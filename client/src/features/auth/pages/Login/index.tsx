@@ -2,6 +2,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import { Button, Flex, Form, Input, InputNumber, Typography } from 'antd'
 
 import { AuthTitle } from '@Auth/components'
+import { Link } from 'react-router-dom'
 
 export function Login() {
   return (
@@ -14,6 +15,7 @@ export function Login() {
             size="large"
             style={{ width: '100%' }}
             controls={false}
+            autoFocus
           />
         </Form.Item>
 
@@ -29,7 +31,7 @@ export function Login() {
 
         <Form.Item>
           <Flex align="end" vertical>
-            <Typography.Link>¿Olvidaste tu contraseña?</Typography.Link>
+            <Link to="/auth/forgot-password">¿Olvidaste tu contraseña?</Link>
           </Flex>
         </Form.Item>
 
@@ -40,8 +42,7 @@ export function Login() {
         </Form.Item>
       </Form>
       <Typography>
-        ¿No tenés una cuenta?{' '}
-        <Typography.Link strong>Crear cuenta</Typography.Link>
+        ¿No tenés una cuenta? <Link to="/auth/register">Crear cuenta</Link>
       </Typography>
     </>
   )
