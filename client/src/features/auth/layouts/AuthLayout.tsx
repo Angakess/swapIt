@@ -16,7 +16,10 @@ export function AuthLayout({ children }: React.PropsWithChildren) {
                 }}
               />
             </Flex>
-            <Card bordered={false} styles={{ body: { padding: '2rem' } }}>
+            <Card
+              bordered={false}
+              styles={{ body: { padding: '2rem', marginBottom: '3rem' } }}
+            >
               {children}
             </Card>
           </Col>
