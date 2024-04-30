@@ -12,6 +12,7 @@
     "format:fix": "prettier --write --list-different ."
   },
   "dependencies": {
+    "antd": "^5.16.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
