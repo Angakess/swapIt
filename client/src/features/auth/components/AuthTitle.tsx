@@ -5,8 +5,12 @@ export function AuthTitle({ children }: React.PropsWithChildren) {
 
   return (
     <Typography.Title
-      level={2}
-      style={{ textAlign: 'center', color: token.colorPrimaryActive }}
+      level={3}
+      style={{
+        textAlign: 'center',
+        color: token.colorPrimaryActive,
+        marginBottom: '2rem',
+      }}
     >
       {children}
     </Typography.Title>

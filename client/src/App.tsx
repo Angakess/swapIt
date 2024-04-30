@@ -8,7 +8,7 @@ function App() {
       theme={{
         token: {
           colorPrimary: '#14518b',
-          colorInfo: '#d02f4c',
+          colorInfo: '#14518b',
           colorTextBase: '#061726',
         },
       }}
