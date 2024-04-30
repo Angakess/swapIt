@@ -21,7 +21,10 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Custom */
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "@Auth/*": ["features/auth/*"],
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
