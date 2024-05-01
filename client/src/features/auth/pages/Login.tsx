@@ -36,12 +36,17 @@ export function Login() {
         </Form.Item>
 
         <Form.Item>
-          <Button block type="primary" size="large">
+          <Button
+            block
+            type="primary"
+            size="large"
+            style={{ marginTop: '0.5rem' }}
+          >
             Iniciar sesión
           </Button>
         </Form.Item>
       </Form>
-      <Typography>
+      <Typography style={{ textAlign: 'center' }}>
         ¿No tenés una cuenta? <Link to="/auth/register">Crear cuenta</Link>
       </Typography>
     </>

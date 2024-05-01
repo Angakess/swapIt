@@ -11,7 +11,7 @@ export function AuthLayout({ children }: React.PropsWithChildren) {
                 src="/logo-caritas.svg"
                 alt="logo caritas"
                 style={{
-                  height: '5rem',
+                  height: '4rem',
                   marginBottom: '1.25rem',
                 }}
               />
