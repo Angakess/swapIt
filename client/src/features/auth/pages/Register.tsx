@@ -107,17 +107,12 @@ export function Register() {
         </Form.Item>
 
         <Form.Item>
-          <Button
-            block
-            type="primary"
-            size="large"
-            style={{ marginTop: '1rem' }}
-          >
+          <Button block type="primary" size="large">
             Crear cuenta
           </Button>
         </Form.Item>
       </Form>
-      <Typography>
+      <Typography style={{ textAlign: 'center' }}>
         ¿Ya tenés una cuenta? <Link to="/auth/login">Iniciar sesión</Link>
       </Typography>
     </>
