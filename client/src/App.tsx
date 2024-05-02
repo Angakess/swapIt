@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { AuthRoutes } from '@Auth/routes'
 import { ConfigProvider } from 'antd'
+import { AuthRoutes } from '@Auth/routes'
+import { PostsRoutes } from '@Posts/routes'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/auth/*" element={<AuthRoutes />} />
+          <Route path="/posts/*" element={<PostsRoutes />} />
         </Routes>
       </BrowserRouter>
     </ConfigProvider>
