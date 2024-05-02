@@ -3,7 +3,7 @@
 //   EllipsisOutlined,
 //   SettingOutlined,
 // } from '@ant-design/icons'
-import { Card, Carousel, Typography, theme } from 'antd'
+import { Card, Carousel, Tag, Typography, theme } from 'antd'
 
 const images = [
   'https://picsum.photos/200/300',
@@ -23,18 +23,30 @@ export function PostItem() {
       //   <EditOutlined key="edit" />,
       //   <EllipsisOutlined key="ellipsis" />,
       // ]}
+      bordered
     >
       <Card.Meta
         title="Título de la publicación"
         description={
-          <Typography.Paragraph type="secondary" ellipsis={{ rows: 2 }}>
+          <Typography.Paragraph type="secondary" ellipsis={{ rows: 3 }}>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi
             modi tempora veniam ducimus earum veritatis. Dicta, doloribus odio
             libero molestias maxime, commodi assumenda vel hic aliquid voluptate
             ducimus aperiam voluptatibus!
           </Typography.Paragraph>
         }
+        style={{ marginBottom: '0.5rem' }}
       />
+      <Tag bordered={false} color="blue">
+        Útiles escolares
+      </Tag>
+      <Tag
+        bordered={false}
+        color="default"
+        style={{ backgroundColor: 'transparent' }}
+      >
+        Casi nuevo
+      </Tag>
     </Card>
   )
 }
