@@ -15,7 +15,7 @@ const images = [
 export function PostItem() {
   return (
     <Card
-      style={{ width: 300, overflow: 'hidden' }}
+      style={{ overflow: 'hidden' }}
       hoverable
       cover={<PostItemCarousel images={images} />}
       // actions={[
