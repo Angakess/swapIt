@@ -24,6 +24,7 @@
     "baseUrl": "src",
     "paths": {
       "@Auth/*": ["features/auth/*"],
+      "@Posts/*": ["features/posts/*"],
     }
   },
   "include": ["src"],
