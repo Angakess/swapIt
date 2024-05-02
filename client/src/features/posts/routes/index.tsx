@@ -29,11 +29,12 @@ export function PostsRoutes() {
             label: 'nav 3',
           },
         ]}
-        content={<h1>Content</h1>}
-      />
-      <Routes>
-        <Route path="posts" element={<Posts />} />
-      </Routes>
+        header={<h1>SwapIt!</h1>}
+      >
+        <Routes>
+          <Route path="/" element={<Posts />} />
+        </Routes>
+      </AppLayout>
     </>
   )
 }

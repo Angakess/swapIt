@@ -6,10 +6,11 @@ const { Header, Sider, Content } = Layout
 
 type Props = {
   menuItems: ItemType[]
-  content: React.ReactNode
+  header: React.ReactNode
+  children: React.ReactNode
 }
 
-export function AppLayout({ menuItems, content }: Props) {
+export function AppLayout({ menuItems, header, children }: Props) {
   const { colorBgContainer } = theme.useToken().token
 
   return (
@@ -17,9 +18,18 @@ export function AppLayout({ menuItems, content }: Props) {
       <Sidebar menuItems={menuItems} />
       <Layout>
         <Header style={{ backgroundColor: colorBgContainer, padding: 0 }}>
-          <h1>Header</h1>
+          {header}
         </Header>
-        <Content>{content}</Content>
+        <Content
+          style={{
+            padding: '1.5rem',
+            maxWidth: '900px',
+            margin: '0 auto',
+            width: '100%',
+          }}
+        >
+          {children}
+        </Content>
       </Layout>
     </Layout>
   )
@@ -56,10 +66,10 @@ function Sidebar({ menuItems }: SidebarProps) {
           <img
             src={isCollapsed ? '/logo-caritas-sm.svg' : '/logo-caritas.svg'}
             alt="logo caritas"
-            style={{ height: '3rem' }}
+            style={{ height: '2.5rem' }}
           />
         </Header>
-        <Content style={{ backgroundColor }}>
+        <Content style={{ backgroundColor, paddingTop: '0.5rem' }}>
           <Menu
             theme="light"
             mode="inline"
