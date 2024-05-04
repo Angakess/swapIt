@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom'
 
 export function Login() {
  
-  const onFinish: FormProps<number | string | null>['onFinish'] = (values) => {
+  const onFinish: FormProps['onFinish'] = (values) => {
     console.log("Success: ", values)
   };
-  const onFinishFailed: FormProps<number | string | null>['onFinishFailed'] = (errorInfo) => {
+  const onFinishFailed: FormProps['onFinishFailed'] = (errorInfo) => {
     console.log('Failed: ', errorInfo)
   };
  
