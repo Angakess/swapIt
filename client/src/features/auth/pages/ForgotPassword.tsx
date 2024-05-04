@@ -1,21 +1,13 @@
 import { AuthTitle } from "@Auth/components";
 import { Form, InputNumber, Button, FormProps } from "antd"
-import { useState } from "react";
 
 export function ForgotPassword() {
  
-  const [dni, setDni] = useState<number | string | null>(null)
-
-  const handleChange = (newDni: number | string | null) => {
-    console.log(newDni)
-    setDni(newDni)
-  }
- 
-  const onFinish: FormProps<number | string | null>['onFinish'] = (values) => {
+  const onFinish: FormProps['onFinish'] = (values) => {
     console.log("Success: ", values)
   };
 
-  const onFinishFailed: FormProps<number | string | null>['onFinishFailed'] = (errorInfo) => {
+  const onFinishFailed: FormProps['onFinishFailed'] = (errorInfo) => {
     console.log('Failed: ', errorInfo)
   };
 
@@ -29,6 +21,7 @@ export function ForgotPassword() {
         <Form.Item
           label="DNI"
           name="dni"
+          required={false}
           rules={[{required: true, message: 'Porfavor ingrese su DNI'},
                   {validator: (_, value) => 
                     value && value.toString().length === 8  ?
@@ -43,8 +36,6 @@ export function ForgotPassword() {
             style={{ width: '100%' }}
             controls={false}
             autoFocus
-            value={dni}
-            onChange={handleChange}
           />
         </Form.Item>
         
