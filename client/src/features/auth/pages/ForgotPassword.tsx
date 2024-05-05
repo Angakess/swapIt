@@ -1,8 +1,16 @@
 import { AuthTitle } from "@Auth/components";
 import { Form, InputNumber, Button, FormProps } from "antd"
+import { RuleObject } from "antd/es/form";
 
 export function ForgotPassword() {
  
+  const dniValidator = (_: RuleObject, value: number) => {
+    if(!value || value.toString().length == 8){
+      return Promise.resolve()
+    }
+    return Promise.reject(new Error("El DNI debe ser un número de 8 dígitos"))
+  }
+  
   const onFinish: FormProps['onFinish'] = (values) => {
     console.log("Success: ", values)
   };
@@ -23,11 +31,7 @@ export function ForgotPassword() {
           name="dni"
           required={false}
           rules={[{required: true, message: 'Porfavor ingrese su DNI'},
-                  {validator: (_, value) => 
-                    value && value.toString().length === 8  ?
-                      Promise.resolve() :
-                      Promise.reject("El DNI debe ser un número de 8 dígitos")
-                  },
+                  {validator: dniValidator},
           ]}
           >
           <InputNumber
