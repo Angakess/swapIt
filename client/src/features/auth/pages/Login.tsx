@@ -3,9 +3,17 @@ import { Button, Flex, Form, Input, InputNumber, Typography, FormProps } from 'a
 
 import { AuthTitle } from '@Auth/components'
 import { Link } from 'react-router-dom'
+import { RuleObject } from 'antd/es/form'
 
 export function Login() {
  
+  const dniValidator = (_: RuleObject, value: number) => {
+    if(!value || value.toString().length == 8){
+      return Promise.resolve()
+    }
+    return Promise.reject(new Error("El DNI debe ser un número de 8 dígitos"))
+  }
+
   const onFinish: FormProps['onFinish'] = (values) => {
     console.log("Success: ", values)
   };
@@ -27,11 +35,7 @@ export function Login() {
           name="dni"
           required={false}
           rules={[{required: true, message: "Porfavor ingrese su DNI"},
-                  {validator: (_, value) => 
-                    value && value.toString().length === 8  ?
-                      Promise.resolve() :
-                      Promise.reject("El DNI debe ser un número de 8 dígitos")
-                  },
+                  {validator: dniValidator},
           ]}    
           >
           <InputNumber
