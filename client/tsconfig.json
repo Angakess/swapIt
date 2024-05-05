@@ -25,6 +25,7 @@
     "paths": {
       "@Auth/*": ["features/auth/*"],
       "@Posts/*": ["features/posts/*"],
+      "@Admin/*": ["features/admin/*"],
     }
   },
   "include": ["src"],
