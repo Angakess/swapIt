@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'coreapi',
     'rest_framework',
+
+    #My apps
+    'app_post',
 ]
 
 MIDDLEWARE = [
