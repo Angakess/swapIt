@@ -1,0 +1,158 @@
+[
+    {
+        "model": "app_post.post",
+        "pk": 1,
+        "fields": {
+            "name": "Cartuchera",
+            "description": "Cartuchera de cuero",
+            "value": 5,
+            "stateProduct": "Nuevo",
+            "id_state": 1,
+            "id_category": 1
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 2,
+        "fields": {
+            "name": "Mochila",
+            "description": "Mochila de tela",
+            "value": 10,
+            "stateProduct": "Usado",
+            "id_state": 2,
+            "id_category": 1
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 3,
+        "fields": {
+            "name": "Cuaderno",
+            "description": "Cuaderno de 100 hojas",
+            "value": 2,
+            "stateProduct": "Nuevo",
+            "id_state": 1,
+            "id_category": 1
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 4,
+        "fields": {
+            "name": "Lapicera",
+            "description": "Lapicera de tinta",
+            "value": 1,
+            "stateProduct": "Usado",
+            "id_state": 2,
+            "id_category": 1
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 5,
+        "fields": {
+            "name": "Goma",
+            "description": "Goma de borrar",
+            "value": 0.5,
+            "stateProduct": "Nuevo",
+            "id_state": 1,
+            "id_category": 1
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 6,
+        "fields": {
+            "name": "Regla",
+            "description": "Regla de 30 cm",
+            "value": 1.5,
+            "stateProduct": "Usado",
+            "id_state": 2,
+            "id_category": 1
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 7,
+        "fields": {
+            "name": "Tijera",
+            "description": "Tijera de acero",
+            "value": 2,
+            "stateProduct": "Nuevo",
+            "id_state": 1,
+            "id_category": 1
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 8,
+        "fields": {
+            "name": "Mochila",
+            "description": "Mochila de tela",
+            "value": 10,
+            "stateProduct": "Usado",
+            "id_state": 2,
+            "id_category": 1
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 9,
+        "fields": {
+            "name": "Manzana",
+            "description": "Manzana fresca",
+            "value": 1,
+            "stateProduct": "Nuevo",
+            "id_state": 1,
+            "id_category": 2
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 10,
+        "fields": {
+            "name": "Banana",
+            "description": "Banana madura",
+            "value": 0.5,
+            "stateProduct": "Nuevo",
+            "id_state": 1,
+            "id_category": 2
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 11,
+        "fields": {
+            "name": "Leche",
+            "description": "Leche descremada",
+            "value": 2,
+            "stateProduct": "Nuevo",
+            "id_state": 1,
+            "id_category": 2
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 12,
+        "fields": {
+            "name": "Pan",
+            "description": "Pan integral",
+            "value": 1.5,
+            "stateProduct": "Nuevo",
+            "id_state": 1,
+            "id_category": 2
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 13,
+        "fields": {
+            "name": "Arroz",
+            "description": "Arroz blanco",
+            "value": 3,
+            "stateProduct": "Nuevo",
+            "id_state": 1,
+            "id_category": 2
+        }
+    }
+]

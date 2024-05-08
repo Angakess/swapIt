@@ -7,6 +7,8 @@ from app_post import views
 
 router = routers.DefaultRouter()
 router.register(r'category', views.CategoryViewSet, 'category')
+router.register(r'post', views.PostViewSet, 'post')
+router.register(r'poststate', views.PostStateViewSet, 'poststate')
 
 urlpatterns = [
     path('posts/', include(router.urls)),
