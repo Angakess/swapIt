@@ -9,10 +9,12 @@ import {
   InputNumber,
   Select,
   Typography,
+  FormProps,
 } from 'antd'
 
 import { AuthTitle } from '@Auth/components'
 import { Link } from 'react-router-dom'
+import { RuleObject } from 'antd/es/form'
 
 export function Register() {
   const [isPasswordVisible, setPasswordVisible] = useState(false)
@@ -21,10 +23,50 @@ export function Register() {
     setPasswordVisible(!isPasswordVisible)
   }
 
+  const dniValidator = (_: RuleObject, value: number) => {
+    if (!value || value.toString().length == 8) {
+      return Promise.resolve()
+    }
+    return Promise.reject(new Error('El DNI debe ser un número de 8 dígitos'))
+  }
+  const phoneValidator = (_: RuleObject, value: string) => {
+    if (!value || /^\d+$/.test(value)) {
+      return Promise.resolve()
+    }
+    return Promise.reject(new Error('Debe ingresar un número'))
+  }
+  const dateValidator = (_: RuleObject, value: any) => {
+    if (value != undefined || value != null) {
+      const today = new Date()
+      const bDay = value.$d
+      let age = today.getFullYear() - bDay.getFullYear()
+      const m = today.getMonth() - bDay.getMonth()
+      if (m < 0 || (m === 0 && today.getDate() < bDay.getDate())) {
+        age--
+      }
+      if (!value || age >= 18) {
+        return Promise.resolve()
+      }
+      return Promise.reject(new Error('Debe tener mas de 18 años'))
+    }
+    return Promise.resolve()
+  }
+
+  const handleFinish: FormProps['onFinish'] = (values) => {
+    console.log('Success: ', values)
+  }
+  const handleFinishFailed: FormProps['onFinishFailed'] = (errorInfo) => {
+    console.log('Failed: ', errorInfo)
+  }
+
   return (
     <>
       <AuthTitle>Crear Cuenta</AuthTitle>
-      <Form layout="vertical">
+      <Form
+        layout="vertical"
+        onFinish={handleFinish}
+        onFinishFailed={handleFinishFailed}
+      >
         {/* 
           [x] nombre
           [x] apellido
@@ -40,16 +82,34 @@ export function Register() {
         */}
 
         <Flex gap="1rem">
-          <Form.Item label="Nombre">
+          <Form.Item
+            label="Nombre"
+            name="firstName"
+            required={false}
+            rules={[{ required: true, message: 'Ingrese su nombre' }]}
+          >
             <Input placeholder="Nombre" size="large" autoFocus />
           </Form.Item>
 
-          <Form.Item label="Apellido">
+          <Form.Item
+            label="Apellido"
+            name="lastName"
+            required={false}
+            rules={[{ required: true, message: 'Ingrese su apellido' }]}
+          >
             <Input placeholder="Apellido" size="large" />
           </Form.Item>
         </Flex>
 
-        <Form.Item label="DNI">
+        <Form.Item
+          label="DNI"
+          name="dni"
+          required={false}
+          rules={[
+            { required: true, message: 'Ingrese su DNI' },
+            { validator: dniValidator },
+          ]}
+        >
           <InputNumber
             placeholder="DNI"
             size="large"
@@ -58,19 +118,48 @@ export function Register() {
           />
         </Form.Item>
 
-        <Form.Item label="Correo">
+        <Form.Item
+          label="Correo"
+          name="email"
+          required={false}
+          rules={[
+            { required: true, message: 'Ingrese su email' },
+            { type: 'email', message: 'No es un mail valido' },
+          ]}
+        >
           <Input placeholder="Correo" size="large" />
         </Form.Item>
 
-        <Form.Item label="Telefono">
+        <Form.Item
+          label="Teléfono"
+          name="phone"
+          required={false}
+          rules={[
+            { required: true, message: 'Ingrese su número de teléfono' },
+            { validator: phoneValidator },
+          ]}
+        >
           <Input placeholder="221 123-4567" size="large" />
         </Form.Item>
 
-        <Form.Item label="Fecha de nacimiento">
+        <Form.Item
+          label="Fecha de nacimiento"
+          name="birthday"
+          required={false}
+          rules={[
+            { required: true, message: 'Ingrese su fecha de nacimiento' },
+            { validator: dateValidator },
+          ]}
+        >
           <DatePicker size="large" style={{ width: '100%' }} />
         </Form.Item>
 
-        <Form.Item label="Género">
+        <Form.Item
+          label="Género"
+          name="gender"
+          required={false}
+          rules={[{ required: true, message: 'Seleccione una opción' }]}
+        >
           <Select placeholder="Selecciona tu género" size="large">
             <Select.Option value="male">Masculino</Select.Option>
             <Select.Option value="female">Femenino</Select.Option>
@@ -78,7 +167,12 @@ export function Register() {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Contraseña">
+        <Form.Item
+          label="Contraseña"
+          name="password"
+          required={false}
+          rules={[{ required: true, message: 'Ingrese su contraseña' }]}
+        >
           <Input.Password
             placeholder="Contraseña"
             size="large"
@@ -92,7 +186,27 @@ export function Register() {
           />
         </Form.Item>
 
-        <Form.Item label="Confirmar contraseña">
+        <Form.Item
+          label="Confirmar contraseña"
+          name="confirmPassword"
+          dependencies={['password']}
+          required={false}
+          rules={[
+            { required: true, message: 'Confirme su contraseña' },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve()
+                }
+                return Promise.reject(
+                  new Error(
+                    'No coincide con la contraseña ingresada previamente'
+                  )
+                )
+              },
+            }),
+          ]}
+        >
           <Input.Password
             placeholder="Confirmar contraseña"
             size="large"
@@ -107,7 +221,7 @@ export function Register() {
         </Form.Item>
 
         <Form.Item>
-          <Button block type="primary" size="large">
+          <Button block type="primary" size="large" htmlType="submit">
             Crear cuenta
           </Button>
         </Form.Item>
