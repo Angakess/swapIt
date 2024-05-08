@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react"
 import type { FilterDropdownProps } from "antd/es/table/interface"
 
 //archivo JSON sacado de mockaroo.com local para testear
-//import MOCK_DATA from "./MOCK_DATA.json"
+import MOCK_DATA from "./MOCK_DATA_AYUDANTES.json"
 
 
 export function Helpers(){
@@ -48,7 +48,7 @@ export function Helpers(){
         setLoading(true)
     
         
-        /* //------Version mock---------------------------------------------------------------
+        //------Version mock---------------------------------------------------------------
         setData(MOCK_DATA)
                 setLoading(false)
                 setTableParams({
@@ -58,7 +58,7 @@ export function Helpers(){
                         total: 200
                     },
                 })
-        //---------------------------------------------------------------------------------- */
+        //----------------------------------------------------------------------------------
         
         
         //------Version real----------------------------------------------------------------
@@ -117,7 +117,7 @@ export function Helpers(){
             <div style={{padding: 8}} onKeyDown={(e) => e.stopPropagation()}>
                 <Input 
                     ref={searchInput}
-                    placeholder={`Search ${dataIndex}`}
+                    placeholder={`Buscar ${dataIndex}`}
                     value={selectedKeys[0]}
                     onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
                     onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
