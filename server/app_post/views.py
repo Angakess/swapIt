@@ -3,9 +3,8 @@
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from .models import Category, Post
-from .serializer import *
-from itertools import chain
+from .models import Category, Post, PostState
+from .serializer import CategorySerializer, PostSerializer, PostStateSerializer
 
 
 
