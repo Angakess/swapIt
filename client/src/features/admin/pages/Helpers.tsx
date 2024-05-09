@@ -7,6 +7,7 @@ import {
   TableColumnsType,
   TableColumnType,
   InputRef,
+  Modal
 } from 'antd'
 import { GetProp, TableProps } from 'antd'
 import {
@@ -19,6 +20,9 @@ import type { FilterDropdownProps } from 'antd/es/table/interface'
 
 //archivo JSON sacado de mockaroo.com local para testear
 import MOCK_DATA from './MOCK_DATA_AYUDANTES.json'
+
+
+
 
 export function Helpers() {
   type ColumnsType<T> = TableProps<T>['columns']
@@ -242,21 +246,53 @@ export function Helpers() {
       render: () => (
         <Space>
           <Button type="primary" icon={<ShopFilled />}></Button>
-          <Button type="primary" danger icon={<UserDeleteOutlined />}></Button>
+          <Button type="primary" danger icon={<UserDeleteOutlined />} onClick={showModal}></Button>
         </Space>
       ),
       width: '100px',
     },
   ]
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const showModal = () => {
+    setIsModalOpen(true)
+  }
+  const handleOk = () => {
+    setIsModalOpen(false)
+    console.log("AYUDANTE DESINCORPORADO")
+  }
+  const handleCancel = () => {
+    setIsModalOpen(false)
+    console.log("OPERACION CANCELADA")
+  }
+
+
+
+
   return (
-    <Table
-      columns={columns}
-      rowKey={(record) => record.id}
-      dataSource={data}
-      pagination={tableParams.pagination}
-      loading={loading}
-      onChange={handleTableChange}
-    />
+    
+    <>
+      <Table
+        columns={columns}
+        rowKey={(record) => record.id}
+        dataSource={data}
+        pagination={tableParams.pagination}
+        loading={loading}
+        onChange={handleTableChange}
+      />
+      <Modal
+        title="Atención"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        cancelText="Cancelar"
+        okText="Desincorporar"
+        okButtonProps={{danger: true}}
+      >
+        <p>¿Está seguro que quiere desincorporar a este ayudante?</p>
+
+      </Modal>
+    
+    </>
   )
 }
