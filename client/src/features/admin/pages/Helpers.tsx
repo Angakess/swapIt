@@ -55,7 +55,7 @@ export function Helpers(){
                     ...tableParams,
                     pagination: {
                         ...tableParams.pagination,
-                        total: 200
+                        total: MOCK_DATA.length
                     },
                 })
         //----------------------------------------------------------------------------------
@@ -107,9 +107,11 @@ export function Helpers(){
         setSearchedColumn(dataIndex)
     }
 
-    const handleReset = (clearFilters: () => void) => {
+    const handleReset = (clearFilters: () => void,  selectedKeys: string[], confirm: FilterDropdownProps["confirm"], dataIndex: DataIndex) => {
         clearFilters()
         setSearchText("")
+        confirm()
+        setSearchedColumn(dataIndex)
     }
 
     const getColumnSearchProps = (dataIndex: DataIndex): TableColumnType<DataType> => ({
@@ -134,7 +136,7 @@ export function Helpers(){
                         Buscar
                     </Button>
                     <Button
-                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        onClick={() => clearFilters && handleReset(clearFilters, selectedKeys as string[], confirm, dataIndex)}
                         size="small"
                         style={{ width: 90}}
                     >
@@ -208,7 +210,7 @@ export function Helpers(){
                     <Button type="primary" danger>Desincorporar</Button>
                 </Space>
             ),
-            width: "%30"
+            width: "200px"
         }
     ]
 
