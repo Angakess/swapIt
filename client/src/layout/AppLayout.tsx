@@ -14,18 +14,25 @@ export function AppLayout({ menuItems, header, children }: Props) {
   const { colorBgContainer } = theme.useToken().token
 
   return (
-    <Layout>
+    <Layout style={{ maxHeight: '100dvh' }}>
       <Sidebar menuItems={menuItems} />
-      <Layout>
-        <Header style={{ backgroundColor: colorBgContainer, padding: 0 }}>
+      <Layout style={{ overflow: 'auto' }}>
+        <Header
+          style={{
+            backgroundColor: colorBgContainer,
+            padding: '0',
+            marginBottom: '1.5rem',
+          }}
+        >
           {header}
         </Header>
         <Content
           style={{
-            padding: '1.5rem',
+            padding: '0 1.5rem',
             maxWidth: '900px',
             margin: '0 auto',
             width: '100%',
+            height: 'auto',
           }}
         >
           {children}
@@ -48,6 +55,8 @@ function Sidebar({ menuItems }: SidebarProps) {
   return (
     <Sider
       theme="light"
+      breakpoint="lg"
+      collapsedWidth="3.75rem"
       style={{ backgroundColor }}
       collapsible
       collapsed={isCollapsed}

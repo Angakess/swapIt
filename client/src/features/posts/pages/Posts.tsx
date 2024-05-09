@@ -39,7 +39,10 @@ export function Posts() {
       />
       <Divider />
       <PostsList posts={MOCK_POSTS.posts} />
-      <Flex justify="center" style={{ margin: '2rem 0 1rem' }}>
+      <Flex
+        justify="center"
+        style={{ margin: '2rem 0', paddingBottom: '1rem' }}
+      >
         <Pagination defaultCurrent={1} total={12} />
       </Flex>
     </>
