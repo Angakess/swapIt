@@ -11,41 +11,38 @@ import { AppLayout } from 'layout'
 import { MenuInfo } from 'rc-menu/lib/interface'
 
 export function AdminRoutes() {
-  
+  const handleClick = (info: MenuInfo) => {
+    console.log('key: ', info.key)
+  }
 
-    const handleClick = (info: MenuInfo) => {
-        console.log("key: ", info.key)
-    }
-
-    return (
+  return (
     <>
       <AppLayout
         menuItems={[
           {
-            key: "helpers",
-            title: "helpers",
+            key: 'helpers',
+            title: 'helpers',
             icon: <ContactsOutlined />,
             label: 'Ayudantes',
             onClick: handleClick,
-            
           },
           {
-            key: "exchangers",
+            key: 'exchangers',
             icon: <UserOutlined />,
             label: 'Intercambiadores',
-            onClick: handleClick
+            onClick: handleClick,
           },
           {
-            key: "locals",
+            key: 'locals',
             icon: <ShopOutlined />,
             label: 'Filiales',
-            onClick: handleClick
+            onClick: handleClick,
           },
           {
-            key: "categories",
+            key: 'categories',
             icon: <ProductOutlined />,
             label: 'Categorias',
-            onClick: handleClick
+            onClick: handleClick,
           },
         ]}
         header={<h1>Página de administración</h1>}

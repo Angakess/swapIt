@@ -1,39 +1,40 @@
-import { AuthTitle } from "@Auth/components";
-import { Form, InputNumber, Button, FormProps } from "antd"
-import { RuleObject } from "antd/es/form";
+import { AuthTitle } from '@Auth/components'
+import { Form, InputNumber, Button, FormProps } from 'antd'
+import { RuleObject } from 'antd/es/form'
 
 export function ForgotPassword() {
- 
   const dniValidator = (_: RuleObject, value: number) => {
-    if(!value || value.toString().length == 8){
+    if (!value || value.toString().length == 8) {
       return Promise.resolve()
     }
-    return Promise.reject(new Error("El DNI debe ser un número de 8 dígitos"))
+    return Promise.reject(new Error('El DNI debe ser un número de 8 dígitos'))
   }
-  
+
   const onFinish: FormProps['onFinish'] = (values) => {
-    console.log("Success: ", values)
-  };
+    console.log('Success: ', values)
+  }
 
   const onFinishFailed: FormProps['onFinishFailed'] = (errorInfo) => {
     console.log('Failed: ', errorInfo)
-  };
+  }
 
   return (
     <>
       <AuthTitle>¿Has olvidado tu contraseña?</AuthTitle>
-      <Form layout="vertical"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+      <Form
+        layout="vertical"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
         <Form.Item
           label="DNI"
           name="dni"
           required={false}
-          rules={[{required: true, message: 'Porfavor ingrese su DNI'},
-                  {validator: dniValidator},
+          rules={[
+            { required: true, message: 'Porfavor ingrese su DNI' },
+            { validator: dniValidator },
           ]}
-          >
+        >
           <InputNumber
             placeholder="Ingrese su DNI (ej: 12345678)"
             size="large"
@@ -42,9 +43,12 @@ export function ForgotPassword() {
             autoFocus
           />
         </Form.Item>
-        
+
         <Form.Item>
-          <p>Enviaremos un código de recuperación por email si el DNI ingresado coincide con una cuenta de SwapIt existente</p>   
+          <p>
+            Enviaremos un código de recuperación por email si el DNI ingresado
+            coincide con una cuenta de SwapIt existente
+          </p>
         </Form.Item>
         <Form.Item>
           <Button
@@ -52,29 +56,23 @@ export function ForgotPassword() {
             type="primary"
             htmlType="submit"
             size="large"
-            style={{ marginTop: '0.5rem'}}
+            style={{ marginTop: '0.5rem' }}
           >
             Enviar
           </Button>
         </Form.Item>
-        
+
         <Form.Item>
           <Button
             type="link"
             size="large"
-
             // ni idea si esto esta bien
             href="/auth/login"
-
-            style={{ display: 'block',
-              margin: 'auto',
-              marginTop: '0.5rem',
-              }}
+            style={{ display: 'block', margin: 'auto', marginTop: '0.5rem' }}
           >
             Volver
           </Button>
         </Form.Item>
-
       </Form>
     </>
   )

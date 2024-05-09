@@ -1,7 +1,7 @@
-export function Locals(){
-    return (
-        <>
-            <p>Administración de filiales</p>
-        </>
-    )
+export function Locals() {
+  return (
+    <>
+      <p>Administración de filiales</p>
+    </>
+  )
 }
