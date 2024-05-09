@@ -5,7 +5,7 @@ import {
   VideoCameraOutlined,
 } from '@ant-design/icons'
 
-import { Posts } from '@Posts/pages'
+import { Post, Posts } from '@Posts/pages'
 import { AppLayout } from 'layout'
 
 export function PostsRoutes() {
@@ -33,6 +33,7 @@ export function PostsRoutes() {
       >
         <Routes>
           <Route path="/" element={<Posts />} />
+          <Route path="/:id" element={<Post />} />
         </Routes>
       </AppLayout>
     </>
