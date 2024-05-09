@@ -116,7 +116,7 @@ export function Helpers() {
     filial: '',
     id: '',
   })
-  const [searchedColumn, setSearchedColumn] = useState('')
+  //const [searchedColumn, setSearchedColumn] = useState('')
   const searchInput = useRef<InputRef>(null)
 
   const handleSearch = (
@@ -131,7 +131,7 @@ export function Helpers() {
           [dataIndex]: selectedKeys[0],
         }
       })
-    setSearchedColumn(dataIndex)
+    //setSearchedColumn(dataIndex)
   }
 
   const handleReset = (
@@ -147,7 +147,7 @@ export function Helpers() {
       }
     })
     confirm()
-    setSearchedColumn(dataIndex)
+    //setSearchedColumn(dataIndex)
   }
 
   const getColumnSearchProps = (
