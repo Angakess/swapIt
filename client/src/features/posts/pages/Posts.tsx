@@ -1,5 +1,6 @@
 import { PostsList, SearchAndFilter } from '@Posts/components'
-import { Divider, SelectProps } from 'antd'
+import { Divider, Flex, Pagination, SelectProps } from 'antd'
+import MOCK_POSTS from '@Posts/MOCK_POSTS.json'
 
 const categoryOptions: SelectProps['options'] = [
   { label: 'Todas las categorías', value: 'all' },
@@ -25,19 +26,22 @@ export function Posts() {
         searchBar={{ placeholder: 'Busca un producto' }}
         filters={[
           {
+            placeholder: 'Categoría',
             options: categoryOptions,
             defaultValue: 'all',
-            placeholder: 'Categoría',
           },
           {
+            placeholder: 'Estado',
             options: stateOptions,
             defaultValue: 'all',
-            placeholder: 'Estado',
           },
         ]}
       />
       <Divider />
-      <PostsList />
+      <PostsList posts={MOCK_POSTS.posts} />
+      <Flex justify="center" style={{ margin: '2rem 0 1rem' }}>
+        <Pagination defaultCurrent={1} total={12} />
+      </Flex>
     </>
   )
 }

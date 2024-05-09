@@ -14,7 +14,7 @@ export function SearchAndFilter({ searchBar, filters }: SearchAndFilterProps) {
       <SearchBar {...searchBar} />
       <Flex gap={'1rem'} style={{ marginBottom: '1rem' }}>
         {filters.map((filter) => (
-          <SelectFilter {...filter} />
+          <SelectFilter key={filter.placeholder} {...filter} />
         ))}
       </Flex>
       <Flex justify="end">
