@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
 import { AuthRoutes } from '@Auth/routes'
 import { PostsRoutes } from '@Posts/routes'
+import { AdminRoutes } from '@Admin/routes'
 
 function App() {
   return (
