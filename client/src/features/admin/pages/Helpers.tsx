@@ -243,10 +243,10 @@ export function Helpers() {
     },
     {
       title: 'Acciones',
-      render: () => (
+      render: (_: any, __: DataType, index: number) => (
         <Space>
           <Button type="primary" icon={<ShopFilled />}></Button>
-          <Button type="primary" danger icon={<UserDeleteOutlined />} onClick={showModal}></Button>
+          <Button type="primary" danger icon={<UserDeleteOutlined />} onClick={() => showModal(index)}></Button>
         </Space>
       ),
       width: '100px',
@@ -254,20 +254,21 @@ export function Helpers() {
   ]
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const showModal = () => {
+  const [idSelected, setIdSelected] = useState(0)
+
+  const showModal = (newId: number) => {
     setIsModalOpen(true)
+    setIdSelected(newId)
   }
   const handleOk = () => {
     setIsModalOpen(false)
-    console.log("AYUDANTE DESINCORPORADO")
+    if(data !== undefined)
+      console.log(`AYUDANTE ${data[idSelected].nombre} DESINCORPORADO`)
   }
   const handleCancel = () => {
     setIsModalOpen(false)
     console.log("OPERACION CANCELADA")
   }
-
-
-
 
   return (
     
