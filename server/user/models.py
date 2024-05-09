@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-
+from subsidiary.models import Subsidiary
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, dni,password=None ,**extra_fields):
@@ -34,6 +34,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     gender= models.CharField(max_length=1, choices=GENDER_CHOICES)
     date_of_birth = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=30)
+
+    id_subsidiary = models.ForeignKey(Subsidiary, blank=True, null=True, on_delete=models.DO_NOTHING)
 
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

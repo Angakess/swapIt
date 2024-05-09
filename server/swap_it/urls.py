@@ -14,9 +14,10 @@ urlpatterns = [
     path('activate/<str:uid>/<str:token>', activation_user),
     path('list/', ListaVista.as_view()),
     path('posts/', include('app_post.urls')),
+    path('subsidiary/', include('subsidiary.urls')),
     # path('api/category/', include('app_post.urls')),
     path('admin/', admin.site.urls),
-    path('docs/', include_docs_urls(title='Swap It API')),
+    path('docs/', include_docs_urls(title='Swap It API', permission_classes=[])),
 ]
 
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
