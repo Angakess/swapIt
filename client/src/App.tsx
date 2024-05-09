@@ -18,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/auth/*" element={<AuthRoutes />} />
           <Route path="/posts/*" element={<PostsRoutes />} />
+          <Route path="/admin/*" element={<AdminRoutes />} />
         </Routes>
       </BrowserRouter>
     </ConfigProvider>
