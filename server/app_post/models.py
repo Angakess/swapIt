@@ -5,6 +5,9 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return f"NAME {self.name} | ACTIVE {self.active}"
+
 
 class PostState(models.Model):
     name = models.CharField(max_length=255)
@@ -27,4 +30,3 @@ class Post(models.Model):
         StateProduct: {self.stateProduct},
         Id_state: {self.id_state},
         Id_category: {self.id_category}"""
-
