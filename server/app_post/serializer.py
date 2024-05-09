@@ -1,11 +1,6 @@
-# Generar los serializadores para Category, PostState y Post.
-
-
-from .models import *
+from .models import Category, Post, PostState
 from rest_framework import serializers
-from rest_framework.response import Response
 
-# Serializador para la categoria 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
