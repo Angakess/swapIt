@@ -3,47 +3,43 @@
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.decorators import action
+# from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
 from .models import Category, Post, PostState
 from .serializer import CategorySerializer, PostSerializer, PostStateSerializer
 
 
+class CategoryDetails(generics.RetrieveUpdateDestroyAPIView):
 
-# Crear las vistas para el modelo Category, PostState y Post
-# De las vistas Category: Listar, Crear, Actualizar, Eliminar.
+    def get_queryset(self):
+        return Category.objects.all()
 
-class CategoryViewSet(viewsets.ModelViewSet):
+    def destroy(self, request, *args, **kwargs):
+        pk = kwargs['pk']
+        post = Post.objects.filter(id_category=pk)
+        post.update(id_state=2)
+        Category.objects.filter(pk=pk).update(active=False)
+
+        return Response({"message": "Category modify successfully"}, 
+                        status=204)
 
     serializer_class = CategorySerializer
+    # permission_classes = [IsAuthenticated]
+
+
+class CategoryCreate(generics.CreateAPIView):
     queryset = Category.objects.all()
-
-    def list(self, request):
-        queryset = Category.objects.all()
-        serializer = CategorySerializer(queryset, many=True)
-        return Response(serializer.data)
+    serializer_class = CategorySerializer
+    # permission_classes = [IsAuthenticated]
 
 
-    def create(self, request):
-        serializer = CategorySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+class CategoryList(generics.ListAPIView):
+    def get_queryset(self):
+        return Category.objects.all()
 
+    serializer_class = CategorySerializer
+    # permission_classes = [IsAuthenticated]
 
-    def update(self, request, pk=None):
-        category = Category.objects.filter(pk=pk)
-        serializer = CategorySerializer(category, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
-    
-    def remove(self, request, pk=None):
-        category = Category.objects.filter(pk=pk)
-        category.delete()
-        posts = Post.objects.filter(id_category=pk)
-        posts.delete()
-        return Response(status=204)
 
 class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
