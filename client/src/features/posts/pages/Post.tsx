@@ -7,6 +7,7 @@ import {
   PostUser,
 } from '@Posts/components'
 import MOCK_POSTS from '@Posts/MOCK_POSTS.json'
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 
 export function Post() {
   const { borderRadiusLG } = theme.useToken().token
@@ -42,8 +43,29 @@ export function Post() {
             <PostDetails post={post} />
           </Card>
 
-          <Card>
+          <Card style={{ marginBottom: '1.5rem' }}>
             <PostUser />
+          </Card>
+
+          <Card>
+            <Typography.Title level={4}>Filial</Typography.Title>
+            <MapContainer
+              center={[-34.9222141, -57.955808]}
+              zoom={15}
+              zoomControl={false}
+              style={{ borderRadius: borderRadiusLG, height: '160px' }}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <Marker position={[-34.9222141, -57.955808]}>
+                <Popup>Filial Catedral</Popup>
+              </Marker>
+            </MapContainer>
+            <Typography.Text
+              strong
+              style={{ marginTop: '1rem', display: 'block' }}
+            >
+              Filial catedral
+            </Typography.Text>
           </Card>
         </Col>
       </Row>
