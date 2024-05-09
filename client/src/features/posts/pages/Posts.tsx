@@ -1,5 +1,5 @@
-import { PostsList, SearchBar, SelectFilter } from '@Posts/components'
-import { Button, Divider, Flex, SelectProps } from 'antd'
+import { PostsList, SearchAndFilter } from '@Posts/components'
+import { Divider, SelectProps } from 'antd'
 
 const categoryOptions: SelectProps['options'] = [
   { label: 'Todas las categorías', value: 'all' },
@@ -21,22 +21,21 @@ export function Posts() {
   return (
     <>
       <h2 style={{ marginBottom: '2rem' }}>Publicaciones</h2>
-      <SearchBar />
-      <Flex gap={'1rem'} style={{ marginBottom: '1rem' }}>
-        <SelectFilter
-          options={categoryOptions}
-          defaultValue="all"
-          placeholder="Categoría"
-        />
-        <SelectFilter
-          options={stateOptions}
-          defaultValue="all"
-          placeholder="Estado"
-        />
-      </Flex>
-      <Flex justify="end">
-        <Button type="primary">Buscar</Button>
-      </Flex>
+      <SearchAndFilter
+        searchBar={{ placeholder: 'Busca un producto' }}
+        filters={[
+          {
+            options: categoryOptions,
+            defaultValue: 'all',
+            placeholder: 'Categoría',
+          },
+          {
+            options: stateOptions,
+            defaultValue: 'all',
+            placeholder: 'Estado',
+          },
+        ]}
+      />
       <Divider />
       <PostsList />
     </>

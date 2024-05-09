@@ -1,6 +1,10 @@
 import { Input, theme } from 'antd'
 
-export function SearchBar() {
+export type SearchBarProps = {
+  placeholder: string
+}
+
+export function SearchBar({ placeholder }: SearchBarProps) {
   const { colorBgBase } = theme.useToken().token
 
   return (
@@ -8,7 +12,7 @@ export function SearchBar() {
       style={{ backgroundColor: colorBgBase, marginBottom: '1rem' }}
       size="large"
       variant="borderless"
-      placeholder="Busca un producto"
+      placeholder={placeholder}
     />
   )
 }
