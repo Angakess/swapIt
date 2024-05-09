@@ -9,7 +9,11 @@ import {
   InputRef,
 } from 'antd'
 import { GetProp, TableProps } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import {
+  SearchOutlined,
+  ShopFilled,
+  UserDeleteOutlined,
+} from '@ant-design/icons'
 import { useState, useEffect, useRef } from 'react'
 import type { FilterDropdownProps } from 'antd/es/table/interface'
 
@@ -179,12 +183,7 @@ export function Helpers() {
           </Button>
           <Button
             onClick={() =>
-              clearFilters &&
-              handleReset(
-                clearFilters,
-                confirm,
-                dataIndex
-              )
+              clearFilters && handleReset(clearFilters, confirm, dataIndex)
             }
             size="small"
             style={{ width: 90 }}
@@ -223,30 +222,30 @@ export function Helpers() {
       title: `Nombre: ${searchText.nombre}`,
       dataIndex: 'nombre',
       render: (nombre) => `${nombre}`,
-      width: '%20',
+      width: '250px',
       ...getColumnSearchProps('nombre'),
     },
     {
       title: `DNI: ${searchText.id}`,
       dataIndex: 'id',
+      width: '150px',
       ...getColumnSearchProps('id'),
     },
     {
       title: `Filial: ${searchText.filial}`,
       dataIndex: 'filial',
       ...getColumnSearchProps('filial'),
+      sorter: (a, b) => a.filial.localeCompare(b.filial),
     },
     {
       title: 'Acciones',
       render: () => (
         <Space>
-          <Button type="primary">Cambiar filial</Button>
-          <Button type="primary" danger>
-            Desincorporar
-          </Button>
+          <Button type="primary" icon={<ShopFilled />}></Button>
+          <Button type="primary" danger icon={<UserDeleteOutlined />}></Button>
         </Space>
       ),
-      width: '200px',
+      width: '100px',
     },
   ]
 
