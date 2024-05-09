@@ -1,6 +1,5 @@
-import { PostsList } from '@Posts/components'
+import { PostsList, SearchBar, SelectFilter } from '@Posts/components'
 import { Button, Divider, Flex, SelectProps } from 'antd'
-import { SearchBar, SelectFilter } from 'components'
 
 const categoryOptions: SelectProps['options'] = [
   { label: 'Todas las categorías', value: 'all' },
