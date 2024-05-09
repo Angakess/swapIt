@@ -1,12 +1,16 @@
 import { Select, SelectProps, theme } from 'antd'
 
-type Props = {
+export type SelectFilterProps = {
   options: SelectProps['options']
   placeholder: string
   defaultValue: string | null
 }
 
-export function SelectFilter({ options, placeholder, defaultValue }: Props) {
+export function SelectFilter({
+  options,
+  placeholder,
+  defaultValue,
+}: SelectFilterProps) {
   const { colorBgBase, borderRadius } = theme.useToken().token
 
   return (
