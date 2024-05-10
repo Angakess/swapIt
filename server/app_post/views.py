@@ -1,6 +1,5 @@
-
 from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework import generics, status
 
 from app_post.custommixin import CategorySearchMixin
 
@@ -47,7 +46,7 @@ class PostOfCategory(APIView):
         category = Category.objects.filter(id=1).first()
         posts = category.posts
         serializer = PostSerializer(data=posts.values(), many=True)
-        return Response(serializer.initial_data)
+        return Response(serializer.initial_data, status=status.HTTP_200_OK)
 
 class CategorySearch(CategorySearchMixin, generics.RetrieveAPIView):
     queryset = Category.objects.all()

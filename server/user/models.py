@@ -3,6 +3,16 @@ from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin,
                                         BaseUserManager)
 from subsidiary.models import Subsidiary
 
+class Role(models.TextChoices):
+    ADMIN = 'ADMIN'
+    HELPER = 'HELPER'
+    EXCHANGER = 'EXCHANGER'
+
+class Gender(models.TextChoices):
+    """Sex options."""
+    MALE = 'MALE'
+    FEMALE = 'FEMALE'
+    OTHER = 'OTHER'
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, dni, password, **extra_fields):
@@ -24,15 +34,9 @@ class UserAccountManager(BaseUserManager):
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
-    GENDER_CHOICES = (
-        ('M', 'Masculino'),
-        ('F', 'Femenino'),
-        ('O', 'Otro'),
-    )
-
     dni = models.CharField(max_length=40, unique=True)
     email = models.EmailField(max_length=255, unique=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=6, choices=Gender.choices)
     date_of_birth = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=30)
 
@@ -42,12 +46,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
 
-    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
 
-    is_helper = models.BooleanField(default=False)
-    is_exchanger = models.BooleanField(default=False)
-
+    role = models.CharField(max_length=10, choices=Role.choices, default=Role.EXCHANGER)
     objects = UserAccountManager()
 
     USERNAME_FIELD = 'dni'

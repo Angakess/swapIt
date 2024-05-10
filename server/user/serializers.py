@@ -21,6 +21,16 @@ class UserSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'password',
-            'is_exchanger',
-            'is_helper'
+            'role'
+        ]
+
+class UserCreatedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAccount
+        fields = [
+            'id',
+            'first_name',
+            'last_name',
+            'dni',
+            'email',
         ]
