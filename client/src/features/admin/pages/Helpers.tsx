@@ -54,6 +54,11 @@ export function Helpers() {
       pageSize: 10,
     },
   })
+  const [searchText, setSearchText] = useState({
+    nombre: '',
+    filial: '',
+    id: '',
+  })
 
   const fetchData = () => {
     setLoading(true)
@@ -65,7 +70,9 @@ export function Helpers() {
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: MOCK_DATA.length,
+        total: MOCK_DATA.filter((item: DataType) => (item.nombre.includes(searchText.nombre))
+          && (item.filial.includes(searchText.filial))
+          && (item.id.toString().includes(searchText.id))).length,
       },
     })
     //----------------------------------------------------------------------------------
@@ -89,7 +96,7 @@ export function Helpers() {
 
   useEffect(() => {
     fetchData()
-  }, [tableParams.pagination?.current, tableParams.pagination?.pageSize])
+  }, [tableParams.pagination?.current, tableParams.pagination?.pageSize, searchText])
 
   const handleTableChange: TableProps['onChange'] = (
     pagination,
@@ -106,11 +113,7 @@ export function Helpers() {
     }
   }
 
-  const [searchText, setSearchText] = useState({
-    nombre: '',
-    filial: '',
-    id: '',
-  })
+  
   //const [searchedColumn, setSearchedColumn] = useState('')
   const searchInput = useRef<InputRef>(null)
 
