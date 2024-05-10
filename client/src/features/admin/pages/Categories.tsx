@@ -238,15 +238,16 @@ export function Categories() {
     if(!editedName){
       setInputStatus("error")
       setInputErrorMessage("Porfavor ingrese un nombre")
+      return
     }
-    else if(data.some(item => item.name === editedName)){
+    if(data.some(item => item.name === editedName)){
       setInputStatus("error")
       setInputErrorMessage(`Ya existe una categoría con el nombre "${editedName}"`)
+      return
     }
-    else{
-      setIsModalOpen(false)
-      console.log(`CATEGORIA ${data[idSelected].name} EDITADA A ${editedName}`)
-    }
+    setIsModalOpen(false)
+    console.log(`CATEGORIA ${data[idSelected].name} EDITADA A ${editedName}`)
+
   }
   const handleCancel = () => {
     setIsModalOpen(false)
