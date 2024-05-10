@@ -3,8 +3,6 @@ import {
   Space,
   Table,
   Input,
-  TablePaginationConfig,
-  TableColumnsType,
   TableColumnType,
   InputRef,
   Modal
@@ -20,9 +18,6 @@ import type { FilterDropdownProps } from 'antd/es/table/interface'
 
 //archivo JSON sacado de mockaroo.com local para testear
 import MOCK_DATA from './MOCK_DATA_AYUDANTES.json'
-
-
-
 
 export function Helpers() {
   type ColumnsType<T> = TableProps<T>['columns']
