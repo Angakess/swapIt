@@ -1,7 +1,7 @@
-import { Button, GetProp, Input, InputRef, Space, Table, TableColumnType, TableProps } from "antd"
+import { Button, GetProp, Input, InputRef, Modal, Space, Table, TableColumnType, TableProps } from "antd"
 import { FilterDropdownProps } from "antd/es/table/interface"
-import { SearchOutlined, UserOutlined, PauseOutlined, CaretRightOutlined } from '@ant-design/icons'
-import { useEffect, useRef, useState } from "react"
+import { SearchOutlined, EditOutlined, PauseOutlined, CaretRightOutlined } from '@ant-design/icons'
+import { ChangeEvent, useEffect, useRef, useState } from "react"
 /* import MOCK_DATA from "./MOCK_DATA_CAT.json" */
 
 type DataIndex = keyof DataType
@@ -25,7 +25,11 @@ interface TableParams {
 
 export function Categories() {
   
-  const [data, setData] = useState<DataType[]>()
+  const [data, setData] = useState<DataType[]>([{
+    id: 0,
+    name: "",
+    active: false
+  }])
   const [isLoading, setIsLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -34,6 +38,12 @@ export function Categories() {
     },
   })
   const [searchCatName, setSearchCatName] = useState("")
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [idSelected, setIdSelected] = useState(0)
+  const [editedName, setEditedName] = useState("")
+  const [inputStatus, setInputStatus] = useState<"" | "error">("")
+  const [inputErrorMessage, setInputErrorMessage] = useState("")
+
   const searchInput = useRef<InputRef>(null)
 
   const fetchData = () => {
@@ -197,19 +207,21 @@ export function Categories() {
       title: 'Acciones',
       render: (_: any, __: DataType, index: number) => (
         <Space>
-          {data && data[index].active ? <Button
-            type="primary"
-            icon={<PauseOutlined />}
-          >
-          </Button> : 
+          {data && data[index].active ? 
+            <Button
+              type="primary"
+              icon={<PauseOutlined />}
+            >
+            </Button> : 
+            <Button
+              type="primary"
+              icon={<CaretRightOutlined />}
+            >
+            </Button>}
           <Button
             type="primary"
-            icon={<CaretRightOutlined />}
-          >
-          </Button>}
-          <Button
-            type="primary"
-            icon={<UserOutlined />}
+            icon={<EditOutlined />}
+            onClick={() => showModal(index)}
           >
           </Button>
         </Space>
@@ -218,9 +230,35 @@ export function Categories() {
     },
   ]
   
+  const showModal = (index: number) => {
+    setIsModalOpen(true)
+    setIdSelected(index)
+  }
+  const handleOk = () => {
+    if(!editedName){
+      setInputStatus("error")
+      setInputErrorMessage("Porfavor ingrese un nombre")
+    }
+    else if(data.some(item => item.name === editedName)){
+      setInputStatus("error")
+      setInputErrorMessage(`Ya existe una categoría con el nombre "${editedName}"`)
+    }
+    else{
+      setIsModalOpen(false)
+      console.log(`CATEGORIA ${data[idSelected].name} EDITADA A ${editedName}`)
+    }
+  }
+  const handleCancel = () => {
+    setIsModalOpen(false)
+    console.log("OPERACION CANCELADA")
+  }
 
-
-
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setEditedName(event.target.value)
+    setInputStatus("")
+    setInputErrorMessage("")
+    console.log(event.target.value)
+  }
 
 
   
@@ -235,6 +273,25 @@ export function Categories() {
         onChange={handleTableChange}
         locale={{emptyText: "No hay categorías disponibles"}}
       />
+      <Modal
+        title="Editando categoría"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        cancelText="Cancelar"
+        okText="Confirmar"
+        afterClose={() => {setEditedName("")}}
+      >
+        <p>Ingrese un nuevo nombre para la categoría "{data[idSelected].name}"</p>
+        <Input
+          placeholder="Ingrese un nombre"
+          onChange={handleChange}
+          status={inputStatus}
+          value={editedName}
+        
+        ></Input>
+        {(inputStatus === "error") ? <p style={{color: "#FF4D4F"}}>{inputErrorMessage}</p> : <></> }
+      </Modal>
     </>
   )
 }
