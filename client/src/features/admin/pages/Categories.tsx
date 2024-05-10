@@ -59,7 +59,7 @@ export function Categories() {
           ...tableParams,
           pagination: {
               ...tableParams.pagination,
-              total: results.filter((item: DataType) => item.name.includes(searchCatName))
+              total: results.filter((item: DataType) => item.name.includes(searchCatName)).length
             },
           }
         )
