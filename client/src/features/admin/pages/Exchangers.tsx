@@ -81,7 +81,7 @@ export function Exchangers() {
                     ...tableParams,
                     pagination: {
                         ...tableParams.pagination,
-                        total: 200 //mock data (tendria que ser algo como data.totalCount)
+                        total: 200 //acordate de hacer el results.filter(...).length
                     },
                 })
             }) */
