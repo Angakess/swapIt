@@ -2,7 +2,7 @@ import { Button, GetProp, Input, InputRef, Space, Table, TableColumnType, TableP
 import { FilterDropdownProps } from "antd/es/table/interface"
 import { SearchOutlined, UserOutlined, PauseOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { useEffect, useRef, useState } from "react"
-import MOCK_DATA from "./MOCK_DATA_CAT.json"
+/* import MOCK_DATA from "./MOCK_DATA_CAT.json" */
 
 type DataIndex = keyof DataType
 interface DataType {
@@ -22,11 +22,6 @@ interface TableParams {
   sortOrder?: string
   filters?: Parameters<GetProp<TableProps, 'onChange'>>[1]
 }
-
-
-
-
-
 
 export function Categories() {
   
@@ -64,7 +59,7 @@ export function Categories() {
           ...tableParams,
           pagination: {
               ...tableParams.pagination,
-              total: results.length
+              total: results.filter((item: DataType) => item.name.includes(searchCatName))
             },
           }
         )
@@ -74,7 +69,7 @@ export function Categories() {
 
   useEffect(() => {
     fetchData()
-  },[tableParams.pagination?.current, tableParams.pagination?.pageSize])
+  },[tableParams.pagination?.current, tableParams.pagination?.pageSize, searchCatName])
 
   const handleTableChange: TableProps['onChange'] = (
     pagination,
@@ -94,7 +89,6 @@ export function Categories() {
   const handleSearch = (
     selectedKeys: string[],
     confirm: FilterDropdownProps['confirm'],
-    dataIndex: DataIndex
   ) => {
     confirm(),
       setSearchCatName(selectedKeys[0])
@@ -103,7 +97,6 @@ export function Categories() {
   const handleReset = (
     clearFilters: () => void,
     confirm: FilterDropdownProps['confirm'],
-    dataIndex: DataIndex
   ) => {
     clearFilters()
     setSearchCatName("")
@@ -129,7 +122,7 @@ export function Categories() {
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
           onPressEnter={() =>
-            handleSearch(selectedKeys as string[], confirm, dataIndex)
+            handleSearch(selectedKeys as string[], confirm)
           }
           style={{ marginBottom: 8, display: 'block' }}
         />
@@ -137,7 +130,7 @@ export function Categories() {
           <Button
             type="primary"
             onClick={() =>
-              handleSearch(selectedKeys as string[], confirm, dataIndex)
+              handleSearch(selectedKeys as string[], confirm)
             }
             icon={<SearchOutlined />}
             size="small"
@@ -147,7 +140,7 @@ export function Categories() {
           </Button>
           <Button
             onClick={() =>
-              clearFilters && handleReset(clearFilters, confirm, dataIndex)
+              clearFilters && handleReset(clearFilters, confirm)
             }
             size="small"
             style={{ width: 90 }}
@@ -240,6 +233,7 @@ export function Categories() {
         pagination={tableParams.pagination}
         loading={isLoading}
         onChange={handleTableChange}
+        locale={{emptyText: "No hay categorías disponibles"}}
       />
     </>
   )
