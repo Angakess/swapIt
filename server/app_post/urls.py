@@ -13,5 +13,6 @@ urlpatterns = [
     path('post/do/<int:id>/', views.PostDetails.as_view(), name='post-detail'),
     path('post/', views.PostCreate.as_view(), name='post-create'),
     path('post/list/', views.PostList.as_view(), name='post-list'),
+    path('posts-of-category/', views.PostOfCategory.as_view()),
 
 ]

@@ -6,6 +6,7 @@ from app_post.custommixin import CategorySearchMixin
 
 from .models import Category, Post, PostState
 from .serializer import CategorySerializer, PostSerializer, PostStateSerializer
+from rest_framework.views import APIView
 
 
 class CategoryDetails(generics.RetrieveUpdateDestroyAPIView):
@@ -41,6 +42,12 @@ class CategoryList(generics.ListAPIView):
     def get_queryset(self):
         return Category.objects.all()
 
+class PostOfCategory(APIView):
+    def get(self, request, *args, **kwargs):
+        category = Category.objects.filter(id=1).first()
+        posts = category.posts
+        serializer = PostSerializer(data=posts.values(), many=True)
+        return Response(serializer.initial_data)
 
 class CategorySearch(CategorySearchMixin, generics.RetrieveAPIView):
     queryset = Category.objects.all()

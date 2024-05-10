@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import UserAccount
 
 
 class Category(models.Model):
@@ -18,10 +19,12 @@ class Post(models.Model):
     description = models.CharField(max_length=255, null=False)
     value = models.FloatField(null=False)
     stateProduct = models.CharField(max_length=255, null=False)
+    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE, related_name='posts')
     id_state = models.ForeignKey(PostState,
-                                 on_delete=models.DO_NOTHING)
+                                 on_delete=models.DO_NOTHING, related_name="posts")
     id_category = models.ForeignKey(Category,
-                                    on_delete=models.DO_NOTHING)
+                                    on_delete=models.DO_NOTHING, related_name="posts")
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"""Name: {self.name},

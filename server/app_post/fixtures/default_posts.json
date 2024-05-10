@@ -8,7 +8,8 @@
             "value": 5,
             "stateProduct": "Nuevo",
             "id_state": 1,
-            "id_category": 1
+            "id_category": 1,
+            "user":20
         }
     },
     {
@@ -20,7 +21,8 @@
             "value": 10,
             "stateProduct": "Usado",
             "id_state": 2,
-            "id_category": 1
+            "id_category": 1,
+            "user":20
         }
     },
     {
@@ -32,7 +34,8 @@
             "value": 2,
             "stateProduct": "Nuevo",
             "id_state": 1,
-            "id_category": 1
+            "id_category": 1,
+            "user":20
         }
     },
     {
@@ -44,7 +47,8 @@
             "value": 1,
             "stateProduct": "Usado",
             "id_state": 2,
-            "id_category": 1
+            "id_category": 1,
+            "user":20
         }
     },
     {
@@ -56,7 +60,8 @@
             "value": 0.5,
             "stateProduct": "Nuevo",
             "id_state": 1,
-            "id_category": 1
+            "id_category": 1,
+            "user":20
         }
     },
     {
@@ -68,7 +73,8 @@
             "value": 1.5,
             "stateProduct": "Usado",
             "id_state": 2,
-            "id_category": 1
+            "id_category": 1,
+            "user":20
         }
     },
     {
@@ -80,7 +86,8 @@
             "value": 2,
             "stateProduct": "Nuevo",
             "id_state": 1,
-            "id_category": 1
+            "id_category": 1,
+            "user":20
         }
     },
     {
@@ -92,7 +99,8 @@
             "value": 10,
             "stateProduct": "Usado",
             "id_state": 2,
-            "id_category": 1
+            "id_category": 1,
+            "user":20
         }
     },
     {
@@ -104,7 +112,8 @@
             "value": 1,
             "stateProduct": "Nuevo",
             "id_state": 1,
-            "id_category": 2
+            "id_category": 2,
+            "user":20
         }
     },
     {
@@ -116,7 +125,8 @@
             "value": 0.5,
             "stateProduct": "Nuevo",
             "id_state": 1,
-            "id_category": 2
+            "id_category": 2,
+            "user":20
         }
     },
     {
@@ -128,7 +138,8 @@
             "value": 2,
             "stateProduct": "Nuevo",
             "id_state": 1,
-            "id_category": 2
+            "id_category": 2,
+            "user":20
         }
     },
     {
@@ -140,7 +151,8 @@
             "value": 1.5,
             "stateProduct": "Nuevo",
             "id_state": 1,
-            "id_category": 2
+            "id_category": 2,
+            "user":20
         }
     },
     {
@@ -152,7 +164,8 @@
             "value": 3,
             "stateProduct": "Nuevo",
             "id_state": 1,
-            "id_category": 2
+            "id_category": 2,
+            "user":20
         }
     }
 ]

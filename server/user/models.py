@@ -5,7 +5,7 @@ from subsidiary.models import Subsidiary
 
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, dni, password=None, **extra_fields):
+    def create_user(self, dni, password, **extra_fields):
         if not dni:
             raise ValueError('Users must have an dni address')
         user = self.model(dni=dni, **extra_fields)
@@ -17,6 +17,7 @@ class UserAccountManager(BaseUserManager):
         user = self.create_user(dni, password, **extra_fields)
         user.is_superuser = True
         user.is_staff = True
+        user.is_active = True
         user.save()
 
         return user
@@ -41,7 +42,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
 
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
     is_helper = models.BooleanField(default=False)
@@ -52,7 +53,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'dni'
     REQUIRED_FIELDS = [
         'first_name', 'last_name', 'email', 'date_of_birth', 'phone_number',
-        'gender', 'is_exchanger', 'is_helper'
+        'gender'
     ]
 
     def __str__(self):
@@ -62,19 +63,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'usuario'
         verbose_name_plural = 'usuarios'
 
+class UserRegister(models.Model):
+    code = models.CharField(max_length=255)
+    user = models.OneToOneField(UserAccount, on_delete=models.CASCADE, related_name='user_register')
 
-class UserGeneral(models.Model):
-    dni = models.CharField(max_length=40, unique=True)
-    email = models.EmailField(max_length=255, unique=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    def __str__(self):
+        return f"Code: {self.code}, User: {self.user.dni}"
 
-    id_subsidiary = models.ForeignKey(Subsidiary, on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    is_helper = models.BooleanField(default=False)
-    is_exchanger = models.BooleanField(default=False)
-
-    class Meta:
-        verbose_name = 'usuario general'
-        verbose_name_plural = 'usuarios generales'
