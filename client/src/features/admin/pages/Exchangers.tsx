@@ -5,15 +5,10 @@ import {
   Input,
   TableColumnType,
   InputRef,
-  Modal
+  Modal,
 } from 'antd'
 import { GetProp, TableProps } from 'antd'
-import {
-  SearchOutlined,
-  ShopFilled,
-  UserOutlined,
-  UserDeleteOutlined,
-} from '@ant-design/icons'
+import { SearchOutlined, UserOutlined } from '@ant-design/icons'
 import { useState, useEffect, useRef } from 'react'
 import type { FilterDropdownProps } from 'antd/es/table/interface'
 
@@ -61,9 +56,10 @@ export function Exchangers() {
     setLoading(true)
 
     //------Version mock---------------------------------------------------------------
-    MOCK_DATA.forEach(element => {
-      element.estado = element.estado.charAt(0).toUpperCase() + element.estado.slice(1)      
-    });
+    MOCK_DATA.forEach((element) => {
+      element.estado =
+        element.estado.charAt(0).toUpperCase() + element.estado.slice(1)
+    })
     setData(MOCK_DATA)
     setLoading(false)
     setTableParams({
@@ -243,22 +239,27 @@ export function Exchangers() {
     },
     {
       title: `Estado: ${searchText.estado}`,
-      dataIndex: "estado",
+      dataIndex: 'estado',
       filters: [
-        { text: "Activo", value: "Activo" },
-        { text: "Inactivo", value: "Inactivo"},
-        { text: "Bloqueado", value: "Bloqueado"},
-        { text: "Borrado", value: "Borrado"}
+        { text: 'Activo', value: 'Activo' },
+        { text: 'Inactivo', value: 'Inactivo' },
+        { text: 'Bloqueado', value: 'Bloqueado' },
+        { text: 'Borrado', value: 'Borrado' },
       ],
       onFilter: (value, record) => record.estado === value,
       filterSearch: false,
-
     },
     {
       title: 'Acciones',
       render: (_: any, __: DataType, index: number) => (
         <Space>
-          <Button type="primary" icon={<UserOutlined />} onClick={() => showModal(index)}>Ver perfil</Button>
+          <Button
+            type="primary"
+            icon={<UserOutlined />}
+            onClick={() => showModal(index)}
+          >
+            Ver perfil
+          </Button>
         </Space>
       ),
       width: '100px',
@@ -274,16 +275,15 @@ export function Exchangers() {
   }
   const handleOk = () => {
     setIsModalOpen(false)
-    if(data !== undefined)
+    if (data !== undefined)
       console.log(`AYUDANTE ${data[idSelected].nombre} DESINCORPORADO`)
   }
   const handleCancel = () => {
     setIsModalOpen(false)
-    console.log("OPERACION CANCELADA")
+    console.log('OPERACION CANCELADA')
   }
 
   return (
-    
     <>
       <Table
         columns={columns}
@@ -300,12 +300,10 @@ export function Exchangers() {
         onCancel={handleCancel}
         cancelText="Cancelar"
         okText="Desincorporar"
-        okButtonProps={{danger: true}}
+        okButtonProps={{ danger: true }}
       >
         <p>¿Está seguro que quiere desincorporar a este ayudante?</p>
-
       </Modal>
-    
     </>
   )
 }
