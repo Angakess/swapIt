@@ -269,9 +269,9 @@ export function Exchangers() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [idSelected, setIdSelected] = useState(0)
 
-  const showModal = (newId: number) => {
+  const showModal = (index: number) => {
     setIsModalOpen(true)
-    setIdSelected(newId)
+    setIdSelected(index)
   }
   const handleOk = () => {
     setIsModalOpen(false)
