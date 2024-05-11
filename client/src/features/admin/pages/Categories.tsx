@@ -90,6 +90,32 @@ export function Categories() {
         })
       })
   }
+  const sendNewCat = () => {
+    try {
+      fetch("http://localhost:8000/category/",{
+      method: "POST",
+      body: JSON.stringify({
+        name: newName
+        })
+      })
+      .then((res) => res.json)
+      .then((result) => {console.log(result)})
+    }
+    catch (error){
+      alert(error)
+    }
+    
+    
+    
+    
+    /* fetch("http://localhost:8000/category",{
+      method: "POST",
+      body: JSON.stringify({
+        name: newName
+      })
+    })
+    .then((res) => res.json) */
+  }
 
   useEffect(() => {
     fetchData()
@@ -290,6 +316,7 @@ export function Categories() {
       )
       return
     }
+    sendNewCat()
     setIsModalOpenNewCat(false)
     console.log(`CATEGORIA ${newName} AGREGADA`)
   }
