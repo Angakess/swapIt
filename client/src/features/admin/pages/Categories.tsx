@@ -1,21 +1,33 @@
-import { Button, GetProp, Input, InputRef, Modal, Space, Table, TableColumnType, TableProps } from "antd"
-import { FilterDropdownProps } from "antd/es/table/interface"
-import { SearchOutlined, EditOutlined, PauseOutlined, CaretRightOutlined } from '@ant-design/icons'
-import { ChangeEvent, useEffect, useRef, useState } from "react"
+import {
+  Button,
+  GetProp,
+  Input,
+  InputRef,
+  Modal,
+  Space,
+  Table,
+  TableColumnType,
+  TableProps,
+} from 'antd'
+import { FilterDropdownProps } from 'antd/es/table/interface'
+import {
+  SearchOutlined,
+  EditOutlined,
+  PauseOutlined,
+  CaretRightOutlined,
+} from '@ant-design/icons'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 /* import MOCK_DATA from "./MOCK_DATA_CAT.json" */
 
 type DataIndex = keyof DataType
 interface DataType {
-  id: number,
-  name: string,
+  id: number
+  name: string
   active: boolean
 }
 
 type ColumnsType<T> = TableProps<T>['columns']
-  type TablePaginationConfig = Exclude<
-    GetProp<TableProps, 'pagination'>,
-    boolean
-  >
+type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>
 interface TableParams {
   pagination?: TablePaginationConfig
   sortField?: string
@@ -24,12 +36,13 @@ interface TableParams {
 }
 
 export function Categories() {
-  
-  const [data, setData] = useState<DataType[]>([{
-    id: 0,
-    name: "",
-    active: false
-  }])
+  const [data, setData] = useState<DataType[]>([
+    {
+      id: 0,
+      name: '',
+      active: false,
+    },
+  ])
   const [isLoading, setIsLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -37,12 +50,12 @@ export function Categories() {
       pageSize: 10,
     },
   })
-  const [searchCatName, setSearchCatName] = useState("")
+  const [searchCatName, setSearchCatName] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [idSelected, setIdSelected] = useState(0)
-  const [editedName, setEditedName] = useState("")
-  const [inputStatus, setInputStatus] = useState<"" | "error">("")
-  const [inputErrorMessage, setInputErrorMessage] = useState("")
+  const [editedName, setEditedName] = useState('')
+  const [inputStatus, setInputStatus] = useState<'' | 'error'>('')
+  const [inputErrorMessage, setInputErrorMessage] = useState('')
 
   const searchInput = useRef<InputRef>(null)
 
@@ -59,8 +72,8 @@ export function Categories() {
       },
     }) */
 
-    fetch("http://localhost:8000/category/list/")
-      .then(res => res.json())
+    fetch('http://localhost:8000/category/list/')
+      .then((res) => res.json())
       .then((results) => {
         setData(results)
         console.log(results)
@@ -68,18 +81,22 @@ export function Categories() {
         setTableParams({
           ...tableParams,
           pagination: {
-              ...tableParams.pagination,
-              total: results.filter((item: DataType) => item.name.includes(searchCatName)).length
-            },
-          }
-        )
-      }
-    )
+            ...tableParams.pagination,
+            total: results.filter((item: DataType) =>
+              item.name.includes(searchCatName)
+            ).length,
+          },
+        })
+      })
   }
 
   useEffect(() => {
     fetchData()
-  },[tableParams.pagination?.current, tableParams.pagination?.pageSize, searchCatName])
+  }, [
+    tableParams.pagination?.current,
+    tableParams.pagination?.pageSize,
+    searchCatName,
+  ])
 
   const handleTableChange: TableProps['onChange'] = (
     pagination,
@@ -98,18 +115,17 @@ export function Categories() {
 
   const handleSearch = (
     selectedKeys: string[],
-    confirm: FilterDropdownProps['confirm'],
+    confirm: FilterDropdownProps['confirm']
   ) => {
-    confirm(),
-      setSearchCatName(selectedKeys[0])
+    confirm(), setSearchCatName(selectedKeys[0])
   }
 
   const handleReset = (
     clearFilters: () => void,
-    confirm: FilterDropdownProps['confirm'],
+    confirm: FilterDropdownProps['confirm']
   ) => {
     clearFilters()
-    setSearchCatName("")
+    setSearchCatName('')
     confirm()
   }
 
@@ -131,17 +147,13 @@ export function Categories() {
           onChange={(e) =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
-          onPressEnter={() =>
-            handleSearch(selectedKeys as string[], confirm)
-          }
+          onPressEnter={() => handleSearch(selectedKeys as string[], confirm)}
           style={{ marginBottom: 8, display: 'block' }}
         />
         <Space>
           <Button
             type="primary"
-            onClick={() =>
-              handleSearch(selectedKeys as string[], confirm)
-            }
+            onClick={() => handleSearch(selectedKeys as string[], confirm)}
             icon={<SearchOutlined />}
             size="small"
             style={{ width: 90 }}
@@ -149,9 +161,7 @@ export function Categories() {
             Buscar
           </Button>
           <Button
-            onClick={() =>
-              clearFilters && handleReset(clearFilters, confirm)
-            }
+            onClick={() => clearFilters && handleReset(clearFilters, confirm)}
             size="small"
             style={{ width: 90 }}
           >
@@ -195,7 +205,7 @@ export function Categories() {
     {
       title: `Estado:`,
       dataIndex: 'active',
-      render: (isActive) => isActive ? "Activo" : "Pausado",
+      render: (isActive) => (isActive ? 'Activo' : 'Pausado'),
       filters: [
         { text: 'Activo', value: true },
         { text: 'Inactivo', value: false },
@@ -207,62 +217,54 @@ export function Categories() {
       title: 'Acciones',
       render: (_: any, __: DataType, index: number) => (
         <Space>
-          {data && data[index].active ? 
-            <Button
-              type="primary"
-              icon={<PauseOutlined />}
-            >
-            </Button> : 
-            <Button
-              type="primary"
-              icon={<CaretRightOutlined />}
-            >
-            </Button>}
+          {data && data[index].active ? (
+            <Button type="default" icon={<PauseOutlined />}></Button>
+          ) : (
+            <Button type="default" icon={<CaretRightOutlined />}></Button>
+          )}
           <Button
             type="primary"
             icon={<EditOutlined />}
             onClick={() => showModal(index)}
-          >
-          </Button>
+          ></Button>
         </Space>
       ),
       width: '100px',
     },
   ]
-  
+
   const showModal = (index: number) => {
     setIsModalOpen(true)
     setIdSelected(index)
   }
   const handleOk = () => {
-    if(!editedName){
-      setInputStatus("error")
-      setInputErrorMessage("Porfavor ingrese un nombre")
+    if (!editedName) {
+      setInputStatus('error')
+      setInputErrorMessage('El nombre es obligatorio')
       return
     }
-    if(data.some(item => item.name === editedName)){
-      setInputStatus("error")
-      setInputErrorMessage(`Ya existe una categoría con el nombre "${editedName}"`)
+    if (data.some((item) => item.name === editedName)) {
+      setInputStatus('error')
+      setInputErrorMessage(
+        `Ya existe una categoría con el nombre "${editedName}"`
+      )
       return
     }
     setIsModalOpen(false)
     console.log(`CATEGORIA ${data[idSelected].name} EDITADA A ${editedName}`)
-
   }
   const handleCancel = () => {
     setIsModalOpen(false)
-    console.log("OPERACION CANCELADA")
+    console.log('OPERACION CANCELADA')
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEditedName(event.target.value)
-    setInputStatus("")
-    setInputErrorMessage("")
+    setInputStatus('')
+    setInputErrorMessage('')
     console.log(event.target.value)
   }
 
-
-  
   return (
     <>
       <Table
@@ -272,7 +274,7 @@ export function Categories() {
         pagination={tableParams.pagination}
         loading={isLoading}
         onChange={handleTableChange}
-        locale={{emptyText: "No hay categorías disponibles"}}
+        locale={{ emptyText: 'No hay categorías disponibles' }}
       />
       <Modal
         title="Editando categoría"
@@ -281,17 +283,23 @@ export function Categories() {
         onCancel={handleCancel}
         cancelText="Cancelar"
         okText="Confirmar"
-        afterClose={() => {setEditedName("")}}
+        afterClose={() => {
+          setEditedName('')
+          setInputStatus('')
+        }}
       >
-        <p>Ingrese un nuevo nombre para la categoría "{data[idSelected].name}"</p>
+        <p>
+          Ingrese un nuevo nombre para la categoría "{data[idSelected].name}"
+        </p>
         <Input
           placeholder="Ingrese un nombre"
           onChange={handleChange}
           status={inputStatus}
           value={editedName}
-        
         ></Input>
-        {(inputStatus === "error") ? <p style={{color: "#FF4D4F"}}>{inputErrorMessage}</p> : <></> }
+        {inputStatus === 'error' ? (
+          <p style={{ color: '#FF4D4F' }}>{inputErrorMessage}</p>
+        ) : null}
       </Modal>
     </>
   )
