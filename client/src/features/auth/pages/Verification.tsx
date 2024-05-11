@@ -1,16 +1,8 @@
-import { AuthTitle } from '@Auth/components'
 import { Form, Input, Button, FormProps } from 'antd'
-import { RuleObject } from 'antd/es/form'
+import { AuthTitle } from '@Auth/components'
+import { codeValidator } from 'helpers/validators'
 
 export function Verification() {
-  const codeValidator = (_: RuleObject, value: any) => {
-    const format = /[`!@#$%^()_+\-=\[\]{};':"\\|,.<>\/?~]/
-    if (!value || !format.test(value)) {
-      return Promise.resolve()
-    }
-    return Promise.reject(new Error('Hay uno o más caracteres inválidos'))
-  }
-
   const handleFinish: FormProps['onFinish'] = (values) => {
     console.log('Success: ', values)
   }
