@@ -1,6 +1,5 @@
 from pathlib import Path
 import os
-from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +24,6 @@ INSTALLED_APPS = [
     'coreapi',
     'rest_framework',
     'rest_framework.authtoken',
-    'djoser'
 ]
 
 MIDDLEWARE = [
