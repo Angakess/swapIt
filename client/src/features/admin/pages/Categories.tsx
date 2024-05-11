@@ -92,14 +92,17 @@ export function Categories() {
   }
   const sendNewCat = () => {
     try {
-      fetch("http://localhost:8000/category/",{
+      fetch("http://localhost:8000/category",{
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         name: newName
         })
       })
       .then((res) => res.json)
-      .then((result) => {console.log(result)})
+      .then((result) => {console.log("resultado de sendNewCat: ",result)})
     }
     catch (error){
       alert(error)
@@ -319,6 +322,7 @@ export function Categories() {
     sendNewCat()
     setIsModalOpenNewCat(false)
     console.log(`CATEGORIA ${newName} AGREGADA`)
+    fetchData()
   }
   const handleCancelNewCat = () => {
     setIsModalOpenNewCat(false)
