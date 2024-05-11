@@ -26,5 +26,12 @@
         "fields": {
             "name": "Inactivo"
         }
+    },
+    {
+        "model": "user.userstate",
+        "pk": 5,
+        "fields": {
+            "name": "Eliminado"
+        }
     }
 ]

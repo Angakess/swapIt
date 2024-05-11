@@ -30,7 +30,8 @@ class UserAccountManager(BaseUserManager):
             raise ValueError('Users must have an dni address')
         user = self.model(dni=dni, **extra_fields)
         user.set_password(password)
-        user.state = 4
+        state = UserState.objects.get(id=4)
+        user.state = state
         user.save()
         return user
 
@@ -39,7 +40,8 @@ class UserAccountManager(BaseUserManager):
         user.is_superuser = True
         user.is_staff = True
         user.is_active = True
-        user.state = 3
+        state = UserState.objects.get(id=3)
+        user.state = state
         user.save()
 
         return user

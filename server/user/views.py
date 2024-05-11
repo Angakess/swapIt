@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from user.serializers import UserCreatedSerializer
 import itertools
-from user.models import Role
+from user.models import Role, UserState
 
 
 class CreateUser(generics.CreateAPIView):
@@ -71,7 +71,8 @@ class ActivateUser(APIView):
             )
 
         user_register.user.is_active = True
-        user_register.user.state = 3
+        state = UserState.objects.get(id=3)
+        user_register.state = state
         user_register.user.save()
         user_register.delete()
         return Response({
@@ -90,8 +91,8 @@ class LoginUser(APIView):
         password = request.data.get('password')
         user = UserAccount.objects.filter(dni=dni).first()
 
-        if user is None or not user.check_password(password):
-            # TODO: CHECK FAILED LOGIN ATTEMPTS
+        # No existe el usuario
+        if user is None:
             return Response(
                 {
                     'ok': False,
@@ -100,7 +101,8 @@ class LoginUser(APIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
-
+        
+        #Existe pero no esta activo
         if not user.is_active:
             user_register = UserRegister.objects.filter(
                 user__dni=user.dni).first()
@@ -122,15 +124,64 @@ class LoginUser(APIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
+        
+        #Existe pero esta suspendido o bloqueado o eliminado
+        if user.state.id == 1 or user.state.id == 2 or user.state.id == 5:
+            message = ''
+            if user.state.id == 2:
+                message  = 'suspendido por intentos fallidos,'
+            else:
+                message = 'bloqueado,' if user.state.id == 1 else 'eliminado,'
+                
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Usuario', message, ' por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
+                    'data': {}
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        #Existe pero la contraseña es incorrecta
+        if not user.check_password(password):
+            if user.failed_login_attempts == 2:
+                state = UserState.objects.get(id=2)
+                user.state = state
+                user.failed_login_attempts = 3
+                user.save()
+                return Response(
+                    {
+                        'ok': False,
+                        'message': ['Usuario bloqueado por exceso de intentos fallidos, por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
+                        'data': {}
+                    },
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            user.failed_login_attempts += 1
+            user.save()
+            return Response(
+                {
+                    'ok': False,
+                    'message': ['Contraseña incorrecta solo quedan ' + str(3 - user.failed_login_attempts) + ' intentos'],
+                    'data': {}
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
 
         if user.role == Role.EXCHANGER:
+            user.failed_login_attempts = 0
+            user.save()
             return Response({
                 'ok': True,
                 'messages': ['Usuario logeado exitosamente'],
                 'data': {'user': UserCreatedSerializer(user).data}
             }, status=status.HTTP_200_OK
             )
+
         elif user.role == Role.ADMIN or user.role == Role.HELPER:
+            user.failed_login_attempts = 0
+            user.save()
             code_2fa = random.randint(100000, 999999)
 
             send_email_to_user(
