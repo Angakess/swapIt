@@ -80,6 +80,7 @@ class LoginUser(APIView):
         user = UserAccount.objects.filter(dni=dni).first()
 
         if user is None or not user.check_password(password):
+            # TODO: CHECK FAILED LOGIN ATTEMPTS
             return Response(
                 {
                     'ok': False,

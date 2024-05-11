@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import path, re_path, include
-from django.views.generic import TemplateView
 from rest_framework.documentation import include_docs_urls
+from django.conf.urls.static import static
+from .settings import MEDIA_ROOT, MEDIA_URL
+
 urlpatterns = [
     path('', include('app_post.urls')),
     path('subsidiary/', include('subsidiary.urls')),
@@ -11,4 +13,6 @@ urlpatterns = [
     path('docs/', include_docs_urls(title='Swap It API',
          permission_classes=[])),
 ]
+
+urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
 

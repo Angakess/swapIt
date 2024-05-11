@@ -34,22 +34,28 @@ class UserAccountManager(BaseUserManager):
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
-    dni = models.CharField(max_length=40, unique=True)
-    email = models.EmailField(max_length=255, unique=True)
-    gender = models.CharField(max_length=6, choices=Gender.choices)
-    date_of_birth = models.DateField(null=True, blank=True)
-    phone_number = models.CharField(max_length=30)
-
+    first_name = models.CharField(max_length=255, null=False)
+    last_name = models.CharField(max_length=255, null=False)
+    dni = models.CharField(max_length=8, unique=True, null=False)
+    email = models.EmailField(max_length=255, unique=True, null=False)
+    date_of_birth = models.DateField(null=False, blank=True)
+    phone_number = models.CharField(max_length=30, null=False)
+    
     id_subsidiary = models.ForeignKey(
-        Subsidiary, blank=True, null=True, on_delete=models.DO_NOTHING)
+        Subsidiary, blank=True, null=True, on_delete=models.DO_NOTHING
+    )
 
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    failed_login_attempts = models.IntegerField(default=0)
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
 
-    role = models.CharField(max_length=10, choices=Role.choices, default=Role.EXCHANGER)
+    gender = models.CharField(max_length=6, choices=Gender.choices, null=False)
+    role = models.CharField(max_length=10, choices=Role.choices, default=Role.EXCHANGER, null=False)
+
+
+    # TODO: ADD STATE USER
+
     objects = UserAccountManager()
 
     USERNAME_FIELD = 'dni'

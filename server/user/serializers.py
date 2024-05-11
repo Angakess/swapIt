@@ -12,16 +12,16 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
         fields = [
+            'first_name',
+            'last_name',
             'dni',
             'email',
             'gender',
             'date_of_birth',
             'phone_number',
-            'id_subsidiary',
-            'first_name',
-            'last_name',
             'password',
-            'role'
+            'role',
+            'id_subsidiary',
         ]
 
 class UserCreatedSerializer(serializers.ModelSerializer):
@@ -33,4 +33,5 @@ class UserCreatedSerializer(serializers.ModelSerializer):
             'last_name',
             'dni',
             'email',
+            'role'
         ]
