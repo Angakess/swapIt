@@ -1,32 +1,36 @@
-import { useState } from 'react'
-import { ItemType } from 'antd/es/menu/hooks/useItems'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Layout, Menu, theme } from 'antd'
+import { MenuItemType } from 'antd/es/menu/hooks/useItems'
+import { MenuProps } from 'antd/es/menu'
 
-const { Header, Sider, Content } = Layout
+export type SidebarProps = {
+  menuItems: MenuItemType[]
+  defaultSelectedKey: string
+}
 
 type Props = {
-  menuItems: ItemType[]
-  header: React.ReactNode
+  sidebarProps: SidebarProps
   children: React.ReactNode
 }
 
-export function AppLayout({ menuItems, header, children }: Props) {
+export function AppLayout({ sidebarProps, children }: Props) {
   const { colorBgContainer } = theme.useToken().token
 
   return (
     <Layout style={{ maxHeight: '100dvh' }}>
-      <Sidebar menuItems={menuItems} />
+      <Sidebar {...sidebarProps} />
       <Layout style={{ overflow: 'auto' }}>
-        <Header
+        <Layout.Header
           style={{
             backgroundColor: colorBgContainer,
             padding: '0',
             marginBottom: '1.5rem',
           }}
         >
-          {header}
-        </Header>
-        <Content
+          header
+        </Layout.Header>
+        <Layout.Content
           style={{
             padding: '0 1.5rem',
             maxWidth: '900px',
@@ -36,24 +40,32 @@ export function AppLayout({ menuItems, header, children }: Props) {
           }}
         >
           {children}
-        </Content>
+        </Layout.Content>
       </Layout>
     </Layout>
   )
 }
 
-type SidebarProps = {
-  menuItems: ItemType[]
-}
+function Sidebar({ menuItems, defaultSelectedKey }: SidebarProps) {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const [activeKey, setActiveKey] = useState(defaultSelectedKey)
 
-function Sidebar({ menuItems }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const { colorBgContainer } = theme.useToken().token
 
   const backgroundColor = colorBgContainer
 
+  useEffect(() => {
+    setActiveKey(location.pathname)
+  }, [location])
+
+  const handleMenuItemClick: MenuProps['onClick'] = ({ key }) => {
+    navigate(key)
+  }
+
   return (
-    <Sider
+    <Layout.Sider
       theme="light"
       breakpoint="lg"
       collapsedWidth="3.75rem"
@@ -63,7 +75,7 @@ function Sidebar({ menuItems }: SidebarProps) {
       onCollapse={() => setIsCollapsed(!isCollapsed)}
     >
       <Layout style={{ minHeight: '100dvh' }}>
-        <Header
+        <Layout.Header
           style={{
             backgroundColor,
             padding: '0 0.625rem',
@@ -77,16 +89,17 @@ function Sidebar({ menuItems }: SidebarProps) {
             alt="logo caritas"
             style={{ height: '2.5rem' }}
           />
-        </Header>
-        <Content style={{ backgroundColor, paddingTop: '0.5rem' }}>
+        </Layout.Header>
+        <Layout.Content style={{ backgroundColor, paddingTop: '0.5rem' }}>
           <Menu
             theme="light"
             mode="inline"
-            defaultSelectedKeys={['1']}
             items={menuItems}
+            onClick={handleMenuItemClick}
+            selectedKeys={[activeKey]}
           />
-        </Content>
+        </Layout.Content>
       </Layout>
-    </Sider>
+    </Layout.Sider>
   )
 }

@@ -1,25 +1,20 @@
 from rest_framework import permissions
-
+from user.models import Role
 
 class IsStaff(permissions.BasePermission):
     def has_permission(self, request, view):
         return request.user.is_staff
 
 
-class IsExchanger(permissions.BasePermission):
+class IsAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_exchanger
+        return request.user.role == Role.ADMIN
 
 
 class IsHelper(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_helper
+        return request.user.role == Role.HELPER
 
-
-class ValidateAccess(permissions.BasePermission):
+class IsExchanger(permissions.BasePermission):
     def has_permission(self, request, view):
-        return (
-            (request.META.get('HTTP_REFERER') == 'http://localhost:8000/docs/'
-             and request.META.get('SERVER_PORT') == '8000') or
-            permissions.IsAuthenticated().has_permission(request, view)
-        )
+        return request.user.role == Role.EXCHANGER

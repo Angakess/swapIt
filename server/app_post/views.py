@@ -1,11 +1,11 @@
-
 from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework import generics, status
 
 from app_post.custommixin import CategorySearchMixin
 
 from .models import Category, Post, PostState
-from .serializer import CategorySerializer, PostSerializer, PostStateSerializer
+from .serializer import CategorySerializer, PostSerializer, PostStateSerializer, PostBaseSerializer
+from rest_framework.views import APIView
 
 
 class CategoryDetails(generics.RetrieveUpdateDestroyAPIView):
@@ -22,8 +22,8 @@ class CategoryDetails(generics.RetrieveUpdateDestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
         id = kwargs['id']
-        post = Post.objects.filter(id_category=id)
-        post.update(id_state=2)
+        post = Post.objects.filter(category=id)
+        post.update(state=2)
         Category.objects.filter(pk=id).update(active=False)
 
         return Response({"Response": f"Category modify successfully \n"
@@ -40,7 +40,6 @@ class CategoryList(generics.ListAPIView):
 
     def get_queryset(self):
         return Category.objects.all()
-
 
 class CategorySearch(CategorySearchMixin, generics.RetrieveAPIView):
     queryset = Category.objects.all()
@@ -77,9 +76,9 @@ class PostDetails(generics.RetrieveUpdateDestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         pk = kwargs['pk']
         post = Post.objects.filter(pk=pk)
-        post.update(id_state=2)
+        post.update(state=2)
 
-        return Response({"Message": f"Post id:{pk}, id_state:{2} UwU CwC <3"})
+        return Response({"Message": f"Post id:{pk}, state:{2} UwU CwC <3"})
 
     def partial_update(self, request, *args, **kwargs):
         try:
@@ -97,7 +96,7 @@ class PostDetails(generics.RetrieveUpdateDestroyAPIView):
 
 
 class PostList(generics.ListAPIView):
-    serializer_class = PostSerializer
+    serializer_class = PostBaseSerializer
 
     def get_queryset(self):
         return Post.objects.all()

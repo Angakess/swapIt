@@ -23,9 +23,10 @@
     /* Custom */
     "baseUrl": "src",
     "paths": {
+      "@Admin/*": ["features/admin/*"],
       "@Auth/*": ["features/auth/*"],
-      "@Posts/*": ["features/posts/*"],
-      "@Admin/*": ["features/admin/*"]
+      "@Home/*": ["features/home/*"],
+      "@Posts/*": ["features/posts/*"]
     }
   },
   "include": ["src"],
