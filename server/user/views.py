@@ -21,11 +21,11 @@ class CreateUser(generics.CreateAPIView):
             generated_code = random.randint(100000, 999999)
 
             user_register = UserRegister.objects.create(code=str(generated_code), user=user)
-
+        
             send_email_to_user( 
-                email = user_register.email,
-                subject= 'Activacion de cuenta de: ' + user_register.first_name + ' ' + user_register.last_name,
-                message= 'Ingrese a la siguiente url http://localhost:5173/auth/email-verification/' + generated_code
+                email = user_register.user.email,
+                subject = 'Activacion de cuenta de: ' + user_register.user.first_name + ' ' + user_register.user.last_name,
+                message= 'Ingrese a la siguiente url http://localhost:5173/auth/email-verification/' + str(generated_code)
             )
             
             return Response(
@@ -94,9 +94,9 @@ class LoginUser(APIView):
             user_register = UserRegister.objects.filter(user__dni=user.dni).first()
             
             send_email_to_user( 
-                email = user_register.email,
-                subject= 'Activacion de cuenta de: ' + user_register.first_name + ' ' + user_register.last_name,
-                message= 'Ingrese a la siguiente url http://localhost:5173/auth/email-verification/' + user_register.code
+                email = user_register.user.email,
+                subject= 'Activacion de cuenta de: ' + user_register.user.first_name + ' ' + user_register.user.last_name,
+                message= 'Ingrese a la siguiente url http://localhost:5173/auth/email-verification/' + str(user_register.code)
             )
             return Response(
                 {
