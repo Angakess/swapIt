@@ -3,101 +3,57 @@
 //   EllipsisOutlined,
 //   SettingOutlined,
 // } from '@ant-design/icons'
-import { Card, Carousel, Tag, Typography, theme } from 'antd'
+import { Card, Flex, Tag, Typography } from 'antd'
+import { Link } from 'react-router-dom'
+import { ImageCarousel } from './ImageCarousel'
 
-const images = [
-  'https://picsum.photos/200/300',
-  'https://picsum.photos/300/600',
-  'https://picsum.photos/100/150',
-  'https://picsum.photos/300',
-]
+const IMG_HEIGHT = '300px'
 
-export function PostItem() {
+export function PostItem({ post }: { post: Post }) {
   return (
-    <Card
-      style={{ overflow: 'hidden' }}
-      hoverable
-      cover={<PostItemCarousel images={images} />}
-      // actions={[
-      //   <SettingOutlined key="setting" />,
-      //   <EditOutlined key="edit" />,
-      //   <EllipsisOutlined key="ellipsis" />,
-      // ]}
-      bordered
-    >
-      <Card.Meta
-        title="Título de la publicación"
-        description={
-          <Typography.Paragraph type="secondary" ellipsis={{ rows: 3 }}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi
-            modi tempora veniam ducimus earum veritatis. Dicta, doloribus odio
-            libero molestias maxime, commodi assumenda vel hic aliquid voluptate
-            ducimus aperiam voluptatibus!
-          </Typography.Paragraph>
+    <Link to={`/posts/${post.id}`}>
+      <Card
+        style={{ overflow: 'hidden', height: '100%' }}
+        styles={{ body: { height: `calc(100% - ${IMG_HEIGHT})` } }}
+        hoverable
+        cover={
+          <ImageCarousel imagesUrls={post.images} imageHeight={IMG_HEIGHT} />
         }
-        style={{ marginBottom: '0.5rem' }}
-      />
-      <Tag bordered={false} color="blue">
-        Útiles escolares
-      </Tag>
-      <Tag
-        bordered={false}
-        color="default"
-        style={{ backgroundColor: 'transparent' }}
+        // actions={[
+        //   <SettingOutlined key="setting" />,
+        //   <EditOutlined key="edit" />,
+        //   <EllipsisOutlined key="ellipsis" />,
+        // ]}
+        bordered
       >
-        Casi nuevo
-      </Tag>
-    </Card>
-  )
-}
-
-const mainImageStyle: React.CSSProperties = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  zIndex: '1',
-  height: '300px',
-  width: '100%',
-  objectFit: 'contain',
-}
-
-const backgroundImageStyle: React.CSSProperties = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  zIndex: '0',
-  height: '300px',
-  width: '100%',
-  objectFit: 'cover',
-  objectPosition: 'center center',
-  filter: 'blur(5px) brightness(0.4)',
-}
-
-function PostItemCarousel({ images }: { images: string[] }) {
-  const { colorPrimary } = theme.useToken().token
-
-  const containerStyle: React.CSSProperties = {
-    height: '300px',
-    width: '100%',
-    position: 'relative',
-    backgroundColor: colorPrimary,
-  }
-
-  return (
-    <Carousel>
-      {images.map((img, i) => (
-        <div>
-          <div style={containerStyle}>
-            <img style={mainImageStyle} src={img} alt={`image ${i}`} />
-            <img
-              key={img}
-              style={backgroundImageStyle}
-              src={img}
-              alt={`background image ${i}`}
-            />
+        <Flex vertical justify="space-between" style={{ height: '100%' }}>
+          <Card.Meta
+            title={post.title}
+            description={
+              <Typography.Paragraph
+                type="secondary"
+                ellipsis={{ rows: 2 }}
+                style={{ whiteSpace: 'pre-line' }}
+              >
+                {post.description}
+              </Typography.Paragraph>
+            }
+            style={{ marginBottom: '0.5rem' }}
+          />
+          <div>
+            <Tag bordered={false} color="blue">
+              {post.category}
+            </Tag>
+            <Tag
+              bordered={false}
+              color="default"
+              style={{ backgroundColor: 'transparent' }}
+            >
+              {post.state}
+            </Tag>
           </div>
-        </div>
-      ))}
-    </Carousel>
+        </Flex>
+      </Card>
+    </Link>
   )
 }
