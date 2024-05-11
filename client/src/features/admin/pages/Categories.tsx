@@ -15,6 +15,7 @@ import {
   EditOutlined,
   PauseOutlined,
   CaretRightOutlined,
+  PlusOutlined,
 } from '@ant-design/icons'
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 /* import MOCK_DATA from "./MOCK_DATA_CAT.json" */
@@ -53,7 +54,7 @@ export function Categories() {
   const [searchCatName, setSearchCatName] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [idSelected, setIdSelected] = useState(0)
-  const [editedName, setEditedName] = useState('')
+  const [newName, setNewName] = useState('')
   const [inputStatus, setInputStatus] = useState<'' | 'error'>('')
   const [inputErrorMessage, setInputErrorMessage] = useState('')
 
@@ -127,6 +128,13 @@ export function Categories() {
     clearFilters()
     setSearchCatName('')
     confirm()
+  }
+
+  const handleClickPause = (index: number) => {
+    console.log(`SE PAUSO LA CATEGORIA ${data[index].name}`)
+  }
+  const handleClickResume = (index: number) => {
+    console.log(`SE REANUDO LA CATEGORIA ${data[index].name}`)
   }
 
   const getColumnSearchProps = (
@@ -218,14 +226,14 @@ export function Categories() {
       render: (_: any, __: DataType, index: number) => (
         <Space>
           {data && data[index].active ? (
-            <Button type="default" icon={<PauseOutlined />}></Button>
+            <Button type="default" icon={<PauseOutlined />} onClick={() => handleClickPause(index)}></Button>
           ) : (
-            <Button type="default" icon={<CaretRightOutlined />}></Button>
+            <Button type="default" icon={<CaretRightOutlined />} onClick={() => handleClickResume(index)}></Button>
           )}
           <Button
             type="primary"
             icon={<EditOutlined />}
-            onClick={() => showModal(index)}
+            onClick={() => showModalEdit(index)}
           ></Button>
         </Space>
       ),
@@ -233,40 +241,73 @@ export function Categories() {
     },
   ]
 
-  const showModal = (index: number) => {
+  const showModalEdit = (index: number) => {
     setIsModalOpen(true)
     setIdSelected(index)
   }
   const handleOk = () => {
-    if (!editedName) {
+    if (!newName) {
       setInputStatus('error')
       setInputErrorMessage('El nombre es obligatorio')
       return
     }
-    if (data.some((item) => item.name === editedName)) {
+    if (data.some((item) => item.name === newName)) {
       setInputStatus('error')
       setInputErrorMessage(
-        `Ya existe una categoría con el nombre "${editedName}"`
+        `Ya existe una categoría con el nombre "${newName}"`
       )
       return
     }
     setIsModalOpen(false)
-    console.log(`CATEGORIA ${data[idSelected].name} EDITADA A ${editedName}`)
+    console.log(`CATEGORIA ${data[idSelected].name} EDITADA A ${newName}`)
   }
   const handleCancel = () => {
     setIsModalOpen(false)
     console.log('OPERACION CANCELADA')
   }
-
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEditedName(event.target.value)
+    setNewName(event.target.value)
     setInputStatus('')
     setInputErrorMessage('')
     console.log(event.target.value)
   }
 
+  const [isModalOpenNewCat, setIsModalOpenNewCat] = useState(false)
+
+  const showModalNewCat = () => {
+    setIsModalOpenNewCat(true)
+  }
+  const handleOkNewCat = () => {
+    if (!newName) {
+      setInputStatus('error')
+      setInputErrorMessage('El nombre es obligatorio')
+      return
+    }
+    if (data.some((item) => item.name === newName)) {
+      setInputStatus('error')
+      setInputErrorMessage(
+        `Ya existe una categoría con el nombre "${newName}"`
+      )
+      return
+    }
+    setIsModalOpenNewCat(false)
+    console.log(`CATEGORIA ${newName} AGREGADA`)
+  }
+  const handleCancelNewCat = () => {
+    setIsModalOpenNewCat(false)
+    console.log('OPERACION CANCELADA')
+  }
+
   return (
     <>
+      <Button
+        type='primary'
+        icon={<PlusOutlined />}
+        style={{marginBottom: "15px"}}
+        onClick={showModalNewCat}
+      >
+        Agregar categoría
+      </Button>
       <Table
         columns={columns}
         rowKey={(record) => record.id}
@@ -284,7 +325,7 @@ export function Categories() {
         cancelText="Cancelar"
         okText="Confirmar"
         afterClose={() => {
-          setEditedName('')
+          setNewName('')
           setInputStatus('')
         }}
       >
@@ -295,7 +336,32 @@ export function Categories() {
           placeholder="Ingrese un nombre"
           onChange={handleChange}
           status={inputStatus}
-          value={editedName}
+          value={newName}
+        ></Input>
+        {inputStatus === 'error' ? (
+          <p style={{ color: '#FF4D4F' }}>{inputErrorMessage}</p>
+        ) : null}
+      </Modal>
+      <Modal
+        title="Agregando categoría"
+        open={isModalOpenNewCat}
+        onOk={handleOkNewCat}
+        onCancel={handleCancelNewCat}
+        cancelText="Cancelar"
+        okText="Confirmar"
+        afterClose={() => {
+          setNewName('')
+          setInputStatus('')
+        }}
+      >
+        <p>
+          Ingrese un nombre para la nueva categoría
+        </p>
+        <Input
+          placeholder="Ingrese un nombre"
+          onChange={handleChange}
+          status={inputStatus}
+          value={newName}
         ></Input>
         {inputStatus === 'error' ? (
           <p style={{ color: '#FF4D4F' }}>{inputErrorMessage}</p>
