@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { UploadOutlined } from '@ant-design/icons'
 
-import { Post, Posts } from '@Posts/pages'
+import { Post, Posts,PostAdd } from '@Posts/pages'
 import { AppLayout } from 'layout'
 
 export function PostsRoutes() {
@@ -16,12 +16,18 @@ export function PostsRoutes() {
               label: 'Publicaciones',
               icon: <UploadOutlined />,
             },
+            {
+              key: '/posts/add',
+              label: 'Agregar Publicación',
+              icon: <UploadOutlined />,
+            }
           ],
         }}
       >
         <Routes>
           <Route path="/" element={<Posts />} />
           <Route path="/:id" element={<Post />} />
+          <Route path="/add" element={<PostAdd />} />
         </Routes>
       </AppLayout>
     </>
