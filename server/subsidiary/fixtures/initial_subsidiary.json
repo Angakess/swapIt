@@ -1,0 +1,36 @@
+[
+    
+    {
+        "model": "subsidiary.subsidiary",
+        "pk": 1,
+        "fields": {
+            "name": "Sucursal A",
+            "x_coordinate": "123.456",
+            "y_coordinate": "789.012",
+            "max_helpers": 5,
+            "active": true
+        }
+    },
+    {
+        "model": "subsidiary.subsidiary",
+        "pk": 2,
+        "fields": {
+            "name": "Sucursal B",
+            "x_coordinate": "456.789",
+            "y_coordinate": "321.654",
+            "max_helpers": 4,
+            "active": true
+        }
+    },
+    {
+        "model": "subsidiary.subsidiary",
+        "pk": 3,
+        "fields": {
+            "name": "Sucursal C",
+            "x_coordinate": "789.012",
+            "y_coordinate": "654.321",
+            "max_helpers": 3,
+            "active": false
+        }
+    }
+]

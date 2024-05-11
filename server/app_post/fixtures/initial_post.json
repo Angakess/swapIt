@@ -1,0 +1,78 @@
+[
+    {
+        "model": "app_post.post",
+        "pk": 1,
+        "fields":{
+            "name": "Cuaderno",
+            "description": "Cuaderno de 100 hojas",
+            "value": 1000,
+            "user": 1,
+            "subsidiary": 1,
+            "state": 1,
+            "category": 1,
+            "state_product": 1,
+            "image_1": "cuaderno1.jpg",
+            "image_2": "cuaderno2.jpg",
+            "image_3": "cuaderno3.jpg",
+            "image_4": "cuaderno4.jpg",
+            "image_5": "cuaderno5.jpg"
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 2,
+        "fields":{
+            "name": "Camisa",
+            "description": "Camisa de color blanco",
+            "value": 5000,
+            "user": 1,
+            "subsidiary": 1,
+            "state": 1,
+            "category": 2,
+            "state_product": 1,
+            "image_1": "camisa1.jpg",
+            "image_2": "camisa2.jpg",
+            "image_3": "camisa3.jpg",
+            "image_4": "camisa4.jpg",
+            "image_5": "camisa5.jpg"
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 3,
+        "fields":{
+            "name": "Arroz",
+            "description": "Arroz de 1 kilo",
+            "value": 2000,
+            "user": 1,
+            "subsidiary": 1,
+            "state": 1,
+            "category": 3,
+            "state_product": 1,
+            "image_1": "arroz1.jpg",
+            "image_2": "arroz2.jpg",
+            "image_3": "arroz3.jpg",
+            "image_4": "arroz4.jpg",
+            "image_5": "arroz5.jpg"
+        }
+    },
+    {
+        "model": "app_post.post",
+        "pk": 4,
+        "fields":{
+            "name": "Jabón",
+            "description": "Jabón de 1 litro",
+            "value": 3000,
+            "user": 1,
+            "subsidiary": 1,
+            "state": 1,
+            "category": 4,
+            "state_product": 1,
+            "image_1": "jabon1.jpg",
+            "image_2": "jabon2.jpg",
+            "image_3": "jabon3.jpg",
+            "image_4": "jabon4.jpg",
+            "image_5": "jabon5.jpg"
+        }
+    }
+]

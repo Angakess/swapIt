@@ -1,0 +1,40 @@
+[
+    {
+        "model": "user.useraccount",
+        "pk": 1,
+        "fields": {
+            "first_name": "John",
+            "last_name": "Doe",
+            "dni": "12345678",
+            "email": "john@example.com",
+            "date_of_birth": "1990-05-15",
+            "phone_number": "123456789",
+            "id_subsidiary": null,
+            "failed_login_attempts": 0,
+            "is_staff": false,
+            "is_active": true,
+            "state":1,
+            "gender": "Male",
+            "role": "Exchanger"
+        }
+    },
+    {
+        "model": "user.useraccount",
+        "pk": 2,
+        "fields": {
+            "first_name": "Jane",
+            "last_name": "Smith",
+            "dni": "87654321",
+            "email": "jane@example.com",
+            "date_of_birth": "1985-10-20",
+            "phone_number": "987654321",
+            "id_subsidiary": 1,
+            "failed_login_attempts": 2,
+            "is_staff": true,
+            "is_active": true,
+            "state":1,
+            "gender": "Female",
+            "role": "Admin"
+        }
+    }
+]
