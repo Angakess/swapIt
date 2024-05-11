@@ -1,11 +1,12 @@
-import { Card, Descriptions, DescriptionsProps, Space } from "antd";
-import { useState } from "react";
-
+import { Button, Card, Descriptions, DescriptionsProps, Flex } from "antd";
+import { useEffect, useState } from "react";
+import MOCK_DATA from "./MOCK_DATA_EXCH_ACCOUNT.json"
 
 type DataType = {
+    id: number,
     first_name: string,
     last_name: string,
-    dni: number,
+    dni: string,
     email: string,
     gender: string,
     date_of_birth: string,
@@ -15,10 +16,30 @@ type DataType = {
 
 export function ExchangerAccount(){
     
+    function CardHeader(){
+        return (
+            <Flex 
+                align="center"
+                gap="small"
+
+            >
+                <h3
+                    style={{marginRight: "auto"}}
+                >Perfil de usuario</h3>
+                <Button></Button>
+                <Button></Button>
+            </Flex>
+        )
+    }
+
+    const parts = window.location.href.split("/")
+    const index: number = parseInt(parts[parts.length - 1])
+
     const [data, setData] = useState<DataType>({
+        id: 0,
         first_name: "",
         last_name: "",
-        dni: 0,
+        dni: "",
         email: "",
         gender: "",
         date_of_birth: "",
@@ -26,8 +47,10 @@ export function ExchangerAccount(){
         status: ""
     })
     const fetchData = () => {
-        
+        setData(MOCK_DATA[index])
+        console.log("fetching data")
     }
+    useEffect(fetchData,)
 
     const items: DescriptionsProps['items'] = [
         {
@@ -70,12 +93,8 @@ export function ExchangerAccount(){
     return (
         
         <>
-            <Descriptions 
-                title="Información de usuario"
-                items={items}
-            />
             <Card
-                title = "Perfil de usuario"
+                title = {<CardHeader />}
             >
                 <Descriptions 
                     bordered
