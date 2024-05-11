@@ -7,7 +7,8 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    id_subsidiary = serializers.PrimaryKeyRelatedField(queryset=Subsidiary.objects.all(), required=False)
+    id_subsidiary = serializers.PrimaryKeyRelatedField(
+        queryset=Subsidiary.objects.all(), required=False)
 
     class Meta:
         model = UserAccount
@@ -23,6 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
             'role',
             'id_subsidiary',
         ]
+
 
 class UserCreatedSerializer(serializers.ModelSerializer):
     class Meta:

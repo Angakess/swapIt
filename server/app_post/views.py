@@ -92,6 +92,14 @@ class CategoryCreate(generics.CreateAPIView):
 class CategoryList(APIView):
 
     def get(self, request, state):
+        if (state != 'active' and state != 'inactive'):
+            return Response({
+                'ok': False,
+                'messages': ['Estado invalido'],
+                'data': {}
+            },
+                status=status.HTTP_400_BAD_REQUEST
+            )
         queryset = Category.objects.filter(active=(state == 'active'))
         if (not queryset):
             return Response({
