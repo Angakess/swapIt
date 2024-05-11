@@ -5,7 +5,7 @@ import {
   Input,
   TableColumnType,
   InputRef,
-  Modal
+  Modal,
 } from 'antd'
 import { GetProp, TableProps } from 'antd'
 import {
@@ -70,9 +70,12 @@ export function Helpers() {
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: MOCK_DATA.filter((item: DataType) => (item.nombre.includes(searchText.nombre))
-          && (item.filial.includes(searchText.filial))
-          && (item.id.toString().includes(searchText.id))).length,
+        total: MOCK_DATA.filter(
+          (item: DataType) =>
+            item.nombre.includes(searchText.nombre) &&
+            item.filial.includes(searchText.filial) &&
+            item.id.toString().includes(searchText.id)
+        ).length,
       },
     })
     //----------------------------------------------------------------------------------
@@ -96,7 +99,11 @@ export function Helpers() {
 
   useEffect(() => {
     fetchData()
-  }, [tableParams.pagination?.current, tableParams.pagination?.pageSize, searchText])
+  }, [
+    tableParams.pagination?.current,
+    tableParams.pagination?.pageSize,
+    searchText,
+  ])
 
   const handleTableChange: TableProps['onChange'] = (
     pagination,
@@ -113,7 +120,6 @@ export function Helpers() {
     }
   }
 
-  
   //const [searchedColumn, setSearchedColumn] = useState('')
   const searchInput = useRef<InputRef>(null)
 
@@ -245,7 +251,12 @@ export function Helpers() {
       render: (_: any, __: DataType, index: number) => (
         <Space>
           <Button type="primary" icon={<ShopFilled />}></Button>
-          <Button type="primary" danger icon={<UserDeleteOutlined />} onClick={() => showModal(index)}></Button>
+          <Button
+            type="primary"
+            danger
+            icon={<UserDeleteOutlined />}
+            onClick={() => showModal(index)}
+          ></Button>
         </Space>
       ),
       
@@ -261,16 +272,15 @@ export function Helpers() {
   }
   const handleOk = () => {
     setIsModalOpen(false)
-    if(data !== undefined)
+    if (data !== undefined)
       console.log(`AYUDANTE ${data[idSelected].nombre} DESINCORPORADO`)
   }
   const handleCancel = () => {
     setIsModalOpen(false)
-    console.log("OPERACION CANCELADA")
+    console.log('OPERACION CANCELADA')
   }
 
   return (
-    
     <>
       <Table
         columns={columns}
@@ -288,12 +298,10 @@ export function Helpers() {
         onCancel={handleCancel}
         cancelText="Cancelar"
         okText="Desincorporar"
-        okButtonProps={{danger: true}}
+        okButtonProps={{ danger: true }}
       >
         <p>¿Está seguro que quiere desincorporar a este ayudante?</p>
-
       </Modal>
-    
     </>
   )
 }
