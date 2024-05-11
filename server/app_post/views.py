@@ -1,33 +1,87 @@
 from rest_framework.response import Response
-from rest_framework import generics, status
-
-from app_post.custommixin import CategorySearchMixin
-
+from rest_framework import generics
 from .models import Category, Post, PostState
-from .serializer import CategorySerializer, PostSerializer, PostStateSerializer, PostBaseSerializer
+from .serializer import (CategorySerializer, PostSerializer,
+                         PostStateSerializer, PostBaseSerializer)
 from rest_framework.views import APIView
+from rest_framework import status
 
 
-class CategoryDetails(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = CategorySerializer
+# Format for the response:
+# {
+#     'ok': True,
+#     'messages': [messageSuccess],
+#     'data': {'modelName': serializer}
+# }
+# {
+#     'ok': False,
+#     'messages': [messageError],
+#     'data': {}
+# }
 
-    def get_queryset(self):
-        return Category.objects.all()
 
-    def retrieve(self, request, *args, **kwargs):
-        id = kwargs['id']
-        category = Category.objects.filter(pk=id)
-        serializer = CategorySerializer(data=category.values(), many=True)
-        return Response(serializer.initial_data)
+class CategoryRemove(APIView):
 
-    def destroy(self, request, *args, **kwargs):
-        id = kwargs['id']
-        post = Post.objects.filter(category=id)
-        post.update(state=2)
-        Category.objects.filter(pk=id).update(active=False)
+    def delete(self, request):
+        try:
+            pk = request.data['pk']
+            category = Category.objects.filter(pk=pk).first()
+            if (not category):
+                return Response({
+                    'ok': False,
+                    'messages': ['Categoria no encontrada'],
+                    'data': {}
+                }, status=status.HTTP_404_NOT_FOUND)
 
-        return Response({"Response": f"Category modify successfully \n"
-                         f"Post modificaods {post.values()}"})
+            category.active = False
+            category.posts.all().update(state=2)
+            category.save()
+            return Response(
+                {
+                    'ok': True,
+                    'messages': ['Categoria eliminada exitosamente'],
+                    'data': {'category': CategorySerializer(category).data}
+                },
+                status=status.HTTP_200_OK
+            )
+        except KeyError:
+            return Response({
+                'ok': False,
+                'messages': ['Falta ID'],
+                'data': {}
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CategoryRestore(APIView):
+
+    def put(self, request):
+        try:
+            pk: int = request.data['pk']
+            category = Category.objects.filter(pk=pk).first()
+            if (not category):
+                return Response({
+                    'ok': False,
+                    'messages': ['Categoria no encontrada'],
+                    'data': {}
+                }, status=status.HTTP_404_NOT_FOUND)
+
+            category.active = True
+            category.posts.all().update(state=1)
+            category.save()
+            return Response(
+                {
+                    'ok': True,
+                    'messages': ['Categoria restaurada exitosamente'],
+                    'data': {'category': CategorySerializer(category).data}
+                },
+                status=status.HTTP_200_OK
+            )
+        except KeyError:
+            return Response({
+                'ok': False,
+                'messages': ['Falta ID'],
+                'data': {}
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CategoryCreate(generics.CreateAPIView):
@@ -35,19 +89,48 @@ class CategoryCreate(generics.CreateAPIView):
     serializer_class = CategorySerializer
 
 
-class CategoryList(generics.ListAPIView):
-    serializer_class = CategorySerializer
+class CategoryList(APIView):
 
-    def get_queryset(self):
-        return Category.objects.all()
+    def get(self, request, state):
+        queryset = Category.objects.filter(active=(state == 'active'))
+        if (not queryset):
+            return Response({
+                'ok': False,
+                'messages': ['Categorias no encontradas'],
+                'data': {}
+            },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = CategorySerializer(queryset, many=True)
+        return Response({
+            'ok': True,
+            'messages': ['Categorias encontradas exitosamente'],
+            'data': {'categories': serializer.data}
+        },
+            status=status.HTTP_200_OK
+        )
 
-class CategorySearch(CategorySearchMixin, generics.RetrieveAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    lookup_url_kwarg = ['name']
 
-    def get_queryset(self):
-        return Category.objects.all()
+class CategorySearch(APIView):
+
+    def get(self, request, name):
+
+        queryset = Category.objects.filter(name__icontains=name)
+        if (not queryset):
+            return Response({
+                'ok': False,
+                'messages': ['Categoria no encontrada'],
+                'data': {}
+            },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = CategorySerializer(data=queryset.values(), many=True)
+        return Response({
+            'ok': True,
+            'messages': ['Categoria encontrada exitosamente'],
+            'data': {'category': serializer.initial_data}
+        },
+            status=status.HTTP_200_OK)
 
     # ----------------------POST----------------------
 
