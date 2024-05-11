@@ -1,0 +1,32 @@
+[
+    {
+        "model": "app_post.poststate",
+        "fields": {
+            "name": "Activo"
+        }
+    },
+    {
+        "model": "app_post.poststate",
+        "fields": {
+            "name": "Pendiente de Revisión"
+        }
+    },
+    {
+        "model": "app_post.poststate",
+        "fields": {
+            "name": "Bloqueado"
+        }
+    },
+    {
+        "model": "app_post.poststate",
+        "fields": {
+            "name": "Eliminado"
+        }
+    },
+    {
+        "model": "app_post.poststate",
+        "fields": {
+            "name": "Rechazado"
+        }
+    }
+]
