@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import {
   Button,
@@ -8,19 +9,10 @@ import {
   Typography,
   FormProps,
 } from 'antd'
-
 import { AuthTitle } from '@Auth/components'
-import { Link } from 'react-router-dom'
-import { RuleObject } from 'antd/es/form'
+import { dniValidator } from 'helpers/validators'
 
 export function Login() {
-  const dniValidator = (_: RuleObject, value: number) => {
-    if (!value || value.toString().length == 8) {
-      return Promise.resolve()
-    }
-    return Promise.reject(new Error('El DNI debe ser un número de 8 dígitos'))
-  }
-
   const onFinish: FormProps['onFinish'] = (values) => {
     console.log('Success: ', values)
   }

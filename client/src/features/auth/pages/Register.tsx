@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import {
   Button,
@@ -11,45 +12,14 @@ import {
   Typography,
   FormProps,
 } from 'antd'
-
 import { AuthTitle } from '@Auth/components'
-import { Link } from 'react-router-dom'
-import { RuleObject } from 'antd/es/form'
+import { dateValidator, dniValidator, phoneValidator } from 'helpers/validators'
 
 export function Register() {
   const [isPasswordVisible, setPasswordVisible] = useState(false)
 
   function togglePasswordVisibility() {
     setPasswordVisible(!isPasswordVisible)
-  }
-
-  const dniValidator = (_: RuleObject, value: number) => {
-    if (!value || value.toString().length == 8) {
-      return Promise.resolve()
-    }
-    return Promise.reject(new Error('El DNI debe ser un número de 8 dígitos'))
-  }
-  const phoneValidator = (_: RuleObject, value: string) => {
-    if (!value || /^\d+$/.test(value)) {
-      return Promise.resolve()
-    }
-    return Promise.reject(new Error('Debe ingresar un número'))
-  }
-  const dateValidator = (_: RuleObject, value: any) => {
-    if (value != undefined || value != null) {
-      let today = new Date()
-      let bDay = value.$d
-      let age = today.getFullYear() - bDay.getFullYear()
-      let m = today.getMonth() - bDay.getMonth()
-      if (m < 0 || (m === 0 && today.getDate() < bDay.getDate())) {
-        age--
-      }
-      if (!value || age >= 18) {
-        return Promise.resolve()
-      }
-      return Promise.reject(new Error('Debe tener mas de 18 años'))
-    }
-    return Promise.resolve()
   }
 
   const handleFinish: FormProps['onFinish'] = (values) => {
@@ -67,20 +37,6 @@ export function Register() {
         onFinish={handleFinish}
         onFinishFailed={handleFinishFailed}
       >
-        {/* 
-          [x] nombre
-          [x] apellido
-          [x] dni
-          [x] correo
-          [x] telefono
-          [x] fecha nacimiento
-          [x] genero
-          [x] contraseña
-          [x] confirmar contraseña
-          [ ] boton crear
-          [ ] ya tenes cuenta... iniciar sesion
-        */}
-
         <Flex gap="1rem">
           <Form.Item
             label="Nombre"

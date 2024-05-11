@@ -1,15 +1,8 @@
-import { AuthTitle } from '@Auth/components'
 import { Form, InputNumber, Button, FormProps } from 'antd'
-import { RuleObject } from 'antd/es/form'
+import { AuthTitle } from '@Auth/components'
+import { dniValidator } from 'helpers/validators'
 
 export function ForgotPassword() {
-  const dniValidator = (_: RuleObject, value: number) => {
-    if (!value || value.toString().length == 8) {
-      return Promise.resolve()
-    }
-    return Promise.reject(new Error('El DNI debe ser un número de 8 dígitos'))
-  }
-
   const onFinish: FormProps['onFinish'] = (values) => {
     console.log('Success: ', values)
   }
