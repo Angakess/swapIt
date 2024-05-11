@@ -18,6 +18,21 @@ class CreateUser(generics.CreateAPIView):
 
     def create(self, request):
         serializer = UserSerializer(data=request.data)
+        dni = serializer.initial_data['dni']
+
+        user_of_dni = UserAccount.objects.filter(dni=dni).first()
+
+        # NOTE: Usuario existente y bloqueado
+        if user_of_dni is not None and user_of_dni.state.id == 5:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Esta cuenta ha sido borrada y no es posible registrar usuarios previamente borrados, por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
+                    'data':{}
+                }
+            )
+                    
+
         if serializer.is_valid():
             user_data = serializer.validated_data
             user = UserAccount.objects.create_user(**user_data)
