@@ -8,44 +8,36 @@ import {
 
 import { Categories, Exchangers, Helpers, Locals } from '@Admin/pages'
 import { AppLayout } from 'layout'
-import { MenuInfo } from 'rc-menu/lib/interface'
 
 export function AdminRoutes() {
-  const handleClick = (info: MenuInfo) => {
-    console.log('key: ', info.key)
-  }
-
   return (
     <>
       <AppLayout
-        menuItems={[
-          {
-            key: 'helpers',
-            title: 'helpers',
-            icon: <ContactsOutlined />,
-            label: 'Ayudantes',
-            onClick: handleClick,
-          },
-          {
-            key: 'exchangers',
-            icon: <UserOutlined />,
-            label: 'Intercambiadores',
-            onClick: handleClick,
-          },
-          {
-            key: 'locals',
-            icon: <ShopOutlined />,
-            label: 'Filiales',
-            onClick: handleClick,
-          },
-          {
-            key: 'categories',
-            icon: <ProductOutlined />,
-            label: 'Categorias',
-            onClick: handleClick,
-          },
-        ]}
-        header={<h1>Página de administración</h1>}
+        sidebarProps={{
+          defaultSelectedKey: 'helpers',
+          menuItems: [
+            {
+              key: '/admin/helpers',
+              label: 'Ayudantes',
+              icon: <ContactsOutlined />,
+            },
+            {
+              key: '/admin/exchangers',
+              label: 'Intercambiadores',
+              icon: <UserOutlined />,
+            },
+            {
+              key: '/admin/locals',
+              label: 'Filiales',
+              icon: <ShopOutlined />,
+            },
+            {
+              key: '/admin/categories',
+              label: 'Categorias',
+              icon: <ProductOutlined />,
+            },
+          ],
+        }}
       >
         <Routes>
           <Route path="/helpers" element={<Helpers />} />
