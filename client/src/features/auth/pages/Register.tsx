@@ -37,10 +37,10 @@ export function Register() {
   }
   const dateValidator = (_: RuleObject, value: any) => {
     if (value != undefined || value != null) {
-      const today = new Date()
-      const bDay = value.$d
+      let today = new Date()
+      let bDay = value.$d
       let age = today.getFullYear() - bDay.getFullYear()
-      const m = today.getMonth() - bDay.getMonth()
+      let m = today.getMonth() - bDay.getMonth()
       if (m < 0 || (m === 0 && today.getDate() < bDay.getDate())) {
         age--
       }
