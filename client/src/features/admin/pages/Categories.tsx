@@ -92,25 +92,23 @@ export function Categories() {
   }
   const sendNewCat = () => {
     try {
-      fetch("http://localhost:8000/category",{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: newName
-        })
+      fetch('http://localhost:8000/category', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: newName,
+        }),
       })
-      .then((res) => res.json)
-      .then((result) => {console.log("resultado de sendNewCat: ",result)})
-    }
-    catch (error){
+        .then((res) => res.json)
+        .then((result) => {
+          console.log('resultado de sendNewCat: ', result)
+        })
+    } catch (error) {
       alert(error)
     }
-    
-    
-    
-    
+
     /* fetch("http://localhost:8000/category",{
       method: "POST",
       body: JSON.stringify({
@@ -245,7 +243,7 @@ export function Categories() {
       render: (isActive) => (isActive ? 'Activo' : 'Pausado'),
       filters: [
         { text: 'Activo', value: true },
-        { text: 'Inactivo', value: false },
+        { text: 'Pausado', value: false },
       ],
       onFilter: (value, record) => record.active === value,
       filterSearch: false,
@@ -255,9 +253,17 @@ export function Categories() {
       render: (_: any, __: DataType, index: number) => (
         <Space>
           {data && data[index].active ? (
-            <Button type="default" icon={<PauseOutlined />} onClick={() => handleClickPause(index)}></Button>
+            <Button
+              type="default"
+              icon={<PauseOutlined />}
+              onClick={() => handleClickPause(index)}
+            ></Button>
           ) : (
-            <Button type="default" icon={<CaretRightOutlined />} onClick={() => handleClickResume(index)}></Button>
+            <Button
+              type="default"
+              icon={<CaretRightOutlined />}
+              onClick={() => handleClickResume(index)}
+            ></Button>
           )}
           <Button
             type="primary"
@@ -282,9 +288,7 @@ export function Categories() {
     }
     if (data.some((item) => item.name === newName)) {
       setInputStatus('error')
-      setInputErrorMessage(
-        `Ya existe una categoría con el nombre "${newName}"`
-      )
+      setInputErrorMessage(`Ya existe una categoría con el nombre "${newName}"`)
       return
     }
     setIsModalOpen(false)
@@ -314,9 +318,7 @@ export function Categories() {
     }
     if (data.some((item) => item.name === newName)) {
       setInputStatus('error')
-      setInputErrorMessage(
-        `Ya existe una categoría con el nombre "${newName}"`
-      )
+      setInputErrorMessage(`Ya existe una categoría con el nombre "${newName}"`)
       return
     }
     sendNewCat()
@@ -332,9 +334,9 @@ export function Categories() {
   return (
     <>
       <Button
-        type='primary'
+        type="primary"
         icon={<PlusOutlined />}
-        style={{marginBottom: "15px"}}
+        style={{ marginBottom: '15px' }}
         onClick={showModalNewCat}
       >
         Agregar categoría
@@ -385,9 +387,7 @@ export function Categories() {
           setInputStatus('')
         }}
       >
-        <p>
-          Ingrese un nombre para la nueva categoría
-        </p>
+        <p>Ingrese un nombre para la nueva categoría</p>
         <Input
           placeholder="Ingrese un nombre"
           onChange={handleChange}
