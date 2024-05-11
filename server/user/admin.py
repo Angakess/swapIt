@@ -10,3 +10,8 @@ class UserAdmin(admin.ModelAdmin):
 class UserRegisterAdmin(admin.ModelAdmin):
     list_display = ('user', 'code',)
     search_fields = ('user', 'code',)
+
+@admin.register(models.UserForgotPassword)
+class UserForgotAdmin(admin.ModelAdmin):
+    list_display = ('user', 'code',)
+    search_fields = ('user', 'code',)

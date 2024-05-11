@@ -1,6 +1,6 @@
 
 from user.serializers import UserSerializer
-from user.models import UserAccount, UserRegister
+from user.models import UserAccount, UserRegister, UserForgotPassword
 from rest_framework import generics
 from common.email import send_email_to_user
 import random
@@ -18,6 +18,21 @@ class CreateUser(generics.CreateAPIView):
 
     def create(self, request):
         serializer = UserSerializer(data=request.data)
+        dni = serializer.initial_data['dni']
+
+        user_of_dni = UserAccount.objects.filter(dni=dni).first()
+
+        # NOTE: Usuario existente y bloqueado
+        if user_of_dni is not None and user_of_dni.state.id == 5:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Esta cuenta ha sido borrada y no es posible registrar usuarios previamente borrados, por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
+                    'data':{}
+                }
+            )
+                    
+
         if serializer.is_valid():
             user_data = serializer.validated_data
             user = UserAccount.objects.create_user(**user_data)
@@ -56,8 +71,6 @@ class CreateUser(generics.CreateAPIView):
 
 class ActivateUser(APIView):
     """Activate user account"""
-    permission_classes = []
-
     def post(self, request):
         code = request.data.get('code')
         user_register = UserRegister.objects.filter(code=code).first()
@@ -80,6 +93,107 @@ class ActivateUser(APIView):
             'messages': ['Email validado exitosamente'],
             'data': {}
         }, status=status.HTTP_204_NO_CONTENT)
+    
+class ForgotPassword(APIView):
+    def post(self, request):
+        dni = request.data.get('dni')
+        user = UserAccount.objects.filter(dni=dni).first()
+        if user is None:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Usuario no encontrado'],
+                    'data': {}
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        #Existe pero esta suspendido o bloqueado o eliminado
+        if user.state.id != 3:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Este usuario no puede solicitar la recuperacion de contraseña, por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+                                 
+        already_has_code = UserForgotPassword.objects.filter(user__dni=dni).first()
+
+        if (already_has_code is not None):
+            send_email_to_user(
+                email=already_has_code.user.email,
+                subject='Recuperacion de contraseña de: ' +
+                already_has_code.user.first_name + ' '
+                + already_has_code.user.last_name,
+                message='Ingrese a la siguiente url'
+                + ' http://localhost:5173/auth/reset-password/' +
+                str(already_has_code.code)
+            )
+            return Response(
+                {
+                    'ok': True,
+                    'messages': ['Codigo enviado exitosamente'],
+                    'data': {}
+                },
+                status=status.HTTP_200_OK
+            )
+
+
+        generated_code = random.randint(100000, 999999)
+        user_forgot_password = UserForgotPassword.objects.create(code=str(generated_code), user=user)
+
+        send_email_to_user(
+            email=user_forgot_password.user.email,
+            subject='Recuperacion de contraseña de: ' +
+            user_forgot_password.user.first_name + ' '
+            + user_forgot_password.user.last_name,
+            message='Ingrese a la siguiente url'
+            + ' http://localhost:5173/auth/reset-password/' +
+            str(generated_code)
+        )
+
+        return Response(
+            {
+                'ok': True,
+                'messages': ['Codigo enviado exitosamente'],
+                'data': {}
+            },
+            status=status.HTTP_200_OK
+        )
+    
+class ResetPassword(APIView):
+    def post(self, request):
+        code = request.data.get('code')
+        user_forgot_password = UserForgotPassword.objects.filter(code=code).first()
+        if user_forgot_password is None:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Codigo invalido'],
+                    'data': {},
+                }, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if user_forgot_password.user.state.id != 3:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Este usuario no puede solicitar la recuperacion de contraseña, por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        user_forgot_password.user.set_password(request.data.get('password'))
+        user_forgot_password.user.save()
+        user_forgot_password.delete()
+        return Response({
+                'ok': True,
+                'messages': ['Contraseña cambiada exitosamente'],
+                'data': {}
+            }, status=status.HTTP_204_NO_CONTENT
+        )
+    
 
 
 class LoginUser(APIView):
@@ -144,7 +258,7 @@ class LoginUser(APIView):
 
         #Existe pero la contraseña es incorrecta
         if not user.check_password(password):
-            if user.failed_login_attempts == 2:
+            if user.failed_login_attempts >= 2:
                 state = UserState.objects.get(id=2)
                 user.state = state
                 user.failed_login_attempts = 3

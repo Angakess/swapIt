@@ -95,3 +95,11 @@ class UserRegister(models.Model):
 
     def __str__(self):
         return f"Code: {self.code}, User: {self.user.dni}"
+    
+class UserForgotPassword(models.Model):
+    code = models.CharField(max_length=255)
+    user = models.OneToOneField(
+        UserAccount, on_delete=models.CASCADE, related_name='user_forgot_password')
+
+    def __str__(self):
+        return f"Code: {self.code}, User: {self.user.dni}"
