@@ -6,9 +6,9 @@ from rest_framework import generics
 from common.email import send_email_to_user
 import random
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, filters
 from rest_framework.views import APIView
-from user.serializers import UserCreatedSerializer
+from user.serializers import UserCreatedSerializer, ListHelperSerializer, ListExchangerSerializer
 import itertools
 from user.models import Role, UserState
 import coreschema
@@ -16,7 +16,9 @@ from rest_framework.schemas import AutoSchema
 
 
 class CreateUser(generics.CreateAPIView):
-    """Register user"""
+    """
+        Register user pls
+    """
     serializer_class = UserSerializer
 
     def create(self, request):
@@ -339,3 +341,17 @@ class LoginUser(APIView):
             },
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
+
+class SearchHelper(generics.ListAPIView):
+    """Search Helper"""
+    serializer_class = ListHelperSerializer
+
+    def get_queryset(self):
+        return UserAccount.objects.filter(role=Role.HELPER)
+    
+class SearchExchanger(generics.ListAPIView):
+    """Search Exchanger"""
+
+    serializer_class = ListExchangerSerializer
+    def get_queryset(self):
+        return UserAccount.objects.filter(role=Role.EXCHANGER)

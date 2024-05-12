@@ -56,7 +56,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=30, null=False)
 
     id_subsidiary = models.ForeignKey(
-        Subsidiary, blank=True, null=True, on_delete=models.DO_NOTHING
+        Subsidiary, blank=True, null=True, on_delete=models.DO_NOTHING, related_name='users'
     )
 
     failed_login_attempts = models.IntegerField(default=0)
