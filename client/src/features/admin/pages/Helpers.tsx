@@ -248,7 +248,7 @@ export function Helpers() {
     },
     {
       title: 'Acciones',
-      render: (_: any, record: DataType, index: number) => (
+      render: (_: any, record: DataType) => (
         <Space>
           <Button 
             type="primary" 
