@@ -44,7 +44,7 @@ class CreateUser(generics.CreateAPIView):
 
             send_email_to_user(
                 email=user_register.user.email,
-                subject='Activacion de cuenta de: ' +
+                subject='Activación de cuenta de: ' +
                 user_register.user.first_name + ' '
                 + user_register.user.last_name,
                 message='Ingrese a la siguiente url'
@@ -210,7 +210,7 @@ class LoginUser(APIView):
             return Response(
                 {
                     'ok': False,
-                    'message': ['Usuario y/o ocontraseña invalida'],
+                    'messages': ['Usuario y/o ocontraseña invalida'],
                     'data': {}
                 },
                 status=status.HTTP_404_NOT_FOUND
@@ -223,7 +223,7 @@ class LoginUser(APIView):
 
             send_email_to_user(
                 email=user_register.user.email,
-                subject='Activacion de cuenta de: ' +
+                subject='Activación de cuenta de: ' +
                 user_register.user.first_name + ' '
                 + user_register.user.last_name,
                 message='Ingrese a la siguiente url'
@@ -250,7 +250,7 @@ class LoginUser(APIView):
             return Response(
                 {
                     'ok': False,
-                    'messages': ['Usuario', message, ' por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
+                    'messages': ['Usuario ' + message + ', por favor comuníquese con el administrador en is2.caritas@hotmail.com'],
                     'data': {}
                 },
                 status=status.HTTP_404_NOT_FOUND
@@ -266,7 +266,7 @@ class LoginUser(APIView):
                 return Response(
                     {
                         'ok': False,
-                        'message': ['Usuario bloqueado por exceso de intentos fallidos, por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
+                        'messages': ['Usuario bloqueado por exceso de intentos fallidos, por favor comuníquese con el administrador en is2.caritas@hotmail.com'],
                         'data': {}
                     },
                     status=status.HTTP_404_NOT_FOUND
@@ -277,7 +277,7 @@ class LoginUser(APIView):
             return Response(
                 {
                     'ok': False,
-                    'message': ['Contraseña incorrecta solo quedan ' + str(3 - user.failed_login_attempts) + ' intentos'],
+                    'messages': ['Contraseña incorrecta solo quedan ' + str(3 - user.failed_login_attempts) + ' intentos'],
                     'data': {}
                 },
                 status=status.HTTP_404_NOT_FOUND

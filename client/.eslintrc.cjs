@@ -15,5 +15,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'prettier/prettier': 'error',
+    'no-extra-semi': 'off',
   },
 }
