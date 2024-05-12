@@ -6,5 +6,5 @@ def send_email_to_user(email,subject, message ):
         subject, 
         message, 
         EMAIL_HOST_USER, 
-        [email]
+        email
     )
