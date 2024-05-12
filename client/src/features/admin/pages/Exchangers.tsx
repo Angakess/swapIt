@@ -5,7 +5,6 @@ import {
   Input,
   TableColumnType,
   InputRef,
-  Modal,
 } from 'antd'
 import { GetProp, TableProps } from 'antd'
 import { SearchOutlined, UserOutlined } from '@ant-design/icons'
@@ -43,7 +42,12 @@ export function Exchangers() {
         ...params,
     }) */
 
-  const [data, setData] = useState<DataType[]>()
+  const [data, setData] = useState<DataType[]>([{
+    nombre: "",
+    estado: "",
+    id: 0,
+    email: "",
+  }])
   const [loading, setLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -145,6 +149,10 @@ export function Exchangers() {
     })
     confirm()
     //setSearchedColumn(dataIndex)
+  }
+
+  const goToProfile = (record:DataType) => {
+    window.location.assign(`/admin/exchangers/${record.id}`)
   }
 
   const getColumnSearchProps = (
@@ -251,12 +259,12 @@ export function Exchangers() {
     },
     {
       title: 'Acciones',
-      render: (_: any, __: DataType, index: number) => (
+      render: (_: any, record: DataType) => (
         <Space>
           <Button
             type="primary"
             icon={<UserOutlined />}
-            onClick={() => showModal(index)}
+            onClick={() => goToProfile(record)}
           >
             Ver perfil
           </Button>
@@ -265,23 +273,6 @@ export function Exchangers() {
       width: '100px',
     },
   ]
-
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [idSelected, setIdSelected] = useState(0)
-
-  const showModal = (index: number) => {
-    setIsModalOpen(true)
-    setIdSelected(index)
-  }
-  const handleOk = () => {
-    setIsModalOpen(false)
-    if (data !== undefined)
-      console.log(`AYUDANTE ${data[idSelected].nombre} DESINCORPORADO`)
-  }
-  const handleCancel = () => {
-    setIsModalOpen(false)
-    console.log('OPERACION CANCELADA')
-  }
 
   return (
     <>
@@ -293,17 +284,6 @@ export function Exchangers() {
         loading={loading}
         onChange={handleTableChange}
       />
-      <Modal
-        title="Atención"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        cancelText="Cancelar"
-        okText="Desincorporar"
-        okButtonProps={{ danger: true }}
-      >
-        <p>¿Está seguro que quiere desincorporar a este ayudante?</p>
-      </Modal>
     </>
   )
 }
