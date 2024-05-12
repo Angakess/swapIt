@@ -59,7 +59,7 @@ export function Register() {
       last_name: 'Doe',
       dni: '12345678',
       email: 'jdoe@mail.com',
-      gender: UserGender.MALE,
+      gender: 'MALE',
       phone_number: '2211234567',
       date_of_birth: dayjs('12/11/2001', 'DD/MM/YYYY'),
       password: '1234',
@@ -80,7 +80,7 @@ export function Register() {
       {
         ...fields,
         date_of_birth: fields.date_of_birth.format('YYYY-MM-DD'),
-        role: UserRole.EXCHANGER,
+        role: 'EXCHANGER',
       }
     )
     const data = await resp.json()
@@ -195,9 +195,9 @@ export function Register() {
           rules={[{ required: true, message: 'Seleccione una opción' }]}
         >
           <Select placeholder="Selecciona tu género" size="large">
-            <Select.Option value={UserGender.MALE}>Masculino</Select.Option>
-            <Select.Option value={UserGender.FEMALE}>Femenino</Select.Option>
-            <Select.Option value={UserGender.OTHER}>Otro</Select.Option>
+            <Select.Option value="MALE">Masculino</Select.Option>
+            <Select.Option value="FEMALE">Femenino</Select.Option>
+            <Select.Option value="OTHER">Otro</Select.Option>
           </Select>
         </Form.Item>
 
