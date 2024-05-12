@@ -11,9 +11,6 @@ import { SearchOutlined, UserOutlined } from '@ant-design/icons'
 import { useState, useEffect, useRef } from 'react'
 import type { FilterDropdownProps } from 'antd/es/table/interface'
 
-//archivo JSON sacado de mockaroo.com local para testear
-import MOCK_DATA from './MOCK_DATA_INTERC.json'
-
 export function Exchangers() {
   type ColumnsType<T> = TableProps<T>['columns']
   type TablePaginationConfig = Exclude<
@@ -23,10 +20,11 @@ export function Exchangers() {
   type DataIndex = keyof DataType
 
   interface DataType {
-    nombre: string
-    estado: string
     id: number
+    full_name: string
+    dni: string
     email: string
+    user_state: string
   }
 
   interface TableParams {
@@ -43,10 +41,11 @@ export function Exchangers() {
     }) */
 
   const [data, setData] = useState<DataType[]>([{
-    nombre: "",
-    estado: "",
     id: 0,
+    full_name: "",
+    dni: "",
     email: "",
+    user_state: ""
   }])
   const [loading, setLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
@@ -56,40 +55,22 @@ export function Exchangers() {
     },
   })
 
-  const fetchData = () => {
+  const fetchData = async() => {
     setLoading(true)
-
-    //------Version mock---------------------------------------------------------------
-    MOCK_DATA.forEach((element) => {
-      element.estado =
-        element.estado.charAt(0).toUpperCase() + element.estado.slice(1)
-    })
-    setData(MOCK_DATA)
+    const res = await fetch("http://localhost:8000/users/list-exchangers/")
+    const result = await res.json()
+    setData(result)
     setLoading(false)
     setTableParams({
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: MOCK_DATA.length,
+        total: result.filter((item: DataType) =>
+          item.full_name.includes(searchText.full_name) &&
+          item.dni.includes(searchText.dni) &&
+          item.email.includes(searchText.email))
       },
     })
-    //----------------------------------------------------------------------------------
-
-    //------Version real----------------------------------------------------------------
-    /* fetch("./MOCK_DATA.json")
-            .then((res) => res.json())
-            .then(({results}) => {
-                setData(results)
-                setLoading(false)
-                setTableParams({
-                    ...tableParams,
-                    pagination: {
-                        ...tableParams.pagination,
-                        total: 200 //acordate de hacer el results.filter(...).length
-                    },
-                })
-            }) */
-    //------------------------------------------------------------------------------------
   }
 
   useEffect(() => {
@@ -111,11 +92,12 @@ export function Exchangers() {
     }
   }
 
-  const [searchText, setSearchText] = useState({
-    nombre: '',
+  const [searchText, setSearchText] = useState<DataType>({
+    id: 0,
+    full_name: '',
+    dni: '',
     email: '',
-    estado: '',
-    id: '',
+    user_state: ""
   })
   //const [searchedColumn, setSearchedColumn] = useState('')
   const searchInput = useRef<InputRef>(null)
@@ -228,17 +210,17 @@ export function Exchangers() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: `Nombre: ${searchText.nombre}`,
-      dataIndex: 'nombre',
-      render: (nombre) => `${nombre}`,
-      width: '250px',
-      ...getColumnSearchProps('nombre'),
+      title: `Nombre: ${searchText.full_name}`,
+      dataIndex: 'full_name',
+      render: (full_name) => `${full_name}`,
+      width: '25%',
+      ...getColumnSearchProps('full_name'),
     },
     {
-      title: `DNI: ${searchText.id}`,
-      dataIndex: 'id',
-      width: '100px',
-      ...getColumnSearchProps('id'),
+      title: `DNI: ${searchText.dni}`,
+      dataIndex: 'dni',
+      width: '20%',
+      ...getColumnSearchProps('dni'),
     },
     {
       title: `Email: ${searchText.email}`,
@@ -246,16 +228,17 @@ export function Exchangers() {
       ...getColumnSearchProps('email'),
     },
     {
-      title: `Estado: ${searchText.estado}`,
-      dataIndex: 'estado',
+      title: `Estado: ${searchText.user_state}`,
+      dataIndex: 'user_state',
       filters: [
         { text: 'Activo', value: 'Activo' },
         { text: 'Inactivo', value: 'Inactivo' },
         { text: 'Bloqueado', value: 'Bloqueado' },
-        { text: 'Borrado', value: 'Borrado' },
+        { text: 'Eliminado', value: 'Eliminado' },
       ],
-      onFilter: (value, record) => record.estado === value,
+      onFilter: (value, record) => record.user_state === value,
       filterSearch: false,
+      width: "10%"
     },
     {
       title: 'Acciones',
@@ -270,7 +253,7 @@ export function Exchangers() {
           </Button>
         </Space>
       ),
-      width: '100px',
+      width: "0"
     },
   ]
 
@@ -283,6 +266,7 @@ export function Exchangers() {
         pagination={tableParams.pagination}
         loading={loading}
         onChange={handleTableChange}
+        locale={{emptyText: "No hay intercambiadores disponibles"}}
       />
     </>
   )
