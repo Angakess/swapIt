@@ -94,9 +94,11 @@ export function Categories() {
       })
   }
   const sendNewCat = () => {
+    setIsLoading(true)
     fetchPost("http://localhost:8000/category/create", {
       name: newName
     })
+    setIsLoading(true)
     fetchData()
 
     /* 
