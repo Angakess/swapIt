@@ -1,11 +1,13 @@
+import coreapi
 from rest_framework.response import Response
 from rest_framework import generics
 from .models import Category, Post, PostState
-from .serializer import (CategorySerializer, PostSerializer,
-                         PostStateSerializer, PostBaseSerializer)
+from .serializer import (
+    CategorySerializer, PostSerializer, PostStateSerializer)
 from rest_framework.views import APIView
-from rest_framework import status
-
+from rest_framework import status, filters
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.schemas import AutoSchema
 
 # Format for the response:
 # {
@@ -21,6 +23,11 @@ from rest_framework import status
 
 
 class CategoryRemove(APIView):
+
+    schema = AutoSchema(manual_fields=[
+        coreapi.Field("pk", required=True, location="form",
+                      description="ID de la categoria a pausar")
+    ])
 
     def delete(self, request):
         try:
@@ -53,6 +60,11 @@ class CategoryRemove(APIView):
 
 
 class CategoryRestore(APIView):
+
+    schema = AutoSchema(manual_fields=[
+        coreapi.Field("pk", required=True, location="form",
+                      description="ID de la categoria a restaurar")
+    ])
 
     def put(self, request):
         try:
@@ -89,58 +101,37 @@ class CategoryCreate(generics.CreateAPIView):
     serializer_class = CategorySerializer
 
 
-class CategoryList(APIView):
+class CategoryList(generics.ListAPIView):
 
-    def get(self, request, state):
-        if (state != 'active' and state != 'inactive'):
+    def get_queryset(self):
+        return Category.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        list = super().list(request, *args, **kwargs)
+        if (len(list.data) == 0):
             return Response({
                 'ok': False,
-                'messages': ['Estado invalido'],
+                'messages': ["No hay categorías disponibles"],
                 'data': {}
-            },
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        queryset = Category.objects.filter(active=(state == 'active'))
-        if (not queryset):
-            return Response({
-                'ok': False,
-                'messages': ['Categorias no encontradas'],
-                'data': {}
-            },
-                status=status.HTTP_404_NOT_FOUND
-            )
-        serializer = CategorySerializer(queryset, many=True)
+            }, status=status.HTTP_404_NOT_FOUND)
         return Response({
             'ok': True,
-            'messages': ['Categorias encontradas exitosamente'],
-            'data': {'categories': serializer.data}
-        },
-            status=status.HTTP_200_OK
-        )
-
-
-class CategorySearch(APIView):
-
-    def get(self, request, name):
-
-        queryset = Category.objects.filter(name__icontains=name)
-        if (not queryset):
-            return Response({
-                'ok': False,
-                'messages': ['Categoria no encontrada'],
-                'data': {}
-            },
-                status=status.HTTP_404_NOT_FOUND
-            )
-        serializer = CategorySerializer(data=queryset.values(), many=True)
-        return Response({
-            'ok': True,
-            'messages': ['Categoria encontrada exitosamente'],
-            'data': {'category': serializer.initial_data}
+            'messages': [f'Categorias {"encontradas"}'],
+            'data': {'categories': list.data}
         },
             status=status.HTTP_200_OK)
 
-    # ----------------------POST----------------------
+    serializer_class = CategorySerializer
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filterset_fields = [
+        'active'
+    ]
+    search_fields = [
+        '^name',
+    ]
+
+
+# ----------------------POST----------------------
 
 
 class PostDetails(generics.RetrieveUpdateDestroyAPIView):
@@ -186,13 +177,6 @@ class PostDetails(generics.RetrieveUpdateDestroyAPIView):
             return Response({"Error de Atributos:", f"{values} "})
 
 
-class PostList(generics.ListAPIView):
-    serializer_class = PostBaseSerializer
-
-    def get_queryset(self):
-        return Post.objects.all()
-
-
 class PostCreate(generics.CreateAPIView):
 
     queryset = Post.objects.all()
@@ -206,7 +190,24 @@ class PostCreate(generics.CreateAPIView):
         return Response(serializer.errors, status=400)
 
 
+class PostLists(generics.ListAPIView):
+
+    def get_queryset(self):
+        return Post.objects.all()
+
+    serializer_class = PostSerializer
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filterset_fields = [
+        'name',
+        'state_product',
+        'state__name',
+    ]
+    search_fields = [
+        'name',
+    ]
+
 # ----------------------POST STATE----------------------
+
 
 class PostStateList(generics.ListAPIView):
     serializer_class = PostStateSerializer

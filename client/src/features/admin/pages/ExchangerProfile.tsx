@@ -1,17 +1,17 @@
-import { Button, Card, Descriptions, DescriptionsProps, Flex } from "antd";
-import { useEffect, useState } from "react";
-import MOCK_DATA from "./MOCK_DATA_EXCH_ACCOUNT.json"
+import { Button, Card, Descriptions, DescriptionsProps, Flex } from 'antd'
+import { useEffect, useState } from 'react'
+import MOCK_DATA from './MOCK_DATA_EXCH_ACCOUNT.json'
 
 type DataType = {
-    id: number,
-    first_name: string,
-    last_name: string,
-    dni: string,
-    email: string,
-    gender: string,
-    date_of_birth: string,
-    phone_number: string,
-    status: string
+  id: number
+  first_name: string
+  last_name: string
+  dni: string
+  email: string
+  gender: string
+  date_of_birth: string
+  phone_number: string
+  status: string
 }
 
 export function ExchangerProfile(){

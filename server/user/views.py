@@ -1,4 +1,5 @@
 
+import coreapi
 from user.serializers import UserSerializer
 from user.models import UserAccount, UserRegister, UserForgotPassword
 from rest_framework import generics
@@ -10,6 +11,8 @@ from rest_framework.views import APIView
 from user.serializers import UserCreatedSerializer
 import itertools
 from user.models import Role, UserState
+import coreschema
+from rest_framework.schemas import AutoSchema
 
 
 class CreateUser(generics.CreateAPIView):
@@ -28,10 +31,9 @@ class CreateUser(generics.CreateAPIView):
                 {
                     'ok': False,
                     'messages': ['Esta cuenta ha sido borrada y no es posible registrar usuarios previamente borrados, por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
-                    'data':{}
+                    'data': {}
                 }
             )
-                    
 
         if serializer.is_valid():
             user_data = serializer.validated_data
@@ -44,7 +46,7 @@ class CreateUser(generics.CreateAPIView):
 
             send_email_to_user(
                 email=user_register.user.email,
-                subject='Activacion de cuenta de: ' +
+                subject='Activación de cuenta de: ' +
                 user_register.user.first_name + ' '
                 + user_register.user.last_name,
                 message='Ingrese a la siguiente url'
@@ -70,8 +72,18 @@ class CreateUser(generics.CreateAPIView):
 
 
 class ActivateUser(APIView):
-    """Activate user account"""
+
+    schema = AutoSchema(manual_fields=[
+        coreapi.Field(
+            "code",
+            required=True,
+            location="form",
+            schema=coreschema.String()
+        ),
+    ])
+
     def post(self, request):
+
         code = request.data.get('code')
         user_register = UserRegister.objects.filter(code=code).first()
         if user_register is None:
@@ -93,7 +105,8 @@ class ActivateUser(APIView):
             'messages': ['Email validado exitosamente'],
             'data': {}
         }, status=status.HTTP_204_NO_CONTENT)
-    
+
+
 class ForgotPassword(APIView):
     def post(self, request):
         dni = request.data.get('dni')
@@ -108,7 +121,7 @@ class ForgotPassword(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        #Existe pero esta suspendido o bloqueado o eliminado
+        # Existe pero esta suspendido o bloqueado o eliminado
         if user.state.id != 3:
             return Response(
                 {
@@ -117,8 +130,9 @@ class ForgotPassword(APIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
-                                 
-        already_has_code = UserForgotPassword.objects.filter(user__dni=dni).first()
+
+        already_has_code = UserForgotPassword.objects.filter(
+            user__dni=dni).first()
 
         if (already_has_code is not None):
             send_email_to_user(
@@ -139,9 +153,9 @@ class ForgotPassword(APIView):
                 status=status.HTTP_200_OK
             )
 
-
         generated_code = random.randint(100000, 999999)
-        user_forgot_password = UserForgotPassword.objects.create(code=str(generated_code), user=user)
+        user_forgot_password = UserForgotPassword.objects.create(
+            code=str(generated_code), user=user)
 
         send_email_to_user(
             email=user_forgot_password.user.email,
@@ -161,11 +175,13 @@ class ForgotPassword(APIView):
             },
             status=status.HTTP_200_OK
         )
-    
+
+
 class ResetPassword(APIView):
     def post(self, request):
         code = request.data.get('code')
-        user_forgot_password = UserForgotPassword.objects.filter(code=code).first()
+        user_forgot_password = UserForgotPassword.objects.filter(
+            code=code).first()
         if user_forgot_password is None:
             return Response(
                 {
@@ -188,12 +204,11 @@ class ResetPassword(APIView):
         user_forgot_password.user.save()
         user_forgot_password.delete()
         return Response({
-                'ok': True,
-                'messages': ['Contraseña cambiada exitosamente'],
-                'data': {}
-            }, status=status.HTTP_204_NO_CONTENT
+            'ok': True,
+            'messages': ['Contraseña cambiada exitosamente'],
+            'data': {}
+        }, status=status.HTTP_204_NO_CONTENT
         )
-    
 
 
 class LoginUser(APIView):
@@ -210,20 +225,20 @@ class LoginUser(APIView):
             return Response(
                 {
                     'ok': False,
-                    'message': ['Usuario y/o ocontraseña invalida'],
+                    'messages': ['Usuario y/o ocontraseña invalida'],
                     'data': {}
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
-        
-        #Existe pero no esta activo
+
+        # Existe pero no esta activo
         if not user.is_active:
             user_register = UserRegister.objects.filter(
                 user__dni=user.dni).first()
 
             send_email_to_user(
                 email=user_register.user.email,
-                subject='Activacion de cuenta de: ' +
+                subject='Activación de cuenta de: ' +
                 user_register.user.first_name + ' '
                 + user_register.user.last_name,
                 message='Ingrese a la siguiente url'
@@ -238,25 +253,25 @@ class LoginUser(APIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
-        
-        #Existe pero esta suspendido o bloqueado o eliminado
+
+        # Existe pero esta suspendido o bloqueado o eliminado
         if user.state.id == 1 or user.state.id == 2 or user.state.id == 5:
             message = ''
             if user.state.id == 2:
-                message  = 'suspendido por intentos fallidos,'
+                message = 'suspendido por intentos fallidos,'
             else:
                 message = 'bloqueado,' if user.state.id == 1 else 'eliminado,'
-                
+
             return Response(
                 {
                     'ok': False,
-                    'messages': ['Usuario', message, ' por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
+                    'messages': ['Usuario ' + message + ', por favor comuníquese con el administrador en is2.caritas@hotmail.com'],
                     'data': {}
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        #Existe pero la contraseña es incorrecta
+        # Existe pero la contraseña es incorrecta
         if not user.check_password(password):
             if user.failed_login_attempts >= 2:
                 state = UserState.objects.get(id=2)
@@ -266,7 +281,7 @@ class LoginUser(APIView):
                 return Response(
                     {
                         'ok': False,
-                        'message': ['Usuario bloqueado por exceso de intentos fallidos, por favor comuniquese con el administrador en is2.caritas@hotmail.com'],
+                        'messages': ['Usuario bloqueado por exceso de intentos fallidos, por favor comuníquese con el administrador en is2.caritas@hotmail.com'],
                         'data': {}
                     },
                     status=status.HTTP_404_NOT_FOUND
@@ -277,7 +292,7 @@ class LoginUser(APIView):
             return Response(
                 {
                     'ok': False,
-                    'message': ['Contraseña incorrecta solo quedan ' + str(3 - user.failed_login_attempts) + ' intentos'],
+                    'messages': ['Contraseña incorrecta solo quedan ' + str(3 - user.failed_login_attempts) + ' intentos'],
                     'data': {}
                 },
                 status=status.HTTP_404_NOT_FOUND

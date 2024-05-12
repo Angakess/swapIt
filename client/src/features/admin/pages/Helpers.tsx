@@ -230,13 +230,13 @@ export function Helpers() {
       title: `Nombre: ${searchText.nombre}`,
       dataIndex: 'nombre',
       render: (nombre) => `${nombre}`,
-      width: "25%",
+      width: '25%',
       ...getColumnSearchProps('nombre'),
     },
     {
       title: `DNI: ${searchText.id}`,
       dataIndex: 'id',
-      width: "15%",
+      width: '15%',
       ...getColumnSearchProps('id'),
     },
     {
@@ -244,7 +244,7 @@ export function Helpers() {
       dataIndex: 'filial',
       ...getColumnSearchProps('filial'),
       sorter: (a, b) => a.filial.localeCompare(b.filial),
-      width: "50%"
+      width: '50%',
     },
     {
       title: 'Acciones',
@@ -263,7 +263,6 @@ export function Helpers() {
           ></Button>
         </Space>
       ),
-      
     },
   ]
 
@@ -297,7 +296,7 @@ export function Helpers() {
         pagination={tableParams.pagination}
         loading={loading}
         onChange={handleTableChange}
-        locale={{emptyText: "No hay ayudantes disponibles"}}
+        locale={{ emptyText: 'No hay ayudantes disponibles' }}
       />
       <Modal
         title="Atención"
