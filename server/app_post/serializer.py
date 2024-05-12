@@ -35,7 +35,6 @@ class PostBaseSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'value',
-            'active',
             'user',
             'subsidiary',
             'state',

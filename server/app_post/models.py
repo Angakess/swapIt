@@ -35,6 +35,7 @@ class Post(models.Model):
         Subsidiary, on_delete=models.CASCADE, related_name='posts', null=False)
 
     state = models.ForeignKey(PostState,
+                              default=2,
                               on_delete=models.DO_NOTHING,
                               related_name="posts")
     category = models.ForeignKey(Category,

@@ -4,6 +4,7 @@ import { AuthRoutes } from '@Auth/routes'
 import { PostsRoutes } from '@Posts/routes'
 import { AdminRoutes } from '@Admin/routes'
 import { HomePage } from '@Home/pages'
+import { AuthProvider } from '@Auth/context'
 
 function App() {
   return (
@@ -16,14 +17,16 @@ function App() {
         },
       }}
     >
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/auth/*" element={<AuthRoutes />} />
-          <Route path="/posts/*" element={<PostsRoutes />} />
-          <Route path="/admin/*" element={<AdminRoutes />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/auth/*" element={<AuthRoutes />} />
+            <Route path="/posts/*" element={<PostsRoutes />} />
+            <Route path="/admin/*" element={<AdminRoutes />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </ConfigProvider>
   )
 }
