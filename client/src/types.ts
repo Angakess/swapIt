@@ -4,6 +4,12 @@ export enum UserRole {
   EXCHANGER = 'EXCHANGER',
 }
 
+export enum UserGender {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  OTHER = 'OTHER',
+}
+
 export type User = {
   id: number
   first_name: string

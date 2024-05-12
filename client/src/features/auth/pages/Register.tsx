@@ -1,7 +1,9 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import dayjs, { Dayjs } from 'dayjs'
+import { Link, useNavigate } from 'react-router-dom'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import {
+  App,
   Button,
   DatePicker,
   Flex,
@@ -11,36 +13,106 @@ import {
   Select,
   Typography,
   FormProps,
+  Spin,
 } from 'antd'
 import { AuthTitle } from '@Auth/components'
 import { dateValidator, dniValidator, phoneValidator } from 'helpers/validators'
+import { fetchPost } from 'helpers'
+import { UserGender, UserRole } from 'types'
+
+type LoginBody = {
+  first_name: string
+  last_name: string
+  dni: string
+  email: string
+  gender: UserGender
+  date_of_birth: string
+  phone_number: string
+  password: string
+  role: UserRole
+}
+
+type RegisterFormData = {
+  first_name: string
+  last_name: string
+  dni: string
+  email: string
+  gender: UserGender
+  date_of_birth: Dayjs
+  phone_number: string
+  password: string
+  confirmPassword: string
+}
 
 export function Register() {
+  const navigate = useNavigate()
+
+  const { modal } = App.useApp()
+  const [form] = Form.useForm<RegisterFormData>()
+
+  const [isLoading, setIsLoading] = useState(false)
   const [isPasswordVisible, setPasswordVisible] = useState(false)
+
+  useEffect(() => {
+    form.setFieldsValue({
+      first_name: 'John',
+      last_name: 'Doe',
+      dni: '12345678',
+      email: 'jdoe@mail.com',
+      gender: UserGender.MALE,
+      phone_number: '2211234567',
+      date_of_birth: dayjs('12/11/2001', 'DD/MM/YYYY'),
+      password: '1234',
+      confirmPassword: '1234',
+    })
+  }, [])
 
   function togglePasswordVisibility() {
     setPasswordVisible(!isPasswordVisible)
   }
 
-  const handleFinish: FormProps['onFinish'] = (values) => {
-    console.log('Success: ', values)
-  }
-  const handleFinishFailed: FormProps['onFinishFailed'] = (errorInfo) => {
-    console.log('Failed: ', errorInfo)
+  const handleFinish: FormProps<RegisterFormData>['onFinish'] = async (
+    fields
+  ) => {
+    setIsLoading(true)
+    const resp = await fetchPost<LoginBody>(
+      'http://localhost:8000/users/create/',
+      {
+        ...fields,
+        date_of_birth: fields.date_of_birth.format('YYYY-MM-DD'),
+        role: UserRole.EXCHANGER,
+      }
+    )
+    const data = await resp.json()
+    if (resp.ok) {
+      modal.success({
+        title: 'Cuenta registrada con éxito',
+        content: <SucessMesage email={fields.email} />,
+        onOk: () => navigate('/auth/login'),
+      })
+    } else {
+      modal.error({
+        title: 'Ocurrió un error al intentar registrar la cuenta',
+        content: data.messages.join('\n'),
+        styles: { content: { whiteSpace: 'pre-line' } },
+      })
+    }
+    setIsLoading(false)
   }
 
   return (
-    <>
+    <Spin tip="Cargando..." spinning={isLoading}>
       <AuthTitle>Crear Cuenta</AuthTitle>
       <Form
         layout="vertical"
         onFinish={handleFinish}
-        onFinishFailed={handleFinishFailed}
+        disabled={isLoading}
+        form={form}
       >
         <Flex gap="1rem">
           <Form.Item
             label="Nombre"
-            name="firstName"
+            name="first_name"
             required={false}
             rules={[{ required: true, message: 'Ingrese su nombre' }]}
           >
@@ -49,7 +121,7 @@ export function Register() {
 
           <Form.Item
             label="Apellido"
-            name="lastName"
+            name="last_name"
             required={false}
             rules={[{ required: true, message: 'Ingrese su apellido' }]}
           >
@@ -88,7 +160,7 @@ export function Register() {
 
         <Form.Item
           label="Teléfono"
-          name="phone"
+          name="phone_number"
           required={false}
           rules={[
             { required: true, message: 'Ingrese su número de teléfono' },
@@ -100,14 +172,18 @@ export function Register() {
 
         <Form.Item
           label="Fecha de nacimiento"
-          name="birthday"
+          name="date_of_birth"
           required={false}
           rules={[
             { required: true, message: 'Ingrese su fecha de nacimiento' },
             { validator: dateValidator },
           ]}
         >
-          <DatePicker size="large" style={{ width: '100%' }} />
+          <DatePicker
+            size="large"
+            style={{ width: '100%' }}
+            format="DD/MM/YYYY"
+          />
         </Form.Item>
 
         <Form.Item
@@ -117,9 +193,9 @@ export function Register() {
           rules={[{ required: true, message: 'Seleccione una opción' }]}
         >
           <Select placeholder="Selecciona tu género" size="large">
-            <Select.Option value="male">Masculino</Select.Option>
-            <Select.Option value="female">Femenino</Select.Option>
-            <Select.Option value="other">Otro</Select.Option>
+            <Select.Option value={UserGender.MALE}>Masculino</Select.Option>
+            <Select.Option value={UserGender.FEMALE}>Femenino</Select.Option>
+            <Select.Option value={UserGender.OTHER}>Otro</Select.Option>
           </Select>
         </Form.Item>
 
@@ -183,8 +259,32 @@ export function Register() {
         </Form.Item>
       </Form>
       <Typography style={{ textAlign: 'center' }}>
-        ¿Ya tenés una cuenta? <Link to="/auth/login">Iniciar sesión</Link>
+        ¿Ya tenés una cuenta?
+        <Button type="link" size="small" disabled={isLoading}>
+          <Link to="/auth/login">Iniciar sesión</Link>
+        </Button>
       </Typography>
+    </Spin>
+  )
+}
+
+function SucessMesage({ email }: { email: string }) {
+  return (
+    <>
+      <Typography.Paragraph>
+        Se envió un correo a <Typography.Text strong>{email}</Typography.Text>{' '}
+        con un código de verificación.
+      </Typography.Paragraph>
+      <Typography.Paragraph type="secondary">
+        <Typography.Text type="secondary" strong>
+          Nota:
+        </Typography.Text>{' '}
+        Al hacer click en{' '}
+        <Typography.Text type="secondary" italic>
+          "ok"
+        </Typography.Text>{' '}
+        será ridirigido a la pagína de inicio de sesión
+      </Typography.Paragraph>
     </>
   )
 }
