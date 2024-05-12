@@ -6,6 +6,7 @@
 import { Card, Flex, Tag, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { ImageCarousel } from './ImageCarousel'
+import { Post } from 'types'
 
 const IMG_HEIGHT = '300px'
 

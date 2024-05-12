@@ -1,10 +1,10 @@
-enum UserRole {
+export enum UserRole {
   ADMIN = 'ADMIN',
   HELPER = 'HELPER',
   EXCHANGER = 'EXCHANGER',
 }
 
-type User = {
+export type User = {
   id: number
   first_name: string
   last_name: string
@@ -13,9 +13,18 @@ type User = {
   role: UserRole
 }
 
-type AuthContextType = {
+export type AuthContextType = {
   user: User | null
   isLoggedIn: () => boolean
   logIn: (user: User) => void
   logOut: () => void
+}
+
+export type Post = {
+  id: number
+  title: string
+  description: string
+  category: string
+  state: string
+  images: string[]
 }
