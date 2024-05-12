@@ -97,16 +97,15 @@ class ActivateUser(APIView):
 
         user_register.user.is_active = True
         state = UserState.objects.get(id=3)
-        user_register.state = state
+        user_register.user.state = state
         user_register.user.save()
         user_register.delete()
         return Response({
             'ok': True,
             'messages': ['Email validado exitosamente'],
-            'data': {}
-        }, status=status.HTTP_204_NO_CONTENT)
-
-
+            'data': {},
+        }, status=status.HTTP_200_OK)
+    
 class ForgotPassword(APIView):
     def post(self, request):
         dni = request.data.get('dni')
@@ -204,10 +203,10 @@ class ResetPassword(APIView):
         user_forgot_password.user.save()
         user_forgot_password.delete()
         return Response({
-            'ok': True,
-            'messages': ['Contraseña cambiada exitosamente'],
-            'data': {}
-        }, status=status.HTTP_204_NO_CONTENT
+                'ok': True,
+                'messages': ['Contraseña cambiada exitosamente'],
+                'data': {}
+            }, status=status.HTTP_200_OK
         )
 
 

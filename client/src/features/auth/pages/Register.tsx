@@ -47,7 +47,7 @@ type RegisterFormData = {
 export function Register() {
   const navigate = useNavigate()
 
-  const { modal } = App.useApp()
+  const { modal, notification } = App.useApp()
   const [form] = Form.useForm<RegisterFormData>()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -59,7 +59,7 @@ export function Register() {
       last_name: 'Doe',
       dni: '12345678',
       email: 'jdoe@mail.com',
-      gender: UserGender.MALE,
+      gender: 'MALE',
       phone_number: '2211234567',
       date_of_birth: dayjs('12/11/2001', 'DD/MM/YYYY'),
       password: '1234',
@@ -80,21 +80,23 @@ export function Register() {
       {
         ...fields,
         date_of_birth: fields.date_of_birth.format('YYYY-MM-DD'),
-        role: UserRole.EXCHANGER,
+        role: 'EXCHANGER',
       }
     )
     const data = await resp.json()
-    if (resp.ok) {
+    if (resp.ok && data.ok) {
       modal.success({
         title: 'Cuenta registrada con éxito',
-        content: <SucessMesage email={fields.email} />,
+        content: <SuccessMesage email={fields.email} />,
         onOk: () => navigate('/auth/login'),
       })
     } else {
-      modal.error({
-        title: 'Ocurrió un error al intentar registrar la cuenta',
-        content: data.messages.join('\n'),
-        styles: { content: { whiteSpace: 'pre-line' } },
+      notification.error({
+        message: 'Ocurrió un error al intentar registrar la cuenta',
+        description: data.messages.join('\n'),
+        placement: 'topRight',
+        duration: 3,
+        style: { whiteSpace: 'pre-line' },
       })
     }
     setIsLoading(false)
@@ -193,9 +195,9 @@ export function Register() {
           rules={[{ required: true, message: 'Seleccione una opción' }]}
         >
           <Select placeholder="Selecciona tu género" size="large">
-            <Select.Option value={UserGender.MALE}>Masculino</Select.Option>
-            <Select.Option value={UserGender.FEMALE}>Femenino</Select.Option>
-            <Select.Option value={UserGender.OTHER}>Otro</Select.Option>
+            <Select.Option value="MALE">Masculino</Select.Option>
+            <Select.Option value="FEMALE">Femenino</Select.Option>
+            <Select.Option value="OTHER">Otro</Select.Option>
           </Select>
         </Form.Item>
 
@@ -268,7 +270,7 @@ export function Register() {
   )
 }
 
-function SucessMesage({ email }: { email: string }) {
+function SuccessMesage({ email }: { email: string }) {
   return (
     <>
       <Typography.Paragraph>

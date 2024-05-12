@@ -1,14 +1,6 @@
-export enum UserRole {
-  ADMIN = 'ADMIN',
-  HELPER = 'HELPER',
-  EXCHANGER = 'EXCHANGER',
-}
+export type UserRole = 'ADMIN' | 'HELPER' | 'EXCHANGER'
 
-export enum UserGender {
-  MALE = 'MALE',
-  FEMALE = 'FEMALE',
-  OTHER = 'OTHER',
-}
+export type UserGender = 'MALE' | 'FEMALE' | 'OTHER'
 
 export type User = {
   id: number

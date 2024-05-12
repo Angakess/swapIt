@@ -41,7 +41,7 @@ class CategoryRemove(APIView):
                 }, status=status.HTTP_404_NOT_FOUND)
 
             category.active = False
-            category.posts.all().update(state=2)
+            category.posts.filter(state=1).update(state=3)
             category.save()
             return Response(
                 {
@@ -78,7 +78,7 @@ class CategoryRestore(APIView):
                 }, status=status.HTTP_404_NOT_FOUND)
 
             category.active = True
-            category.posts.all().update(state=1)
+            category.posts.filter(state=3).update(state=1)
             category.save()
             return Response(
                 {
@@ -97,6 +97,11 @@ class CategoryRestore(APIView):
 
 
 class CategoryCreate(generics.CreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class CategoryUpdate(generics.UpdateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
@@ -134,33 +139,13 @@ class CategoryList(generics.ListAPIView):
 # ----------------------POST----------------------
 
 
-class PostDetails(generics.RetrieveUpdateDestroyAPIView):
-    """
-    get:
-    Return a Post instance.
-
-    patch:
-
-    - Para actualizar cualquier campo se debe enviar la clave, y el valor
-    junto con el id. Ejemplo:
-    {
-        "id": 1,
-        "name": "Nuevo Nombre"
-    }
-    """
+class PostDetails(generics.UpdateAPIView):
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
     def get_queryset(self):
         return Category.objects.all()
-
-    def destroy(self, request, *args, **kwargs):
-        pk = kwargs['pk']
-        post = Post.objects.filter(pk=pk)
-        post.update(state=2)
-
-        return Response({"Message": f"Post id:{pk}, state:{2} UwU CwC <3"})
 
     def partial_update(self, request, *args, **kwargs):
         try:
@@ -201,10 +186,71 @@ class PostLists(generics.ListAPIView):
         'name',
         'state_product',
         'state__name',
+        'category__name',
+        'user__id',
+        'user__first_name'
     ]
     search_fields = [
         'name',
     ]
+
+
+class PostListsExchanger(generics.ListAPIView):
+
+    def get_queryset(self):
+        return Post.objects.filter(state_product='NUEVO')
+
+    serializer_class = PostSerializer
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filterset_fields = [
+        'name',
+        'state_product',
+        'state__name',
+    ]
+    search_fields = [
+        'name',
+    ]
+
+    def list(self, request, id, *args, **kwargs):
+        print("ID: ", id)
+        # print("[QUERY PARAMS]:", request.query_params())
+        queryset = (Post.objects
+                    .exclude(user__id=id)
+                    .filter(**request.GET))
+        return Response(
+            {
+                'ok': True,
+                'messages': ['Posts encontrados'],
+                'data': {'posts': PostSerializer(queryset, many=True).data}
+            },
+            status=status.HTTP_200_OK
+        )
+
+
+class PostRemove(generics.DestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            print("[KWARGS] ", kwargs)
+            post = Post.objects.filter(pk=kwargs['pk'])
+            post.update(state=2)
+            # Agregar cancelación de peticiones
+            return Response(
+                {
+                    'ok': True,
+                    'messages': ['Post eliminado exitosamente'],
+                    'data': {'post': PostSerializer(post.first()).data}
+                }, status=status.HTTP_200_OK
+            )
+        except KeyError:
+            return Response({
+                'ok': False,
+                'messages': ['Falta ID'],
+                'data': {}
+            }, status=status.HTTP_400_BAD_REQUEST)
+
 
 # ----------------------POST STATE----------------------
 
