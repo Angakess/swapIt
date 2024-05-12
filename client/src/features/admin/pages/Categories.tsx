@@ -208,13 +208,13 @@ export function Categories() {
     if(res.ok){
       modal.success({
         title: "Operación completada",
-        content: /* data.messages[0] */"ASDASD"
+        content: data.messages[0]
       })
     }
     else{
       modal.error({
         title: "Operación fallida",
-        content: /* data.messages[0] */ "ZXCZXCV"
+        content: data.messages[0]
       })
     }
     setIsLoading(false)
