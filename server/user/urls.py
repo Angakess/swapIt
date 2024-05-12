@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CreateUser, ActivateUser, LoginUser, ForgotPassword, ResetPassword, SearchHelper, SearchExchanger
+from .views import CreateUser, ActivateUser, LoginUser, ForgotPassword, ResetPassword, SearchHelper, SearchExchanger, DisincorporateHelper
 
 
 urlpatterns = [
@@ -10,4 +10,5 @@ urlpatterns = [
     path('reset-password/', ResetPassword.as_view(), name='user-reset-password'),
     path('list-helpers/', SearchHelper.as_view(), name='user-list-helpers'),
     path('list-exchangers/', SearchExchanger.as_view(), name='user-list-exchangers'),
+    path('disincorporate-helper/<int:id>', DisincorporateHelper.as_view(), name='user-disincorporate-helper'),
 ]
