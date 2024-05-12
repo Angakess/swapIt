@@ -59,74 +59,34 @@ export function Categories() {
   const [newName, setNewName] = useState('')
   const [inputStatus, setInputStatus] = useState<'' | 'error'>('')
   const [inputErrorMessage, setInputErrorMessage] = useState('')
-  const {modal} = App.useApp()
+  const { modal } = App.useApp()
 
   const searchInput = useRef<InputRef>(null)
 
-  const fetchData = () => {
+  const fetchData = async () => {
     setIsLoading(true)
-    //------Version mock---------------------------------------------------------------
-    /* setData(MOCK_DATA)
+    const res = await fetch('http://localhost:8000/category/list/')
+    const results = await res.json()
+    setData(results.data.categories)
+    console.log(results)
     setIsLoading(false)
     setTableParams({
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: MOCK_DATA.length,
+        total: results.data.categories.filter((item: DataType) =>
+          item.name.includes(searchCatName)
+        ).length,
       },
-    }) */
-
-    fetch('http://localhost:8000/category/list/')
-      .then((res) => res.json())
-      .then((results) => {
-        setData(results.data.categories)
-        console.log(results)
-        setIsLoading(false)
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: results.data.categories.filter((item: DataType) =>
-              item.name.includes(searchCatName)
-            ).length,
-          },
-        })
-      })
+    })
   }
   const sendNewCat = () => {
     setIsLoading(true)
-    fetchPost("http://localhost:8000/category/create", {
-      name: newName
+    fetchPost('http://localhost:8000/category/create', {
+      name: newName,
     })
     setIsLoading(true)
     fetchData()
-
-    /* 
-    try {
-      fetch('http://localhost:8000/category/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: newName,
-        }),
-      })
-        .then((res) => res.json)
-        .then((result) => {
-          console.log('resultado de sendNewCat: ', result)
-        })
-    } catch (error) {
-      alert(error)
-    } */
-
-    /* fetch("http://localhost:8000/category",{
-      method: "POST",
-      body: JSON.stringify({
-        name: newName
-      })
-    })
-    .then((res) => res.json) */
   }
 
   useEffect(() => {
@@ -168,55 +128,53 @@ export function Categories() {
     confirm()
   }
 
-  const handleClickPause = async(id: number) => {
+  const handleClickPause = async (id: number) => {
     setIsLoading(true)
-    const res = await fetch("http://localhost:8000/category/remove",{
+    const res = await fetch('http://localhost:8000/category/remove', {
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      method: "DELETE",
+      method: 'DELETE',
       body: JSON.stringify({
-        pk: id
-      })
+        pk: id,
+      }),
     })
     const data = await res.json()
-    if(res.ok){
+    if (res.ok) {
       modal.success({
-        title: "Operación completada",
-        content: data.messages[0]
+        title: 'Operación completada',
+        content: data.messages[0],
       })
-    }
-    else{
+    } else {
       modal.error({
-        title: "Operación fallida",
-        content: data.messages[0]
+        title: 'Operación fallida',
+        content: data.messages[0],
       })
     }
     setIsLoading(false)
     fetchData()
   }
-  const handleClickResume = async(id: number) => {
+  const handleClickResume = async (id: number) => {
     setIsLoading(true)
-    const res = await fetch("http://localhost:8000/category/restore",{
+    const res = await fetch('http://localhost:8000/category/restore', {
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      method: "PUT",
+      method: 'PUT',
       body: JSON.stringify({
-        pk: id
-      })
+        pk: id,
+      }),
     })
     const data = await res.json()
-    if(res.ok){
+    if (res.ok) {
       modal.success({
-        title: "Operación completada",
-        content: data.messages[0]
+        title: 'Operación completada',
+        content: data.messages[0],
       })
-    }
-    else{
+    } else {
       modal.error({
-        title: "Operación fallida",
-        content: data.messages[0]
+        title: 'Operación fallida',
+        content: data.messages[0],
       })
     }
     setIsLoading(false)
@@ -335,6 +293,26 @@ export function Categories() {
     },
   ]
 
+  const sendCatNameChange = async (id: number) => {
+    setIsLoading(true)
+    const res = await fetch(`http://localhost:8000/category/update/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'PATCH',
+      body: JSON.stringify({
+        name: newName,
+      }),
+    })
+    if (!res.ok) {
+      modal.error({
+        title: 'Operación fallida',
+      })
+    }
+    setIsLoading(false)
+    fetchData()
+  }
+
   const showModalEdit = (id: number) => {
     setIsModalOpen(true)
     setIdSelected(id)
@@ -350,6 +328,7 @@ export function Categories() {
       setInputErrorMessage(`Ya existe una categoría con el nombre "${newName}"`)
       return
     }
+    sendCatNameChange(idSelected)
     setIsModalOpen(false)
     console.log(`CATEGORIA ${data[idSelected].name} EDITADA A ${newName}`)
   }
@@ -429,6 +408,7 @@ export function Categories() {
           onChange={handleChange}
           status={inputStatus}
           value={newName}
+          onPressEnter={handleOk}
         ></Input>
         {inputStatus === 'error' ? (
           <p style={{ color: '#FF4D4F' }}>{inputErrorMessage}</p>
@@ -452,6 +432,7 @@ export function Categories() {
           onChange={handleChange}
           status={inputStatus}
           value={newName}
+          onPressEnter={handleOkNewCat}
         ></Input>
         {inputStatus === 'error' ? (
           <p style={{ color: '#FF4D4F' }}>{inputErrorMessage}</p>
