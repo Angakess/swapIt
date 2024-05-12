@@ -248,14 +248,18 @@ export function Helpers() {
     },
     {
       title: 'Acciones',
-      render: (_: any, __: DataType, index: number) => (
+      render: (_: any, record: DataType, index: number) => (
         <Space>
-          <Button type="primary" icon={<ShopFilled />}></Button>
+          <Button 
+            type="primary" 
+            icon={<ShopFilled />}
+            onClick={() => goToLocalChange(record.id)}
+            ></Button>
           <Button
             type="primary"
             danger
             icon={<UserDeleteOutlined />}
-            onClick={() => showModal(index)}
+            onClick={() => showModal(record.id - 1)}
           ></Button>
         </Space>
       ),
@@ -265,6 +269,10 @@ export function Helpers() {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [idSelected, setIdSelected] = useState(0)
+
+  const goToLocalChange = (id:number) => {
+    window.location.assign(`/admin/helpers/change-local/${id}`)
+  }
 
   const showModal = (newId: number) => {
     setIsModalOpen(true)

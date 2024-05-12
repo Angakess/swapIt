@@ -6,7 +6,7 @@ import {
   ShopOutlined,
 } from '@ant-design/icons'
 
-import { Categories, ExchangerProfile, Exchangers, Helpers, Locals } from '@Admin/pages'
+import { Categories, ChangeLocal, ExchangerProfile, Exchangers, Helpers, Locals } from '@Admin/pages'
 import { AppLayout } from 'layout'
 
 export function AdminRoutes() {
@@ -41,6 +41,7 @@ export function AdminRoutes() {
       >
         <Routes>
           <Route path="/helpers" element={<Helpers />} />
+          <Route path="/helpers/change-local/:id" element={<ChangeLocal />}/>
           <Route path="/exchangers" element={<Exchangers />} />
           <Route path='/exchangers/:id' element={<ExchangerProfile />} />
           <Route path="/locals" element={<Locals />} />
