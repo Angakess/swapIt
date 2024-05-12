@@ -1,4 +1,5 @@
 import {
+  App,
   Button,
   GetProp,
   Input,
@@ -18,6 +19,7 @@ import {
   PlusOutlined,
 } from '@ant-design/icons'
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { fetchPost } from 'helpers'
 /* import MOCK_DATA from "./MOCK_DATA_CAT.json" */
 
 type DataIndex = keyof DataType
@@ -57,6 +59,7 @@ export function Categories() {
   const [newName, setNewName] = useState('')
   const [inputStatus, setInputStatus] = useState<'' | 'error'>('')
   const [inputErrorMessage, setInputErrorMessage] = useState('')
+  const {modal} = App.useApp()
 
   const searchInput = useRef<InputRef>(null)
 
@@ -76,14 +79,14 @@ export function Categories() {
     fetch('http://localhost:8000/category/list/')
       .then((res) => res.json())
       .then((results) => {
-        setData(results)
+        setData(results.data.categories)
         console.log(results)
         setIsLoading(false)
         setTableParams({
           ...tableParams,
           pagination: {
             ...tableParams.pagination,
-            total: results.filter((item: DataType) =>
+            total: results.data.categories.filter((item: DataType) =>
               item.name.includes(searchCatName)
             ).length,
           },
@@ -91,8 +94,14 @@ export function Categories() {
       })
   }
   const sendNewCat = () => {
+    fetchPost("http://localhost:8000/category/create", {
+      name: newName
+    })
+    fetchData()
+
+    /* 
     try {
-      fetch('http://localhost:8000/category', {
+      fetch('http://localhost:8000/category/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +116,7 @@ export function Categories() {
         })
     } catch (error) {
       alert(error)
-    }
+    } */
 
     /* fetch("http://localhost:8000/category",{
       method: "POST",
@@ -157,11 +166,59 @@ export function Categories() {
     confirm()
   }
 
-  const handleClickPause = (index: number) => {
-    console.log(`SE PAUSO LA CATEGORIA ${data[index].name}`)
+  const handleClickPause = async(id: number) => {
+    setIsLoading(true)
+    const res = await fetch("http://localhost:8000/category/remove",{
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "DELETE",
+      body: JSON.stringify({
+        pk: id
+      })
+    })
+    const data = await res.json()
+    if(res.ok){
+      modal.success({
+        title: "Operación completada",
+        content: data.messages[0]
+      })
+    }
+    else{
+      modal.error({
+        title: "Operación fallida",
+        content: data.messages[0]
+      })
+    }
+    setIsLoading(false)
+    fetchData()
   }
-  const handleClickResume = (index: number) => {
-    console.log(`SE REANUDO LA CATEGORIA ${data[index].name}`)
+  const handleClickResume = async(id: number) => {
+    setIsLoading(true)
+    const res = await fetch("http://localhost:8000/category/restore",{
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "PUT",
+      body: JSON.stringify({
+        pk: id
+      })
+    })
+    const data = await res.json()
+    if(res.ok){
+      modal.success({
+        title: "Operación completada",
+        content: /* data.messages[0] */"ASDASD"
+      })
+    }
+    else{
+      modal.error({
+        title: "Operación fallida",
+        content: /* data.messages[0] */ "ZXCZXCV"
+      })
+    }
+    setIsLoading(false)
+    fetchData()
   }
 
   const getColumnSearchProps = (
@@ -250,25 +307,25 @@ export function Categories() {
     },
     {
       title: 'Acciones',
-      render: (_: any, __: DataType, index: number) => (
+      render: (_: any, record: DataType, index: number) => (
         <Space>
           {data && data[index].active ? (
             <Button
               type="default"
               icon={<PauseOutlined />}
-              onClick={() => handleClickPause(index)}
+              onClick={() => handleClickPause(record.id)}
             ></Button>
           ) : (
             <Button
               type="default"
               icon={<CaretRightOutlined />}
-              onClick={() => handleClickResume(index)}
+              onClick={() => handleClickResume(record.id)}
             ></Button>
           )}
           <Button
             type="primary"
             icon={<EditOutlined />}
-            onClick={() => showModalEdit(index)}
+            onClick={() => showModalEdit(record.id)}
           ></Button>
         </Space>
       ),
@@ -276,9 +333,9 @@ export function Categories() {
     },
   ]
 
-  const showModalEdit = (index: number) => {
+  const showModalEdit = (id: number) => {
     setIsModalOpen(true)
-    setIdSelected(index)
+    setIdSelected(id)
   }
   const handleOk = () => {
     if (!newName) {
