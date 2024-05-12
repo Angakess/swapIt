@@ -14,6 +14,12 @@
     {
         "model": "app_post.poststate",
         "fields": {
+            "name": "Suspendido"
+        }
+    },
+    {
+        "model": "app_post.poststate",
+        "fields": {
             "name": "Bloqueado"
         }
     },
