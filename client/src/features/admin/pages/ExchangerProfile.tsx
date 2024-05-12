@@ -14,7 +14,7 @@ type DataType = {
     status: string
 }
 
-export function ExchangerAccount(){
+export function ExchangerProfile(){
     
     function CardHeader(){
         return (
