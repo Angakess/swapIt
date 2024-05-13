@@ -1,12 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
-import { Button, Form, Input, Typography, FormProps, Spin, App } from 'antd'
+import { Button, Form, Typography, FormProps, Spin, App } from 'antd'
 import { AuthTitle } from '@Auth/components'
 import { useState } from 'react'
 import { fetchPost } from 'common/helpers'
 import { User, UserRole } from '@Common/types'
 import { useAuth } from '@Common/hooks'
-import { DniItem, ForgotPasswordItem, SubmitItem } from '@Auth/components/items'
+import {
+  DniItem,
+  ForgotPasswordItem,
+  SinglePasswordItem,
+  SubmitItem,
+} from '@Auth/components/items'
 
 type LoginFormData = {
   dni: string
@@ -55,6 +59,7 @@ export function Login() {
   return (
     <Spin tip="Cargando..." spinning={isLoading}>
       <AuthTitle>Iniciar sesión</AuthTitle>
+
       <Form
         layout="vertical"
         onFinish={handleFinish}
@@ -62,28 +67,11 @@ export function Login() {
         disabled={isLoading}
       >
         <DniItem autoFocus />
-
-        <Form.Item
-          label="Contraseña"
-          name="password"
-          required={false}
-          rules={[
-            { required: true, message: 'Porfavor ingrese su contraseña' },
-          ]}
-          style={{ marginBottom: '0.25rem' }}
-        >
-          <Input.Password
-            placeholder="Ingrese su contraseña"
-            size="large"
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-          />
-        </Form.Item>
-
+        <SinglePasswordItem />
         <ForgotPasswordItem disabled={isLoading} />
         <SubmitItem text="Iniciar sesión" style={{ marginTop: '0.5rem' }} />
       </Form>
+
       <Typography style={{ textAlign: 'center' }}>
         ¿No tenés una cuenta?
         <Button type="link" size="small" disabled={isLoading}>
