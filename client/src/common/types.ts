@@ -2,6 +2,8 @@ export type UserRole = 'ADMIN' | 'HELPER' | 'EXCHANGER'
 
 export type UserGender = 'MALE' | 'FEMALE' | 'OTHER'
 
+export type UserPermissions = UserRole | 'UNREGISTERED'
+
 export type User = {
   id: number
   first_name: string
@@ -16,6 +18,7 @@ export type AuthContextType = {
   isLoggedIn: () => boolean
   logIn: (user: User) => void
   logOut: () => void
+  getPermissions: () => UserPermissions
 }
 
 export type Post = {
