@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { Link, useNavigate } from 'react-router-dom'
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import {
   App,
   Button,
@@ -9,20 +8,20 @@ import {
   Flex,
   Form,
   Input,
-  InputNumber,
   Select,
   Typography,
   FormProps,
   Spin,
 } from 'antd'
 import { AuthTitle } from '@Auth/components'
-import {
-  dateValidator,
-  dniValidator,
-  phoneValidator,
-} from '@Common/helpers/validators'
+import { dateValidator, phoneValidator } from '@Common/helpers/validators'
 import { fetchPost } from 'common/helpers'
 import { UserGender, UserRole } from '@Common/types'
+import {
+  ConfirmPasswordItem,
+  DniItem,
+  SubmitItem,
+} from '@Auth/components/items'
 
 type LoginBody = {
   first_name: string
@@ -55,7 +54,6 @@ export function Register() {
   const [form] = Form.useForm<RegisterFormData>()
 
   const [isLoading, setIsLoading] = useState(false)
-  const [isPasswordVisible, setPasswordVisible] = useState(false)
 
   useEffect(() => {
     form.setFieldsValue({
@@ -70,10 +68,6 @@ export function Register() {
       confirmPassword: '1234',
     })
   }, [])
-
-  function togglePasswordVisibility() {
-    setPasswordVisible(!isPasswordVisible)
-  }
 
   const handleFinish: FormProps<RegisterFormData>['onFinish'] = async (
     fields
@@ -135,22 +129,7 @@ export function Register() {
           </Form.Item>
         </Flex>
 
-        <Form.Item
-          label="DNI"
-          name="dni"
-          required={false}
-          rules={[
-            { required: true, message: 'Ingrese su DNI' },
-            { validator: dniValidator },
-          ]}
-        >
-          <InputNumber
-            placeholder="DNI"
-            size="large"
-            style={{ width: '100%' }}
-            controls={false}
-          />
-        </Form.Item>
+        <DniItem />
 
         <Form.Item
           label="Correo"
@@ -205,64 +184,9 @@ export function Register() {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          label="Contraseña"
-          name="password"
-          required={false}
-          rules={[{ required: true, message: 'Ingrese su contraseña' }]}
-        >
-          <Input.Password
-            placeholder="Contraseña"
-            size="large"
-            visibilityToggle={{
-              visible: isPasswordVisible,
-              onVisibleChange: togglePasswordVisibility,
-            }}
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-          />
-        </Form.Item>
+        <ConfirmPasswordItem />
 
-        <Form.Item
-          label="Confirmar contraseña"
-          name="confirmPassword"
-          dependencies={['password']}
-          required={false}
-          rules={[
-            { required: true, message: 'Confirme su contraseña' },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve()
-                }
-                return Promise.reject(
-                  new Error(
-                    'No coincide con la contraseña ingresada previamente'
-                  )
-                )
-              },
-            }),
-          ]}
-        >
-          <Input.Password
-            placeholder="Confirmar contraseña"
-            size="large"
-            visibilityToggle={{
-              visible: isPasswordVisible,
-              onVisibleChange: togglePasswordVisibility,
-            }}
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-          />
-        </Form.Item>
-
-        <Form.Item>
-          <Button block type="primary" size="large" htmlType="submit">
-            Crear cuenta
-          </Button>
-        </Form.Item>
+        <SubmitItem text="Crear cuenta" style={{ marginTop: '0.5rem' }} />
       </Form>
       <Typography style={{ textAlign: 'center' }}>
         ¿Ya tenés una cuenta?
@@ -289,7 +213,7 @@ function SuccessMesage({ email }: { email: string }) {
         <Typography.Text type="secondary" italic>
           "ok"
         </Typography.Text>{' '}
-        será ridirigido a la pagína de inicio de sesión
+        será redirigido a la página de inicio de sesión
       </Typography.Paragraph>
     </>
   )
