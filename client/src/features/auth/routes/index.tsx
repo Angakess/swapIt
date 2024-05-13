@@ -21,8 +21,7 @@ export function AuthRoutes() {
           path="email-verification/:code"
           element={<EmailVerification />}
         />
-        <Route path="new-password" element={<NewPassword />} />{' '}
-        {/* seguramente temporal, averiguar para link con vencimiento */}
+        <Route path="new-password" element={<NewPassword />} />
         <Route path="/*" element={<Navigate to="/auth/login" />} />
       </Routes>
     </AuthLayout>
