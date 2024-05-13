@@ -4,7 +4,7 @@ import { UserAvatar } from '@Common/components/UserAvatar'
 import { useAuth } from '@Common/hooks'
 import { Link } from 'react-router-dom'
 
-export default function AppHeader() {
+export function AppHeader() {
   const { user, logOut, isLoggedIn } = useAuth()
   const { colorErrorActive } = theme.useToken().token
 

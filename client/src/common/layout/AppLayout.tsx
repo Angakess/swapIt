@@ -1,6 +1,6 @@
 import { Layout, theme } from 'antd'
 import { Sidebar } from './Sidebar'
-import AppHeader from './AppHeader'
+import { AppHeader } from './AppHeader'
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { colorBgContainer } = theme.useToken().token
