@@ -9,6 +9,7 @@ import {
   ContactsOutlined,
   ProductOutlined,
   ShopOutlined,
+  HomeOutlined,
 } from '@ant-design/icons'
 import { UserPermissions } from '@Common/types'
 import { useAuth } from '@Common/hooks'
@@ -20,8 +21,14 @@ type SidebarProps = {
 
 const items: Record<UserPermissions, SidebarProps> = {
   UNREGISTERED: {
-    defaultSelectedKey: '',
-    menuItems: [],
+    defaultSelectedKey: '/home',
+    menuItems: [
+      {
+        key: '/home',
+        label: 'Home',
+        icon: <HomeOutlined />,
+      },
+    ],
   },
   ADMIN: {
     defaultSelectedKey: 'helpers',
