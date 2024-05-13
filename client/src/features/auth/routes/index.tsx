@@ -6,7 +6,7 @@ import {
   NewPassword,
   Register,
   EmailVerification,
-  Verification,
+  Verification2FA,
 } from '@Auth/pages'
 import { ProtectedRoute } from '@Common/components'
 
@@ -18,7 +18,7 @@ export function AuthRoutes() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/verification" element={<Verification />} />
+          <Route path="/verification" element={<Verification2FA />} />
           <Route
             path="/email-verification/:code"
             element={<EmailVerification />}

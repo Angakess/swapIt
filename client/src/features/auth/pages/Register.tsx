@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { Link, useNavigate } from 'react-router-dom'
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import {
   App,
   Button,
@@ -18,7 +17,11 @@ import { AuthTitle } from '@Auth/components'
 import { dateValidator, phoneValidator } from '@Common/helpers/validators'
 import { fetchPost } from 'common/helpers'
 import { UserGender, UserRole } from '@Common/types'
-import { DniItem, SubmitItem } from '@Auth/components/items'
+import {
+  ConfirmPasswordItem,
+  DniItem,
+  SubmitItem,
+} from '@Auth/components/items'
 
 type LoginBody = {
   first_name: string
@@ -51,7 +54,6 @@ export function Register() {
   const [form] = Form.useForm<RegisterFormData>()
 
   const [isLoading, setIsLoading] = useState(false)
-  const [isPasswordVisible, setPasswordVisible] = useState(false)
 
   useEffect(() => {
     form.setFieldsValue({
@@ -66,10 +68,6 @@ export function Register() {
       confirmPassword: '1234',
     })
   }, [])
-
-  function togglePasswordVisibility() {
-    setPasswordVisible(!isPasswordVisible)
-  }
 
   const handleFinish: FormProps<RegisterFormData>['onFinish'] = async (
     fields
@@ -186,58 +184,7 @@ export function Register() {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          label="Contraseña"
-          name="password"
-          required={false}
-          rules={[{ required: true, message: 'Ingrese su contraseña' }]}
-        >
-          <Input.Password
-            placeholder="Contraseña"
-            size="large"
-            visibilityToggle={{
-              visible: isPasswordVisible,
-              onVisibleChange: togglePasswordVisibility,
-            }}
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Confirmar contraseña"
-          name="confirmPassword"
-          dependencies={['password']}
-          required={false}
-          rules={[
-            { required: true, message: 'Confirme su contraseña' },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve()
-                }
-                return Promise.reject(
-                  new Error(
-                    'No coincide con la contraseña ingresada previamente'
-                  )
-                )
-              },
-            }),
-          ]}
-        >
-          <Input.Password
-            placeholder="Confirmar contraseña"
-            size="large"
-            visibilityToggle={{
-              visible: isPasswordVisible,
-              onVisibleChange: togglePasswordVisibility,
-            }}
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-          />
-        </Form.Item>
+        <ConfirmPasswordItem />
 
         <SubmitItem text="Crear cuenta" style={{ marginTop: '0.5rem' }} />
       </Form>
