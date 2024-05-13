@@ -70,12 +70,12 @@ const items: Record<UserPermissions, SidebarProps> = {
 }
 
 export function Sidebar() {
-  const { getPermissions } = useAuth()
+  const { getPermission } = useAuth()
 
   const location = useLocation()
   const navigate = useNavigate()
   const [activeKey, setActiveKey] = useState(
-    items[getPermissions()].defaultSelectedKey
+    items[getPermission()].defaultSelectedKey
   )
 
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -121,7 +121,7 @@ export function Sidebar() {
           <Menu
             theme="light"
             mode="inline"
-            items={items[getPermissions()].menuItems}
+            items={items[getPermission()].menuItems}
             onClick={handleMenuItemClick}
             selectedKeys={[activeKey]}
           />

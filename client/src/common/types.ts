@@ -18,7 +18,7 @@ export type AuthContextType = {
   isLoggedIn: () => boolean
   logIn: (user: User) => void
   logOut: () => void
-  getPermissions: () => UserPermissions
+  getPermission: () => UserPermissions
 }
 
 export type Post = {

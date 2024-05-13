@@ -19,14 +19,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null)
   }
 
-  function getPermissions(): UserPermissions {
+  function getPermission(): UserPermissions {
     if (user == null) return 'UNREGISTERED'
     return user.role
   }
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoggedIn, logIn, logOut, getPermissions }}
+      value={{ user, isLoggedIn, logIn, logOut, getPermission }}
     >
       {children}
     </AuthContext.Provider>
