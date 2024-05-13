@@ -18,7 +18,7 @@ const mainPages: Record<UserPermissions, string> = {
   ADMIN: '/admin/helpers',
   EXCHANGER: '/posts',
   HELPER: '/posts',
-  UNREGISTERED: '/auth',
+  UNREGISTERED: '/home',
 }
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
         path="/"
         element={<Navigate to={mainPages[getPermission()]} replace />}
       />
-      <Route path="/*" element={<Page404 />} />
+      <Route path="*" element={<Page404 />} />
     </Routes>
   )
 }

@@ -22,7 +22,7 @@ export function AdminRoutes() {
           <Route path="/exchangers/:id" element={<ExchangerProfile />} />
           <Route path="/locals" element={<Locals />} />
           <Route path="/categories" element={<Categories />} />
-          <Route path="/*" element={<Page404 />} />
+          <Route path="*" element={<Page404 />} />
         </Route>
       </Routes>
     </AppLayout>

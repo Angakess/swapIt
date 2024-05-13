@@ -10,7 +10,7 @@ export function HomeRoutes() {
       <Routes>
         <Route path="/" element={<ProtectedRoute allowed={['UNREGISTERED']} />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/*" element={<Page404 />} />
+          <Route path="*" element={<Page404 />} />
         </Route>
       </Routes>
     </AppLayout>
