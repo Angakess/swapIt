@@ -79,6 +79,7 @@ export function ChangeLocal() {
             openErrorModal("No puede seleccionar la filial actual")
             return
         }
+        //cambiar el 5 por subsData[index].curr_helpers o algo asi
         if(5 === subsData[index].max_helpers){
             openErrorModal("La filial seleccionada no posee cupo disponible")
             return
