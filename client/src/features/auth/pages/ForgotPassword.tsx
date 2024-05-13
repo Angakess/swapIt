@@ -1,6 +1,6 @@
 import { Form, Button, FormProps } from 'antd'
 import { AuthTitle } from '@Auth/components'
-import { DniItem } from '@Auth/components/items'
+import { DniItem, SubmitItem } from '@Auth/components/items'
 
 export function ForgotPassword() {
   const onFinish: FormProps['onFinish'] = (values) => {
@@ -13,7 +13,7 @@ export function ForgotPassword() {
 
   return (
     <>
-      <AuthTitle>¿Has olvidado tu contraseña?</AuthTitle>
+      <AuthTitle>Recuperación de contraseña</AuthTitle>
       <Form
         layout="vertical"
         onFinish={onFinish}
@@ -27,18 +27,7 @@ export function ForgotPassword() {
             coincide con una cuenta de SwapIt existente
           </p>
         </Form.Item>
-        <Form.Item>
-          <Button
-            block
-            type="primary"
-            htmlType="submit"
-            size="large"
-            style={{ marginTop: '0.5rem' }}
-          >
-            Enviar
-          </Button>
-        </Form.Item>
-
+        <SubmitItem text="Enviar" style={{ marginTop: '0.5rem' }} />
         <Form.Item>
           <Button
             type="link"

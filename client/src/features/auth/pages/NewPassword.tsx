@@ -1,4 +1,5 @@
 import { AuthTitle } from '@Auth/components'
+import { SubmitItem } from '@Auth/components/items'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import { Form, Input, Button, FormProps } from 'antd'
 import { useState } from 'react'
@@ -78,17 +79,10 @@ export function NewPassword() {
           />
         </Form.Item>
 
-        <Form.Item>
-          <Button
-            block
-            type="primary"
-            htmlType="submit"
-            size="large"
-            style={{ marginTop: '0.5rem' }}
-          >
-            Actualizar contraseña
-          </Button>
-        </Form.Item>
+        <SubmitItem
+          text="Actualizar contraseña"
+          style={{ marginTop: '0.5rem' }}
+        />
 
         <Form.Item>
           <Button

@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { fetchPost } from 'common/helpers'
 import { User, UserRole } from '@Common/types'
 import { useAuth } from '@Common/hooks'
-import { DniItem, ForgotPasswordItem } from '@Auth/components/items'
+import { DniItem, ForgotPasswordItem, SubmitItem } from '@Auth/components/items'
 
 type LoginFormData = {
   dni: string
@@ -82,18 +82,7 @@ export function Login() {
         </Form.Item>
 
         <ForgotPasswordItem disabled={isLoading} />
-
-        <Form.Item>
-          <Button
-            block
-            type="primary"
-            size="large"
-            htmlType="submit"
-            style={{ marginTop: '0.5rem' }}
-          >
-            Iniciar sesión
-          </Button>
-        </Form.Item>
+        <SubmitItem text="Iniciar sesión" style={{ marginTop: '0.5rem' }} />
       </Form>
       <Typography style={{ textAlign: 'center' }}>
         ¿No tenés una cuenta?

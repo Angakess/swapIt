@@ -18,7 +18,7 @@ import { AuthTitle } from '@Auth/components'
 import { dateValidator, phoneValidator } from '@Common/helpers/validators'
 import { fetchPost } from 'common/helpers'
 import { UserGender, UserRole } from '@Common/types'
-import { DniItem } from '@Auth/components/items'
+import { DniItem, SubmitItem } from '@Auth/components/items'
 
 type LoginBody = {
   first_name: string
@@ -239,11 +239,7 @@ export function Register() {
           />
         </Form.Item>
 
-        <Form.Item>
-          <Button block type="primary" size="large" htmlType="submit">
-            Crear cuenta
-          </Button>
-        </Form.Item>
+        <SubmitItem text="Crear cuenta" style={{ marginTop: '0.5rem' }} />
       </Form>
       <Typography style={{ textAlign: 'center' }}>
         ¿Ya tenés una cuenta?
