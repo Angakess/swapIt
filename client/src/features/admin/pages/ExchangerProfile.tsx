@@ -14,97 +14,86 @@ type DataType = {
   status: string
 }
 
-export function ExchangerProfile(){
-    
-    function CardHeader(){
-        return (
-            <Flex 
-                align="center"
-                gap="small"
-
-            >
-                <h3
-                    style={{marginRight: "auto"}}
-                >Perfil de usuario</h3>
-                <Button></Button>
-                <Button></Button>
-            </Flex>
-        )
-    }
-
-    const parts = window.location.href.split("/")
-    const index: number = parseInt(parts[parts.length - 1])
-
-    const [data, setData] = useState<DataType>({
-        id: 0,
-        first_name: "",
-        last_name: "",
-        dni: "",
-        email: "",
-        gender: "",
-        date_of_birth: "",
-        phone_number: "",
-        status: ""
-    })
-    const fetchData = () => {
-        setData(MOCK_DATA[index])
-        console.log("fetching data")
-    }
-    useEffect(fetchData,)
-
-    const items: DescriptionsProps['items'] = [
-        {
-            key: "1",
-            label: "Nombre",
-            children: `${data.first_name} ${data.last_name}`
-        },
-        {
-            key: "2",
-            label: "DNI",
-            children: `${data.dni}`
-        },
-        {
-            key: "3",
-            label: "Email",
-            children: `${data.email}`
-        },
-        {
-            key: "4",
-            label: "Teléfono",
-            children: `${data.phone_number}`
-        },
-        {
-            key: "5",
-            label: "Fecha de nacimiento",
-            children: `${data.date_of_birth}`
-        },
-        {
-            key: "6",
-            label: "Género",
-            children: `${data.gender}`
-        },
-        {
-            key: "7",
-            label: "Estado",
-            children: `${data.status}`
-        },
-    ]
-
+export function ExchangerProfile() {
+  function CardHeader() {
     return (
-        
-        <>
-            <Card
-                title = {<CardHeader />}
-            >
-                <Descriptions 
-                    bordered
-                    layout="horizontal"
-                    column={1}
-                    items={items}
-                    labelStyle={{width: "15%"}}
-            />
-            </Card>
-        </>
-        
+      <Flex align="center" gap="small">
+        <h3 style={{ marginRight: 'auto' }}>Perfil de usuario</h3>
+        <Button></Button>
+        <Button></Button>
+      </Flex>
     )
+  }
+
+  const parts = window.location.href.split('/')
+  const index: number = parseInt(parts[parts.length - 1])
+
+  const [data, setData] = useState<DataType>({
+    id: 0,
+    first_name: '',
+    last_name: '',
+    dni: '',
+    email: '',
+    gender: '',
+    date_of_birth: '',
+    phone_number: '',
+    status: '',
+  })
+  const fetchData = () => {
+    setData(MOCK_DATA[index])
+    console.log('fetching data')
+  }
+  useEffect(fetchData)
+
+  const items: DescriptionsProps['items'] = [
+    {
+      key: '1',
+      label: 'Nombre',
+      children: `${data.first_name} ${data.last_name}`,
+    },
+    {
+      key: '2',
+      label: 'DNI',
+      children: `${data.dni}`,
+    },
+    {
+      key: '3',
+      label: 'Email',
+      children: `${data.email}`,
+    },
+    {
+      key: '4',
+      label: 'Teléfono',
+      children: `${data.phone_number}`,
+    },
+    {
+      key: '5',
+      label: 'Fecha de nacimiento',
+      children: `${data.date_of_birth}`,
+    },
+    {
+      key: '6',
+      label: 'Género',
+      children: `${data.gender}`,
+    },
+    {
+      key: '7',
+      label: 'Estado',
+      children: `${data.status}`,
+    },
+  ]
+
+  return (
+    <>
+      <Card title={<CardHeader />}>
+        <Descriptions
+          bordered
+          layout="horizontal"
+          column={1}
+          items={items}
+          labelStyle={{ width: '15%' }}
+        />
+      </Card>
+    </>
+  )
 }

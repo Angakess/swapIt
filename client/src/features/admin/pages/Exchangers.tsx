@@ -1,11 +1,4 @@
-import {
-  Button,
-  Space,
-  Table,
-  Input,
-  TableColumnType,
-  InputRef,
-} from 'antd'
+import { Button, Space, Table, Input, TableColumnType, InputRef } from 'antd'
 import { GetProp, TableProps } from 'antd'
 import { SearchOutlined, UserOutlined } from '@ant-design/icons'
 import { useState, useEffect, useRef } from 'react'
@@ -42,12 +35,14 @@ export function Exchangers() {
         ...params,
     }) */
 
-  const [data, setData] = useState<DataType[]>([{
-    nombre: "",
-    estado: "",
-    id: 0,
-    email: "",
-  }])
+  const [data, setData] = useState<DataType[]>([
+    {
+      nombre: '',
+      estado: '',
+      id: 0,
+      email: '',
+    },
+  ])
   const [loading, setLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -151,7 +146,7 @@ export function Exchangers() {
     //setSearchedColumn(dataIndex)
   }
 
-  const goToProfile = (record:DataType) => {
+  const goToProfile = (record: DataType) => {
     window.location.assign(`/admin/exchangers/${record.id}`)
   }
 
