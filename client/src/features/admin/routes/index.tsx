@@ -18,33 +18,7 @@ import { AppLayout } from '@Common/layout'
 export function AdminRoutes() {
   return (
     <>
-      <AppLayout
-        sidebarProps={{
-          defaultSelectedKey: 'helpers',
-          menuItems: [
-            {
-              key: '/admin/helpers',
-              label: 'Ayudantes',
-              icon: <ContactsOutlined />,
-            },
-            {
-              key: '/admin/exchangers',
-              label: 'Intercambiadores',
-              icon: <UserOutlined />,
-            },
-            {
-              key: '/admin/locals',
-              label: 'Filiales',
-              icon: <ShopOutlined />,
-            },
-            {
-              key: '/admin/categories',
-              label: 'Categorias',
-              icon: <ProductOutlined />,
-            },
-          ],
-        }}
-      >
+      <AppLayout>
         <Routes>
           <Route path="/helpers" element={<Helpers />} />
           <Route path="/exchangers" element={<Exchangers />} />
