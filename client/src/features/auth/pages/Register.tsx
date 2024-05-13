@@ -213,7 +213,7 @@ function SuccessMesage({ email }: { email: string }) {
         <Typography.Text type="secondary" italic>
           "ok"
         </Typography.Text>{' '}
-        será ridirigido a la pagína de inicio de sesión
+        será redirigido a la página de inicio de sesión
       </Typography.Paragraph>
     </>
   )

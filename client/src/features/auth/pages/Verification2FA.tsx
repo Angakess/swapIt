@@ -80,7 +80,7 @@ export function Verification2FA() {
       </Form>
       <Flex justify="center">
         <Button type="link" size="small">
-          <Link to="/auth/login">Volver a iniciar sesión</Link>
+          <Link to="/auth/login">Volver a inicio de sesión</Link>
         </Button>
       </Flex>
     </>
