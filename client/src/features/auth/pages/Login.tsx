@@ -1,21 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
-import {
-  Button,
-  Flex,
-  Form,
-  Input,
-  Typography,
-  FormProps,
-  Spin,
-  App,
-} from 'antd'
+import { Button, Form, Input, Typography, FormProps, Spin, App } from 'antd'
 import { AuthTitle } from '@Auth/components'
 import { useState } from 'react'
 import { fetchPost } from 'common/helpers'
 import { User, UserRole } from '@Common/types'
 import { useAuth } from '@Common/hooks'
-import { DniItem } from '@Auth/components/items'
+import { DniItem, ForgotPasswordItem } from '@Auth/components/items'
 
 type LoginFormData = {
   dni: string
@@ -90,13 +81,7 @@ export function Login() {
           />
         </Form.Item>
 
-        <Form.Item>
-          <Flex align="end" vertical>
-            <Button type="link" size="small" disabled={isLoading}>
-              <Link to="/auth/forgot-password">¿Olvidaste tu contraseña?</Link>
-            </Button>
-          </Flex>
-        </Form.Item>
+        <ForgotPasswordItem disabled={isLoading} />
 
         <Form.Item>
           <Button
