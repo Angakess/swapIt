@@ -3,7 +3,7 @@ import { Button, Form, Typography, FormProps, Spin, App } from 'antd'
 import { AuthTitle } from '@Auth/components'
 import { useState } from 'react'
 import { fetchPost } from 'common/helpers'
-import { User, UserRole } from '@Common/types'
+import { User } from '@Common/types'
 import { useAuth } from '@Common/hooks'
 import {
   DniItem,
@@ -35,15 +35,12 @@ export function Login() {
     const user = data.data.user as User
 
     if (resp.ok && data.ok) {
-      if (user.role !== 'HELPER') {
+      if (user.role === 'EXCHANGER') {
         authContext.logIn(user)
+        navigate('/posts', { replace: true })
+      } else {
+        navigate('/auth/verification', { state: data.data })
       }
-      const redirections: Record<UserRole, string> = {
-        ADMIN: '/admin/helpers',
-        HELPER: '/auth/verification',
-        EXCHANGER: '/posts',
-      }
-      navigate(redirections[user.role])
     } else {
       notification.error({
         message: 'Ocurrió un error al intentar iniciar sesión',

@@ -25,11 +25,3 @@ export function dateValidator(_: RuleObject, value: any) {
   }
   return Promise.resolve()
 }
-
-export function codeValidator(_: RuleObject, value: any) {
-  const format = /[`!@#$%^()_+\-=\[\]{};':"\\|,.<>\/?~]/
-  if (!value || !format.test(value)) {
-    return Promise.resolve()
-  }
-  return Promise.reject(new Error('Hay uno o más caracteres inválidos'))
-}
