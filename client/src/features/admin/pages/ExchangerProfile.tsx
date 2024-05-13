@@ -15,12 +15,32 @@ type DataType = {
 }
 
 export function ExchangerProfile() {
+
   function CardHeader() {
+
+    const sendAddHelper = () => {
+        console.log("se incorporo al intercambiador con id: ",data.id)
+        fetchData()
+    }
+    const sendBlock = () => {
+        console.log("se bloqueo al intercambiador con id: ",data.id)
+        fetchData
+    }
+    const sendUnblock = () => {
+        console.log("se desbloqueo al intercambiador con id: ",data.id)
+        fetchData
+    }
+
+
     return (
       <Flex align="center" gap="small">
         <h3 style={{ marginRight: 'auto' }}>Perfil de usuario</h3>
-        <Button></Button>
-        <Button></Button>
+        {(data.status !== "active") ?
+            (<>
+                <Button onClick={sendAddHelper}>Incorporar como ayudante</Button>
+                <Button type='primary' danger onClick={sendBlock}>Bloquear</Button>
+            </>) : 
+                <Button type='primary' onClick={sendUnblock}>Desbloquear</Button>}
       </Flex>
     )
   }
