@@ -1,41 +1,40 @@
-import { Card, Col, Modal, Row, Spin } from "antd"
-import { useEffect, useState } from "react"
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
+import { Card, Col, Modal, Row, Spin } from 'antd'
+import { useEffect, useState } from 'react'
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 
 type HelperType = {
-    id: number,
-    name: string,
-    subsidiary: {
-        id: number,
-        name: string,
-        x_coordinate: string,
-        y_coordinate: string,
-        max_helpers: number,
-        active: boolean
-    }
+  id: number
+  name: string
+  subsidiary: {
+    id: number
+    name: string
+    x_coordinate: string
+    y_coordinate: string
+    max_helpers: number
+    active: boolean
+  }
 }
 type SubsidiaryType = {
-    id: number,
-    name: string,
-    x_coordinate: string,
-    y_coordinate: string,
-    max_helpers: number,
-    active: boolean
+  id: number
+  name: string
+  x_coordinate: string
+  y_coordinate: string
+  max_helpers: number
+  active: boolean
 }
 export function ChangeLocal() {
-
-    const MOCK_HELPER: HelperType = {
-        id: 7,
-        name: "Pedro",
-        subsidiary: {
-            id: 7,
-            name: "La Plata",
-            x_coordinate: "-34.9205",
-            y_coordinate: "-57.9536",
-            max_helpers: 5,
-            active: true
-        }
-    }
+  const MOCK_HELPER: HelperType = {
+    id: 7,
+    name: 'Pedro',
+    subsidiary: {
+      id: 7,
+      name: 'La Plata',
+      x_coordinate: '-34.9205',
+      y_coordinate: '-57.9536',
+      max_helpers: 5,
+      active: true,
+    },
+  }
 
   const parts = window.location.href.split('/')
   const helperId: number = parseInt(parts[parts.length - 1])
@@ -43,95 +42,97 @@ export function ChangeLocal() {
   const [isLoading, setIsLoading] = useState(false)
   const [isModalOpen, setModalOpen] = useState(false)
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false)
-  const [subsData, setSubsData] = useState<SubsidiaryType[]>([{
-    id: 0,
-    name: "",
-    x_coordinate: "0",
-    y_coordinate: "0",
-    max_helpers: 0,
-    active: false
-  }])
+  const [subsData, setSubsData] = useState<SubsidiaryType[]>([
+    {
+      id: 0,
+      name: '',
+      x_coordinate: '0',
+      y_coordinate: '0',
+      max_helpers: 0,
+      active: false,
+    },
+  ])
   const [helperData, setHelperData] = useState<HelperType>(MOCK_HELPER)
 
   const [idSelected, setIdSelected] = useState<number>(0)
 
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState('')
 
-    const fetchSubsData = async() => {
-        setIsLoading(true)
-        const res = await fetch("http://localhost:8000/subsidiary/subsidiaries/")
-        const result = await res.json()
-        setSubsData(result)
-        setIsLoading(false)
-    }
-    useEffect(() => {
-        fetchSubsData()
-    },[])
+  const fetchSubsData = async () => {
+    setIsLoading(true)
+    const res = await fetch('http://localhost:8000/subsidiary/subsidiaries/')
+    const result = await res.json()
+    setSubsData(result)
+    setIsLoading(false)
+  }
+  useEffect(() => {
+    fetchSubsData()
+  }, [])
 
-    const fetchHelperData = async() => {
-        setIsLoading(true)
-        
-    }
+  const fetchHelperData = async () => {
+    setIsLoading(true)
+  }
 
-    const handleMarkerClick = (index:number) => {
-        console.log("Clickeaste la filial de ",subsData[index].name)
-        if(helperData.subsidiary.id === subsData[index].id){
-            openErrorModal("No puede seleccionar la filial actual")
-            return
-        }
-        //cambiar el 5 por subsData[index].curr_helpers o algo asi
-        if(5 === subsData[index].max_helpers){
-            openErrorModal("La filial seleccionada no posee cupo disponible")
-            return
-        }
-        setModalOpen(true)
-        setIdSelected(index)
+  const handleMarkerClick = (index: number) => {
+    console.log('Clickeaste la filial de ', subsData[index].name)
+    if (helperData.subsidiary.id === subsData[index].id) {
+      openErrorModal('No puede seleccionar la filial actual')
+      return
     }
-    const handleOk = () => {
-        console.log("Se cambio a la filial: ",subsData[idSelected].name)
+    //cambiar el 5 por subsData[index].curr_helpers o algo asi
+    if (5 === subsData[index].max_helpers) {
+      openErrorModal('La filial seleccionada no posee cupo disponible')
+      return
     }
-    const handleCancel = () => {
-        setModalOpen(false)
-        setIsErrorModalOpen(false)
-    }
+    setModalOpen(true)
+    setIdSelected(index)
+  }
+  const handleOk = () => {
+    console.log('Se cambio a la filial: ', subsData[idSelected].name)
+  }
+  const handleCancel = () => {
+    setModalOpen(false)
+    setIsErrorModalOpen(false)
+  }
 
-    const openErrorModal = (message: string) => {
-        Modal.error({
-            title: "Error",
-            content: message
-        })
-    }
-    
+  const openErrorModal = (message: string) => {
+    Modal.error({
+      title: 'Error',
+      content: message,
+    })
+  }
+
   return (
     <Spin spinning={isLoading}>
       <Row>
         <Col span={24}>
-            <Card title="Mapa"
-                style={{width: "100%",
-                    height:"500px"
-                }}>
-                <MapContainer
-                center={[parseFloat(helperData.subsidiary.x_coordinate), parseFloat(helperData.subsidiary.y_coordinate)]}
-                zoom={12}
-                zoomControl={false}
-                style={{ borderRadius: "5px", height: '400px' }}
+          <Card title="Mapa" style={{ width: '100%', height: '500px' }}>
+            <MapContainer
+              center={[
+                parseFloat(helperData.subsidiary.x_coordinate),
+                parseFloat(helperData.subsidiary.y_coordinate),
+              ]}
+              zoom={12}
+              zoomControl={false}
+              style={{ borderRadius: '5px', height: '400px' }}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              {subsData.map((marcador, index) => (
+                <Marker
+                  key={index}
+                  position={[
+                    parseFloat(marcador.x_coordinate),
+                    parseFloat(marcador.y_coordinate),
+                  ]}
+                  eventHandlers={{
+                    click: () => handleMarkerClick(index),
+                  }}
                 >
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    {subsData.map((marcador, index) => (
-                        <Marker 
-                            key={index} 
-                            position={[parseFloat(marcador.x_coordinate), parseFloat(marcador.y_coordinate)]}
-                            eventHandlers={{
-                                click: () => (handleMarkerClick(index)),
-                            }}
-                            
-                            >
-                            <Popup>{marcador.name}</Popup>
-                        </Marker>
-                    ))}
-                </MapContainer>
-            </Card>
-
+                  <Popup>{marcador.name}</Popup>
+                </Marker>
+              ))}
+            </MapContainer>
+          </Card>
         </Col>
       </Row>
       <Modal
@@ -143,7 +144,10 @@ export function ChangeLocal() {
         okText="Confirmar"
       >
         <p>¿Está seguro que quiere cambiar la filial de {helperData.name}? </p>
-        <p>{"("}De {helperData.subsidiary.name} a {subsData[idSelected].name}{")"}</p>
+        <p>
+          {'('}De {helperData.subsidiary.name} a {subsData[idSelected].name}
+          {')'}
+        </p>
         {/* {data[idSelected] && data[idSelected].subsidiary_cant_helpers === 1 ? 
         <p style={{fontWeight: "bold"}}>IMPORTANTE: Si {data[idSelected].full_name} es desincorporada la filial {data[idSelected].subsidiary_name} se quedará sin ayudantes, lo que deshabilitará la sucursal y suspenderá todas las publicaciones relacionadas</p> : null} */}
       </Modal>
@@ -155,12 +159,8 @@ export function ChangeLocal() {
         cancelText="Cancelar"
         okText="Confirmar"
       >
-        Modal.error({
-
-        })
-        <p>{errorMessage}</p>
+        Modal.error({})<p>{errorMessage}</p>
       </Modal>
-
     </Spin>
   )
 }
