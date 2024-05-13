@@ -3,7 +3,7 @@
         "model": "app_post.category",
         "pk": 1,
         "fields": {
-            "name": "utiles escolares",
+            "name": "útiles escolares",
             "active": true
         }
     },
@@ -29,6 +29,14 @@
         "fields": {
             "name": "elementos de limpieza",
             "active": true
+        }
+    },
+    {
+        "model": "app_post.category",
+        "pk": 5,
+        "fields": {
+            "name": "herramientas",
+            "active": false
         }
     }
 ]

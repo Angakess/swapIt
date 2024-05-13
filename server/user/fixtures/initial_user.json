@@ -1,155 +1,482 @@
-
 [
-    {
-        "model": "user.useraccount",
-        "fields": {
-            "first_name": "John",
-            "last_name": "Doe",
-            "dni": "12345678",
-            "email": "john.doe@mail.com",
-            "date_of_birth": "1990-01-01",
-            "phone_number": "1234567890",
-            "id_subsidiary": null,
-            "failed_login_attempts": 0,
-            "is_staff": false,
-            "is_active": true,
-            "gender": "MALE",
-            "state": 3,
-            "role": "EXCHANGER",
-            "password": "482c811da5d5b4bc6d497ffa98491e38"
-        }
-    },
-    {
-        "model": "user.useraccount",
-        "fields": {
-            "first_name": "Jane",
-            "last_name": "Smith",
-            "dni": "98765432",
-            "email": "jane.smith@mail.com",
-            "date_of_birth": "1995-05-05",
-            "phone_number": "9876543210",
-            "id_subsidiary": null,
-            "failed_login_attempts": 0,
-            "is_staff": false,
-            "is_active": true,
-            "gender": "FEMALE",
-            "state": 3,
-            "role": "EXCHANGER",
-            "password": "482c811da5d5b4bc6d497ffa98491e38"
-        }
-    },
-    {
-        "model": "user.useraccount",
-        "fields": {
-            "first_name": "Robert",
-            "last_name": "Johnson",
-            "dni": "45678912",
-            "email": "robert.johnson@mail.com",
-            "date_of_birth": "1985-08-15",
-            "phone_number": "4567891230",
-            "id_subsidiary": null,
-            "failed_login_attempts": 0,
-            "is_staff": false,
-            "is_active": true,
-            "gender": "MALE",
-            "state": 3,
-            "role": "EXCHANGER",
-            "password": "482c811da5d5b4bc6d497ffa98491e38"
-        }
-    },
-    {
-        "model": "user.useraccount",
-        "fields": {
-            "first_name": "Emily",
-            "last_name": "Davis",
-            "dni": "32165498",
-            "email": "emily.davis@mail.com",
-            "date_of_birth": "1998-12-10",
-            "phone_number": "3216549870",
-            "id_subsidiary": null,
-            "failed_login_attempts": 0,
-            "is_staff": false,
-            "is_active": true,
-            "gender": "FEMALE",
-            "state": 3,
-            "role": "EXCHANGER",
-            "password": "482c811da5d5b4bc6d497ffa98491e38"
-        }
-    },
-    {
-        "model": "user.useraccount",
-        "fields": {
-            "first_name": "Michael",
-            "last_name": "Brown",
-            "dni": "98712365",
-            "email": "michael.brown@mail.com",
-            "date_of_birth": "1992-06-20",
-            "phone_number": "9871236540",
-            "id_subsidiary": 1,
-            "failed_login_attempts": 0,
-            "is_staff": false,
-            "is_active": true,
-            "gender": "MALE",
-            "state": 3,
-            "role": "HELPER",
-            "password": "482c811da5d5b4bc6d497ffa98491e38"
-        }
-    },
-    {
-        "model": "user.useraccount",
-        "fields": {
-            "first_name": "Emma",
-            "last_name": "Johnson",
-            "dni": "65498732",
-            "email": "emma.johnson@mail.com",
-            "date_of_birth": "1994-09-25",
-            "phone_number": "6549873210",
-            "id_subsidiary": 1,
-            "failed_login_attempts": 0,
-            "is_staff": false,
-            "is_active": true,
-            "gender": "FEMALE",
-            "state": 3,
-            "role": "HELPER",
-            "password": "482c811da5d5b4bc6d497ffa98491e38"
-        }
-    },
-    {
-        "model": "user.useraccount",
-        "fields": {
-            "first_name": "William",
-            "last_name": "Miller",
-            "dni": "12398765",
-            "email": "william.miller@mail.com",
-            "date_of_birth": "1988-03-12",
-            "phone_number": "1239876540",
-            "id_subsidiary": 2,
-            "failed_login_attempts": 0,
-            "is_staff": false,
-            "is_active": true,
-            "gender": "MALE",
-            "state": 3,
-            "role": "HELPER",
-            "password": "482c811da5d5b4bc6d497ffa98491e38"
-        }
-    },
-    {
-        "model": "user.useraccount",
-        "fields": {
-            "first_name": "Olivia",
-            "last_name": "Wilson",
-            "dni": "98732165",
-            "email": "olivia.wilson@mail.com",
-            "date_of_birth": "1996-11-08",
-            "phone_number": "9873216540",
-            "id_subsidiary": 2,
-            "failed_login_attempts": 0,
-            "is_staff": false,
-            "is_active": true,
-            "gender": "FEMALE",
-            "state": 3,
-            "role": "HELPER",
-            "password": "482c811da5d5b4bc6d497ffa98491e38"
-        }
+  {
+    "model": "user.useraccount",
+    "pk": 1,
+    "fields": {
+      "first_name": "Administrador",
+      "last_name": "General",
+      "dni": "00000000",
+      "email": "admin_caritas@yopmail.com",
+      "date_of_birth": "2001-11-08",
+      "phone_number": "342780437",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 1,
+      "role": null,
+      "password": null
     }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 2,
+    "fields": {
+      "first_name": "Peterus",
+      "last_name": "Nickless",
+      "dni": "49152698",
+      "email": "pnickless1@yopmail.com",
+      "date_of_birth": "1949-08-08",
+      "phone_number": "7332272396",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 3,
+    "fields": {
+      "first_name": "Amalea",
+      "last_name": "Kierans",
+      "dni": "41448132",
+      "email": "akierans2@yopmail.com",
+      "date_of_birth": "1958-12-25",
+      "phone_number": "7842532734",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": ,
+    "fields": {
+      "first_name": "Nevile",
+      "last_name": "Livett",
+      "dni": "33040563",
+      "email": "nlivett3@yopmail.com",
+      "date_of_birth": "1960-03-25",
+      "phone_number": "2918826931",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 4,
+    "fields": {
+      "first_name": "Valentino",
+      "last_name": "McAster",
+      "dni": "11913963",
+      "email": "vmcaster4@yopmail.ru",
+      "date_of_birth": "1985-07-05",
+      "phone_number": "8499000565",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 5,
+    "fields": {
+      "first_name": "Darby",
+      "last_name": "Camilli",
+      "dni": "16028757",
+      "email": "dcamilli5@yopmail.de",
+      "date_of_birth": "1990-12-05",
+      "phone_number": "5611744809",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 6,
+    "fields": {
+      "first_name": "Brittani",
+      "last_name": "Giraudou",
+      "dni": "19449531",
+      "email": "bgiraudou6@yopmail.cz",
+      "date_of_birth": "1984-05-12",
+      "phone_number": "7988190015",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 7,
+    "fields": {
+      "first_name": "Sayre",
+      "last_name": "Dowsing",
+      "dni": "24296311",
+      "email": "sdowsing7@yopmail.com",
+      "date_of_birth": "1964-05-11",
+      "phone_number": "8762636701",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 8,
+    "fields": {
+      "first_name": "Wileen",
+      "last_name": "Addicote",
+      "dni": "15164957",
+      "email": "waddicote8@yopmail.org",
+      "date_of_birth": "1986-12-22",
+      "phone_number": "8743753669",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "Genderqueer",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 9,
+    "fields": {
+      "first_name": "Fields",
+      "last_name": "Cruse",
+      "dni": "26880580",
+      "email": "fcruse9@yopmail.com",
+      "date_of_birth": "1991-08-18",
+      "phone_number": "1135635156",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 10,
+    "fields": {
+      "first_name": "Casey",
+      "last_name": "Schoenrock",
+      "dni": "25035571",
+      "email": "cschoenrocka@yopmail.com",
+      "date_of_birth": "1975-11-02",
+      "phone_number": "4126628184",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 11,
+    "fields": {
+      "first_name": "Emerson",
+      "last_name": "MacCaig",
+      "dni": "40153322",
+      "email": "emaccaigb@yopmail.org",
+      "date_of_birth": "1954-09-15",
+      "phone_number": "3611518643",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 12,
+    "fields": {
+      "first_name": "Westbrook",
+      "last_name": "Curtain",
+      "dni": "16126254",
+      "email": "wcurtainc@yopmail.com",
+      "date_of_birth": "1971-12-27",
+      "phone_number": "4827484720",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 13,
+    "fields": {
+      "first_name": "Page",
+      "last_name": "Corringham",
+      "dni": "46760040",
+      "email": "pcorringhamd@yopmail.com",
+      "date_of_birth": "1972-08-10",
+      "phone_number": "3492946341",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 14,
+    "fields": {
+      "first_name": "Thayne",
+      "last_name": "Ivchenko",
+      "dni": "16418193",
+      "email": "tivchenkoe@yopmail.net",
+      "date_of_birth": "1967-11-17",
+      "phone_number": "214252869",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 15,
+    "fields": {
+      "first_name": "Rena",
+      "last_name": "Longcake",
+      "dni": "23309342",
+      "email": "rlongcakef@yopmail.com",
+      "date_of_birth": "1986-11-04",
+      "phone_number": "1582241918",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 16,
+    "fields": {
+      "first_name": "Kristofer",
+      "last_name": "Yashunin",
+      "dni": "10623784",
+      "email": "kyashuning@yopmail-blog.com",
+      "date_of_birth": "1977-09-17",
+      "phone_number": "7719954649",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 17,
+    "fields": {
+      "first_name": "Simeon",
+      "last_name": "Heaslip",
+      "dni": "19150417",
+      "email": "sheasliph@yopmail.com",
+      "date_of_birth": "1948-06-14",
+      "phone_number": "4321757447",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 18,
+    "fields": {
+      "first_name": "Reese",
+      "last_name": "Capaldo",
+      "dni": "41467817",
+      "email": "rcapaldoi@yopmail.com",
+      "date_of_birth": "1942-09-06",
+      "phone_number": "3424791121",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 19,
+    "fields": {
+      "first_name": "Cosette",
+      "last_name": "Brumpton",
+      "dni": "38412162",
+      "email": "cbrumptonj@yopmail.org",
+      "date_of_birth": "1952-02-02",
+      "phone_number": "5664020541",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 20,
+    "fields": {
+      "first_name": "Ralph",
+      "last_name": "Buey",
+      "dni": "45164445",
+      "email": "rbueyk@yopmail.com",
+      "date_of_birth": "1973-09-14",
+      "phone_number": "6754869180",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 21,
+    "fields": {
+      "first_name": "Tuck",
+      "last_name": "Pascho",
+      "dni": "46674041",
+      "email": "tpaschol@yopmail.edu",
+      "date_of_birth": "1961-02-01",
+      "phone_number": "817738882",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 22,
+    "fields": {
+      "first_name": "Beverie",
+      "last_name": "Lockwood",
+      "dni": "44992503",
+      "email": "blockwoodm@yopmail.com",
+      "date_of_birth": "1988-07-13",
+      "phone_number": "5756097881",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "Non-binary",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 23,
+    "fields": {
+      "first_name": "Jacquelynn",
+      "last_name": "Gettings",
+      "dni": "11153471",
+      "email": "jgettings0@yopmail.com",
+      "date_of_birth": "2001-11-08",
+      "phone_number": "342780437",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": null,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 1,
+      "role": null,
+      "password": null
+    }
+  },
 ]
