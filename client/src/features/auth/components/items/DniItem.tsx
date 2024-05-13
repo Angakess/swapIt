@@ -1,5 +1,4 @@
-import { Form, InputNumber } from 'antd'
-import { dniValidator } from '@Common/helpers/validators'
+import { Form, Input } from 'antd'
 
 type InputDniProps = {
   autoFocus?: boolean
@@ -12,15 +11,15 @@ export function DniItem({ autoFocus = false }: InputDniProps) {
       name="dni"
       required={false}
       rules={[
-        { required: true, message: 'Porfavor ingrese su DNI' },
-        { validator: dniValidator },
+        { required: true, message: 'Ingrese su DNI' },
+        { len: 8, message: 'El DNI debe ser de 8 dígitos' },
+        { pattern: /^\d+$/, message: 'El DNI debe ser un número' },
       ]}
     >
-      <InputNumber
+      <Input
         placeholder="Ingrese su DNI"
         size="large"
         style={{ width: '100%' }}
-        controls={false}
         autoFocus={autoFocus}
       />
     </Form.Item>

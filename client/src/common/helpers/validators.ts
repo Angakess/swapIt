@@ -1,14 +1,9 @@
 import { RuleObject } from 'antd/es/form'
 
-export function dniValidator(_: RuleObject, value: number) {
-  if (!value || value.toString().length == 8) {
-    return Promise.resolve()
-  }
-  return Promise.reject(new Error('El DNI debe ser un número de 8 dígitos'))
-}
+const regexDigits = /^\d+$/
 
 export function phoneValidator(_: RuleObject, value: string) {
-  if (!value || /^\d+$/.test(value)) {
+  if (!value || regexDigits.test(value)) {
     return Promise.resolve()
   }
   return Promise.reject(new Error('Debe ingresar un número'))
