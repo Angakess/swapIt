@@ -1,6 +1,6 @@
 import { createContext } from 'react'
-import { useLocalStorage } from 'hooks'
-import { AuthContextType, User } from 'types'
+import { useLocalStorage } from '@Common/hooks'
+import { AuthContextType, UserPermissions, User } from '@Common/types'
 
 export const AuthContext = createContext<AuthContextType | null>(null)
 
@@ -19,8 +19,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null)
   }
 
+  function getPermission(): UserPermissions {
+    if (user == null) return 'UNREGISTERED'
+    return user.role
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, logIn, logOut }}>
+    <AuthContext.Provider
+      value={{ user, isLoggedIn, logIn, logOut, getPermission }}
+    >
       {children}
     </AuthContext.Provider>
   )

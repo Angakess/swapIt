@@ -8,6 +8,7 @@ import {
 } from '@Posts/components'
 import MOCK_POSTS from '@Posts/MOCK_POSTS.json'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { Page404 } from '@Common/pages'
 
 export function Post() {
   const { borderRadiusLG } = theme.useToken().token
@@ -16,7 +17,7 @@ export function Post() {
   const post = MOCK_POSTS.posts.find((p) => p.id.toString() === id)
 
   if (!post) {
-    return <>Post no existe</>
+    return <Page404 />
   }
 
   return (

@@ -1,55 +1,82 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Layout, Menu, theme } from 'antd'
-import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 import { MenuProps } from 'antd/es/menu'
+import { MenuItemType } from 'antd/es/menu/hooks/useItems'
+import {
+  UploadOutlined,
+  UserOutlined,
+  ContactsOutlined,
+  ProductOutlined,
+  ShopOutlined,
+} from '@ant-design/icons'
+import { UserPermissions } from '@Common/types'
+import { useAuth } from '@Common/hooks'
 
-export type SidebarProps = {
+type SidebarProps = {
   menuItems: MenuItemType[]
   defaultSelectedKey: string
 }
 
-type Props = {
-  sidebarProps: SidebarProps
-  children: React.ReactNode
+const items: Record<UserPermissions, SidebarProps> = {
+  UNREGISTERED: {
+    defaultSelectedKey: '',
+    menuItems: [],
+  },
+  ADMIN: {
+    defaultSelectedKey: 'helpers',
+    menuItems: [
+      {
+        key: '/admin/helpers',
+        label: 'Ayudantes',
+        icon: <ContactsOutlined />,
+      },
+      {
+        key: '/admin/exchangers',
+        label: 'Intercambiadores',
+        icon: <UserOutlined />,
+      },
+      {
+        key: '/admin/locals',
+        label: 'Filiales',
+        icon: <ShopOutlined />,
+      },
+      {
+        key: '/admin/categories',
+        label: 'Categorias',
+        icon: <ProductOutlined />,
+      },
+    ],
+  },
+  EXCHANGER: {
+    defaultSelectedKey: '/posts',
+    menuItems: [
+      {
+        key: '/posts',
+        label: 'Publicaciones',
+        icon: <UploadOutlined />,
+      },
+      {
+        key: '/posts/add',
+        label: 'Agregar Publicación',
+        icon: <UploadOutlined />,
+      },
+    ],
+  },
+  HELPER: {
+    defaultSelectedKey: '',
+    menuItems: [],
+  },
 }
 
-export function AppLayout({ sidebarProps, children }: Props) {
-  const { colorBgContainer } = theme.useToken().token
+export function Sidebar() {
+  const { getPermission } = useAuth()
 
-  return (
-    <Layout style={{ maxHeight: '100dvh' }}>
-      <Sidebar {...sidebarProps} />
-      <Layout style={{ overflow: 'auto' }}>
-        <Layout.Header
-          style={{
-            backgroundColor: colorBgContainer,
-            padding: '0',
-            marginBottom: '1.5rem',
-          }}
-        >
-          header
-        </Layout.Header>
-        <Layout.Content
-          style={{
-            padding: '0 1.5rem',
-            maxWidth: '900px',
-            margin: '0 auto',
-            width: '100%',
-            height: 'auto',
-          }}
-        >
-          {children}
-        </Layout.Content>
-      </Layout>
-    </Layout>
-  )
-}
-
-function Sidebar({ menuItems, defaultSelectedKey }: SidebarProps) {
   const location = useLocation()
   const navigate = useNavigate()
-  const [activeKey, setActiveKey] = useState(defaultSelectedKey)
+  const [activeKey, setActiveKey] = useState(
+    items[getPermission()].defaultSelectedKey
+  )
 
   const [isCollapsed, setIsCollapsed] = useState(false)
   const { colorBgContainer } = theme.useToken().token
@@ -94,7 +121,7 @@ function Sidebar({ menuItems, defaultSelectedKey }: SidebarProps) {
           <Menu
             theme="light"
             mode="inline"
-            items={menuItems}
+            items={items[getPermission()].menuItems}
             onClick={handleMenuItemClick}
             selectedKeys={[activeKey]}
           />

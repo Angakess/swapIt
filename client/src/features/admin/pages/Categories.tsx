@@ -19,7 +19,7 @@ import {
   PlusOutlined,
 } from '@ant-design/icons'
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
-import { fetchPost } from 'helpers'
+import { fetchPost } from '@Common/helpers'
 /* import MOCK_DATA from "./MOCK_DATA_CAT.json" */
 
 type DataIndex = keyof DataType
