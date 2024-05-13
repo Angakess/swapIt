@@ -1,4 +1,5 @@
 
+import hashlib
 import coreapi
 from user.serializers import UserSerializer
 from user.models import UserAccount, UserRegister, UserForgotPassword
@@ -274,7 +275,10 @@ class LoginUser(APIView):
             )
 
         # Existe pero la contraseña es incorrecta
-        if not user.check_password(password):
+        md5_pass = hashlib.md5(password.encode()).hexdigest()
+        print("md5_pass", md5_pass)
+        print("user.password", user.password)
+        if not user.password == md5_pass:
             if user.failed_login_attempts >= 2:
                 state = UserState.objects.get(id=2)
                 user.state = state

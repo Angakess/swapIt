@@ -2,37 +2,37 @@
     {
         "model": "app_post.poststate",
         "fields": {
-            "name": "Activo"
+            "name": "activo"
         }
     },
     {
         "model": "app_post.poststate",
         "fields": {
-            "name": "Pendiente de Revisión"
+            "name": "pendiente"
         }
     },
     {
         "model": "app_post.poststate",
         "fields": {
-            "name": "Suspendido"
+            "name": "suspendido"
         }
     },
     {
         "model": "app_post.poststate",
         "fields": {
-            "name": "Bloqueado"
+            "name": "bloqueado"
         }
     },
     {
         "model": "app_post.poststate",
         "fields": {
-            "name": "Eliminado"
+            "name": "eliminado"
         }
     },
     {
         "model": "app_post.poststate",
         "fields": {
-            "name": "Rechazado"
+            "name": "rechazado"
         }
     }
 ]

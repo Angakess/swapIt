@@ -10,16 +10,18 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.schemas import AutoSchema
 
 # Format for the response:
-# {
+# ({
 #     'ok': True,
 #     'messages': [messageSuccess],
 #     'data': {'modelName': serializer}
-# }
-# {
+# }, status=status.
+# )
+# ({
 #     'ok': False,
 #     'messages': [messageError],
 #     'data': {}
-# }
+# }, status=status.
+# )
 
 
 class CategoryRemove(APIView):
@@ -139,7 +141,7 @@ class CategoryList(generics.ListAPIView):
 # ----------------------POST----------------------
 
 
-class PostDetails(generics.UpdateAPIView):
+class PostUpdate(generics.UpdateAPIView):
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -147,19 +149,20 @@ class PostDetails(generics.UpdateAPIView):
     def get_queryset(self):
         return Category.objects.all()
 
-    def partial_update(self, request, *args, **kwargs):
-        try:
-            values = dict(**request.data, **kwargs)
-            id = values['id']
-            post = Post.objects.filter(pk=id)
-            if (post):
-                post.update(**values)
-                return Response({"Updated": f"{values} "})
-            raise Exception("Post not found")
-        except KeyError:
-            return Response({"Falta ID, Parametros:", f"{values} "})
-        except Exception:
-            return Response({"Error de Atributos:", f"{values} "})
+
+class PostRetrieve(generics.RetrieveAPIView):
+
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({
+            'ok': True,
+            'messages': ['Post encontrado'],
+            'data': {'post': serializer.data}
+        }, status=status.HTTP_200_OK)
 
 
 class PostCreate(generics.CreateAPIView):
@@ -171,8 +174,16 @@ class PostCreate(generics.CreateAPIView):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+            return Response({
+                'ok': True,
+                'messages': ['Post creado exitosamente'],
+                'data': {'post': serializer.data}
+            }, status=status.HTTP_201_CREATED)
+        return Response({
+            'ok': False,
+            'messages': ['Error al crear el post'],
+            'data': {serializer.errors}
+        }, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
 class PostLists(generics.ListAPIView):
@@ -206,6 +217,7 @@ class PostListsExchanger(generics.ListAPIView):
         'name',
         'state_product',
         'state__name',
+        'category__name',
     ]
     search_fields = [
         'name',
@@ -267,8 +279,28 @@ class PostStateCreate(generics.CreateAPIView):
     serializer_class = PostStateSerializer
 
     def create(self, request):
+        if (PostState.objects.filter(name=request.data['name']).exists()):
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['El estado ya existe'],
+                    'data': {}
+                }, status=status.HTTP_406_NOT_ACCEPTABLE
+            )
         serializer = PostStateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+            return Response(
+                {
+                    'ok': True,
+                    'messages': ['Estado creado exitosamente'],
+                    'data': {'post_state': serializer.data}
+                }, status=status.HTTP_201_CREATED
+            )
+        return Response(
+            {
+                'ok': False,
+                'messages': ['Error al crear el estado'],
+                'data': {serializer.errors}
+            }, status=status.HTTP_406_NOT_ACCEPTABLE
+        )

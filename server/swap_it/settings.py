@@ -93,6 +93,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher'
+]
+
 LANGUAGE_CODE = 'es-AR'
 
 TIME_ZONE = 'UTC'
