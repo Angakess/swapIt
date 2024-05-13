@@ -1,11 +1,4 @@
-import {
-  Button,
-  Space,
-  Table,
-  Input,
-  TableColumnType,
-  InputRef,
-} from 'antd'
+import { Button, Space, Table, Input, TableColumnType, InputRef } from 'antd'
 import { GetProp, TableProps } from 'antd'
 import { SearchOutlined, UserOutlined } from '@ant-design/icons'
 import { useState, useEffect, useRef } from 'react'
@@ -133,7 +126,7 @@ export function Exchangers() {
     //setSearchedColumn(dataIndex)
   }
 
-  const goToProfile = (record:DataType) => {
+  const goToProfile = (record: DataType) => {
     window.location.assign(`/admin/exchangers/${record.id}`)
   }
 

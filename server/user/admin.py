@@ -3,8 +3,8 @@ from . import models
 
 @admin.register(models.UserAccount)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id','first_name', 'last_name', 'email', 'is_staff', 'role')
-    search_fields = ('id','first_name', 'last_name', 'email', 'is_staff', 'role',)
+    list_display = ('id', 'dni', 'first_name', 'last_name', 'email', 'state', 'role',)
+    search_fields = ('id', 'dni', 'first_name', 'last_name', 'email', 'state', 'role',)
 
 @admin.register(models.UserRegister)
 class UserRegisterAdmin(admin.ModelAdmin):

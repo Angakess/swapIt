@@ -1,37 +1,33 @@
 [
     {
         "model": "user.userstate",
-        "pk": 1,
         "fields": {
-            "name": "Bloqueado"
+            "name": "bloqueado"
         }
     },
     {
         "model": "user.userstate",
         "pk": 2,
         "fields": {
-            "name": "Suspendido"
+            "name": "suspendido"
         }
     },
     {
         "model": "user.userstate",
-        "pk": 3,
         "fields": {
-            "name": "Activo"
+            "name": "activo"
         }
     },
     {
         "model": "user.userstate",
-        "pk": 4,
         "fields": {
-            "name": "Inactivo"
+            "name": "inactivo"
         }
     },
     {
         "model": "user.userstate",
-        "pk": 5,
         "fields": {
-            "name": "Eliminado"
+            "name": "eliminado"
         }
     }
 ]

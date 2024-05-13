@@ -250,11 +250,11 @@ export function Helpers() {
       title: 'Acciones',
       render: (_: any, record: DataType) => (
         <Space>
-          <Button 
-            type="primary" 
+          <Button
+            type="primary"
             icon={<ShopFilled />}
             onClick={() => goToLocalChange(record.id)}
-            ></Button>
+          ></Button>
           <Button
             type="primary"
             danger
@@ -269,7 +269,7 @@ export function Helpers() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [idSelected, setIdSelected] = useState(0)
 
-  const goToLocalChange = (id:number) => {
+  const goToLocalChange = (id: number) => {
     window.location.assign(`/admin/helpers/change-local/${id}`)
   }
 

@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd'
 import { PostItem } from './PostItem'
-import { Post } from 'types'
+import { Post } from '@Common/types'
 
 export function PostsList({ posts }: { posts: Post[] }) {
   return (

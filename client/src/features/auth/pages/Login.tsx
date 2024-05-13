@@ -12,11 +12,11 @@ import {
   App,
 } from 'antd'
 import { AuthTitle } from '@Auth/components'
-import { dniValidator } from 'helpers/validators'
-import { useContext, useState } from 'react'
-import { fetchPost } from 'helpers'
-import { AuthContext } from '@Auth/context'
-import { UserRole } from 'types'
+import { dniValidator } from '@Common/helpers/validators'
+import { useState } from 'react'
+import { fetchPost } from 'common/helpers'
+import { User, UserRole } from '@Common/types'
+import { useAuth } from '@Common/hooks'
 
 type LoginFormData = {
   dni: string
@@ -24,7 +24,7 @@ type LoginFormData = {
 }
 
 export function Login() {
-  const authContext = useContext(AuthContext)!
+  const authContext = useAuth()
   const navigate = useNavigate()
   const { notification } = App.useApp()
   const [form] = Form.useForm<LoginFormData>()
@@ -38,14 +38,16 @@ export function Login() {
       { ...values }
     )
     const data = await resp.json()
+    const user = data.data.user as User
+
     if (resp.ok && data.ok) {
-      authContext.logIn(data.data.user)
+      authContext.logIn(user)
       const redirections: Record<UserRole, string> = {
         ADMIN: '/admin/helpers',
         EXCHANGER: '/posts',
         HELPER: '/posts',
       }
-      navigate(redirections[authContext.user!.role])
+      navigate(redirections[user.role])
     } else {
       notification.error({
         message: 'Ocurrió un error al intentar iniciar sesión',

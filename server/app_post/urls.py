@@ -3,26 +3,23 @@ from app_post import views
 
 
 urlpatterns = [
-    path('category/remove', views.CategoryRemove.as_view(),
-         name='category-remove'),
-    path('category/restore', views.CategoryRestore.as_view(),
-         name='category-restore'),
+    # ------------------- VISTAS DE CATEGORIA -------------------
+    path('category/remove', views.CategoryRemove.as_view(),),
+    path('category/restore', views.CategoryRestore.as_view(),),
     path('category/create', views.CategoryCreate.as_view()),
-    path('category/list/', views.CategoryList.as_view(),
-         name='category-list'),
-    path('category/update/<int:pk>', views.CategoryUpdate.as_view(),
-         name='category-update'),
+    path('category/list/', views.CategoryList.as_view(),),
+    path('category/update/<int:pk>', views.CategoryUpdate.as_view()),
+    # ------------------- VISTAS DE POST -------------------
+    path('post/<int:pk>/', views.PostRetrieve.as_view()),
+    path('post/update/<int:id>/', views.PostUpdate.as_view()),
+    path('post/', views.PostCreate.as_view()),
+    path('post/remove/<int:pk>', views.PostRemove.as_view()),
 
-    path('post/<int:id>/', views.PostDetails.as_view(), name='post-detail'),
-    path('post/', views.PostCreate.as_view(), name='post-create'),
-    path('post/remove/<int:pk>', views.PostRemove.as_view(), name='post-remove'),
-
-    path('post/list/',
-         views.PostLists.as_view(),
-         name='post-lists'),
-    path('post/list/<int:id>/',
-         views.PostListsExchanger.as_view(),
-         name='post-lists-exchanger'),
+    path('post/list/', views.PostLists.as_view(),),
+    path('post/list/<int:id>/', views.PostListsExchanger.as_view(),),
+    # ------------------- VISTAS DE POST STATE -------------------
+    path('poststate/list/', views.PostStateList.as_view()),
+    path('poststate/create/', views.PostStateCreate.as_view(),)
 
 
 

@@ -1,4 +1,5 @@
 
+import hashlib
 import coreapi
 from user.serializers import UserSerializer
 from user.models import UserAccount, UserRegister, UserForgotPassword
@@ -47,7 +48,7 @@ class CreateUser(generics.CreateAPIView):
                 code=str(generated_code), user=user)
 
             send_email_to_user(
-                email=user_register.user.email,
+                email=[user_register.user.email],
                 subject='Activación de cuenta de: ' +
                 user_register.user.first_name + ' '
                 + user_register.user.last_name,
@@ -108,6 +109,7 @@ class ActivateUser(APIView):
             'data': {},
         }, status=status.HTTP_200_OK)
     
+
 class ForgotPassword(APIView):
     def post(self, request):
         dni = request.data.get('dni')
@@ -137,7 +139,7 @@ class ForgotPassword(APIView):
 
         if (already_has_code is not None):
             send_email_to_user(
-                email=already_has_code.user.email,
+                email=[already_has_code.user.email],
                 subject='Recuperacion de contraseña de: ' +
                 already_has_code.user.first_name + ' '
                 + already_has_code.user.last_name,
@@ -159,7 +161,7 @@ class ForgotPassword(APIView):
             code=str(generated_code), user=user)
 
         send_email_to_user(
-            email=user_forgot_password.user.email,
+            email=[user_forgot_password.user.email],
             subject='Recuperacion de contraseña de: ' +
             user_forgot_password.user.first_name + ' '
             + user_forgot_password.user.last_name,
@@ -238,7 +240,7 @@ class LoginUser(APIView):
                 user__dni=user.dni).first()
 
             send_email_to_user(
-                email=user_register.user.email,
+                email=[user_register.user.email],
                 subject='Activación de cuenta de: ' +
                 user_register.user.first_name + ' '
                 + user_register.user.last_name,
@@ -273,7 +275,10 @@ class LoginUser(APIView):
             )
 
         # Existe pero la contraseña es incorrecta
-        if not user.check_password(password):
+        md5_pass = hashlib.md5(password.encode()).hexdigest()
+        print("md5_pass", md5_pass)
+        print("user.password", user.password)
+        if not user.password == md5_pass:
             if user.failed_login_attempts >= 2:
                 state = UserState.objects.get(id=2)
                 user.state = state
@@ -315,7 +320,7 @@ class LoginUser(APIView):
             code_2fa = random.randint(100000, 999999)
 
             send_email_to_user(
-                email=user.email,
+                email=[user.email],
                 subject='Codigo de 2FA: ' + user.first_name + ' '
                 + user.last_name,
                 message='Tu codigo de 2FA es: ' + str(code_2fa)
@@ -342,16 +347,59 @@ class LoginUser(APIView):
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+
 class SearchHelper(generics.ListAPIView):
     """Search Helper"""
     serializer_class = ListHelperSerializer
 
     def get_queryset(self):
         return UserAccount.objects.filter(role=Role.HELPER)
-    
+
+
 class SearchExchanger(generics.ListAPIView):
     """Search Exchanger"""
 
     serializer_class = ListExchangerSerializer
     def get_queryset(self):
         return UserAccount.objects.filter(role=Role.EXCHANGER)
+
+
+class DisincorporateHelper(APIView):
+    def delete(self, request, id):
+        helper = UserAccount.objects.filter(pk=id, role= Role.HELPER).first()
+        if helper is None:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Usuario no encontrado'],
+                    'data': {}
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        subsidiary = helper.id_subsidiary # NOTE: id_subsidiary is a subsidiary object
+
+        if (subsidiary.users.count() == 1):
+            posts  = subsidiary.posts.all()
+            unique_emails = list(posts.values_list('user__email', flat=True).distinct())
+            send_email_to_user(
+                email=unique_emails,
+                subject='Pausa temporal de la filial' + subsidiary.name,
+                message= 'La sucursal ' + subsidiary.name + 
+                    ' ha sido pausada temporalmente, todas sus publicaciones relacionadas a esta filial, quedaran suspendidas temporalmente.' + 
+                    'hasta que se incorpore un nuevo ayudante a la sucursal. \n'
+                    + 'Para que su publicacion sea visible nuevamente, seleccione una nueva filial activa en la que desee publicar. \n'
+            )
+            posts.update(state=3)
+            subsidiary.active = False 
+            subsidiary.save()
+
+        helper.delete()
+        return Response(
+            {
+                'ok': True,
+                'messages': ['Usuario eliminado exitosamente'],
+                'data': {}
+            },
+            status=status.HTTP_200_OK
+        )

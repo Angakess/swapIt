@@ -1,5 +1,5 @@
 import { Col, Row, Typography } from 'antd'
-import { Post } from 'types'
+import { Post } from '@Common/types'
 
 export function PostDetails({ post }: { post: Post }) {
   return (
