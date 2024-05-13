@@ -1,6 +1,6 @@
-import { Form, InputNumber, Button, FormProps } from 'antd'
+import { Form, Button, FormProps } from 'antd'
 import { AuthTitle } from '@Auth/components'
-import { dniValidator } from '@Common/helpers/validators'
+import { DniItem } from '@Auth/components/items'
 
 export function ForgotPassword() {
   const onFinish: FormProps['onFinish'] = (values) => {
@@ -19,23 +19,7 @@ export function ForgotPassword() {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item
-          label="DNI"
-          name="dni"
-          required={false}
-          rules={[
-            { required: true, message: 'Porfavor ingrese su DNI' },
-            { validator: dniValidator },
-          ]}
-        >
-          <InputNumber
-            placeholder="Ingrese su DNI (ej: 12345678)"
-            size="large"
-            style={{ width: '100%' }}
-            controls={false}
-            autoFocus
-          />
-        </Form.Item>
+        <DniItem />
 
         <Form.Item>
           <p>

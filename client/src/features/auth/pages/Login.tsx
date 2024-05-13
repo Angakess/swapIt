@@ -5,18 +5,17 @@ import {
   Flex,
   Form,
   Input,
-  InputNumber,
   Typography,
   FormProps,
   Spin,
   App,
 } from 'antd'
 import { AuthTitle } from '@Auth/components'
-import { dniValidator } from '@Common/helpers/validators'
 import { useState } from 'react'
 import { fetchPost } from 'common/helpers'
 import { User, UserRole } from '@Common/types'
 import { useAuth } from '@Common/hooks'
+import { DniItem } from '@Auth/components/items'
 
 type LoginFormData = {
   dni: string
@@ -71,23 +70,7 @@ export function Login() {
         form={form}
         disabled={isLoading}
       >
-        <Form.Item
-          label="DNI"
-          name="dni"
-          required={false}
-          rules={[
-            { required: true, message: 'Porfavor ingrese su DNI' },
-            { validator: dniValidator },
-          ]}
-        >
-          <InputNumber
-            placeholder="Ingrese su DNI"
-            size="large"
-            style={{ width: '100%' }}
-            controls={false}
-            autoFocus
-          />
-        </Form.Item>
+        <DniItem autoFocus />
 
         <Form.Item
           label="Contraseña"

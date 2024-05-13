@@ -9,20 +9,16 @@ import {
   Flex,
   Form,
   Input,
-  InputNumber,
   Select,
   Typography,
   FormProps,
   Spin,
 } from 'antd'
 import { AuthTitle } from '@Auth/components'
-import {
-  dateValidator,
-  dniValidator,
-  phoneValidator,
-} from '@Common/helpers/validators'
+import { dateValidator, phoneValidator } from '@Common/helpers/validators'
 import { fetchPost } from 'common/helpers'
 import { UserGender, UserRole } from '@Common/types'
+import { DniItem } from '@Auth/components/items'
 
 type LoginBody = {
   first_name: string
@@ -135,22 +131,7 @@ export function Register() {
           </Form.Item>
         </Flex>
 
-        <Form.Item
-          label="DNI"
-          name="dni"
-          required={false}
-          rules={[
-            { required: true, message: 'Ingrese su DNI' },
-            { validator: dniValidator },
-          ]}
-        >
-          <InputNumber
-            placeholder="DNI"
-            size="large"
-            style={{ width: '100%' }}
-            controls={false}
-          />
-        </Form.Item>
+        <DniItem />
 
         <Form.Item
           label="Correo"
