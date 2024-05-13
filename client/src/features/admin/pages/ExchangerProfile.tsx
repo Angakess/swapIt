@@ -1,4 +1,4 @@
-import { Button, Card, Descriptions, DescriptionsProps, Flex } from 'antd'
+import { Button, Card, Descriptions, DescriptionsProps, Flex, Spin } from 'antd'
 import { useEffect, useState } from 'react'
 import MOCK_DATA from './MOCK_DATA_EXCH_ACCOUNT.json'
 
@@ -19,28 +19,34 @@ export function ExchangerProfile() {
   function CardHeader() {
 
     const sendAddHelper = () => {
+        setIsLoading(true)
         console.log("se incorporo al intercambiador con id: ",data.id)
         fetchData()
+        setIsLoading(false)
     }
     const sendBlock = () => {
+        setIsLoading(true)
         console.log("se bloqueo al intercambiador con id: ",data.id)
-        fetchData
+        fetchData()
+        setIsLoading(false)
     }
     const sendUnblock = () => {
+        setIsLoading(true)
         console.log("se desbloqueo al intercambiador con id: ",data.id)
-        fetchData
+        fetchData()
+        setIsLoading(false)
     }
 
 
     return (
       <Flex align="center" gap="small">
-        <h3 style={{ marginRight: 'auto' }}>Perfil de usuario</h3>
+        <h3 style={{ marginRight: 'auto', marginBottom: "0" }}>Perfil de usuario intercambiador</h3>
         {(data.status !== "active") ?
             (<>
-                <Button onClick={sendAddHelper}>Incorporar como ayudante</Button>
-                <Button type='primary' danger onClick={sendBlock}>Bloquear</Button>
+                <Button onClick={sendAddHelper} disabled={isLoading}>Incorporar como ayudante</Button>
+                <Button type='primary' danger onClick={sendBlock} disabled={isLoading}>Bloquear</Button>
             </>) : 
-                <Button type='primary' onClick={sendUnblock}>Desbloquear</Button>}
+                <Button type='primary' onClick={sendUnblock} disabled={isLoading}>Desbloquear</Button>}
       </Flex>
     )
   }
@@ -48,6 +54,8 @@ export function ExchangerProfile() {
   const parts = window.location.href.split('/')
   const index: number = parseInt(parts[parts.length - 1])
 
+
+  const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState<DataType>({
     id: 0,
     first_name: '',
@@ -104,7 +112,7 @@ export function ExchangerProfile() {
   ]
 
   return (
-    <>
+    <Spin spinning={isLoading}>
       <Card title={<CardHeader />}>
         <Descriptions
           bordered
@@ -114,6 +122,6 @@ export function ExchangerProfile() {
           labelStyle={{ width: '15%' }}
         />
       </Card>
-    </>
+    </Spin>
   )
 }
