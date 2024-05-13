@@ -1,7 +1,7 @@
 import { Button, Result, Spin } from 'antd'
 import { AuthTitle } from '@Auth/components'
 import { useEffect, useState } from 'react'
-import { fetchPost } from 'helpers'
+import { fetchPost } from 'common/helpers'
 import { Link, useParams } from 'react-router-dom'
 
 type VerificationStatus = 'checking' | 'valid' | 'invalid'

@@ -16,9 +16,13 @@ import {
   Spin,
 } from 'antd'
 import { AuthTitle } from '@Auth/components'
-import { dateValidator, dniValidator, phoneValidator } from 'helpers/validators'
-import { fetchPost } from 'helpers'
-import { UserGender, UserRole } from 'types'
+import {
+  dateValidator,
+  dniValidator,
+  phoneValidator,
+} from '@Common/helpers/validators'
+import { fetchPost } from 'common/helpers'
+import { UserGender, UserRole } from '@Common/types'
 
 type LoginBody = {
   first_name: string

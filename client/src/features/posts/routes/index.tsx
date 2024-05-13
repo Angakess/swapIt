@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import { UploadOutlined } from '@ant-design/icons'
 
 import { Post, Posts,PostAdd } from '@Posts/pages'
-import { AppLayout } from 'layout'
+import { AppLayout } from '@Common/layout'
 
 export function PostsRoutes() {
   return (

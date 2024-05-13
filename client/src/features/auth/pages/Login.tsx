@@ -12,11 +12,11 @@ import {
   App,
 } from 'antd'
 import { AuthTitle } from '@Auth/components'
-import { dniValidator } from 'helpers/validators'
+import { dniValidator } from '@Common/helpers/validators'
 import { useState } from 'react'
-import { fetchPost } from 'helpers'
-import { User, UserRole } from 'types'
-import { useAuth } from 'hooks'
+import { fetchPost } from 'common/helpers'
+import { User, UserRole } from '@Common/types'
+import { useAuth } from '@Common/hooks'
 
 type LoginFormData = {
   dni: string

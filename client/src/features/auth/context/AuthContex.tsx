@@ -1,6 +1,6 @@
 import { createContext } from 'react'
-import { useLocalStorage } from 'hooks'
-import { AuthContextType, User } from 'types'
+import { useLocalStorage } from '@Common/hooks'
+import { AuthContextType, User } from '@Common/types'
 
 export const AuthContext = createContext<AuthContextType | null>(null)
 

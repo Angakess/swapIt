@@ -13,7 +13,7 @@ import {
   Helpers,
   Locals,
 } from '@Admin/pages'
-import { AppLayout } from 'layout'
+import { AppLayout } from '@Common/layout'
 
 export function AdminRoutes() {
   return (

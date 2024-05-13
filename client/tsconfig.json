@@ -23,6 +23,7 @@
     /* Custom */
     "baseUrl": "src",
     "paths": {
+      "@Common/*": ["common/*"],
       "@Admin/*": ["features/admin/*"],
       "@Auth/*": ["features/auth/*"],
       "@Home/*": ["features/home/*"],

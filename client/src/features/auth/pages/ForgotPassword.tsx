@@ -1,6 +1,6 @@
 import { Form, InputNumber, Button, FormProps } from 'antd'
 import { AuthTitle } from '@Auth/components'
-import { dniValidator } from 'helpers/validators'
+import { dniValidator } from '@Common/helpers/validators'
 
 export function ForgotPassword() {
   const onFinish: FormProps['onFinish'] = (values) => {

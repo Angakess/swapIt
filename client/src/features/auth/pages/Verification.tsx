@@ -1,6 +1,6 @@
 import { Form, Input, Button, FormProps } from 'antd'
 import { AuthTitle } from '@Auth/components'
-import { codeValidator } from 'helpers/validators'
+import { codeValidator } from '@Common/helpers/validators'
 
 export function Verification() {
   const handleFinish: FormProps['onFinish'] = (values) => {
