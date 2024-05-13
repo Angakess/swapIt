@@ -18,7 +18,7 @@
             "name": "Nuestra Señora de La Piedad",
             "x_coordinate": "-34.9429053",
             "y_coordinate": "-57.9604655",
-            "max_helpers": 4,
+            "max_helpers": 3,
             "active": true
         }
     },
@@ -56,5 +56,3 @@
         }
     }
 ]
-
-10 ayudantes

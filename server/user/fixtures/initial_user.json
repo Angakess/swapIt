@@ -11,14 +11,17 @@
       "phone_number": "342780437",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "FEMALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "ADMIN",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
+
+
+
   {
     "model": "user.useraccount",
     "pk": 2,
@@ -29,14 +32,14 @@
       "email": "pnickless1@yopmail.com",
       "date_of_birth": "1949-08-08",
       "phone_number": "7332272396",
-      "id_subsidiary": null,
+      "id_subsidiary": 1,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -49,34 +52,14 @@
       "email": "akierans2@yopmail.com",
       "date_of_birth": "1958-12-25",
       "phone_number": "7842532734",
-      "id_subsidiary": null,
+      "id_subsidiary": 1,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "FEMALE",
-      "state": 1,
-      "role": null,
-      "password": null
-    }
-  },
-  {
-    "model": "user.useraccount",
-    "pk": ,
-    "fields": {
-      "first_name": "Nevile",
-      "last_name": "Livett",
-      "dni": "33040563",
-      "email": "nlivett3@yopmail.com",
-      "date_of_birth": "1960-03-25",
-      "phone_number": "2918826931",
-      "id_subsidiary": null,
-      "failed_login_attempts": 0,
-      "is_staff": null,
-      "is_active": true,
-      "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -89,14 +72,14 @@
       "email": "vmcaster4@yopmail.ru",
       "date_of_birth": "1985-07-05",
       "phone_number": "8499000565",
-      "id_subsidiary": null,
+      "id_subsidiary": 1,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -109,14 +92,14 @@
       "email": "dcamilli5@yopmail.de",
       "date_of_birth": "1990-12-05",
       "phone_number": "5611744809",
-      "id_subsidiary": null,
+      "id_subsidiary": 1,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -129,14 +112,14 @@
       "email": "bgiraudou6@yopmail.cz",
       "date_of_birth": "1984-05-12",
       "phone_number": "7988190015",
-      "id_subsidiary": null,
+      "id_subsidiary": 1,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "FEMALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -149,14 +132,14 @@
       "email": "sdowsing7@yopmail.com",
       "date_of_birth": "1964-05-11",
       "phone_number": "8762636701",
-      "id_subsidiary": null,
+      "id_subsidiary": 2,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "FEMALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -169,14 +152,14 @@
       "email": "waddicote8@yopmail.org",
       "date_of_birth": "1986-12-22",
       "phone_number": "8743753669",
-      "id_subsidiary": null,
+      "id_subsidiary": 2,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "Genderqueer",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -189,14 +172,14 @@
       "email": "fcruse9@yopmail.com",
       "date_of_birth": "1991-08-18",
       "phone_number": "1135635156",
-      "id_subsidiary": null,
+      "id_subsidiary": 2,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -209,14 +192,14 @@
       "email": "cschoenrocka@yopmail.com",
       "date_of_birth": "1975-11-02",
       "phone_number": "4126628184",
-      "id_subsidiary": null,
+      "id_subsidiary": 3,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "FEMALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -229,16 +212,19 @@
       "email": "emaccaigb@yopmail.org",
       "date_of_birth": "1954-09-15",
       "phone_number": "3611518643",
-      "id_subsidiary": null,
+      "id_subsidiary": 2,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
+
+
+
   {
     "model": "user.useraccount",
     "pk": 12,
@@ -251,12 +237,12 @@
       "phone_number": "4827484720",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -271,12 +257,12 @@
       "phone_number": "3492946341",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "FEMALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -291,12 +277,12 @@
       "phone_number": "214252869",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -311,12 +297,12 @@
       "phone_number": "1582241918",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "FEMALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -331,12 +317,12 @@
       "phone_number": "7719954649",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -351,12 +337,12 @@
       "phone_number": "4321757447",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -371,12 +357,12 @@
       "phone_number": "3424791121",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -391,12 +377,12 @@
       "phone_number": "5664020541",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "FEMALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -411,12 +397,12 @@
       "phone_number": "6754869180",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -431,12 +417,12 @@
       "phone_number": "817738882",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "MALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -451,12 +437,12 @@
       "phone_number": "5756097881",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
-      "gender": "Non-binary",
-      "state": 1,
-      "role": null,
-      "password": null
+      "gender": "OTHER",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
   {
@@ -471,12 +457,32 @@
       "phone_number": "342780437",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": null,
+      "is_staff": false,
       "is_active": true,
       "gender": "FEMALE",
-      "state": 1,
-      "role": null,
-      "password": null
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },
+  {
+    "model": "user.useraccount",
+    "pk": 24,
+    "fields": {
+      "first_name": "Nevile",
+      "last_name": "Livett",
+      "dni": "33040563",
+      "email": "nlivett3@yopmail.com",
+      "date_of_birth": "1960-03-25",
+      "phone_number": "2918826931",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  }
 ]
