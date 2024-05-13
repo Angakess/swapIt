@@ -16,9 +16,6 @@ import {
 import { useState, useEffect, useRef } from 'react'
 import type { FilterDropdownProps } from 'antd/es/table/interface'
 
-//archivo JSON sacado de mockaroo.com local para testear
-import MOCK_DATA from './MOCK_DATA_AYUDANTES.json'
-
 export function Helpers() {
   type ColumnsType<T> = TableProps<T>['columns']
   type TablePaginationConfig = Exclude<
@@ -28,9 +25,20 @@ export function Helpers() {
   type DataIndex = keyof DataType
 
   interface DataType {
-    nombre: string
-    filial: string
     id: number
+    full_name: string
+    dni: string
+    subsidiary_name: string
+    subsidiary_cant_helpers: number
+  }
+  interface fetchType {
+    id: number
+    full_name: string
+    dni: string
+    subsidiary: {
+      name: string
+      cant_helpers: number
+    }
   }
 
   interface TableParams {
@@ -40,13 +48,7 @@ export function Helpers() {
     filters?: Parameters<GetProp<TableProps, 'onChange'>>[1]
   }
 
-  /* const getRandomUserParams = (params: TableParams) => ({
-        results: params.pagination?.pageSize,
-        page: params.pagination?.current,
-        ...params,
-    }) */
-
-  const [data, setData] = useState<DataType[]>()
+  const [data, setData] = useState<DataType[]>([])
   const [loading, setLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -55,46 +57,41 @@ export function Helpers() {
     },
   })
   const [searchText, setSearchText] = useState({
-    nombre: '',
-    filial: '',
-    id: '',
+    full_name: '',
+    dni: '',
+    subsidiary_name: '',
   })
+  const columnNames = {
+    id: "",
+    full_name: "nombre",
+    dni: "DNI",
+    subsidiary_name: "filial",
+    subsidiary_cant_helpers: ""
+  }
 
-  const fetchData = () => {
+  const fetchData = async() => {
     setLoading(true)
-
-    //------Version mock---------------------------------------------------------------
-    setData(MOCK_DATA)
+    const res = await fetch("http://localhost:8000/users/list-helpers/")
+    const result = await res.json()
+    const transformedData = result.map((item: fetchType) => ({
+      id:item.id,
+      full_name: item.full_name,
+      dni: item.dni,
+      subsidiary_name: item.subsidiary.name,
+      subsidiary_cant_helpers: item.subsidiary.cant_helpers
+    }))
+    setData(transformedData)
     setLoading(false)
     setTableParams({
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: MOCK_DATA.filter(
-          (item: DataType) =>
-            item.nombre.includes(searchText.nombre) &&
-            item.filial.includes(searchText.filial) &&
-            item.id.toString().includes(searchText.id)
-        ).length,
+        total: result.filter((item:any) =>
+          item.full_name.includes(searchText.full_name) &&
+          item.dni.includes(searchText.dni) &&
+          item.subsidiary.name.includes(searchText.subsidiary_name))
       },
     })
-    //----------------------------------------------------------------------------------
-
-    //------Version real----------------------------------------------------------------
-    /* fetch("./MOCK_DATA.json")
-            .then((res) => res.json())
-            .then(({results}) => {
-                setData(results)
-                setLoading(false)
-                setTableParams({
-                    ...tableParams,
-                    pagination: {
-                        ...tableParams.pagination,
-                        total: 200 //mock data (tendria que ser algo como data.totalCount)
-                    },
-                })
-            }) */
-    //------------------------------------------------------------------------------------
   }
 
   useEffect(() => {
@@ -135,13 +132,12 @@ export function Helpers() {
           [dataIndex]: selectedKeys[0],
         }
       })
-    //setSearchedColumn(dataIndex)
   }
 
   const handleReset = (
     clearFilters: () => void,
     confirm: FilterDropdownProps['confirm'],
-    dataIndex: DataIndex
+    dataIndex: DataIndex | string
   ) => {
     clearFilters()
     setSearchText((searchText) => {
@@ -151,7 +147,6 @@ export function Helpers() {
       }
     })
     confirm()
-    //setSearchedColumn(dataIndex)
   }
 
   const getColumnSearchProps = (
@@ -167,7 +162,7 @@ export function Helpers() {
       <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
         <Input
           ref={searchInput}
-          placeholder={`Buscar ${dataIndex}`}
+          placeholder={`Buscar ${columnNames[dataIndex]}`}
           value={selectedKeys[0]}
           onChange={(e) =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
@@ -227,23 +222,23 @@ export function Helpers() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: `Nombre: ${searchText.nombre}`,
-      dataIndex: 'nombre',
-      render: (nombre) => `${nombre}`,
+      title: `Nombre: ${searchText.full_name}`,
+      dataIndex: 'full_name',
+      render: (full_name) => `${full_name}`,
       width: '25%',
-      ...getColumnSearchProps('nombre'),
+      ...getColumnSearchProps('full_name'),
     },
     {
-      title: `DNI: ${searchText.id}`,
-      dataIndex: 'id',
+      title: `DNI: ${searchText.dni}`,
+      dataIndex: 'dni',
       width: '15%',
-      ...getColumnSearchProps('id'),
+      ...getColumnSearchProps('dni'),
     },
     {
-      title: `Filial: ${searchText.filial}`,
-      dataIndex: 'filial',
-      ...getColumnSearchProps('filial'),
-      sorter: (a, b) => a.filial.localeCompare(b.filial),
+      title: `Filial: ${searchText.subsidiary_name}`,
+      dataIndex: 'subsidiary_name',
+      ...getColumnSearchProps('subsidiary_name'),
+      sorter: (a, b) => a.subsidiary_name.localeCompare(b.subsidiary_name),
       width: '50%',
     },
     {
@@ -280,7 +275,7 @@ export function Helpers() {
   const handleOk = () => {
     setIsModalOpen(false)
     if (data !== undefined)
-      console.log(`AYUDANTE ${data[idSelected].nombre} DESINCORPORADO`)
+      console.log(`AYUDANTE ${data[idSelected].full_name} DESINCORPORADO`)
   }
   const handleCancel = () => {
     setIsModalOpen(false)
