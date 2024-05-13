@@ -41,11 +41,13 @@ export function Login() {
     const user = data.data.user as User
 
     if (resp.ok && data.ok) {
-      authContext.logIn(user)
+      if (user.role !== 'HELPER') {
+        authContext.logIn(user)
+      }
       const redirections: Record<UserRole, string> = {
         ADMIN: '/admin/helpers',
+        HELPER: '/auth/verification',
         EXCHANGER: '/posts',
-        HELPER: '/posts',
       }
       navigate(redirections[user.role])
     } else {
