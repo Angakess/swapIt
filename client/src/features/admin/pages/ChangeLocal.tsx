@@ -42,6 +42,7 @@ export function ChangeLocal() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [isModalOpen, setModalOpen] = useState(false)
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false)
   const [subsData, setSubsData] = useState<SubsidiaryType[]>([{
     id: 0,
     name: "",
@@ -53,6 +54,8 @@ export function ChangeLocal() {
   const [helperData, setHelperData] = useState<HelperType>(MOCK_HELPER)
 
   const [idSelected, setIdSelected] = useState<number>(0)
+
+  const [errorMessage, setErrorMessage] = useState("")
 
     const fetchSubsData = async() => {
         setIsLoading(true)
@@ -72,14 +75,30 @@ export function ChangeLocal() {
 
     const handleMarkerClick = (index:number) => {
         console.log("Clickeaste la filial de ",subsData[index].name)
+        if(helperData.subsidiary.id === subsData[index].id){
+            openErrorModal("No puede seleccionar la filial actual")
+            return
+        }
+        if(5 === subsData[index].max_helpers){
+            openErrorModal("La filial seleccionada no posee cupo disponible")
+            return
+        }
         setModalOpen(true)
         setIdSelected(index)
     }
     const handleOk = () => {
-
+        console.log("Se cambio a la filial: ",subsData[idSelected].name)
     }
     const handleCancel = () => {
         setModalOpen(false)
+        setIsErrorModalOpen(false)
+    }
+
+    const openErrorModal = (message: string) => {
+        Modal.error({
+            title: "Error",
+            content: message
+        })
     }
     
   return (
@@ -102,7 +121,7 @@ export function ChangeLocal() {
                             key={index} 
                             position={[parseFloat(marcador.x_coordinate), parseFloat(marcador.y_coordinate)]}
                             eventHandlers={{
-                                click: () => (handleMarkerClick(index))
+                                click: () => (handleMarkerClick(index)),
                             }}
                             
                             >
@@ -127,16 +146,19 @@ export function ChangeLocal() {
         {/* {data[idSelected] && data[idSelected].subsidiary_cant_helpers === 1 ? 
         <p style={{fontWeight: "bold"}}>IMPORTANTE: Si {data[idSelected].full_name} es desincorporada la filial {data[idSelected].subsidiary_name} se quedará sin ayudantes, lo que deshabilitará la sucursal y suspenderá todas las publicaciones relacionadas</p> : null} */}
       </Modal>
-      {/* <Modal
+      <Modal
         title="Cambio de filial"
-        open={isModalOpen}
+        open={isErrorModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         cancelText="Cancelar"
         okText="Confirmar"
       >
-        <p>¿Está seguro que quiere cambiar la filial de {helperData.name}?</p>
-      </Modal> */}
+        Modal.error({
+
+        })
+        <p>{errorMessage}</p>
+      </Modal>
 
     </Spin>
   )
