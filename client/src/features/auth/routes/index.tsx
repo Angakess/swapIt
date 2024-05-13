@@ -23,7 +23,7 @@ export function AuthRoutes() {
             path="/email-verification/:code"
             element={<EmailVerification />}
           />
-          <Route path="/new-password" element={<NewPassword />} />
+          <Route path="/reset-password/:code" element={<NewPassword />} />
           <Route path="*" element={<Navigate to="/auth/login" replace />} />
         </Route>
       </Routes>
