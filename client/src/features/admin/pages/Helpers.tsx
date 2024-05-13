@@ -48,7 +48,13 @@ export function Helpers() {
     filters?: Parameters<GetProp<TableProps, 'onChange'>>[1]
   }
 
-  const [data, setData] = useState<DataType[]>([])
+  const [data, setData] = useState<DataType[]>([{
+    id: 0,
+    full_name: "",
+    dni: "",
+    subsidiary_name: "",
+    subsidiary_cant_helpers: 0
+  }])
   const [loading, setLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -243,7 +249,7 @@ export function Helpers() {
     },
     {
       title: 'Acciones',
-      render: (_: any, record: DataType) => (
+      render: (_: any, record: DataType, index:number) => (
         <Space>
           <Button
             type="primary"
@@ -254,7 +260,7 @@ export function Helpers() {
             type="primary"
             danger
             icon={<UserDeleteOutlined />}
-            onClick={() => showModal(record.id - 1)}
+            onClick={() => showModal(index)}
           ></Button>
         </Space>
       ),
@@ -274,7 +280,7 @@ export function Helpers() {
   }
   const handleOk = () => {
     setIsModalOpen(false)
-    if (data !== undefined)
+    if (data[idSelected] !== undefined)
       console.log(`AYUDANTE ${data[idSelected].full_name} DESINCORPORADO`)
   }
   const handleCancel = () => {
@@ -303,6 +309,8 @@ export function Helpers() {
         okButtonProps={{ danger: true }}
       >
         <p>¿Está seguro que quiere desincorporar a este ayudante?</p>
+        {data[idSelected] && data[idSelected].subsidiary_cant_helpers === 1 ? 
+        <p style={{fontWeight: "bold"}}>IMPORTANTE: Si {data[idSelected].full_name} es desincorporada la filial {data[idSelected].subsidiary_name} se quedará sin ayudantes, lo que deshabilitará la sucursal y suspenderá todas las publicaciones relacionadas</p> : null}
       </Modal>
     </>
   )
