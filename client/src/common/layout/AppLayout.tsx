@@ -1,5 +1,6 @@
 import { Layout, theme } from 'antd'
 import { Sidebar } from './Sidebar'
+import AppHeader from './AppHeader'
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { colorBgContainer } = theme.useToken().token
@@ -15,7 +16,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             marginBottom: '1.5rem',
           }}
         >
-          header
+          <AppHeader />
         </Layout.Header>
         <Layout.Content
           style={{
