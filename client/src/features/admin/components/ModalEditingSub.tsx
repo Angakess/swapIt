@@ -1,4 +1,4 @@
-import { Checkbox, Input, InputNumber, Modal } from 'antd'
+import { Checkbox, Flex, Input, InputNumber, Modal } from 'antd'
 import { CheckboxChangeEvent } from 'antd/es/checkbox'
 import { useState } from 'react'
 
@@ -20,15 +20,29 @@ type PropType = {
     subData: SubsidiaryType
     isModalOpen: boolean
     setIsModalOpen: (x:boolean) => void
+    subsArray: SubsidiaryType[]
+}
+type StatusType = {
+    status: "" | "error"
+    errorMessage: string
 }
 
-export function ModalEditingSub({subData, isModalOpen, setIsModalOpen}: PropType) {
+export function ModalEditingSub({subData, isModalOpen, setIsModalOpen, subsArray}: PropType) {
   
     const [data, setData] = useState<DataType>({
         id: subData.id,
         name: subData.name,
         max_helpers: subData.max_helpers,
         active: subData.active
+    })
+    const [inputStatus, setInputStatus] = useState<StatusType>({
+        status: "",
+        errorMessage: ""
+    })
+
+    const [inputNumberStatus, setInputNumberStatus] = useState<StatusType>({
+        status: "",
+        errorMessage: ""
     })
 
 
@@ -38,12 +52,55 @@ export function ModalEditingSub({subData, isModalOpen, setIsModalOpen}: PropType
             ...prevData,
             name: event.target.value
         }))
+        if(!event.target.value){
+            setInputStatus({
+                status: "error",
+                errorMessage: "El nombre es obligatorio"
+            })
+            return
+        }
+        if(subsArray.some((item) => (item.name === event.target.value)&&(subData.name !== event.target.value))){
+            setInputStatus({
+                status: "error",
+                errorMessage: `Ya hay una filial con el nombre "${event.target.value}"`
+            })
+            return
+        }
+        setInputStatus({
+            status: "",
+            errorMessage: ""
+        })
     }
     const handleChangeCantHelpers = (value: number | null) => {
         setData(prevData => ({
             ...prevData,
             max_helpers: value
         }))
+        if(value === null){
+            setInputNumberStatus({
+                status: "",
+                errorMessage: "La cantidad de ayudantes es obligatoria"
+            })
+            return 
+        }
+        if(value <= 0){
+            setInputNumberStatus({
+                status: "error",
+                errorMessage: "La cantidad debe ser mayor a 0"
+            })
+            return 
+        }
+        if(value < 5/* subData.current_helpers */){
+            setInputNumberStatus({
+                status: "error",
+                errorMessage: "El límite de ayudantes no puede ser inferior a la cantidad de ayudantes asignados"
+            })
+            return 
+        }
+        setInputNumberStatus({
+            status: "",
+            errorMessage: ""
+        })
     }
     const handleChangeActive = (event: CheckboxChangeEvent) => {
         setData(prevData => ({
@@ -69,16 +126,21 @@ export function ModalEditingSub({subData, isModalOpen, setIsModalOpen}: PropType
         onCancel={handleCancel}
         cancelText="Cancelar"
         okText="Aplicar cambios"
+        okButtonProps={{disabled: (data.name === "" || inputStatus.status === "error" || inputNumberStatus.status === "error")}}
       >
-        <label>Nombre: 
-            <Input value={data.name} onChange={(event) => handleChangeName(event)}></Input>
-        </label>
-        <label>Cantidad máxima de ayudantes:
-            <InputNumber value={data.max_helpers} onChange={(value) => handleChangeCantHelpers(value)}></InputNumber>
-        </label>
-        <label>Activa
-            <Checkbox checked={data.active} onChange={(event) => handleChangeActive(event)}></Checkbox>
-        </label>
+        <Flex vertical gap="25px">
+            <label>Nombre: 
+                <Input value={data.name} onChange={(event) => handleChangeName(event)}></Input>
+                {inputStatus.status ? 
+                    (<p style={{color:"#FF4D4F"}}>{inputStatus.errorMessage}</p>) : null}
+            </label>
+            <label>Cantidad máxima de ayudantes: <br />
+                <InputNumber value={data.max_helpers} onChange={(value) => handleChangeCantHelpers(value)}></InputNumber>
+                {inputNumberStatus.status ?
+                    (<p style={{color: "#FF4D4F"}}>{inputNumberStatus.errorMessage}</p>) : null}
+            </label>
+            <Checkbox checked={data.active} onChange={(event) => handleChangeActive(event)}>Activa</Checkbox>
+        </Flex>
       </Modal>
     </>
   )

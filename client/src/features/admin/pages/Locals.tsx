@@ -191,6 +191,7 @@ export function Locals() {
           subData={subsData[idSelected]}
           isModalOpen={isEditingModalOpen}
           setIsModalOpen={setIsEditingModalOpen}
+          subsArray={subsData}
         ></ModalEditingSub>
       ) : null}
     </>

@@ -161,7 +161,7 @@ export function ModalAddingSub({subsData, isModalOpen, setIsModalOpen, fetchData
         onCancel={handleCancel}
         cancelText="Cancelar"
         okText="Confirmar"
-        okButtonProps={{disabled: (data.name === "" || inputNumberStatus.status === "error" || (!data.x_coordinate && !data.y_coordinate))}}
+        okButtonProps={{disabled: (data.name === "" || inputStatus.status === "error" ||inputNumberStatus.status === "error" || (!data.x_coordinate && !data.y_coordinate))}}
       >
         <Flex vertical gap="25px">
         <p>Seleccione un lugar en el mapa</p>
