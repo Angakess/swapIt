@@ -8,12 +8,7 @@ import {
   Row,
 } from 'antd'
 import { useEffect, useState } from 'react'
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-} from 'react-leaflet'
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { Icon } from 'leaflet'
 import { ModalEditingSub } from '@Admin/components/ModalEditingSub'
 import { ModalAddingSub } from '@Admin/components/ModalAddingSub'
@@ -192,6 +187,7 @@ export function Locals() {
           isModalOpen={isEditingModalOpen}
           setIsModalOpen={setIsEditingModalOpen}
           subsArray={subsData}
+          fetchData={fetchData}
         ></ModalEditingSub>
       ) : null}
     </>
