@@ -1,8 +1,10 @@
-import { Button, Card, Checkbox, Col, Descriptions, DescriptionsProps, Flex, Form, Input, InputNumber, Modal, Row } from "antd";
+import { Button, Card, Checkbox, Col, Descriptions, DescriptionsProps, Flex, Form, FormProps, Input, InputNumber, Modal, Row } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import { LatLngExpression } from 'leaflet'
+import { ModalEditingSub } from "@Admin/components/ModalEditingSub";
+import { ModalAddingSub } from "@Admin/components/ModalAddingSub";
 
 type SubsidiaryType = {
   id: number,
@@ -51,8 +53,8 @@ export function Locals() {
 
   const [newSubData, setNewSubData] = useState<NewSubData>({
     name: "",
-    x_coordinate: "0",
-    y_coordinate: "0",
+    x_coordinate: "",
+    y_coordinate: "",
     max_helpers: 0,
     active: false
   })
@@ -160,6 +162,20 @@ export function Locals() {
     }))
   }
 
+  const handleAddFormFinish: FormProps['onFinish'] = () => {
+    console.log("Success adding")
+  }
+  const handleAddFormFinishFailed: FormProps['onFinish'] = () => {
+    console.log("Failed adding")
+  }
+
+  const handleEditFormFinish: FormProps['onFinish'] = () => {
+    console.log("Success adding")
+  }
+  const handleEditFormFinishFailed: FormProps['onFinish'] = () => {
+    console.log("Failed adding")
+  }
+
 
   function CardHeader({ title, buttonName, handleFunction }: PropType) {
 
@@ -247,7 +263,14 @@ export function Locals() {
           </Card>) : null}
         </Col>
       </Row>
-      <Modal
+      <ModalAddingSub
+        subsData={subsData}
+        isModalOpen={isAddingModalOpen}
+        setIsModalOpen={setIsAddingModalOpen}
+      >
+
+      </ModalAddingSub>
+      {/* <Modal
         title="Agregando una filial"
         open={isAddingModalOpen}
         onOk={handleOkAdding}
@@ -255,6 +278,7 @@ export function Locals() {
         cancelText="Cancelar"
         okText="Confirmar"
       >
+        <Flex vertical gap="25px">
         <p>Seleccione un lugar en el mapa</p>
         <div>
           <MapContainer
@@ -268,34 +292,27 @@ export function Locals() {
             <LocationMarker />
             
           </MapContainer>
-        </div>
-        <Form
-          layout="vertical"
-        >
-          <Form.Item
-            label="Nombre"
-            required={false}
-            rules={[{required: true, message:"El nombre es obligatorio"},
-                    {validator: subNameValidator}
-            ]}
-          >
-            <Input value={newEditedSubData.name} onChange={(event) => handleChangeInputName(event)}></Input>
-          </Form.Item>
-          <Form.Item
-            label="Cantidad de ayudantes máximo"
-            rules={[{required: true, message:"Este campo es obligatorio"},
-                    {validator: subHelperCantValidator}
-            ]}
-          >
-            <InputNumber value={newEditedSubData.max_helpers} onChange={(value) => handleChangeInputCantHelpers(value)}></InputNumber>
-          </Form.Item>
-          <Form.Item>
+        </div >
+        
+            <label>Nombre: <Input value={newEditedSubData.name} onChange={(event) => handleChangeInputName(event)}></Input>{!newSubData.name ? (<p style={{color:"#FF4D4F"}}>El nombre es obligatorio</p>) : null}</label>
+          
+            <label>Cantidad máxima de ayudantes: <br/><InputNumber value={newEditedSubData.max_helpers} onChange={(value) => handleChangeInputCantHelpers(value)}></InputNumber></label>
             <Checkbox defaultChecked={newEditedSubData.active} onChange={(value) => handleChangeCheckbox(value)}>Activa</Checkbox>
-          </Form.Item>
           <p>x: {newSubData.x_coordinate} y:{newSubData.y_coordinate}</p>
-        </Form>
-      </Modal>
-      <Modal
+          {(!newSubData.x_coordinate && !newSubData.y_coordinate) ? (<p style={{color: "#FF4D4F"}}>Seleccione un lugar en el mapa</p>) : null}
+        </Flex>
+        
+          
+      </Modal> */}
+      {idSelected > 0 ? (<ModalEditingSub
+        subData={subsData[idSelected]}
+        isModalOpen={isEditingModalOpen}
+        setIsModalOpen={setIsEditingModalOpen}
+      ></ModalEditingSub>) : null}
+      
+
+
+      {/* <Modal
         title="Editando una filial"
         open={isEditingModalOpen}
         onOk={handleOkEditing}
@@ -305,6 +322,8 @@ export function Locals() {
       >
         <Form
           layout="vertical"
+          onFinish={handleEditFormFinish}
+          onFinishFailed={handleEditFormFinishFailed}
         >
           <Form.Item
             label="Nombre"
@@ -327,7 +346,7 @@ export function Locals() {
             <Checkbox defaultChecked={newEditedSubData.active} onChange={(value) => handleChangeCheckbox(value)}>Activa</Checkbox>
           </Form.Item>
         </Form>
-      </Modal>
+      </Modal> */}
     </>
   )
 }
