@@ -11,7 +11,7 @@ import { SERVER_URL } from 'constants'
 
 const IMG_HEIGHT = '300px'
 
-export function PostItem({ post }: { post: PostModel }) {
+export function PostListItem({ post }: { post: PostModel }) {
   const images = Object.entries(post)
     .filter(([key, value]) => key.startsWith('image_') && value != null)
     .map(([, value]) => SERVER_URL + value) as string[]
@@ -38,6 +38,7 @@ export function PostItem({ post }: { post: PostModel }) {
                 type="secondary"
                 ellipsis={{ rows: 2 }}
                 style={{ whiteSpace: 'pre-line' }}
+                title={post.description}
               >
                 {post.description}
               </Typography.Paragraph>
