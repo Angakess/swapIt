@@ -1,9 +1,12 @@
 import coreapi
 from rest_framework.response import Response
 from rest_framework import generics
+
+from user.models import UserAccount
+
 from .models import Category, Post, PostState
 from .serializer import (
-    CategorySerializer, PostSerializer, PostStateSerializer)
+    CategorySerializer, PostSerializer, PostBaseSerializer, PostStateSerializer)
 from rest_framework.views import APIView
 from rest_framework import status, filters
 from django_filters.rest_framework import DjangoFilterBackend
@@ -142,8 +145,7 @@ class CategoryList(generics.ListAPIView):
 
 
 class PostUpdate(generics.UpdateAPIView):
-
-    queryset = Post.objects.all()
+    PostSerializer
     serializer_class = PostSerializer
 
     def get_queryset(self):
@@ -207,6 +209,7 @@ class PostLists(generics.ListAPIView):
 
 
 class PostListsExchanger(generics.ListAPIView):
+    """ Post list execpt id exchenger"""
 
     def get_queryset(self):
         return Post.objects.filter(state_product='NUEVO')
@@ -224,16 +227,21 @@ class PostListsExchanger(generics.ListAPIView):
     ]
 
     def list(self, request, id, *args, **kwargs):
-        print("ID: ", id)
-        # print("[QUERY PARAMS]:", request.query_params())
+        query = {key: request.GET[key]
+                 for key in request.GET.keys() if key != 'id'}
         queryset = (Post.objects
                     .exclude(user__id=id)
-                    .filter(**request.GET))
+                    .filter(**query))
+        # Obtener los usuarios de todos los post en queryset
+        user_ids = queryset.values_list(
+            'user__id', flat=True)
+        post_users = UserAccount.objects.filter(pk__in=user_ids)
+
         return Response(
             {
                 'ok': True,
                 'messages': ['Posts encontrados'],
-                'data': {'posts': PostSerializer(queryset, many=True).data}
+                'data': {'posts': PostBaseSerializer(queryset, many=True).data}
             },
             status=status.HTTP_200_OK
         )
