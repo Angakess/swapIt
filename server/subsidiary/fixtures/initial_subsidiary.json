@@ -4,9 +4,9 @@
         "model": "subsidiary.subsidiary",
         "pk": 1,
         "fields": {
-            "name": "Sucursal A",
-            "x_coordinate": "123.456",
-            "y_coordinate": "789.012",
+            "name": "Matriz de La Plata",
+            "x_coordinate": "-34.9114684",
+            "y_coordinate": "-58.0409868",
             "max_helpers": 5,
             "active": true
         }
@@ -15,10 +15,10 @@
         "model": "subsidiary.subsidiary",
         "pk": 2,
         "fields": {
-            "name": "Sucursal B",
-            "x_coordinate": "456.789",
-            "y_coordinate": "321.654",
-            "max_helpers": 4,
+            "name": "Nuestra Señora de La Piedad",
+            "x_coordinate": "-34.9429053",
+            "y_coordinate": "-57.9604655",
+            "max_helpers": 3,
             "active": true
         }
     },
@@ -26,9 +26,31 @@
         "model": "subsidiary.subsidiary",
         "pk": 3,
         "fields": {
-            "name": "Sucursal C",
-            "x_coordinate": "789.012",
-            "y_coordinate": "654.321",
+            "name": "Nuestra Señora de la Salud",
+            "x_coordinate": "-34.9558827",
+            "y_coordinate": "-57.9661017",
+            "max_helpers": 3,
+            "active": true
+        }
+    },
+    {
+        "model": "subsidiary.subsidiary",
+        "pk": 4,
+        "fields": {
+            "name": "Nuestra Señora de Pompeya",
+            "x_coordinate": "-34.9356262",
+            "y_coordinate": "-57.9529767",
+            "max_helpers": 3,
+            "active": true
+        }
+    },
+    {
+        "model": "subsidiary.subsidiary",
+        "pk": 5,
+        "fields": {
+            "name": "La Plata, calle 40",
+            "x_coordinate": "-34.9114684",
+            "y_coordinate": "-58.0409868",
             "max_helpers": 3,
             "active": false
         }

@@ -3,13 +3,14 @@ import hashlib
 import coreapi
 from user.serializers import UserSerializer
 from user.models import UserAccount, UserRegister, UserForgotPassword
+from subsidiary.models import Subsidiary
 from rest_framework import generics
 from common.email import send_email_to_user
 import random
 from rest_framework.response import Response
 from rest_framework import status, filters
 from rest_framework.views import APIView
-from user.serializers import UserCreatedSerializer, ListHelperSerializer, ListExchangerSerializer
+from user.serializers import UserCreatedSerializer, ListHelperSerializer, ListExchangerSerializer, ExchangerDetailSerializer, HelperDetailSerializer
 import itertools
 from user.models import Role, UserState
 import coreschema
@@ -380,19 +381,7 @@ class DisincorporateHelper(APIView):
         subsidiary = helper.id_subsidiary # NOTE: id_subsidiary is a subsidiary object
 
         if (subsidiary.users.count() == 1):
-            posts  = subsidiary.posts.all()
-            unique_emails = list(posts.values_list('user__email', flat=True).distinct())
-            send_email_to_user(
-                email=unique_emails,
-                subject='Pausa temporal de la filial' + subsidiary.name,
-                message= 'La sucursal ' + subsidiary.name + 
-                    ' ha sido pausada temporalmente, todas sus publicaciones relacionadas a esta filial, quedaran suspendidas temporalmente.' + 
-                    'hasta que se incorpore un nuevo ayudante a la sucursal. \n'
-                    + 'Para que su publicacion sea visible nuevamente, seleccione una nueva filial activa en la que desee publicar. \n'
-            )
-            posts.update(state=3)
-            subsidiary.active = False 
-            subsidiary.save()
+            subsidiary.deactivate()
 
         helper.delete()
         return Response(
@@ -403,3 +392,63 @@ class DisincorporateHelper(APIView):
             },
             status=status.HTTP_200_OK
         )
+    
+class RetrieveExchanger(generics.RetrieveAPIView):
+    def get_queryset(self):
+        return UserAccount.objects.filter(role=Role.EXCHANGER)
+    
+    serializer_class = ExchangerDetailSerializer
+
+class RetrieveHelper(generics.RetrieveAPIView):
+    def get_queryset(self):
+        return UserAccount.objects.filter(role=Role.HELPER)
+    
+    serializer_class = HelperDetailSerializer
+
+
+class ChangeHelperFilial(APIView):
+    def post(self, request, helper_id, filial_id):
+        helper = UserAccount.objects.filter(pk=helper_id, role=Role.HELPER).first()
+        new_subsidiary = Subsidiary.objects.filter(pk=filial_id).first()
+        if helper is None or new_subsidiary is None:
+            messages = []
+            if helper is None:
+                messages.append('Usuario no encontrado')
+            if new_subsidiary is None:
+                messages.append('Filial no encontrada')
+            return Response(
+                {
+                    'ok': False,
+                    'messages': messages,
+                    'data': {}
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        if (new_subsidiary.cant_current_helpers >= new_subsidiary.max_helpers):
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Esta filial ya tiene el cupo de ayudantes completo'],
+                    'data': {}
+                },
+                status=status.HTTP_412_PRECONDITION_FAILED
+            )
+        
+        old_subsidiary = helper.id_subsidiary
+        if (old_subsidiary.cant_current_helpers == 1):
+            old_subsidiary.deactivate()
+        
+        helper.id_subsidiary = new_subsidiary
+        helper.save()
+        return Response(
+            {
+                'ok': True,
+                'messages': ['Usuario cambiado de filial exitosamente'],
+                'data': {}
+            },
+            status=status.HTTP_200_OK
+        )
+
+        
+        
