@@ -1,9 +1,10 @@
 import { fetchPost } from "@Common/helpers";
 import { Flex, Input, InputNumber, Modal } from "antd";
 import Checkbox, { CheckboxChangeEvent } from "antd/es/checkbox";
-import { LatLng } from "leaflet";
+import { Icon, LatLng } from "leaflet";
 import { useState } from "react";
 import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
+import blueMarkerIcon from "/map-pin-blue.svg"
 
 type SubsidiaryType = {
     id: number,
@@ -121,6 +122,14 @@ export function ModalAddingSub({subsData, isModalOpen, setIsModalOpen, fetchData
         setIsModalOpen(false)
     }
 
+    const blueMarker = new Icon({
+        iconUrl: blueMarkerIcon,
+        iconRetinaUrl: blueMarkerIcon,
+        popupAnchor: [0,0],
+        iconSize:[32,45],
+        iconAnchor: [17,46]
+    })
+
 
     function LocationMarker() {
         useMapEvents({
@@ -137,7 +146,9 @@ export function ModalAddingSub({subsData, isModalOpen, setIsModalOpen, fetchData
         })
     
         return !position ? null : (
-          <Marker position={position} />
+          <Marker position={position} 
+            icon={blueMarker}
+          />
         )
       }
 
