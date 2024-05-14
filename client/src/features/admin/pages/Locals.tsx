@@ -220,7 +220,7 @@ export function Locals() {
               />} 
             style={{ width: '100%', height: '500px' }}>
             <MapContainer
-              center={[-35, -58]}
+              center={[-34.9135, -57.9463]}
               zoom={12}
               zoomControl={false}
               style={{ borderRadius: '5px', height: '400px' }}
@@ -267,6 +267,7 @@ export function Locals() {
         subsData={subsData}
         isModalOpen={isAddingModalOpen}
         setIsModalOpen={setIsAddingModalOpen}
+        fetchData={fetchData}
       >
 
       </ModalAddingSub>

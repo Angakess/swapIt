@@ -1,3 +1,4 @@
+import { fetchPost } from "@Common/helpers";
 import { Flex, Input, InputNumber, Modal } from "antd";
 import Checkbox, { CheckboxChangeEvent } from "antd/es/checkbox";
 import { LatLng } from "leaflet";
@@ -23,13 +24,14 @@ type PropType = {
     subsData: SubsidiaryType[]
     isModalOpen: boolean
     setIsModalOpen: (x:boolean) => void
+    fetchData: () => void
 }
 type StatusType = {
     status: "" | "error"
     errorMessage: string
 }
 
-export function ModalAddingSub({subsData, isModalOpen, setIsModalOpen}: PropType) {
+export function ModalAddingSub({subsData, isModalOpen, setIsModalOpen, fetchData}: PropType) {
 
 
     const [data, setData] = useState<DataType>({
@@ -110,6 +112,9 @@ export function ModalAddingSub({subsData, isModalOpen, setIsModalOpen}: PropType
 
     const handleOk = () => {
         console.log("OK", data)
+        fetchPost("http://localhost:8000/subsidiary/subsidiary/",data)
+        setIsModalOpen(false)
+        fetchData()
     }
     const handleCancel = () => {
         console.log("CANCEL")
