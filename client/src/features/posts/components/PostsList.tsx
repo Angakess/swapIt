@@ -1,8 +1,8 @@
 import { Col, Row } from 'antd'
 import { PostItem } from './PostItem'
-import { Post } from '@Common/types'
+import { PostModel } from '@Posts/helpers/getPostsListsExchanger'
 
-export function PostsList({ posts }: { posts: Post[] }) {
+export function PostsList({ posts }: { posts: PostModel[] }) {
   return (
     <Row gutter={[12, 12]}>
       {posts.map((post) => (
