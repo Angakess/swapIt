@@ -1,6 +1,9 @@
 import { Card, Col, Modal, Row, Spin } from 'antd'
 import { useEffect, useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import redMarkerIcon from '/map-pin-red.svg'
+import grayMarkerIcon from '/map-pin-gray.svg'
+import { Icon } from 'leaflet'
 
 type HelperType = {
   id: number
@@ -102,6 +105,21 @@ export function ChangeLocal() {
     })
   }
 
+  const redMarker = new Icon({
+    iconUrl: redMarkerIcon,
+    iconRetinaUrl: redMarkerIcon,
+    popupAnchor: [0, -44],
+    iconSize: [32, 45],
+    iconAnchor: [17, 46],
+  })
+  const grayMarker = new Icon({
+    iconUrl: grayMarkerIcon,
+    iconRetinaUrl: grayMarkerIcon,
+    popupAnchor: [0, -44],
+    iconSize: [32, 45],
+    iconAnchor: [17, 46],
+  })
+
   return (
     <Spin spinning={isLoading}>
       <Row>
@@ -127,6 +145,7 @@ export function ChangeLocal() {
                   eventHandlers={{
                     click: () => handleMarkerClick(index),
                   }}
+                  icon={marcador.active ? redMarker : grayMarker}
                 >
                   <Popup>{marcador.name}</Popup>
                 </Marker>
