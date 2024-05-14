@@ -4,7 +4,7 @@ from common.email import send_email_to_user
 
 
 class Subsidiary(models.Model):
-    name = models.CharField(max_length=255, null=False)
+    name = models.CharField(unique=True,max_length=255, null=False)
     x_coordinate = models.CharField(max_length=255, null=False)
     y_coordinate = models.CharField(max_length=255, null=False)
     max_helpers = models.IntegerField(
