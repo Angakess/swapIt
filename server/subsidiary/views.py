@@ -1,9 +1,8 @@
 from django.shortcuts import render
-from rest_framework import generics, filters
+from rest_framework import generics, filters, status
 from rest_framework.response import Response
 from .models import Subsidiary
 from .serializers import SubsidiarySerializer
-from user.models import UserAccount
 
 class SubsidiaryDetails(generics.RetrieveUpdateDestroyAPIView):
 
@@ -12,14 +11,37 @@ class SubsidiaryDetails(generics.RetrieveUpdateDestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
         pk = kwargs['pk']
-        cant_helpers = UserAccount.objects.filter(id_subsidiary=pk).count()
-        if (cant_helpers>0):
-            return Response({"message": "We can't delete this branch, it has assigned helpers."}, 
-                        status=403)
+        subsidiary = Subsidiary.objects.filter(pk=pk).first()
+        if not subsidiary:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Filial no encontrada'],
+                    'data': {}
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        if (subsidiary.cant_current_helpers>0):
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['La filial tiene empleados activos, esta no se puede eliminar'],
+                    'data': {}
+                },
+                status=status.HTTP_412_PRECONDITION_FAILED
+            )
         
-        Subsidiary.objects.filter(pk=pk).update(active=False)
-        return Response({"message": "Subsidiary modify successfully"}, 
-                        status=204)
+        subsidiary.deactivate()
+
+        return Response(
+                {
+                    'ok': True,
+                    'messages': ['Filial eliminada correctamente'],
+                    'data': {}
+                },
+                status=status.HTTP_412_PRECONDITION_FAILED
+            )
 
     serializer_class = SubsidiarySerializer
 
