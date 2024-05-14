@@ -9,11 +9,14 @@ class Category(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"NAME {self.name} | ACTIVE {self.active}"
+        return self.name
 
 
 class PostState(models.Model):
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
 
 class StateProduct(models.Choices):
@@ -57,16 +60,4 @@ class Post(models.Model):
         upload_to='post_images/', null=True, blank=True)
 
     def __str__(self):
-        return f"""
-
-        NAME: {self.name}
-        DESCRIPTION: {self.description}
-        VALUE: {self.value}
-        USER: {self.user}
-        SUBSIDIARY: {self.subsidiary}
-        STATE: {self.state}
-        CATEGORY: {self.category}
-        STATE PRODUCT: {self.state_product}
-        IMAGES: {self.image_1} | {self.image_2} | {self.image_3} |
-        {self.image_4} | {self.image_5}
-        """
+        return self.name
