@@ -1,5 +1,4 @@
 [
-    
     {
         "model": "subsidiary.subsidiary",
         "pk": 1,
@@ -18,7 +17,7 @@
             "name": "Nuestra Señora de La Piedad",
             "x_coordinate": "-34.9429053",
             "y_coordinate": "-57.9604655",
-            "max_helpers": 3,
+            "max_helpers": 5,
             "active": true
         }
     },

@@ -11,12 +11,13 @@
       "phone_number": "342780437",
       "id_subsidiary": null,
       "failed_login_attempts": 0,
-      "is_staff": false,
+      "is_staff": true,
       "is_active": true,
-      "gender": "FEMALE",
+      "gender": "OTHER",
       "state": 3,
       "role": "ADMIN",
-      "password": "482c811da5d5b4bc6d497ffa98491e38"
+      "password": "482c811da5d5b4bc6d497ffa98491e38",
+      "is_superuser": true
     }
   },
 

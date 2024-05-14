@@ -155,7 +155,7 @@ class PostUpdate(generics.UpdateAPIView):
 class PostRetrieve(generics.RetrieveAPIView):
 
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostBaseSerializer
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -193,7 +193,7 @@ class PostLists(generics.ListAPIView):
     def get_queryset(self):
         return Post.objects.all()
 
-    serializer_class = PostSerializer
+    serializer_class = PostBaseSerializer
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     filterset_fields = [
         'name',
@@ -212,12 +212,11 @@ class PostListsExchanger(generics.ListAPIView):
     """ Post list execpt id exchenger"""
 
     def get_queryset(self):
-        return Post.objects.filter(state_product='NUEVO')
+        return Post.objects.all()
 
-    serializer_class = PostSerializer
+    serializer_class = PostBaseSerializer
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     filterset_fields = [
-        'name',
         'state_product',
         'state__name',
         'category__name',
@@ -227,24 +226,8 @@ class PostListsExchanger(generics.ListAPIView):
     ]
 
     def list(self, request, id, *args, **kwargs):
-        query = {key: request.GET[key]
-                 for key in request.GET.keys() if key != 'id'}
-        queryset = (Post.objects
-                    .exclude(user__id=id)
-                    .filter(**query))
-        # Obtener los usuarios de todos los post en queryset
-        user_ids = queryset.values_list(
-            'user__id', flat=True)
-        post_users = UserAccount.objects.filter(pk__in=user_ids)
-
-        return Response(
-            {
-                'ok': True,
-                'messages': ['Posts encontrados'],
-                'data': {'posts': PostBaseSerializer(queryset, many=True).data}
-            },
-            status=status.HTTP_200_OK
-        )
+        self.queryset = Post.objects.exclude(user__id=id)
+        return super().list(request, *args, **kwargs)
 
 
 class PostRemove(generics.DestroyAPIView):
