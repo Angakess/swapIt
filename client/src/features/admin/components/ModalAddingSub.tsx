@@ -2,7 +2,7 @@ import { Flex, Input, InputNumber, Modal } from "antd";
 import Checkbox, { CheckboxChangeEvent } from "antd/es/checkbox";
 import { LatLng } from "leaflet";
 import { useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 
 type SubsidiaryType = {
     id: number,
@@ -132,9 +132,7 @@ export function ModalAddingSub({subsData, isModalOpen, setIsModalOpen}: PropType
         })
     
         return !position ? null : (
-          <Marker position={position}>
-            <Popup>You are here</Popup>
-          </Marker>
+          <Marker position={position} />
         )
       }
 
@@ -147,7 +145,7 @@ export function ModalAddingSub({subsData, isModalOpen, setIsModalOpen}: PropType
         onCancel={handleCancel}
         cancelText="Cancelar"
         okText="Confirmar"
-        okButtonProps={{disabled: (inputStatus.status === "error" || inputNumberStatus.status === "error" || (!data.x_coordinate && !data.y_coordinate))}}
+        okButtonProps={{disabled: (data.name === "" || inputNumberStatus.status === "error" || (!data.x_coordinate && !data.y_coordinate))}}
       >
         <Flex vertical gap="25px">
         <p>Seleccione un lugar en el mapa</p>
