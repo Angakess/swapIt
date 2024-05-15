@@ -324,6 +324,7 @@ export function Helpers() {
         cancelText="Cancelar"
         okText="Desincorporar"
         okButtonProps={{ danger: true , disabled: loading}}
+        cancelButtonProps={{disabled: loading}}
       >
         <p>¿Está seguro que quiere desincorporar a este ayudante?</p>
         {helperSelected?.subsidiary_cant_helpers === 1 ? 

@@ -49,7 +49,6 @@ export function Locals() {
 
   const [isEditingModalOpen, setIsEditingModalOpen] = useState(false)
   const [isAddingModalOpen, setIsAddingModalOpen] = useState(false)
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   const items: DescriptionsProps['items'] = [
     {
@@ -91,35 +90,6 @@ export function Locals() {
 
   const handleEditingModal = () => {
     setIsEditingModalOpen(true)
-  }
-
-  const handleOkDelete = async() => {
-    setIsLoading(true)
-    const res = await fetch(`http://localhost:8000/subsidiary/subsidiary/${subSelected?.id}`,{
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "DELETE",
-    })
-    const result = await res.json()
-    if(res.ok){
-      Modal.success({
-        title: "Operación completada",
-        content: result.messages
-      })
-    }
-    else{
-      Modal.error({
-        title: "Error",
-        content: result.messages
-      })
-    }
-    setIsDeleteModalOpen(false)
-    setIsLoading(false)
-    fetchData()
-  }
-  const handleCancelDelete = () => {
-    setIsDeleteModalOpen(false)
   }
 
   const redMarker = new Icon({
@@ -213,8 +183,6 @@ export function Locals() {
               title={<>
                 <Flex align="center" gap="small">
                   <h3 style={{ marginRight: 'auto', marginBottom: '0' }}>Información de la filial</h3>
-                  {subSelected.active ? 
-                    <Button type='primary' danger onClick={() => setIsDeleteModalOpen(true)}>Desactivar</Button> : null}
                   <Button onClick={handleEditingModal}>Editar</Button>
                   <Tooltip title="Listar stock">
                     <Button icon={<GoldOutlined />} onClick={handleListStock}></Button>
@@ -253,17 +221,6 @@ export function Locals() {
           fetchData={fetchData}
           setSubSelected={setSubSelected}
         ></ModalEditingSub>) : null}
-        <Modal
-          title="Atención"
-          open={isDeleteModalOpen}
-          onOk={handleOkDelete}
-          onCancel={handleCancelDelete}
-          cancelText="Cancelar"
-          okText="Confirmar"
-          okButtonProps={{type:"primary", danger:true, disabled:isLoading}}
-        >
-          <p>¿Está seguro que quiere desactivar la filial '{subSelected?.name}'?</p>
-        </Modal>
     </>
   )
 }
