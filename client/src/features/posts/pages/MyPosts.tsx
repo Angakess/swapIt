@@ -23,7 +23,7 @@ async function mapCategoiresToSelectOptions(): Promise<SelectOption[]> {
 export function MyPosts() {
   const { user } = useAuth()
 
-  const [categoriesOptions, setCategoriesFilter] = useState<SelectOption[]>([
+  const [categoriesOptions, setCategoriesOption] = useState<SelectOption[]>([
     { label: 'Todas las categorías', value: '' },
   ])
 
@@ -49,7 +49,7 @@ export function MyPosts() {
   useEffect(() => {
     ;(async () => {
       const categories = await mapCategoiresToSelectOptions()
-      setCategoriesFilter([...categoriesOptions, ...categories])
+      setCategoriesOption([...categoriesOptions, ...categories])
     })()
     ;(async () => {
       const p = await getPostList({

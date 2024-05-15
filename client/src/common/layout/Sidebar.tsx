@@ -35,6 +35,11 @@ const items: Record<UserPermissions, SidebarProps> = {
     defaultSelectedKey: 'helpers',
     menuItems: [
       {
+        key: '/posts',
+        label: 'Publicaciones',
+        icon: <AppstoreOutlined />,
+      },
+      {
         key: '/admin/helpers',
         label: 'Ayudantes',
         icon: <ContactsOutlined />,
@@ -78,7 +83,13 @@ const items: Record<UserPermissions, SidebarProps> = {
   },
   HELPER: {
     defaultSelectedKey: '',
-    menuItems: [],
+    menuItems: [
+      {
+        key: '/posts',
+        label: 'Publicaciones',
+        icon: <AppstoreOutlined />,
+      },
+    ],
   },
 }
 

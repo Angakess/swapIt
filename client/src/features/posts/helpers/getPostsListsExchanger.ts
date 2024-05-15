@@ -91,7 +91,7 @@ export async function getPostsListsExchanger({
 // getPostList
 
 type GetPostListOptions = {
-  userId: number
+  userId?: string | number
   search?: string
   state?: string
   status?: string
@@ -99,7 +99,7 @@ type GetPostListOptions = {
 }
 
 export async function getPostList({
-  userId,
+  userId = '',
   search = '',
   state = '',
   status = '',

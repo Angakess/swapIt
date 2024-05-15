@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react'
 import { Divider } from 'antd'
-
-import { useAuth } from '@Common/hooks'
-import { PostsList, SearchAndFilter } from '@Posts/components'
+import { PostsList } from './PostsList'
+import { PageTitle } from '@Common/components'
+import { SearchAndFilter } from './SearchAndFilter'
+import { useEffect, useState } from 'react'
 import {
   PostModel,
   getCategoryList,
-  getPostsListsExchanger,
+  getPostList,
 } from '@Posts/helpers/getPostsListsExchanger'
-import { PageTitle } from '@Common/components'
 
 type SelectOption = {
   label: string
@@ -20,9 +19,7 @@ async function mapCategoiresToSelectOptions(): Promise<SelectOption[]> {
   return categories.map(({ name }) => ({ label: name, value: name }))
 }
 
-export function PostsExchanger() {
-  const { user } = useAuth()
-
+export function PostsStaff() {
   const [categoriesOptions, setCategoriesOptions] = useState<SelectOption[]>([
     { label: 'Todas las categorías', value: '' },
   ])
@@ -35,12 +32,11 @@ export function PostsExchanger() {
   const [searchValue, setSearchValue] = useState('')
 
   async function handleSearch() {
-    const p = await getPostsListsExchanger({
-      excludeUserId: user!.id,
+    const p = await getPostList({
       search: searchValue,
       category: filterCategory,
       state: filterState,
-      status: 'activo',
+      status: 'pendiente',
     })
     setPosts(p)
   }
@@ -51,10 +47,7 @@ export function PostsExchanger() {
       setCategoriesOptions([...categoriesOptions, ...categories])
     })()
     ;(async () => {
-      const p = await getPostsListsExchanger({
-        excludeUserId: user!.id,
-        status: 'activo',
-      })
+      const p = await getPostList({ status: 'pendiente' })
       setPosts(p)
       setIsLoading(false)
     })()
@@ -62,7 +55,7 @@ export function PostsExchanger() {
 
   return (
     <>
-      <PageTitle title="Publicaciones" />
+      <PageTitle title="Publicaciones pendientes de revisión" />
       <SearchAndFilter
         searchBar={{
           placeholder: 'Busca una publicación',

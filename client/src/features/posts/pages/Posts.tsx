@@ -1,5 +1,5 @@
 import { useAuth } from '@Common/hooks'
-import { PostsExchanger } from '@Posts/components'
+import { PostsExchanger, PostsStaff } from '@Posts/components'
 
 export function Posts() {
   const { user } = useAuth()
@@ -8,5 +8,5 @@ export function Posts() {
     return <PostsExchanger />
   }
 
-  return <>Default</>
+  return <PostsStaff />
 }
