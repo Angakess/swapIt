@@ -1,23 +1,35 @@
+import { useAuth } from '@Common/hooks'
 import { UploadOutlined } from '@ant-design/icons'
-import { Button, Form, Input, InputNumber, Upload, message } from 'antd'
+import { Button, Form, Input, InputNumber, Select, Upload, message } from 'antd'
 import type { UploadProps } from 'antd'
-import { useState } from 'react'
+import { act, useEffect, useState } from 'react'
+import {getter} from '@Posts/helpers/getPostsListsExchanger'
+
+const getFiliales = async () => {
+  const response = await getter("/subsidiary/subsidiaries/", {})
+  return {subsidiaries: response}
+}
 
 export function PostAdd() {
   const [files, setFiles] = useState<any[]>([])
+  const [subsidiaries, setSubsidiaries] = useState<any[]>([])
+  useEffect(() => {
+    getFiliales().then((response) => {
+      setSubsidiaries(response.subsidiaries)
+    })
+  }, [])
+
+  const {user} = useAuth()
 
   /* 
-        "name": "Pantalón",
-        "description": "Pantalón de color azul",
-        "value": 10000,
-        "user": 1,
-        "subsidiary": 1,
-        "state": 1,
-        "category": 2,
-        "state_product": string,
-        "image_1": "pantalon1.jpg",
-    
-    */
+    Modifcar:
+    - User id -> Tomarlo del useAuth
+    - Subsidiary id -> Hacer fetch para obtener todas los subsidiary
+    - State id -> Hacer fetch para obtener todas los state
+    - Category id -> Hacer fetch para obtener todas los category
+    - State product -> Seleccionar de un select. Listar los estados de productos
+
+  */
 
   const props: UploadProps = {
     name: 'file',
@@ -36,13 +48,12 @@ export function PostAdd() {
     },
   }
 
-  const onSubmit = (values: any) => {
-    console.log('Success:', values)
+  const onSubmit = async (values: any) => {
     const formData = new FormData()
     formData.append('name', values.name)
     formData.append('description', values.description)
     formData.append('value', values.value)
-    formData.append('user', values.user)
+    formData.append('user', user!.id.toString())
     formData.append('subsidiary', values.subsidiary)
     formData.append('state', values.state)
     formData.append('category', values.category)
@@ -104,31 +115,20 @@ export function PostAdd() {
             style={{ width: '100%' }}
           />
         </Form.Item>
-
-        <Form.Item
-          label="User"
-          name="user"
-          required={true}
-          rules={[{ required: true, message: 'Please enter the user' }]}
-        >
-          <Input
-            placeholder="Enter the user"
-            size="large"
-            style={{ width: '100%' }}
-          />
-        </Form.Item>
-
+        
         <Form.Item
           label="Subsidiary"
           name="subsidiary"
           required={true}
           rules={[{ required: true, message: 'Please enter the subsidiary' }]}
         >
-          <Input
-            placeholder="Enter the subsidiary"
+          <Select
+            placeholder="Elija la filial"
             size="large"
             style={{ width: '100%' }}
-          />
+            options={subsidiaries}
+            />
+
         </Form.Item>
 
         <Form.Item
