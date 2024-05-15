@@ -39,7 +39,7 @@ interface TableParams {
 }
 
 export function Categories() {
-  const [data, setData] = useState<DataType[]>()
+  const [data, setData] = useState<DataType[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
