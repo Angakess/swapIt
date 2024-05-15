@@ -20,7 +20,7 @@ type SubsidiaryType = {
   name: string
   x_coordinate: string
   y_coordinate: string
-  max_helpers: number
+  max_helpers: number | null
   cant_current_helpers: number
   active: boolean
 }
@@ -184,6 +184,7 @@ export function Locals() {
           setIsModalOpen={setIsEditingModalOpen}
           subsArray={subsData}
           fetchData={fetchData}
+          setSubSelected={setSubSelected}
         ></ModalEditingSub>) : null}
     </>
   )

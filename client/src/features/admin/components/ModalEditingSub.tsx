@@ -1,19 +1,12 @@
-import { Checkbox, Flex, Input, InputNumber, Modal } from 'antd'
-import { CheckboxChangeEvent } from 'antd/es/checkbox'
+import { Flex, Input, InputNumber, Modal } from 'antd'
 import { useState } from 'react'
 
-type DataType = {
-  id: number
-  name: string
-  max_helpers: number | null
-  active: boolean
-}
 type SubsidiaryType = {
   id: number
   name: string
   x_coordinate: string
   y_coordinate: string
-  max_helpers: number
+  max_helpers: number | null
   cant_current_helpers: number
   active: boolean
 }
@@ -23,6 +16,7 @@ type PropType = {
   setIsModalOpen: (x: boolean) => void
   subsArray: SubsidiaryType[]
   fetchData: () => void
+  setSubSelected: (s:SubsidiaryType) => void
 }
 type StatusType = {
   status: '' | 'error'
@@ -35,11 +29,15 @@ export function ModalEditingSub({
   setIsModalOpen,
   subsArray,
   fetchData,
+  setSubSelected
 }: PropType) {
-  const [data, setData] = useState<DataType>({
+  const [data, setData] = useState<SubsidiaryType>({
     id: subData.id,
     name: subData.name,
+    x_coordinate: subData.x_coordinate,
+    y_coordinate: subData.y_coordinate,
     max_helpers: subData.max_helpers,
+    cant_current_helpers: subData.cant_current_helpers,
     active: subData.active,
   })
   const [inputStatus, setInputStatus] = useState<StatusType>({
@@ -114,12 +112,6 @@ export function ModalEditingSub({
       errorMessage: '',
     })
   }
-  const handleChangeActive = (event: CheckboxChangeEvent) => {
-    setData((prevData) => ({
-      ...prevData,
-      active: event.target.checked,
-    }))
-  }
 
   const handleOk = async () => {
     try {
@@ -139,6 +131,7 @@ export function ModalEditingSub({
       )
       fetchData()
       setIsModalOpen(false)
+      setSubSelected(data)
     }catch (error) {
       Modal.error({
         title: 'Error',
@@ -190,15 +183,6 @@ export function ModalEditingSub({
               </p>
             ) : null}
           </label>
-          <Checkbox
-            checked={data.active}
-            onChange={(event) => handleChangeActive(event)}
-            disabled={5 > 0}
-          >
-            Activa 
-          </Checkbox>
-          {5 > 0 ? <p style={{opacity: "75%"}}>{"("}Para desactivar una filial no debe haber ningún ayudante asignado{")"}</p> : null}
-
         </Flex>
       </Modal>
     </>
