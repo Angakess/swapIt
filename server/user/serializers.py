@@ -3,13 +3,18 @@ from subsidiary.models import Subsidiary
 from django.contrib.auth import get_user_model
 from .models import UserAccount, UserState
 from rest_framework import serializers
-from subsidiary.serializers import SubsidiaryWithCantHelpersSerializer
+from subsidiary.serializers import SubsidiaryWithCantHelpersSerializer, SubsidiarySerializer
 User = get_user_model()
 
 class UserStateSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserState
         fields = ['name']
+
+class UserStateFullSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserState
+        fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
     id_subsidiary = serializers.PrimaryKeyRelatedField(
@@ -30,7 +35,6 @@ class UserSerializer(serializers.ModelSerializer):
             'id_subsidiary',
         ]
 
-
 class UserCreatedSerializer(serializers.ModelSerializer):
     state = UserStateSerializer()
 
@@ -47,15 +51,7 @@ class UserCreatedSerializer(serializers.ModelSerializer):
         ]
     
 class ListHelperSerializer(serializers.ModelSerializer):
-    full_name = serializers.SerializerMethodField('get_full_name')
     subsidiary = SubsidiaryWithCantHelpersSerializer(source='id_subsidiary')
-
-    def get_full_name(self, obj):
-        return obj.first_name + ' ' + obj.last_name
-    
-
-    def get_subsidiary_name(self, obj):
-        return obj.id_subsidiary.name
 
     class Meta:
         model = UserAccount
@@ -66,14 +62,8 @@ class ListHelperSerializer(serializers.ModelSerializer):
             'subsidiary',
         ]
 
-
 class ListExchangerSerializer(serializers.ModelSerializer):
-    full_name = serializers.SerializerMethodField('get_full_name')
-    user_state = serializers.SerializerMethodField('get_user_state')
-
-    def get_full_name(self, obj):
-        return obj.first_name + ' ' + obj.last_name
-    
+    user_state = serializers.SerializerMethodField('get_user_state')    
 
     def get_user_state(self, obj):
         return obj.state.name
@@ -86,4 +76,31 @@ class ListExchangerSerializer(serializers.ModelSerializer):
             'dni',
             'email',
             'user_state',
+        ]
+
+
+class HelperDetailSerializer(serializers.ModelSerializer):
+    subsidiary = SubsidiarySerializer(source='id_subsidiary')
+
+    class Meta:
+        model = UserAccount
+        fields = [
+            'id',
+            'full_name',
+            'subsidiary',
+        ]
+
+class ExchangerDetailSerializer(serializers.ModelSerializer):
+    state = UserStateFullSerializer()
+    class Meta:
+        model = UserAccount
+        fields = [
+            'id',
+            'full_name',
+            'dni',
+            'email',
+            'gender',
+            'date_of_birth',
+            'phone_number',
+            'state'
         ]

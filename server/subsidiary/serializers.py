@@ -2,17 +2,19 @@ from rest_framework import serializers
 from .models import Subsidiary
 
 class SubsidiarySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Subsidiary
-        fields = '__all__'
+        fields = [
+            'id',
+            'name',
+            'x_coordinate',
+            'y_coordinate',
+            'max_helpers',
+            'cant_current_helpers',
+            'active',
+        ]
 
 class SubsidiaryWithCantHelpersSerializer(serializers.ModelSerializer):
-    cant_helpers = serializers.SerializerMethodField('get_cant_helpers')
-
-    def get_cant_helpers(self, obj):
-        return obj.users.count()
-
     class Meta:
         model = Subsidiary
-        fields = ['name', 'cant_helpers']
+        fields = ['name', 'cant_current_helpers']

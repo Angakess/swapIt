@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, filters
 from rest_framework.response import Response
 from .models import Subsidiary
 from .serializers import SubsidiarySerializer
@@ -32,5 +32,9 @@ class SubsidiaryCreate(generics.CreateAPIView):
 class SubsidiaryList(generics.ListAPIView):
     def get_queryset(self):
         return Subsidiary.objects.all()
+    
+    search_fields = ['name']
+    filter_backends = [filters.SearchFilter]
+
 
     serializer_class = SubsidiarySerializer
