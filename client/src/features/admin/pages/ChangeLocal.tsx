@@ -4,6 +4,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 import redMarkerIcon from '/map-pin-red.svg'
 import grayMarkerIcon from '/map-pin-gray.svg'
 import { Icon } from 'leaflet'
+import { fetchPost } from '@Common/helpers'
 
 type HelperType = {
   id: number
@@ -14,6 +15,7 @@ type HelperType = {
     x_coordinate: string
     y_coordinate: string
     max_helpers: number
+    cant_current_helpers: number
     active: boolean
   }
 }
@@ -80,8 +82,24 @@ export function ChangeLocal() {
     setModalOpen(true)
     setSubSelected(marcador)
   }
-  const handleOk = () => {
-
+  const handleOk = async() => {
+    const res = await fetchPost(`http://localhost:8000/users/change-filial/${helperId}/${subSelected?.id}`,{})
+    const result = await res.json()
+    if(res.ok){
+      Modal.success({
+        title:"Operación completada",
+        content: result.messages
+      })
+    }
+    else{
+      Modal.error({
+        title:"Operación fallida",
+        content: result.messages
+      })
+    }
+    setModalOpen(false)
+    fetchHelperData()
+    fetchSubsData()
   }
   const handleCancel = () => {
     setModalOpen(false)
@@ -134,9 +152,9 @@ export function ChangeLocal() {
             >
               {helperData && <RelocateMap helper={helperData}/>}
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              {(helperData && subsData && subsData.length > 0) && subsData.map((marcador, index) => (
+              {(helperData && subsData) && subsData.map((marcador) => (
                 <Marker
-                  key={index}
+                  key={marcador.id}
                   position={[
                     parseFloat(marcador.x_coordinate),
                     parseFloat(marcador.y_coordinate),
@@ -169,8 +187,8 @@ export function ChangeLocal() {
           </p>
         </>}
         
-        {/* {data[idSelected] && data[idSelected].subsidiary_cant_helpers === 1 ? 
-        <p style={{fontWeight: "bold"}}>IMPORTANTE: Si {data[idSelected].full_name} es desincorporada la filial {data[idSelected].subsidiary_name} se quedará sin ayudantes, lo que deshabilitará la sucursal y suspenderá todas las publicaciones relacionadas</p> : null} */}
+        {helperData && subSelected && helperData.subsidiary.cant_current_helpers === 1 ? 
+        <p style={{fontWeight: "bold"}}>IMPORTANTE: Si {helperData.full_name} es cambiado de filial, la filial '{helperData.subsidiary.name}' se quedará sin ayudantes, por lo que se deshabilitará y se suspenderá todas las publicaciones relacionadas</p> : null}
       </Modal>
       <Modal
         title="Cambio de filial"
