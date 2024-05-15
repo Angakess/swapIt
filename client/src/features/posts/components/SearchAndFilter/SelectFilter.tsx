@@ -4,12 +4,16 @@ export type SelectFilterProps = {
   options: SelectProps['options']
   placeholder: string
   defaultValue: string
+  value: string
+  handleChange: React.Dispatch<React.SetStateAction<string>>
 }
 
 export function SelectFilter({
   options,
   placeholder,
   defaultValue,
+  value,
+  handleChange,
 }: SelectFilterProps) {
   const { colorBgBase, borderRadius } = theme.useToken().token
 
@@ -28,6 +32,8 @@ export function SelectFilter({
       placeholder={placeholder}
       options={options}
       defaultValue={defaultValue}
+      value={value}
+      onChange={handleChange}
     />
   )
 }
