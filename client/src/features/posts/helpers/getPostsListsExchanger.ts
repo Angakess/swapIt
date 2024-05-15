@@ -84,7 +84,7 @@ export async function getPostsListsExchanger({
 
   const resp = await fetch(url)
   const data = await resp.json()
-  return data.data.posts
+  return data
 }
 
 //
