@@ -33,13 +33,15 @@ export function Exchangers() {
         ...params,
     }) */
 
-  const [data, setData] = useState<DataType[]>([{
-    id: 0,
-    full_name: "",
-    dni: "",
-    email: "",
-    user_state: ""
-  }])
+  const [data, setData] = useState<DataType[]>([
+    {
+      id: 0,
+      full_name: '',
+      dni: '',
+      email: '',
+      user_state: '',
+    },
+  ])
   const [loading, setLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -48,9 +50,9 @@ export function Exchangers() {
     },
   })
 
-  const fetchData = async() => {
+  const fetchData = async () => {
     setLoading(true)
-    const res = await fetch("http://localhost:8000/users/list-exchangers/")
+    const res = await fetch('http://localhost:8000/users/list-exchangers/')
     const result = await res.json()
     setData(result)
     setLoading(false)
@@ -58,10 +60,12 @@ export function Exchangers() {
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: result.filter((item: DataType) =>
-          item.full_name.includes(searchText.full_name) &&
-          item.dni.includes(searchText.dni) &&
-          item.email.includes(searchText.email))
+        total: result.filter(
+          (item: DataType) =>
+            item.full_name.includes(searchText.full_name) &&
+            item.dni.includes(searchText.dni) &&
+            item.email.includes(searchText.email)
+        ),
       },
     })
   }
@@ -90,7 +94,7 @@ export function Exchangers() {
     full_name: '',
     dni: '',
     email: '',
-    user_state: ""
+    user_state: '',
   })
   //const [searchedColumn, setSearchedColumn] = useState('')
   const searchInput = useRef<InputRef>(null)
@@ -231,7 +235,7 @@ export function Exchangers() {
       ],
       onFilter: (value, record) => record.user_state === value,
       filterSearch: false,
-      width: "10%"
+      width: '10%',
     },
     {
       title: 'Acciones',
@@ -246,7 +250,7 @@ export function Exchangers() {
           </Button>
         </Space>
       ),
-      width: "0"
+      width: '0',
     },
   ]
 
@@ -259,7 +263,7 @@ export function Exchangers() {
         pagination={tableParams.pagination}
         loading={loading}
         onChange={handleTableChange}
-        locale={{emptyText: "No hay intercambiadores disponibles"}}
+        locale={{ emptyText: 'No hay intercambiadores disponibles' }}
       />
     </>
   )

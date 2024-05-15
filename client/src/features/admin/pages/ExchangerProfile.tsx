@@ -1,4 +1,12 @@
-import { Button, Card, Descriptions, DescriptionsProps, Flex, Modal, Spin } from 'antd'
+import {
+  Button,
+  Card,
+  Descriptions,
+  DescriptionsProps,
+  Flex,
+  Modal,
+  Spin,
+} from 'antd'
 import { useEffect, useState } from 'react'
 
 type DataType = {
@@ -16,29 +24,44 @@ type DataType = {
 }
 
 export function ExchangerProfile() {
-
   function CardHeader() {
-
     const sendAddHelper = () => {
-        fetchData()
+      console.log('Lo agregaste como ayudante')
+      fetchData()
     }
     const sendBlock = () => {
-        fetchData()
+      console.log('Lo bloqueaste')
+      fetchData()
     }
     const sendUnblock = () => {
-        fetchData()
+      console.log('Lo desbloqueaste')
+      fetchData()
     }
-
 
     return (
       <Flex align="center" gap="small">
-        <h3 style={{ marginRight: 'auto', marginBottom: "0" }}>Perfil de usuario intercambiador</h3>
-        {(data?.state.name !== "active") ?
-            (<>
-                <Button onClick={sendAddHelper} disabled={isLoading}>Incorporar como ayudante</Button>
-                <Button type='primary' danger onClick={sendBlock} disabled={isLoading}>Bloquear</Button>
-            </>) : 
-                <Button type='primary' onClick={sendUnblock} disabled={isLoading}>Desbloquear</Button>}
+        <h3 style={{ marginRight: 'auto', marginBottom: '0' }}>
+          Perfil de usuario intercambiador
+        </h3>
+        {data?.state.name !== 'active' ? (
+          <>
+            <Button onClick={sendAddHelper} disabled={isLoading}>
+              Incorporar como ayudante
+            </Button>
+            <Button
+              type="primary"
+              danger
+              onClick={sendBlock}
+              disabled={isLoading}
+            >
+              Bloquear
+            </Button>
+          </>
+        ) : (
+          <Button type="primary" onClick={sendUnblock} disabled={isLoading}>
+            Desbloquear
+          </Button>
+        )}
       </Flex>
     )
   }
@@ -46,25 +69,28 @@ export function ExchangerProfile() {
   const parts = window.location.href.split('/')
   const exchangerId: number = parseInt(parts[parts.length - 1])
 
-
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState<DataType>()
 
-
-  const fetchData = async() => {
-    try{
-      const res = await fetch(`http://localhost:8000/users/get-exchanger/${exchangerId}`)
-      const result = await res.json()  
+  const fetchData = async () => {
+    setIsLoading(true)
+    try {
+      const res = await fetch(
+        `http://localhost:8000/users/get-exchanger/${exchangerId}`
+      )
+      const result = await res.json()
       setData(result)
-    }
-    catch (error){
+    } catch (error) {
       Modal.error({
-        title:"Error",
-        content: "No se encontro al intercambiador solicitado"
+        title: 'Error',
+        content: 'No se encontro al intercambiador solicitado',
       })
     }
+    setIsLoading(false)
   }
-  useEffect(() => {fetchData()},[])
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const items: DescriptionsProps['items'] = [
     {
