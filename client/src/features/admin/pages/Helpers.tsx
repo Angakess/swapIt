@@ -6,6 +6,7 @@ import {
   TableColumnType,
   InputRef,
   Modal,
+  Tooltip,
 } from 'antd'
 import { GetProp, TableProps } from 'antd'
 import {
@@ -247,17 +248,22 @@ export function Helpers() {
       render: (_: any, record: DataType) => (
         <Space>
           <Link to={`/admin/helpers/change-local/${record.id}`}>
-            <Button
+          <Tooltip title="Cambiar filial">
+          <Button
               type="primary"
               icon={<ShopFilled />}
             ></Button>
+            </Tooltip>
           </Link>
+          <Tooltip title="Desincorporar ayudante">
           <Button
             type="primary"
             danger
             icon={<UserDeleteOutlined />}
             onClick={() => showModal(record)}
           ></Button>
+          </Tooltip>
+          
         </Space>
       ),
     },
