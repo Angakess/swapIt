@@ -1,6 +1,6 @@
 export * from './ImageCarousel'
 export * from './PostDetails'
-export * from './PostItem'
+export * from './PostListItem'
 export * from './PostMainButton'
 export * from './PostsList'
 export * from './PostUser'
