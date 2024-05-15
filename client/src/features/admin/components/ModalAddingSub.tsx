@@ -1,6 +1,5 @@
 import { fetchPost } from '@Common/helpers'
 import { Flex, Input, InputNumber, Modal } from 'antd'
-import Checkbox, { CheckboxChangeEvent } from 'antd/es/checkbox'
 import { Icon, LatLng } from 'leaflet'
 import { useState } from 'react'
 import {
@@ -52,7 +51,7 @@ export function ModalAddingSub({
     name: '',
     x_coordinate: '',
     y_coordinate: '',
-    max_helpers: 1,
+    max_helpers: 3,
     active: false,
   })
 
@@ -115,12 +114,6 @@ export function ModalAddingSub({
       status: '',
       errorMessage: '',
     })
-  }
-  const handleChangeActive = (event: CheckboxChangeEvent) => {
-    setData((prevData) => ({
-      ...prevData,
-      active: event.target.checked,
-    }))
   }
 
   const handleOk = async () => {
@@ -251,12 +244,6 @@ export function ModalAddingSub({
               </p>
             ) : null}
           </label>
-          <Checkbox
-            checked={data.active}
-            onChange={(value) => handleChangeActive(value)}
-          >
-            Activa
-          </Checkbox>
           <p>
             x: {data.x_coordinate} y:{data.y_coordinate}
           </p>
