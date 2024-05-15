@@ -47,6 +47,7 @@ export function PostAdd() {
     formData.append('state', values.state)
     formData.append('category', values.category)
     formData.append('state_product', values.state_product)
+    formData.append('stock_product', values.stock_product)
     formData.append('image_1', files[0])
     fetch('http://localhost:8000/post/', {
       method: 'POST',
@@ -166,6 +167,22 @@ export function PostAdd() {
         >
           <Input
             placeholder="Enter the product state"
+            size="large"
+            style={{ width: '100%' }}
+          />
+        </Form.Item>
+
+
+        <Form.Item
+          label="Product Stock"
+          name="stock_product"
+          required={true}
+          rules={[
+            { required: true, message: 'Please enter the product stock' },
+          ]}
+        >
+          <Input
+            placeholder="Enter the product stock"
             size="large"
             style={{ width: '100%' }}
           />

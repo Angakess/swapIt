@@ -30,6 +30,9 @@ class Post(models.Model):
     description = models.TextField(null=False)
     value = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)], null=False)
+    stock_product = models.IntegerField(default=1, null=False,
+                                        validators=[MinValueValidator(1),
+                                                    MaxValueValidator(100)],)
 
     user = models.ForeignKey(
         UserAccount, on_delete=models.CASCADE, related_name='posts',
