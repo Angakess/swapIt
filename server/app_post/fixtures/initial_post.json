@@ -1,13 +1,12 @@
 [
   {
     "model": "app_post.post",
-    "pk": 1,
     "fields": {
       "name": "Camperón de hombre",
       "description": "Camperón XL con bolsillos dentro y forro interior extraíble, excelente estado\nMedidas:\n- sisa: 65 cm\n- largo: 88 cm\n- manga: 61 cm",
       "value": 4,
       "user": 15,
-      "subsidiary": 1,
+      "subsidiary": 3,
       "state": 1,
       "category": 2,
       "state_product": "USADO",
@@ -20,18 +19,17 @@
   },
   {
     "model": "app_post.post",
-    "pk": 2,
     "fields": {
-      "name": "Campera retro vintage de hombre",
-      "description": "Campera retro vintage de hombre\nTalle XL\nSin detalles\nMide de axilas a axilas 75 cm\nDe largo 70 cm\nDe brazo 81 cm\n",
-      "value": 3,
-      "user": 24,
-      "subsidiary": 1,
+      "name": "Bolitas",
+      "description": "Buenass ❤️ ideales para el mate",
+      "value": 5,
+      "user": 13,
+      "subsidiary": 3,
       "state": 1,
-      "category": 2,
-      "state_product": "USADO",
-      "image_1": "post_images/post2_img1.jpg",
-      "image_2": "post_images/post2_img2.jpg",
+      "category": 3,
+      "state_product": "NUEVO",
+      "image_1": "post_images/post16_img1.jpg",
+      "image_2": "post_images/post16_img2.jpg",
       "image_3": null,
       "image_4": null,
       "image_5": null
@@ -39,7 +37,6 @@
   },
   {
     "model": "app_post.post",
-    "pk": 3,
     "fields": {
       "name": "Campera HARLEY DAVIDSON XXL",
       "description": "Vendo Campera de cuero HARLEY DAVIDSON, súper abrigada, talle XXL.",
@@ -48,7 +45,7 @@
       "subsidiary": 1,
       "state": 1,
       "category": 2,
-      "state_product": "USADO",
+      "state_product": "NUEVO",
       "image_1": "post_images/post3_img1.jpg",
       "image_2": null,
       "image_3": null,
@@ -58,7 +55,24 @@
   },
   {
     "model": "app_post.post",
-    "pk": 4,
+    "fields": {
+      "name": "Cuadernillo, lapiceras, RESALTADORES, cartuchera ",
+      "description": "peppa skater",
+      "value": 5,
+      "user": 24,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 1,
+      "state_product": "USADO",
+      "image_1": "post_images/post14_img1.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
     "fields": {
       "name": "Campera de neoprene ideal motos y fuerzas de seguridad",
       "description": "Camperas de neoprene azul y negras, vienen con logo y sin logo (Columbia). Frizadas por dentro con micropolar y capucha desmontable. Ideal policias y fuerzas de seguridad.",
@@ -77,124 +91,6 @@
   },
   {
     "model": "app_post.post",
-    "pk": 5,
-    "fields": {
-      "name": "Botas tipo de montar",
-      "description": "Son de cuero cuero!",
-      "value": 5,
-      "user": 13,
-      "subsidiary": 1,
-      "state": 1,
-      "category": 2,
-      "state_product": "USADO",
-      "image_1": "post_images/post5_img1.jpg",
-      "image_2": "post_images/post5_img2.jpg",
-      "image_3": "post_images/post5_img3.jpg",
-      "image_4": null,
-      "image_5": null
-    }
-  },
-  {
-    "model": "app_post.post",
-    "pk": 6,
-    "fields": {
-      "name": "Campera de hombre wrangler original. Re vintange única",
-      "description": "Viste cuando nuevas no lucías como usadas q no daba igual? Si SOS de esos veni a verla. Para cuando llegue la moda de nueva serás el nombre One.",
-      "value": 2,
-      "user": 15,
-      "subsidiary": 1,
-      "state": 1,
-      "category": 2,
-      "state_product": "USADO",
-      "image_1": "post_images/post6_img1.jpg",
-      "image_2": null,
-      "image_3": null,
-      "image_4": null,
-      "image_5": null
-    }
-  },
-  {
-    "model": "app_post.post",
-    "pk": 7,
-    "fields": {
-      "name": "Campera THE NORTH FACE original talle 14/16",
-      "description": "campera rompevientos the north face original, talle L pequeño (14/16). se puede guardar l capucha en el cuello, tiene detalles de uso",
-      "value": 5,
-      "user": 18,
-      "subsidiary": 1,
-      "state": 1,
-      "category": 2,
-      "state_product": "USADO",
-      "image_1": "post_images/post7_img1.jpg",
-      "image_2": "post_images/post7_img2.jpg",
-      "image_3": null,
-      "image_4": null,
-      "image_5": null
-    }
-  },
-
-
-
-  {
-    "model": "app_post.post",
-    "pk": 8,
-    "fields": {
-      "name": "Lapiceras de colores",
-      "description": "Cambio las cuatro lapiceras por un departamento",
-      "value": 3,
-      "user": 18,
-      "subsidiary": 1,
-      "state": 1,
-      "category": 1,
-      "state_product": "USADO",
-      "image_1": "post_images/post8_img1.jpg",
-      "image_2": null,
-      "image_3": null,
-      "image_4": null,
-      "image_5": null
-    }
-  },
-  {
-    "model": "app_post.post",
-    "pk": 9,
-    "fields": {
-      "name": "10 lapiceras de colores",
-      "description": "Estan buenísimas",
-      "value": 1,
-      "user": 20,
-      "subsidiary": 1,
-      "state": 1,
-      "category": 1,
-      "state_product": "USADO",
-      "image_1": "post_images/post9_img1.jpg",
-      "image_2": null,
-      "image_3": null,
-      "image_4": null,
-      "image_5": null
-    }
-  },
-  {
-    "model": "app_post.post",
-    "pk": 10,
-    "fields": {
-      "name": "Sacapuntas de aluminio",
-      "description": "Sacapuntas para lápices",
-      "value": 2,
-      "user": 15,
-      "subsidiary": 1,
-      "state": 1,
-      "category": 1,
-      "state_product": "USADO",
-      "image_1": "post_images/post10_img1.jpg",
-      "image_2": null,
-      "image_3": null,
-      "image_4": null,
-      "image_5": null
-    }
-  },
-  {
-    "model": "app_post.post",
-    "pk": 11,
     "fields": {
       "name": "Plasticola",
       "description": "Pegan como cachetada de transformer",
@@ -213,13 +109,85 @@
   },
   {
     "model": "app_post.post",
-    "pk": 12,
+    "fields": {
+      "name": "Botas tipo de montar",
+      "description": "Son de cuero cuero!",
+      "value": 5,
+      "user": 13,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/post5_img1.jpg",
+      "image_2": "post_images/post5_img2.jpg",
+      "image_3": "post_images/post5_img3.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "10 lapiceras de colores",
+      "description": "Estan buenísimas",
+      "value": 1,
+      "user": 20,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 1,
+      "state_product": "USADO",
+      "image_1": "post_images/post9_img1.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Campera de hombre wrangler original. Re vintange única",
+      "description": "Viste cuando nuevas no lucías como usadas q no daba igual? Si SOS de esos veni a verla. Para cuando llegue la moda de nueva serás el nombre One.",
+      "value": 2,
+      "user": 15,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 2,
+      "state_product": "NUEVO",
+      "image_1": "post_images/post6_img1.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Lapiceras de colores",
+      "description": "Cambio las cuatro lapiceras por un departamento",
+      "value": 3,
+      "user": 18,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 1,
+      "state_product": "USADO",
+      "image_1": "post_images/post8_img1.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+
+  {
+    "model": "app_post.post",
     "fields": {
       "name": "block de hojas (480)",
       "description": "hojas rivadavia cuadriculadas sin abrir",
       "value": 3,
       "user": 19,
-      "subsidiary": 1,
+      "subsidiary": 3,
       "state": 1,
       "category": 1,
       "state_product": "USADO",
@@ -232,7 +200,42 @@
   },
   {
     "model": "app_post.post",
-    "pk": 13,
+    "fields": {
+      "name": "Campera THE NORTH FACE original talle 14/16",
+      "description": "campera rompevientos the north face original, talle L pequeño (14/16). se puede guardar l capucha en el cuello, tiene detalles de uso",
+      "value": 5,
+      "user": 18,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/post7_img1.jpg",
+      "image_2": "post_images/post7_img2.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sacapuntas de aluminio",
+      "description": "Sacapuntas para lápices",
+      "value": 2,
+      "user": 15,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 1,
+      "state_product": "USADO",
+      "image_1": "post_images/post10_img1.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
     "fields": {
       "name": "Cartuchera peppa skater",
       "description": "peppa skater",
@@ -251,29 +254,6 @@
   },
   {
     "model": "app_post.post",
-    "pk": 14,
-    "fields": {
-      "name": "Cuadernillo, lapiceras, RESALTADORES, cartuchera ",
-      "description": "peppa skater",
-      "value": 5,
-      "user": 24,
-      "subsidiary": 1,
-      "state": 1,
-      "category": 1,
-      "state_product": "USADO",
-      "image_1": "post_images/post14_img1.jpg",
-      "image_2": null,
-      "image_3": null,
-      "image_4": null,
-      "image_5": null
-    }
-  },
-
-
-
-  {
-    "model": "app_post.post",
-    "pk": 15,
     "fields": {
       "name": "mini tortas",
       "description": "Tortas pequeña de 12 cm",
@@ -292,18 +272,17 @@
   },
   {
     "model": "app_post.post",
-    "pk": 16,
     "fields": {
-      "name": "Bolitas",
-      "description": "Buenass ❤️ ideales para el mate",
-      "value": 5,
-      "user": 13,
+      "name": "Campera retro vintage de hombre",
+      "description": "Campera retro vintage de hombre\nTalle XL\nSin detalles\nMide de axilas a axilas 75 cm\nDe largo 70 cm\nDe brazo 81 cm\n",
+      "value": 3,
+      "user": 24,
       "subsidiary": 1,
       "state": 1,
-      "category": 3,
-      "state_product": "NUEVO",
-      "image_1": "post_images/post16_img1.jpg",
-      "image_2": "post_images/post16_img2.jpg",
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/post2_img1.jpg",
+      "image_2": "post_images/post2_img2.jpg",
       "image_3": null,
       "image_4": null,
       "image_5": null
@@ -311,7 +290,6 @@
   },
   {
     "model": "app_post.post",
-    "pk": 17,
     "fields": {
       "name": "tortas de MIGA 🥪😋",
       "description": "Son una bomba 🥪😋",
