@@ -105,7 +105,6 @@ export function MyPosts() {
               { label: 'Pendiente', value: 'pendiente' },
               { label: 'Suspendido', value: 'suspendido' },
               { label: 'Rechazado', value: 'rechazado' },
-              { label: 'Bloqueado', value: 'bloqueado' },
             ],
             defaultValue: '',
             value: filterStatus,
