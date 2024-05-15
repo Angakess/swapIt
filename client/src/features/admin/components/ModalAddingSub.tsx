@@ -123,13 +123,18 @@ export function ModalAddingSub({
   }
 
   const handleOk = async () => {
-    console.log('OK', data)
     await fetchPost('http://localhost:8000/subsidiary/subsidiary/', data)
     fetchData()
     setIsModalOpen(false)
+    setData({
+      name: '',
+      x_coordinate: '',
+      y_coordinate: '',
+      max_helpers: 1,
+      active: false,
+    })
   }
   const handleCancel = () => {
-    console.log('CANCEL')
     setIsModalOpen(false)
   }
 

@@ -14,6 +14,7 @@ type SubsidiaryType = {
   x_coordinate: string
   y_coordinate: string
   max_helpers: number
+  cant_current_helpers: number
   active: boolean
 }
 type PropType = {
@@ -100,7 +101,7 @@ export function ModalEditingSub({
       })
       return
     }
-    if (value < 5 /* subData.current_helpers */) {
+    if (value < subData.cant_current_helpers) {
       setInputNumberStatus({
         status: 'error',
         errorMessage:
@@ -121,7 +122,6 @@ export function ModalEditingSub({
   }
 
   const handleOk = async () => {
-    console.log('OK', data)
     try {
       await fetch(
         `http://localhost:8000/subsidiary/subsidiary/${subData.id}/`,
@@ -137,14 +137,14 @@ export function ModalEditingSub({
           }),
         }
       )
-    } catch (error) {
+      fetchData()
+      setIsModalOpen(false)
+    }catch (error) {
       Modal.error({
         title: 'Error',
         content: 'No se encontró la filial seleccionada',
       })
     }
-    fetchData()
-    setIsModalOpen(false)
   }
   const handleCancel = () => {
     console.log('CANCEL')

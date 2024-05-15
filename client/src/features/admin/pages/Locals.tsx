@@ -21,6 +21,7 @@ type SubsidiaryType = {
   x_coordinate: string
   y_coordinate: string
   max_helpers: number
+  cant_current_helpers: number
   active: boolean
 }
 type PropType = {
@@ -30,18 +31,9 @@ type PropType = {
 }
 
 export function Locals() {
-  const [subsData, setSubsData] = useState<SubsidiaryType[]>([
-    {
-      id: 0,
-      name: '',
-      x_coordinate: '0',
-      y_coordinate: '0',
-      max_helpers: 0,
-      active: false,
-    },
-  ])
+  const [subsData, setSubsData] = useState<SubsidiaryType[]>()
 
-  const [idSelected, setIdSelected] = useState<number>(0)
+  const [subSelected, setSubSelected] = useState<SubsidiaryType>()
 
   const [isEditingModalOpen, setIsEditingModalOpen] = useState(false)
   const [isAddingModalOpen, setIsAddingModalOpen] = useState(false)
@@ -50,17 +42,22 @@ export function Locals() {
     {
       key: '1',
       label: 'Nombre',
-      children: `${subsData[idSelected].name}`,
+      children: `${subSelected?.name}`,
     },
     {
       key: '2',
       label: 'Cantidad máxima de ayudantes',
-      children: `${subsData[idSelected].max_helpers}`,
+      children: `${subSelected?.max_helpers}`,
     },
     {
-      key: '3',
+      key: "3",
+      label: "Cantidad actual de ayudantes",
+      children: `${subSelected?.cant_current_helpers}`
+    },
+    {
+      key: '4',
       label: 'Estado',
-      children: `${subsData[idSelected].active ? 'Activa' : 'Inactiva'}`,
+      children: `${subSelected?.active ? 'Activa' : 'Inactiva'}`,
     },
   ]
 
@@ -69,12 +66,10 @@ export function Locals() {
     const result = await res.json()
     setSubsData(result)
   }
-  useEffect(() => {
-    fetchData()
-  }, [])
+  useEffect(() => {fetchData()}, [])
 
-  const handleMarkerClick = (index: number) => {
-    setIdSelected(index)
+  const handleMarkerClick = (marcador: SubsidiaryType) => {
+    setSubSelected(marcador)
   }
 
   const handleAddingModal = () => {
@@ -132,15 +127,15 @@ export function Locals() {
               style={{ borderRadius: '5px', height: '400px' }}
             >
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              {subsData.map((marcador, index) => (
+              {subsData && subsData.map((marcador) => (
                 <Marker
-                  key={index}
+                  key={marcador.id}
                   position={[
                     parseFloat(marcador.x_coordinate),
                     parseFloat(marcador.y_coordinate),
                   ]}
                   eventHandlers={{
-                    click: () => handleMarkerClick(index),
+                    click: () => handleMarkerClick(marcador),
                   }}
                   icon={marcador.active ? redMarker : grayMarker}
                 >
@@ -153,7 +148,7 @@ export function Locals() {
       </Row>
       <Row>
         <Col span={24}>
-          {idSelected > 0 ? (
+          {subSelected ? (
             <Card
               title={
                 <CardHeader
@@ -175,21 +170,21 @@ export function Locals() {
           ) : null}
         </Col>
       </Row>
-      <ModalAddingSub
-        subsData={subsData}
-        isModalOpen={isAddingModalOpen}
-        setIsModalOpen={setIsAddingModalOpen}
-        fetchData={fetchData}
-      ></ModalAddingSub>
-      {idSelected > 0 ? (
+      {(subsData) ? 
+        (<ModalAddingSub
+          subsData={subsData}
+          isModalOpen={isAddingModalOpen}
+          setIsModalOpen={setIsAddingModalOpen}
+          fetchData={fetchData}
+        ></ModalAddingSub>) : null}
+      {subSelected && subsData ? (
         <ModalEditingSub
-          subData={subsData[idSelected]}
+          subData={subSelected}
           isModalOpen={isEditingModalOpen}
           setIsModalOpen={setIsEditingModalOpen}
           subsArray={subsData}
           fetchData={fetchData}
-        ></ModalEditingSub>
-      ) : null}
+        ></ModalEditingSub>) : null}
     </>
   )
 }
