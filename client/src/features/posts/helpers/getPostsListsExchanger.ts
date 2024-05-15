@@ -95,6 +95,28 @@ type GetCategoryListOptions = {
   active?: boolean
 }
 
+export async function getter(url: string, query: Record<string, string>) {
+
+
+  const endpoint = SERVER_URL + url + '?' + Object.entries(query).reduce((acc, [key, value]) => {
+    return `${acc}${key}=${value}&`
+  }, "").slice(0, -1)
+
+  console.log(endpoint)
+  return fetch(endpoint)
+    .then((response) => response.json())
+    .then((response) => {
+      console.log("[DATA]", response)
+      return response
+    })
+    .catch((error) => { 
+      console.error('Error:', error)
+      return []
+    })
+
+}
+
+
 export async function getCategoryList({
   search = '',
   active = true,
