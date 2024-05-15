@@ -7,7 +7,7 @@ import { Icon } from 'leaflet'
 
 type HelperType = {
   id: number
-  name: string
+  full_name: string
   subsidiary: {
     id: number
     name: string
@@ -162,9 +162,9 @@ export function ChangeLocal() {
         okText="Confirmar"
       >
         {(helperData && subSelected) && <>
-          <p>¿Está seguro que quiere cambiar la filial de {helperData.name}? </p>
+          <p>¿Está seguro que quiere cambiar la filial de {helperData.full_name}? </p>
           <p>
-            {'('}De {helperData.subsidiary.name} a {subSelected.name}
+            {'('}De '{helperData.subsidiary.name}' a '{subSelected.name}'
             {')'}
           </p>
         </>}
