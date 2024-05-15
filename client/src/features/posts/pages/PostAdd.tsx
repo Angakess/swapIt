@@ -1,25 +1,52 @@
 import { useAuth } from '@Common/hooks'
+import { getter } from '@Posts/helpers/getPostsListsExchanger'
 import { UploadOutlined } from '@ant-design/icons'
-import { Button, Form, Input, InputNumber, Select, Upload, message } from 'antd'
 import type { UploadProps } from 'antd'
-import { act, useEffect, useState } from 'react'
-import {getter} from '@Posts/helpers/getPostsListsExchanger'
+import { Button, Form, Input, InputNumber, Select, Upload, message } from 'antd'
+import { useEffect, useState } from 'react'
 
 const getFiliales = async () => {
   const response = await getter("/subsidiary/subsidiaries/", {})
-  return {subsidiaries: response}
+  return { subsidiaries: response }
+}
+
+const getCategoryList = async () => {
+  const response = await getter("/category/list/", { active: "true" })
+    .then((response) => response.data)
+  return response
+}
+
+
+const updateValues = (response: any, setter: any) => {
+  //@ts-ignore
+  setter(response.map((item) => ({
+    // Usar func para capitalizar
+    label: item.name,
+    value: item.id
+  })))
+
 }
 
 export function PostAdd() {
   const [files, setFiles] = useState<any[]>([])
   const [subsidiaries, setSubsidiaries] = useState<any[]>([])
+  const [categories, setCategories] = useState<any[]>([])
+  const stateProducts = [
+    { label: 'Nuevo', value: '1' },
+    { label: 'Usado', value: '2' },
+    { label: 'Reparado', value: '3' },
+  ]
+
   useEffect(() => {
     getFiliales().then((response) => {
-      setSubsidiaries(response.subsidiaries)
+      updateValues(response.subsidiaries, setSubsidiaries)
+    })
+    getCategoryList().then((response) => {
+      updateValues(response.categories, setCategories)
     })
   }, [])
 
-  const {user} = useAuth()
+  const { user } = useAuth()
 
   /* 
     Modifcar:
@@ -77,114 +104,105 @@ export function PostAdd() {
     <>
       <Form layout="vertical" onFinish={onSubmit}>
         <Form.Item
-          label="Name"
+          label="Nombre"
           name="name"
           required={true}
-          rules={[{ required: true, message: 'Please enter the name' }]}
+          rules={[{ required: true, message: 'Ingrese su nombre' }]}
         >
           <Input
-            placeholder="Enter the name"
+            placeholder="Ingrese su nombre"
             size="large"
             style={{ width: '100%' }}
           />
         </Form.Item>
 
         <Form.Item
-          label="Description"
+          label="Descripcion"
           name="description"
           required={true}
-          rules={[{ required: true, message: 'Please enter the description' }]}
+          rules={[{ required: true, message: 'Ingrese la descripción del producto' }]}
           style={{ marginBottom: '0.25rem' }}
         >
           <Input.TextArea
-            placeholder="Enter the description"
+            placeholder="Ingrese la descripción del producto"
             size="large"
             autoSize={{ minRows: 3, maxRows: 6 }}
           />
         </Form.Item>
 
         <Form.Item
-          label="Value"
+          label="Valor"
           name="value"
           required={true}
-          rules={[{ required: true, message: 'Please enter the value' }]}
+          rules={[{ required: true, message: 'Ingrese el valor del producto' }]}
         >
           <InputNumber
-            placeholder="Enter the value"
+            placeholder="Ingrese el valor"
             size="large"
             style={{ width: '100%' }}
           />
         </Form.Item>
-        
+
         <Form.Item
-          label="Subsidiary"
+          label="Filiales"
           name="subsidiary"
           required={true}
-          rules={[{ required: true, message: 'Please enter the subsidiary' }]}
+          rules={[{ required: true, message: 'Por favor, seleccione la filial' }]}
         >
           <Select
             placeholder="Elija la filial"
             size="large"
             style={{ width: '100%' }}
             options={subsidiaries}
-            />
-
-        </Form.Item>
-
-        <Form.Item
-          label="State"
-          name="state"
-          required={true}
-          rules={[{ required: true, message: 'Please enter the state' }]}
-        >
-          <Input
-            placeholder="Enter the state"
-            size="large"
-            style={{ width: '100%' }}
           />
+
         </Form.Item>
 
         <Form.Item
-          label="Category"
+          label="Categorías"
           name="category"
           required={true}
-          rules={[{ required: true, message: 'Please enter the category' }]}
+          rules={[{ required: true, message: 'Por favor, seleccione la categoría' }]}
         >
-          <Input
-            placeholder="Enter the category"
+          <Select
+            placeholder="Elija la categoría"
             size="large"
             style={{ width: '100%' }}
+            options={categories}
           />
         </Form.Item>
 
+
+
         <Form.Item
-          label="Product State"
+          label="Estado"
           name="state_product"
           required={true}
-          rules={[
-            { required: true, message: 'Please enter the product state' },
-          ]}
+          rules={[{ required: true, message: 'Ingrese el estado del producto' }]}
         >
-          <Input
-            placeholder="Enter the product state"
+          <Select
+            placeholder="Elija el estado del producto"
             size="large"
             style={{ width: '100%' }}
+            options={stateProducts}
           />
         </Form.Item>
 
 
         <Form.Item
-          label="Product Stock"
+          label="Cantidad del producto"
           name="stock_product"
           required={true}
           rules={[
-            { required: true, message: 'Please enter the product stock' },
+            { required: true, message: 'El minimo debe ser 1' },
           ]}
         >
           <Input
-            placeholder="Enter the product stock"
+            placeholder="Ingrese la cantidad de unidades que tiene del producto"
             size="large"
             style={{ width: '100%' }}
+            type='number'
+            min={1}
           />
         </Form.Item>
 
