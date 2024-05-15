@@ -1,8 +1,20 @@
-import { Col, Empty, Row } from 'antd'
+import { Col, Empty, Row, Spin } from 'antd'
 import { PostListItem } from './PostListItem'
 import { PostModel } from '@Posts/helpers/getPostsListsExchanger'
 
-export function PostsList({ posts }: { posts: PostModel[] }) {
+export function PostsList({
+  posts,
+  isLoading,
+  showStatus = false,
+}: {
+  posts: PostModel[]
+  isLoading: boolean
+  showStatus?: boolean
+}) {
+  if (isLoading) {
+    return <Spin size="large" style={{ width: '100%' }} />
+  }
+
   if (posts.length === 0) {
     return <Empty description="No se encontraron publicaciones" />
   }
@@ -11,7 +23,7 @@ export function PostsList({ posts }: { posts: PostModel[] }) {
     <Row gutter={[12, 12]}>
       {posts.map((post) => (
         <Col key={post.id} xs={24} md={12} lg={8}>
-          <PostListItem post={post} />
+          <PostListItem post={post} showStatus={showStatus} />
         </Col>
       ))}
     </Row>
