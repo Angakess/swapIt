@@ -55,7 +55,11 @@ export function Categories() {
   })
   const [searchCatName, setSearchCatName] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [idSelected, setIdSelected] = useState(0)
+  const [catSelected, setCatSelected] = useState<DataType>({
+    id: -1,
+    name: "",
+    active: false
+  })
   const [newName, setNewName] = useState('')
   const [inputStatus, setInputStatus] = useState<'' | 'error'>('')
   const [inputErrorMessage, setInputErrorMessage] = useState('')
@@ -285,7 +289,7 @@ export function Categories() {
           <Button
             type="primary"
             icon={<EditOutlined />}
-            onClick={() => showModalEdit(record.id)}
+            onClick={() => showModalEdit(record)}
           ></Button>
         </Space>
       ),
@@ -313,9 +317,9 @@ export function Categories() {
     fetchData()
   }
 
-  const showModalEdit = (id: number) => {
+  const showModalEdit = (record: DataType) => {
     setIsModalOpen(true)
-    setIdSelected(id)
+    setCatSelected(record)
   }
   const handleOk = () => {
     if (!newName) {
@@ -328,9 +332,8 @@ export function Categories() {
       setInputErrorMessage(`Ya existe una categoría con el nombre "${newName}"`)
       return
     }
-    sendCatNameChange(idSelected)
+    sendCatNameChange(catSelected.id)
     setIsModalOpen(false)
-    console.log(`CATEGORIA ${data[idSelected].name} EDITADA A ${newName}`)
   }
   const handleCancel = () => {
     setIsModalOpen(false)
@@ -401,7 +404,7 @@ export function Categories() {
         }}
       >
         <p>
-          Ingrese un nuevo nombre para la categoría "{data[idSelected].name}"
+          Ingrese un nuevo nombre para la categoría "{catSelected.name}"
         </p>
         <Input
           placeholder="Ingrese un nombre"
