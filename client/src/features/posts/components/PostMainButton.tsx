@@ -5,11 +5,12 @@ import {
   UserDeleteOutlined,
 } from '@ant-design/icons'
 
-import { useAuth } from '@Common/hooks'
+import { useAuth, useCustomAlerts } from '@Common/hooks'
 import { PostModel } from '@Posts/helpers/getPostsListsExchanger'
 
 export function PostMainButton({ post }: { post: PostModel }) {
   const { user } = useAuth()
+  const alerts = useCustomAlerts()
   const { colorSuccess } = theme.useToken().token
 
   if (user!.role === 'EXCHANGER') {
@@ -20,6 +21,7 @@ export function PostMainButton({ post }: { post: PostModel }) {
           block
           size="large"
           style={{ fontWeight: '700', marginBottom: '1.5rem' }}
+          onClick={alerts.notImplementedYet}
         >
           Editar
         </Button>
@@ -32,6 +34,7 @@ export function PostMainButton({ post }: { post: PostModel }) {
         block
         size="large"
         style={{ fontWeight: '700', marginBottom: '1.5rem' }}
+        onClick={alerts.notImplementedYet}
       >
         Intercambiar
       </Button>
@@ -46,6 +49,7 @@ export function PostMainButton({ post }: { post: PostModel }) {
         size="large"
         style={{ fontWeight: '700', marginBottom: '1.5rem' }}
         disabled
+        onClick={alerts.notImplementedYet}
       >
         Publicación activa
       </Button>
@@ -60,17 +64,29 @@ export function PostMainButton({ post }: { post: PostModel }) {
           block
           icon={<CheckOutlined />}
           style={{ backgroundColor: colorSuccess, boxShadow: 'none' }}
+          onClick={alerts.notImplementedYet}
         >
           Aprobar
         </Button>
       </Col>
       <Col xs={12}>
-        <Button type="primary" danger block icon={<CloseOutlined />}>
+        <Button
+          type="primary"
+          danger
+          block
+          icon={<CloseOutlined />}
+          onClick={alerts.notImplementedYet}
+        >
           Rechazar
         </Button>
       </Col>
       <Col xs={24}>
-        <Button danger block icon={<UserDeleteOutlined />}>
+        <Button
+          danger
+          block
+          icon={<UserDeleteOutlined />}
+          onClick={alerts.notImplementedYet}
+        >
           Bloquear usuario
         </Button>
       </Col>
