@@ -1,4 +1,5 @@
-import { Flex, Input, InputNumber, Modal } from 'antd'
+import { Checkbox, Flex, Input, InputNumber, Modal } from 'antd'
+import { CheckboxChangeEvent } from 'antd/es/checkbox'
 import { useState } from 'react'
 
 type SubsidiaryType = {
@@ -112,6 +113,12 @@ export function ModalEditingSub({
       errorMessage: '',
     })
   }
+  const handleCheckboxChange = (event: CheckboxChangeEvent) => {
+    setData((prevData) => ({
+      ...prevData,
+      active: event.target.checked,
+    }))
+  }
 
   const handleOk = async () => {
     try {
@@ -185,6 +192,14 @@ export function ModalEditingSub({
               </p>
             ) : null}
           </label>
+          {!subData.active ?
+            <>
+              <Checkbox defaultChecked={false} disabled={data.cant_current_helpers <= 0} onChange={handleCheckboxChange}>Activa</Checkbox>
+              {data.cant_current_helpers <= 0 ? 
+                <p>No se puede activar una filial sin ayudantes</p> : null}
+            </> : null}
+            
+          
         </Flex>
       </Modal>
     </>
