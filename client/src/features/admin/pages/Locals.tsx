@@ -9,6 +9,7 @@ import {
   Modal,
   Row,
 } from 'antd'
+import { ReloadOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { Icon } from 'leaflet'
@@ -16,6 +17,7 @@ import { ModalEditingSub } from '@Admin/components/ModalEditingSub'
 import { ModalAddingSub } from '@Admin/components/ModalAddingSub'
 import redMarkerIcon from '/map-pin-red.svg'
 import grayMarkerIcon from '/map-pin-gray.svg'
+import Input, { SearchProps } from 'antd/es/input'
 
 type SubsidiaryType = {
   id: number
@@ -33,6 +35,8 @@ type PropType = {
 }
 
 export function Locals() {
+  const { Search } = Input
+
   const [subsData, setSubsData] = useState<SubsidiaryType[]>()
 
   const [subSelected, setSubSelected] = useState<SubsidiaryType>()
@@ -125,10 +129,22 @@ export function Locals() {
     iconAnchor: [17, 46],
   })
 
+  const handleSearch: SearchProps['onSearch'] = async(value, _e) => {
+    const res = await fetch('http://localhost:8000/subsidiary/subsidiaries/?' + new URLSearchParams({
+      search: value
+    }))
+    const result = await res.json()
+    setSubsData(result)
+    setSubSelected(undefined)
+  }
+
   function CardHeader({ title, buttonName, handleFunction }: PropType) {
     return (
       <Flex align="center" gap="small">
         <h3 style={{ marginRight: 'auto', marginBottom: '0' }}>{title}</h3>
+        <Search placeholder="Ingrese el nombre de la filial que desea buscar" onSearch={handleSearch} style={{width: "60%"}}/>
+        <Button onClick={() =>{fetchData(); setSubSelected(undefined)}} icon={<ReloadOutlined />}>
+        </Button>
         <Button onClick={handleFunction} type='primary'>
           {buttonName}
         </Button>
