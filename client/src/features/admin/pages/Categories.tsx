@@ -39,13 +39,7 @@ interface TableParams {
 }
 
 export function Categories() {
-  const [data, setData] = useState<DataType[]>([
-    {
-      id: 0,
-      name: '',
-      active: false,
-    },
-  ])
+  const [data, setData] = useState<DataType[]>()
   const [isLoading, setIsLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -78,7 +72,7 @@ export function Categories() {
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: results.data.categories.filter((item: DataType) =>
+        total: results.data.categories?.filter((item: DataType) =>
           item.name.includes(searchCatName)
         ).length,
       },
@@ -327,7 +321,7 @@ export function Categories() {
       setInputErrorMessage('El nombre es obligatorio')
       return
     }
-    if (data.some((item) => item.name === newName)) {
+    if (data?.some((item) => item.name === newName)) {
       setInputStatus('error')
       setInputErrorMessage(`Ya existe una categoría con el nombre "${newName}"`)
       return
@@ -357,7 +351,7 @@ export function Categories() {
       setInputErrorMessage('El nombre es obligatorio')
       return
     }
-    if (data.some((item) => item.name === newName)) {
+    if (data?.some((item) => item.name === newName)) {
       setInputStatus('error')
       setInputErrorMessage(`Ya existe una categoría con el nombre "${newName}"`)
       return
