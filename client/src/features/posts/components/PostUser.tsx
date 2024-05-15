@@ -2,12 +2,17 @@ import { UserAvatar } from '@Common/components/UserAvatar'
 import { StarFilled } from '@ant-design/icons'
 import { Flex, Space, Typography, theme } from 'antd'
 
-export function PostUser() {
+type PostUserProps = {
+  firstName: string
+  lastName: string
+}
+
+export function PostUser({ firstName, lastName }: PostUserProps) {
   const { colorPrimary } = theme.useToken().token
 
   return (
     <Flex justify="space-between">
-      <UserAvatar firstName="John" lastName="Doe" size="large" />
+      <UserAvatar firstName={firstName} lastName={lastName} size="large" />
       <Space>
         <StarFilled style={{ color: colorPrimary, fontSize: '1rem' }} />
         <Typography.Text>

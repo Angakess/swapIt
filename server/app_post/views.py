@@ -212,7 +212,8 @@ class PostListsExchanger(generics.ListAPIView):
     """ Post list execpt id exchenger"""
 
     def get_queryset(self):
-        return Post.objects.all()
+        user_id = self.kwargs.get('id')
+        return Post.objects.exclude(user__id=user_id)
 
     serializer_class = PostBaseSerializer
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
@@ -224,10 +225,6 @@ class PostListsExchanger(generics.ListAPIView):
     search_fields = [
         'name',
     ]
-
-    def list(self, request, id, *args, **kwargs):
-        self.queryset = Post.objects.exclude(user__id=id)
-        return super().list(request, *args, **kwargs)
 
 
 class PostRemove(generics.DestroyAPIView):

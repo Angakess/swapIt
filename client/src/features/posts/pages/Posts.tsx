@@ -1,24 +1,44 @@
+import { useEffect, useState } from 'react'
+import { Divider } from 'antd'
+
+import { useAuth } from '@Common/hooks'
 import { PostsList, SearchAndFilter } from '@Posts/components'
-import { Divider, Flex, Pagination, SelectProps } from 'antd'
-import MOCK_POSTS from '@Posts/MOCK_POSTS.json'
+import {
+  PostModel,
+  getCategoryList,
+  getPostsListsExchanger,
+} from '@Posts/helpers/getPostsListsExchanger'
 
-const categoryOptions: SelectProps['options'] = [
-  { label: 'Todas las categorías', value: 'all' },
-  { label: 'Útiles escolares', value: 'Útiles escolares' },
-  { label: 'Ropa', value: 'Ropa' },
-  { label: 'Alimentos', value: 'Alimentos' },
-  { label: 'Herramientas', value: 'Herramientas' },
-]
+type SelectOption = {
+  label: string
+  value: string
+}
 
-const stateOptions: SelectProps['options'] = [
-  { label: 'Todos los estados', value: 'all' },
-  { label: 'Nuevo', value: 'Nuevo' },
-  { label: 'Excelente estado', value: 'Excelente estado' },
-  { label: 'Buen estado', value: 'Buen estado' },
-  { label: 'Usado', value: 'Usado' },
-]
+async function mapCategoiresToSelectOptions(): Promise<SelectOption[]> {
+  const categories = await getCategoryList()
+  return categories.map(({ name }) => ({ label: name, value: name }))
+}
 
 export function Posts() {
+  const { user } = useAuth()
+
+  const [categoriesOptions, setCategoriesFilter] = useState<SelectOption[]>([
+    { label: 'Todas las categorías', value: '' },
+  ])
+
+  const [posts, setPosts] = useState<PostModel[]>([])
+
+  useEffect(() => {
+    ;(async () => {
+      const categories = await mapCategoiresToSelectOptions()
+      setCategoriesFilter([...categoriesOptions, ...categories])
+    })()
+    ;(async () => {
+      const p = await getPostsListsExchanger({ excludeUserId: user!.id })
+      setPosts(p)
+    })()
+  }, [])
+
   return (
     <>
       <h2 style={{ marginBottom: '2rem' }}>Publicaciones</h2>
@@ -27,24 +47,23 @@ export function Posts() {
         filters={[
           {
             placeholder: 'Categoría',
-            options: categoryOptions,
-            defaultValue: 'all',
+            options: categoriesOptions,
+            defaultValue: '',
           },
           {
             placeholder: 'Estado',
-            options: stateOptions,
-            defaultValue: 'all',
+            options: [
+              { label: 'Todos los estados', value: '' },
+              { label: 'Nuevo', value: 'NUEVO' },
+              { label: 'Usado', value: 'USADO' },
+              { label: 'Defectuoso', value: 'DEFECTUOSO' },
+            ],
+            defaultValue: '',
           },
         ]}
       />
       <Divider />
-      <PostsList posts={MOCK_POSTS.posts} />
-      <Flex
-        justify="center"
-        style={{ margin: '2rem 0', paddingBottom: '1rem' }}
-      >
-        <Pagination defaultCurrent={1} total={12} />
-      </Flex>
+      <PostsList posts={posts} />
     </>
   )
 }

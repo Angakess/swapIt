@@ -27,7 +27,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             height: 'auto',
           }}
         >
-          {children}
+          <div style={{ paddingBottom: '2rem' }}>{children}</div>
         </Layout.Content>
       </Layout>
     </Layout>

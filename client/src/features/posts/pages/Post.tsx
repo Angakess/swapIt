@@ -1,4 +1,4 @@
-import { Card, Col, Row, Typography, theme } from 'antd'
+import { Card, Col, Row, Spin, Typography, theme } from 'antd'
 import { useParams } from 'react-router-dom'
 import {
   ImageCarousel,
@@ -6,17 +6,49 @@ import {
   PostMainButton,
   PostUser,
 } from '@Posts/components'
-import MOCK_POSTS from '@Posts/MOCK_POSTS.json'
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import { Page404 } from '@Common/pages'
+import { useEffect, useState } from 'react'
+import { PostModel, getPostById } from '@Posts/helpers/getPostsListsExchanger'
 
 export function Post() {
   const { borderRadiusLG } = theme.useToken().token
   const { id } = useParams()
 
-  const post = MOCK_POSTS.posts.find((p) => p.id.toString() === id)
+  const [post, setPost] = useState<PostModel | null>(null)
+  const [images, setImages] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  if (!post) {
+  useEffect(() => {
+    ;(async () => {
+      let p: PostModel | null = null
+
+      try {
+        p = await getPostById(Number(id))
+      } catch {
+        p = null
+      } finally {
+        setPost(p)
+        setIsLoading(false)
+      }
+    })()
+  }, [])
+
+  useEffect(() => {
+    if (isLoading || post === null) return
+
+    const arr = Object.entries(post)
+      .filter(([key, value]) => key.startsWith('image_') && value != null)
+      .map(([, value]) => value) as string[]
+
+    setImages(arr)
+  }, [post, isLoading])
+
+  if (isLoading) {
+    return <Spin size="large" style={{ width: '100%' }} />
+  }
+
+  if (!isLoading && post == null) {
     return <Page404 />
   }
 
@@ -24,14 +56,13 @@ export function Post() {
     <>
       <Row gutter={[24, 24]}>
         <Col xs={24} md={12} lg={14}>
-          <ImageCarousel
-            carouselProps={{ fade: true }}
-            imagesUrls={post.images}
-            imageHeight="400px"
-            styles={{
-              container: { borderRadius: borderRadiusLG, overflow: 'hidden' },
-            }}
-          />
+          <div style={{ overflow: 'hidden', borderRadius: borderRadiusLG }}>
+            <ImageCarousel
+              // carouselProps={{ fade: true }}
+              imagesUrls={images}
+              imageHeight="400px"
+            />
+          </div>
         </Col>
 
         <Col xs={24} md={12} lg={10}>
@@ -39,33 +70,42 @@ export function Post() {
             style={{ width: '100%', marginBottom: '1.5rem' }}
             bordered={false}
           >
-            <Typography.Title level={3}>{post.title}</Typography.Title>
+            <Typography.Title level={3}>{post!.name}</Typography.Title>
             <PostMainButton />
-            <PostDetails post={post} />
+            <PostDetails post={post!} />
           </Card>
 
           <Card style={{ marginBottom: '1.5rem' }}>
-            <PostUser />
+            <PostUser
+              firstName={post!.user.first_name}
+              lastName={post!.user.last_name}
+            />
           </Card>
 
           <Card>
             <Typography.Title level={4}>Filial</Typography.Title>
             <MapContainer
-              center={[-34.9222141, -57.955808]}
+              center={[
+                Number(post!.subsidiary.x_coordinate),
+                Number(post!.subsidiary.y_coordinate),
+              ]}
               zoom={15}
               zoomControl={false}
               style={{ borderRadius: borderRadiusLG, height: '160px' }}
             >
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <Marker position={[-34.9222141, -57.955808]}>
-                <Popup>Filial Catedral</Popup>
-              </Marker>
+              <Marker
+                position={[
+                  Number(post!.subsidiary.x_coordinate),
+                  Number(post!.subsidiary.y_coordinate),
+                ]}
+              />
             </MapContainer>
             <Typography.Text
               strong
               style={{ marginTop: '1rem', display: 'block' }}
             >
-              Filial catedral
+              {post!.subsidiary.name}
             </Typography.Text>
           </Card>
         </Col>
