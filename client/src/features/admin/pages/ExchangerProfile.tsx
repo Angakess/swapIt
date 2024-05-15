@@ -41,15 +41,34 @@ export function ExchangerProfile() {
       alert.notImplementedYet()
       fetchData()
     }
+    const sendUnlockAccount = () => {
+      console.log("Le desbloqueaste el inicio de sesión")
+      alert.notImplementedYet()
+      fetchData()
+    }
 
-    return (
-      <Flex align="center" gap="small">
-        <h3 style={{ marginRight: 'auto', marginBottom: '0' }}>
-          Perfil de usuario intercambiador
-        </h3>
-        {data?.state.name !== 'active' ? (
+    const MakeButtons = () => {
+      if(data?.state.name === "suspendido"){
+        return (
           <>
-            <Button onClick={sendAddHelper} disabled={isLoading}>
+            <Button type="primary" onClick={sendUnlockAccount} disabled={isLoading}>
+              Desbloquear inicio de sesión
+            </Button>
+          </>
+        )
+      }
+      if(data?.state.name === "bloqueado"){
+        return (
+          <>
+            <Button type="primary" onClick={sendUnblock} disabled={isLoading}>
+              Desbloquear cuenta
+            </Button>
+          </>
+        )
+      }
+      return (
+        <>
+          <Button onClick={sendAddHelper} disabled={isLoading}>
               Incorporar como ayudante
             </Button>
             <Button
@@ -60,12 +79,16 @@ export function ExchangerProfile() {
             >
               Bloquear
             </Button>
-          </>
-        ) : (
-          <Button type="primary" onClick={sendUnblock} disabled={isLoading}>
-            Desbloquear
-          </Button>
-        )}
+        </>
+      )
+    }
+
+    return (
+      <Flex align="center" gap="small">
+        <h3 style={{ marginRight: 'auto', marginBottom: '0' }}>
+          Perfil de usuario intercambiador
+        </h3>
+        <MakeButtons />
       </Flex>
     )
   }
