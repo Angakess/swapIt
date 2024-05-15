@@ -5,9 +5,11 @@ import { PostModel } from '@Posts/helpers/getPostsListsExchanger'
 export function PostsList({
   posts,
   isLoading,
+  showStatus = false,
 }: {
   posts: PostModel[]
   isLoading: boolean
+  showStatus?: boolean
 }) {
   if (isLoading) {
     return <Spin size="large" style={{ width: '100%' }} />
@@ -21,7 +23,7 @@ export function PostsList({
     <Row gutter={[12, 12]}>
       {posts.map((post) => (
         <Col key={post.id} xs={24} md={12} lg={8}>
-          <PostListItem post={post} />
+          <PostListItem post={post} showStatus={showStatus} />
         </Col>
       ))}
     </Row>

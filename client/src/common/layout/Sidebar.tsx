@@ -10,6 +10,7 @@ import {
   ProductOutlined,
   ShopOutlined,
   HomeOutlined,
+  AppstoreOutlined,
 } from '@ant-design/icons'
 import { UserPermissions } from '@Common/types'
 import { useAuth } from '@Common/hooks'
@@ -61,7 +62,12 @@ const items: Record<UserPermissions, SidebarProps> = {
       {
         key: '/posts',
         label: 'Publicaciones',
-        icon: <UploadOutlined />,
+        icon: <AppstoreOutlined />,
+      },
+      {
+        key: '/posts/my-posts',
+        label: 'Mis Publicaciones',
+        icon: <ProductOutlined />,
       },
       {
         key: '/posts/add',

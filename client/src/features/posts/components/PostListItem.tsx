@@ -10,7 +10,13 @@ import { PostModel } from '@Posts/helpers/getPostsListsExchanger'
 
 const IMG_HEIGHT = '300px'
 
-export function PostListItem({ post }: { post: PostModel }) {
+export function PostListItem({
+  post,
+  showStatus = false,
+}: {
+  post: PostModel
+  showStatus?: boolean
+}) {
   const images = Object.entries(post)
     .filter(([key, value]) => key.startsWith('image_') && value != null)
     .map(([, value]) => value) as string[]
@@ -18,7 +24,7 @@ export function PostListItem({ post }: { post: PostModel }) {
   return (
     <Link to={`/posts/${post.id}`}>
       <Card
-        style={{ overflow: 'hidden', height: '100%' }}
+        style={{ overflow: 'hidden', height: '100%', position: 'relative' }}
         styles={{ body: { height: `calc(100% - ${IMG_HEIGHT})` } }}
         hoverable
         cover={<ImageCarousel imagesUrls={images} imageHeight={IMG_HEIGHT} />}
@@ -63,6 +69,20 @@ export function PostListItem({ post }: { post: PostModel }) {
               {post.state_product}
             </Tag>
           </div>
+          {showStatus && (
+            <Tag
+              bordered={false}
+              color="default"
+              style={{
+                position: 'absolute',
+                top: '0.5rem',
+                right: '0rem',
+                textTransform: 'capitalize',
+              }}
+            >
+              {post.state.name}
+            </Tag>
+          )}
         </Flex>
       </Card>
     </Link>
