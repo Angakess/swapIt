@@ -16,7 +16,7 @@ type PropType = {
   setIsModalOpen: (x: boolean) => void
   subsArray: SubsidiaryType[]
   fetchData: () => void
-  setSubSelected: (s:SubsidiaryType) => void
+  setSubSelected: (s:SubsidiaryType | undefined) => void
 }
 type StatusType = {
   status: '' | 'error'
@@ -142,12 +142,14 @@ export function ModalEditingSub({
   const handleCancel = () => {
     console.log('CANCEL')
     setIsModalOpen(false)
+    setSubSelected(data)
   }
 
   return (
     <>
       <Modal
         title="Editando una filial"
+        afterOpenChange={() => setData(subData)}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
