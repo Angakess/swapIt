@@ -3,6 +3,7 @@ import { GetProp, TableProps } from 'antd'
 import { SearchOutlined, UserOutlined } from '@ant-design/icons'
 import { useState, useEffect, useRef } from 'react'
 import type { FilterDropdownProps } from 'antd/es/table/interface'
+import { Link } from 'react-router-dom'
 
 export function Exchangers() {
   type ColumnsType<T> = TableProps<T>['columns']
@@ -26,12 +27,6 @@ export function Exchangers() {
     sortOrder?: string
     filters?: Parameters<GetProp<TableProps, 'onChange'>>[1]
   }
-
-  /* const getRandomUserParams = (params: TableParams) => ({
-        results: params.pagination?.pageSize,
-        page: params.pagination?.current,
-        ...params,
-    }) */
 
   const [data, setData] = useState<DataType[]>([
     {
@@ -96,7 +91,7 @@ export function Exchangers() {
     email: '',
     user_state: '',
   })
-  //const [searchedColumn, setSearchedColumn] = useState('')
+
   const searchInput = useRef<InputRef>(null)
 
   const handleSearch = (
@@ -111,7 +106,6 @@ export function Exchangers() {
           [dataIndex]: selectedKeys[0],
         }
       })
-    //setSearchedColumn(dataIndex)
   }
 
   const handleReset = (
@@ -127,11 +121,6 @@ export function Exchangers() {
       }
     })
     confirm()
-    //setSearchedColumn(dataIndex)
-  }
-
-  const goToProfile = (record: DataType) => {
-    window.location.assign(`/admin/exchangers/${record.id}`)
   }
 
   const getColumnSearchProps = (
@@ -241,13 +230,14 @@ export function Exchangers() {
       title: 'Acciones',
       render: (_: any, record: DataType) => (
         <Space>
-          <Button
-            type="primary"
-            icon={<UserOutlined />}
-            onClick={() => goToProfile(record)}
-          >
-            Ver perfil
-          </Button>
+          <Link to={`/admin/exchangers/${record.id}`}>
+            <Button
+              type="primary"
+              icon={<UserOutlined />}
+            >
+              Ver perfil
+            </Button>
+          </Link>
         </Space>
       ),
       width: '0',

@@ -15,6 +15,7 @@ import {
 } from '@ant-design/icons'
 import { useState, useEffect, useRef } from 'react'
 import type { FilterDropdownProps } from 'antd/es/table/interface'
+import { Link } from 'react-router-dom'
 
 export function Helpers() {
   type ColumnsType<T> = TableProps<T>['columns']
@@ -245,11 +246,12 @@ export function Helpers() {
       title: 'Acciones',
       render: (_: any, record: DataType) => (
         <Space>
-          <Button
-            type="primary"
-            icon={<ShopFilled />}
-            onClick={() => goToLocalChange(record.id)}
-          ></Button>
+          <Link to={`/admin/helpers/change-local/${record.id}`}>
+            <Button
+              type="primary"
+              icon={<ShopFilled />}
+            ></Button>
+          </Link>
           <Button
             type="primary"
             danger
@@ -263,10 +265,6 @@ export function Helpers() {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [helperSelected, setHelperSelected] = useState<DataType>()
-
-  const goToLocalChange = (id: number) => {
-    window.location.assign(`/admin/helpers/change-local/${id}`)
-  }
 
   const showModal = (record: DataType) => {
     setIsModalOpen(true)
