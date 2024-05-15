@@ -1,17 +1,18 @@
-import { Button, Card, Descriptions, DescriptionsProps, Flex, Spin } from 'antd'
+import { Button, Card, Descriptions, DescriptionsProps, Flex, Modal, Spin } from 'antd'
 import { useEffect, useState } from 'react'
-import MOCK_DATA from './MOCK_DATA_EXCH_ACCOUNT.json'
 
 type DataType = {
   id: number
-  first_name: string
-  last_name: string
+  full_name: string
   dni: string
   email: string
   gender: string
   date_of_birth: string
   phone_number: string
-  status: string
+  state: {
+    id: number
+    name: string
+  }
 }
 
 export function ExchangerProfile() {
@@ -19,29 +20,20 @@ export function ExchangerProfile() {
   function CardHeader() {
 
     const sendAddHelper = () => {
-        setIsLoading(true)
-        console.log("se incorporo al intercambiador con id: ",data.id)
         fetchData()
-        setIsLoading(false)
     }
     const sendBlock = () => {
-        setIsLoading(true)
-        console.log("se bloqueo al intercambiador con id: ",data.id)
         fetchData()
-        setIsLoading(false)
     }
     const sendUnblock = () => {
-        setIsLoading(true)
-        console.log("se desbloqueo al intercambiador con id: ",data.id)
         fetchData()
-        setIsLoading(false)
     }
 
 
     return (
       <Flex align="center" gap="small">
         <h3 style={{ marginRight: 'auto', marginBottom: "0" }}>Perfil de usuario intercambiador</h3>
-        {(data.status !== "active") ?
+        {(data?.state.name !== "active") ?
             (<>
                 <Button onClick={sendAddHelper} disabled={isLoading}>Incorporar como ayudante</Button>
                 <Button type='primary' danger onClick={sendBlock} disabled={isLoading}>Bloquear</Button>
@@ -52,62 +44,63 @@ export function ExchangerProfile() {
   }
 
   const parts = window.location.href.split('/')
-  const index: number = parseInt(parts[parts.length - 1])
+  const exchangerId: number = parseInt(parts[parts.length - 1])
 
 
   const [isLoading, setIsLoading] = useState(false)
-  const [data, setData] = useState<DataType>({
-    id: 0,
-    first_name: '',
-    last_name: '',
-    dni: '',
-    email: '',
-    gender: '',
-    date_of_birth: '',
-    phone_number: '',
-    status: '',
-  })
-  const fetchData = () => {
-    setData(MOCK_DATA[index])
-    console.log('fetching data')
+  const [data, setData] = useState<DataType>()
+
+
+  const fetchData = async() => {
+    try{
+      const res = await fetch(`http://localhost:8000/users/get-exchanger/${exchangerId}`)
+      const result = await res.json()  
+      setData(result)
+    }
+    catch (error){
+      Modal.error({
+        title:"Error",
+        content: "No se encontro al intercambiador solicitado"
+      })
+    }
   }
-  useEffect(fetchData)
+  useEffect(() => {fetchData()},[])
 
   const items: DescriptionsProps['items'] = [
     {
       key: '1',
       label: 'Nombre',
-      children: `${data.first_name} ${data.last_name}`,
+      children: `${data?.full_name}`,
     },
     {
       key: '2',
       label: 'DNI',
-      children: `${data.dni}`,
+      children: `${data?.dni}`,
     },
     {
       key: '3',
       label: 'Email',
-      children: `${data.email}`,
+      children: `${data?.email}`,
     },
     {
       key: '4',
       label: 'Teléfono',
-      children: `${data.phone_number}`,
+      children: `${data?.phone_number}`,
     },
     {
       key: '5',
       label: 'Fecha de nacimiento',
-      children: `${data.date_of_birth}`,
+      children: `${data?.date_of_birth}`,
     },
     {
       key: '6',
       label: 'Género',
-      children: `${data.gender}`,
+      children: `${data?.gender}`,
     },
     {
       key: '7',
       label: 'Estado',
-      children: `${data.status}`,
+      children: `${data?.state.name}`,
     },
   ]
 
