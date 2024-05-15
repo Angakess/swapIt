@@ -267,9 +267,9 @@ export function Categories() {
     },
     {
       title: 'Acciones',
-      render: (_: any, record: DataType, index: number) => (
+      render: (_: any, record: DataType) => (
         <Space>
-          {data && data[index].active ? (
+          {record.active ? (
             <Button
               type="default"
               icon={<PauseOutlined />}
