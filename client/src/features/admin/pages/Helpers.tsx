@@ -277,6 +277,7 @@ export function Helpers() {
     setHelperSelected(record)
   }
   const handleOk = async() => {
+    setLoading(true)
     const res = await fetch(`http://localhost:8000/users/disincorporate-helper/${helperSelected?.id}`,{
       headers: {
         "Content-Type": "application/json"
@@ -298,6 +299,7 @@ export function Helpers() {
     }
     setIsModalOpen(false)
     fetchData()
+    setLoading(false)
   }
   const handleCancel = () => {
     setIsModalOpen(false)
@@ -321,7 +323,7 @@ export function Helpers() {
         onCancel={handleCancel}
         cancelText="Cancelar"
         okText="Desincorporar"
-        okButtonProps={{ danger: true }}
+        okButtonProps={{ danger: true , disabled: loading}}
       >
         <p>¿Está seguro que quiere desincorporar a este ayudante?</p>
         {helperSelected?.subsidiary_cant_helpers === 1 ? 
