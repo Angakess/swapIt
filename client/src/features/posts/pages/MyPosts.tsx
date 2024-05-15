@@ -2,6 +2,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { PageTitle } from '@Common/components'
 import { useAuth } from '@Common/hooks'
 import { PostsList, SearchAndFilter } from '@Posts/components'
+import AddPostModal from '@Posts/components/AddPostModal'
 import {
   getCategoryList,
   getPostList,
@@ -35,6 +36,8 @@ export function MyPosts() {
   const [filterStatus, setFilterStatus] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
+  const [addPostIsOpen, setAddPostIsOpen] = useState(false)
+
   async function handleSearch() {
     const p = await getPostList({
       userId: user!.id,
@@ -65,7 +68,11 @@ export function MyPosts() {
       <PageTitle
         title="Mis publicaciones"
         right={
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => setAddPostIsOpen(true)}
+          >
             Agregar
           </Button>
         }
@@ -88,7 +95,7 @@ export function MyPosts() {
           {
             placeholder: 'Estado del producto',
             options: [
-              { label: 'Todos los estados del producto', value: '' },
+              { label: 'Todos los estados de producto', value: '' },
               { label: 'Nuevo', value: 'NUEVO' },
               { label: 'Usado', value: 'USADO' },
               { label: 'Defectuoso', value: 'DEFECTUOSO' },
@@ -116,6 +123,8 @@ export function MyPosts() {
       <Divider />
 
       <PostsList posts={posts} isLoading={isLoading} showStatus />
+
+      <AddPostModal isOpen={addPostIsOpen} setIsOpen={setAddPostIsOpen} />
     </>
   )
 }
