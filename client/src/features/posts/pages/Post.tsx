@@ -71,7 +71,7 @@ export function Post() {
             bordered={false}
           >
             <Typography.Title level={3}>{post!.name}</Typography.Title>
-            <PostMainButton />
+            <PostMainButton post={post!} />
             <PostDetails post={post!} />
           </Card>
 

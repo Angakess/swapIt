@@ -88,6 +88,32 @@ export async function getPostsListsExchanger({
 }
 
 //
+// getPostList
+
+type GetPostListOptions = {
+  userId?: string | number
+  search?: string
+  state?: string
+  status?: string
+  category?: string
+}
+
+export async function getPostList({
+  userId = '',
+  search = '',
+  state = '',
+  status = '',
+  category = '',
+}: GetPostListOptions): Promise<PostModel[]> {
+  const URL = `${SERVER_URL}/post/list/?search=${search}&state_product=${state}&state__name=${status}&category__name=${category}&user__id=${userId}`
+
+  const resp = await fetch(URL)
+  const data = await resp.json()
+
+  return data
+}
+
+//
 // getCategoryList
 
 type GetCategoryListOptions = {
@@ -96,26 +122,28 @@ type GetCategoryListOptions = {
 }
 
 export async function getter(url: string, query: Record<string, string>) {
-
-
-  const endpoint = SERVER_URL + url + '?' + Object.entries(query).reduce((acc, [key, value]) => {
-    return `${acc}${key}=${value}&`
-  }, "").slice(0, -1)
+  const endpoint =
+    SERVER_URL +
+    url +
+    '?' +
+    Object.entries(query)
+      .reduce((acc, [key, value]) => {
+        return `${acc}${key}=${value}&`
+      }, '')
+      .slice(0, -1)
 
   console.log(endpoint)
   return fetch(endpoint)
     .then((response) => response.json())
     .then((response) => {
-      console.log("[DATA]", response)
+      console.log('[DATA]', response)
       return response
     })
-    .catch((error) => { 
+    .catch((error) => {
       console.error('Error:', error)
       return []
     })
-
 }
-
 
 export async function getCategoryList({
   search = '',
