@@ -28,6 +28,7 @@ export function Posts() {
   ])
 
   const [posts, setPosts] = useState<PostModel[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const [filterCategory, setFilterCategory] = useState('')
   const [filterState, setFilterState] = useState('')
@@ -55,6 +56,7 @@ export function Posts() {
         status: 'activo',
       })
       setPosts(p)
+      setIsLoading(false)
     })()
   }, [])
 
@@ -63,7 +65,7 @@ export function Posts() {
       <PageTitle title="Publicaciones" />
       <SearchAndFilter
         searchBar={{
-          placeholder: 'Busca un producto',
+          placeholder: 'Busca una publicación',
           value: searchValue,
           handleChange: (e) => setSearchValue(e.target.value),
         }}
@@ -91,7 +93,7 @@ export function Posts() {
         handleSearch={handleSearch}
       />
       <Divider />
-      <PostsList posts={posts} />
+      <PostsList posts={posts} isLoading={isLoading} />
     </>
   )
 }
