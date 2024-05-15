@@ -18,7 +18,7 @@ export function AppHeader() {
         <Button type="link" size="small">
           <Link to="/auth/login">Iniciar sesión</Link>
         </Button>
-        │
+        &#9474;
         <Button type="link" size="small">
           <Link to="/auth/register">Registrarse</Link>
         </Button>
