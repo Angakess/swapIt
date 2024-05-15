@@ -2,7 +2,6 @@ import coreapi
 from rest_framework.response import Response
 from rest_framework import generics
 
-from user.models import UserAccount
 
 from .models import Category, Post, PostState
 from .serializer import (
