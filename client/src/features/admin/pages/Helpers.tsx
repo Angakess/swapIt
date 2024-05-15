@@ -37,7 +37,7 @@ export function Helpers() {
     dni: string
     subsidiary: {
       name: string
-      cant_helpers: number
+      cant_current_helpers: number
     }
   }
 
@@ -48,13 +48,7 @@ export function Helpers() {
     filters?: Parameters<GetProp<TableProps, 'onChange'>>[1]
   }
 
-  const [data, setData] = useState<DataType[]>([{
-    id: 0,
-    full_name: "",
-    dni: "",
-    subsidiary_name: "",
-    subsidiary_cant_helpers: 0
-  }])
+  const [data, setData] = useState<DataType[]>([])
   const [loading, setLoading] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -84,7 +78,7 @@ export function Helpers() {
       full_name: item.full_name,
       dni: item.dni,
       subsidiary_name: item.subsidiary.name,
-      subsidiary_cant_helpers: item.subsidiary.cant_helpers
+      subsidiary_cant_helpers: item.subsidiary.cant_current_helpers
     }))
     setData(transformedData)
     setLoading(false)
@@ -249,7 +243,7 @@ export function Helpers() {
     },
     {
       title: 'Acciones',
-      render: (_: any, record: DataType, index:number) => (
+      render: (_: any, record: DataType) => (
         <Space>
           <Button
             type="primary"
@@ -260,7 +254,7 @@ export function Helpers() {
             type="primary"
             danger
             icon={<UserDeleteOutlined />}
-            onClick={() => showModal(index)}
+            onClick={() => showModal(record)}
           ></Button>
         </Space>
       ),
@@ -268,24 +262,41 @@ export function Helpers() {
   ]
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [idSelected, setIdSelected] = useState(0)
+  const [helperSelected, setHelperSelected] = useState<DataType>()
 
   const goToLocalChange = (id: number) => {
     window.location.assign(`/admin/helpers/change-local/${id}`)
   }
 
-  const showModal = (newId: number) => {
+  const showModal = (record: DataType) => {
     setIsModalOpen(true)
-    setIdSelected(newId)
+    setHelperSelected(record)
   }
-  const handleOk = () => {
+  const handleOk = async() => {
+    const res = await fetch(`http://localhost:8000/users/disincorporate-helper/${helperSelected?.id}`,{
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "DELETE"
+    })
+    const result = await res.json()
+    if(res.ok){
+      Modal.success({
+        title: "Operación completada",
+        content: result.messages
+      })
+    }
+    else{
+      Modal.error({
+        title: "Operación fallida",
+        content: result.messages
+      })
+    }
     setIsModalOpen(false)
-    if (data[idSelected] !== undefined)
-      console.log(`AYUDANTE ${data[idSelected].full_name} DESINCORPORADO`)
+    fetchData()
   }
   const handleCancel = () => {
     setIsModalOpen(false)
-    console.log('OPERACION CANCELADA')
   }
 
   return (
@@ -309,8 +320,8 @@ export function Helpers() {
         okButtonProps={{ danger: true }}
       >
         <p>¿Está seguro que quiere desincorporar a este ayudante?</p>
-        {data[idSelected] && data[idSelected].subsidiary_cant_helpers === 1 ? 
-        <p style={{fontWeight: "bold"}}>IMPORTANTE: Si {data[idSelected].full_name} es desincorporada la filial {data[idSelected].subsidiary_name} se quedará sin ayudantes, lo que deshabilitará la sucursal y suspenderá todas las publicaciones relacionadas</p> : null}
+        {helperSelected?.subsidiary_cant_helpers === 1 ? 
+        <p style={{fontWeight: "bold"}}>IMPORTANTE: Si {helperSelected.full_name} es desincorporado/a, la filial '{helperSelected.subsidiary_name}' se quedará sin ayudantes, lo que deshabilitará la sucursal y suspenderá todas las publicaciones relacionadas</p> : null}
       </Modal>
     </>
   )
