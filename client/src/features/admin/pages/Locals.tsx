@@ -4,6 +4,7 @@ import {
   Col,
   Descriptions,
   DescriptionsProps,
+  Empty,
   Flex,
   Modal,
   Row,
@@ -149,29 +150,31 @@ export function Locals() {
             }
             style={{ width: '100%', height: '500px' }}
           >
+            {subsData && subsData?.length > 0 ?
             <MapContainer
-              center={[-34.9135, -57.9463]}
-              zoom={12}
-              zoomControl={false}
-              style={{ borderRadius: '5px', height: '400px' }}
-            >
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              {subsData && subsData.map((marcador) => (
-                <Marker
-                  key={marcador.id}
-                  position={[
-                    parseFloat(marcador.x_coordinate),
-                    parseFloat(marcador.y_coordinate),
-                  ]}
-                  eventHandlers={{
-                    click: () => handleMarkerClick(marcador),
-                  }}
-                  icon={marcador.active ? redMarker : grayMarker}
-                >
-                  <Popup>{marcador.name}</Popup>
-                </Marker>
-              ))}
-            </MapContainer>
+            center={[-34.9135, -57.9463]}
+            zoom={12}
+            zoomControl={false}
+            style={{ borderRadius: '5px', height: '400px' }}
+          >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            {subsData && subsData.map((marcador) => (
+              <Marker
+                key={marcador.id}
+                position={[
+                  parseFloat(marcador.x_coordinate),
+                  parseFloat(marcador.y_coordinate),
+                ]}
+                eventHandlers={{
+                  click: () => handleMarkerClick(marcador),
+                }}
+                icon={marcador.active ? redMarker : grayMarker}
+              >
+                <Popup>{marcador.name}</Popup>
+              </Marker>
+            ))}
+          </MapContainer> : <Empty description={<p>No hay filiales disponibles</p>}/>}
+            
           </Card>
         </Col>
       </Row>
