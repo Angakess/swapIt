@@ -5,6 +5,7 @@ import {
   Descriptions,
   DescriptionsProps,
   Flex,
+  Modal,
   Row,
 } from 'antd'
 import { useEffect, useState } from 'react'
@@ -37,6 +38,7 @@ export function Locals() {
 
   const [isEditingModalOpen, setIsEditingModalOpen] = useState(false)
   const [isAddingModalOpen, setIsAddingModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   const items: DescriptionsProps['items'] = [
     {
@@ -80,6 +82,33 @@ export function Locals() {
     setIsEditingModalOpen(true)
   }
 
+  const handleOkDelete = async() => {
+    const res = await fetch(`http://localhost:8000/subsidiary/subsidiary/${subSelected?.id}`,{
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "DELETE",
+    })
+    const result = await res.json()
+    if(res.ok){
+      Modal.success({
+        title: "Operación completada",
+        content: result.messages
+      })
+    }
+    else{
+      Modal.error({
+        title: "Error",
+        content: result.messages
+      })
+    }
+    setIsDeleteModalOpen(false)
+    fetchData()
+  }
+  const handleCancelDelete = () => {
+    setIsDeleteModalOpen(false)
+  }
+
   const redMarker = new Icon({
     iconUrl: redMarkerIcon,
     iconRetinaUrl: redMarkerIcon,
@@ -99,7 +128,7 @@ export function Locals() {
     return (
       <Flex align="center" gap="small">
         <h3 style={{ marginRight: 'auto', marginBottom: '0' }}>{title}</h3>
-        <Button type="primary" onClick={handleFunction}>
+        <Button onClick={handleFunction} type='primary'>
           {buttonName}
         </Button>
       </Flex>
@@ -150,12 +179,15 @@ export function Locals() {
         <Col span={24}>
           {subSelected ? (
             <Card
-              title={
-                <CardHeader
-                  title="Información de la filial"
-                  buttonName="Editar"
-                  handleFunction={handleEditingModal}
-                />
+              title={<>
+                <Flex align="center" gap="small">
+                  <h3 style={{ marginRight: 'auto', marginBottom: '0' }}>Información de la filial</h3>
+                  {subSelected.active ? 
+                    <Button type='primary' danger onClick={() => setIsDeleteModalOpen(true)}>Desactivar</Button> : null}
+                  <Button onClick={handleEditingModal}>Editar</Button>
+            </Flex>
+              </>
+                
               }
               style={{ marginBottom: '30px', marginTop: '10px' }}
             >
@@ -186,6 +218,17 @@ export function Locals() {
           fetchData={fetchData}
           setSubSelected={setSubSelected}
         ></ModalEditingSub>) : null}
+        <Modal
+          title="Atención"
+          open={isDeleteModalOpen}
+          onOk={handleOkDelete}
+          onCancel={handleCancelDelete}
+          cancelText="Cancelar"
+          okText="Confirmar"
+          okButtonProps={{type:"primary", danger:true}}
+        >
+          <p>¿Está seguro que quiere desactivar la filial '{subSelected?.name}'?</p>
+        </Modal>
     </>
   )
 }
