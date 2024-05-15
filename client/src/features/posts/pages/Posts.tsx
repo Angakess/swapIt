@@ -8,6 +8,7 @@ import {
   getCategoryList,
   getPostsListsExchanger,
 } from '@Posts/helpers/getPostsListsExchanger'
+import { PageTitle } from '@Common/components'
 
 type SelectOption = {
   label: string
@@ -41,7 +42,7 @@ export function Posts() {
 
   return (
     <>
-      <h2 style={{ marginBottom: '2rem' }}>Publicaciones</h2>
+      <PageTitle title="Publicaciones" />
       <SearchAndFilter
         searchBar={{ placeholder: 'Busca un producto' }}
         filters={[
