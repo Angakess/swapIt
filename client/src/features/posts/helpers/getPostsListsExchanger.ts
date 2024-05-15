@@ -106,3 +106,10 @@ export async function getCategoryList({
 
   return data.data?.categories ?? []
 }
+
+export async function getPostById(id: number): Promise<PostModel | null> {
+  const resp = await fetch(`${SERVER_URL}/post/${id}`)
+  const data = await resp.json()
+
+  return data?.data?.post ?? null
+}
