@@ -2,9 +2,15 @@ import { Input, theme } from 'antd'
 
 export type SearchBarProps = {
   placeholder: string
+  value: string
+  handleChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
-export function SearchBar({ placeholder }: SearchBarProps) {
+export function SearchBar({
+  placeholder,
+  value,
+  handleChange,
+}: SearchBarProps) {
   const { colorBgBase } = theme.useToken().token
 
   return (
@@ -13,6 +19,8 @@ export function SearchBar({ placeholder }: SearchBarProps) {
       size="large"
       variant="borderless"
       placeholder={placeholder}
+      value={value}
+      onChange={handleChange}
     />
   )
 }

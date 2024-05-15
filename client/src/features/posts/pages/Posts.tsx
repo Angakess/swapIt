@@ -8,6 +8,7 @@ import {
   getCategoryList,
   getPostsListsExchanger,
 } from '@Posts/helpers/getPostsListsExchanger'
+import { PageTitle } from '@Common/components'
 
 type SelectOption = {
   label: string
@@ -28,27 +29,51 @@ export function Posts() {
 
   const [posts, setPosts] = useState<PostModel[]>([])
 
+  const [filterCategory, setFilterCategory] = useState('')
+  const [filterState, setFilterState] = useState('')
+  const [searchValue, setSearchValue] = useState('')
+
+  async function handleSearch() {
+    const p = await getPostsListsExchanger({
+      excludeUserId: user!.id,
+      search: searchValue,
+      category: filterCategory,
+      state: filterState,
+      status: 'activo',
+    })
+    setPosts(p)
+  }
+
   useEffect(() => {
     ;(async () => {
       const categories = await mapCategoiresToSelectOptions()
       setCategoriesFilter([...categoriesOptions, ...categories])
     })()
     ;(async () => {
-      const p = await getPostsListsExchanger({ excludeUserId: user!.id })
+      const p = await getPostsListsExchanger({
+        excludeUserId: user!.id,
+        status: 'activo',
+      })
       setPosts(p)
     })()
   }, [])
 
   return (
     <>
-      <h2 style={{ marginBottom: '2rem' }}>Publicaciones</h2>
+      <PageTitle title="Publicaciones" />
       <SearchAndFilter
-        searchBar={{ placeholder: 'Busca un producto' }}
+        searchBar={{
+          placeholder: 'Busca un producto',
+          value: searchValue,
+          handleChange: (e) => setSearchValue(e.target.value),
+        }}
         filters={[
           {
             placeholder: 'Categoría',
             options: categoriesOptions,
             defaultValue: '',
+            value: filterCategory,
+            handleChange: setFilterCategory,
           },
           {
             placeholder: 'Estado',
@@ -59,8 +84,11 @@ export function Posts() {
               { label: 'Defectuoso', value: 'DEFECTUOSO' },
             ],
             defaultValue: '',
+            value: filterState,
+            handleChange: setFilterState,
           },
         ]}
+        handleSearch={handleSearch}
       />
       <Divider />
       <PostsList posts={posts} />

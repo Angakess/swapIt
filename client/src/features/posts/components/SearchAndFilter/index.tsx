@@ -6,9 +6,14 @@ import { SelectFilter, SelectFilterProps } from './SelectFilter'
 type SearchAndFilterProps = {
   searchBar: SearchBarProps
   filters: SelectFilterProps[]
+  handleSearch: React.MouseEventHandler<HTMLElement>
 }
 
-export function SearchAndFilter({ searchBar, filters }: SearchAndFilterProps) {
+export function SearchAndFilter({
+  searchBar,
+  filters,
+  handleSearch,
+}: SearchAndFilterProps) {
   return (
     <>
       <SearchBar {...searchBar} />
@@ -20,7 +25,7 @@ export function SearchAndFilter({ searchBar, filters }: SearchAndFilterProps) {
       </Flex>
 
       <Flex justify="end">
-        <Button type="primary" icon={<SearchOutlined />}>
+        <Button type="primary" icon={<SearchOutlined />} onClick={handleSearch}>
           Buscar
         </Button>
       </Flex>
