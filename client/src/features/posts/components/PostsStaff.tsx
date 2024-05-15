@@ -29,6 +29,7 @@ export function PostsStaff() {
 
   const [filterCategory, setFilterCategory] = useState('')
   const [filterState, setFilterState] = useState('')
+  const [filterStatus, setFilterStatus] = useState('pendiente')
   const [searchValue, setSearchValue] = useState('')
 
   async function handleSearch() {
@@ -36,7 +37,7 @@ export function PostsStaff() {
       search: searchValue,
       category: filterCategory,
       state: filterState,
-      status: 'pendiente',
+      status: filterStatus,
     })
     setPosts(p)
   }
@@ -47,7 +48,7 @@ export function PostsStaff() {
       setCategoriesOptions([...categoriesOptions, ...categories])
     })()
     ;(async () => {
-      const p = await getPostList({ status: 'pendiente' })
+      const p = await getPostList({ status: filterStatus })
       setPosts(p)
       setIsLoading(false)
     })()
@@ -55,7 +56,7 @@ export function PostsStaff() {
 
   return (
     <>
-      <PageTitle title="Publicaciones pendientes de revisión" />
+      <PageTitle title="Publicaciones" />
       <SearchAndFilter
         searchBar={{
           placeholder: 'Busca una publicación',
@@ -71,9 +72,9 @@ export function PostsStaff() {
             handleChange: setFilterCategory,
           },
           {
-            placeholder: 'Estado',
+            placeholder: 'Estado producto',
             options: [
-              { label: 'Todos los estados', value: '' },
+              { label: 'Todos los estados de producto', value: '' },
               { label: 'Nuevo', value: 'NUEVO' },
               { label: 'Usado', value: 'USADO' },
               { label: 'Defectuoso', value: 'DEFECTUOSO' },
@@ -82,11 +83,24 @@ export function PostsStaff() {
             value: filterState,
             handleChange: setFilterState,
           },
+          {
+            placeholder: 'Estado de la publicación',
+            options: [
+              { label: 'Todos los estados de la publicación', value: '' },
+              { label: 'Activo', value: 'activo' },
+              { label: 'Pendiente', value: 'pendiente' },
+              { label: 'Suspendido', value: 'suspendido' },
+              { label: 'Rechazado', value: 'rechazado' },
+            ],
+            defaultValue: 'pendiente',
+            value: filterStatus,
+            handleChange: setFilterStatus,
+          },
         ]}
         handleSearch={handleSearch}
       />
       <Divider />
-      <PostsList posts={posts} isLoading={isLoading} />
+      <PostsList posts={posts} isLoading={isLoading} showStatus />
     </>
   )
 }
