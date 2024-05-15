@@ -40,7 +40,7 @@ class SubsidiaryDetails(generics.RetrieveUpdateDestroyAPIView):
                     'messages': ['Filial eliminada correctamente'],
                     'data': {}
                 },
-                status=status.HTTP_412_PRECONDITION_FAILED
+                status=status.HTTP_200_OK
             )
 
     serializer_class = SubsidiarySerializer
