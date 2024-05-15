@@ -1,3 +1,4 @@
+import { useCustomAlerts } from '@Common/hooks'
 import {
   Button,
   Card,
@@ -27,14 +28,17 @@ export function ExchangerProfile() {
   function CardHeader() {
     const sendAddHelper = () => {
       console.log('Lo agregaste como ayudante')
+      alert.notImplementedYet()
       fetchData()
     }
     const sendBlock = () => {
       console.log('Lo bloqueaste')
+      alert.notImplementedYet()
       fetchData()
     }
     const sendUnblock = () => {
       console.log('Lo desbloqueaste')
+      alert.notImplementedYet()
       fetchData()
     }
 
@@ -68,6 +72,8 @@ export function ExchangerProfile() {
 
   const parts = window.location.href.split('/')
   const exchangerId: number = parseInt(parts[parts.length - 1])
+
+  const alert = useCustomAlerts()
 
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState<DataType>()
