@@ -59,7 +59,7 @@ export function MyPosts() {
       const p = await getPostList({
         userId: user!.id,
       })
-      setPosts(p)
+      setPosts(p.filter(({ state }) => state.id !== 5))
       setIsLoading(false)
     })()
   }, [])
