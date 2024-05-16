@@ -8,8 +8,9 @@ import {
   Flex,
   Modal,
   Row,
+  Tooltip,
 } from 'antd'
-import { ReloadOutlined } from '@ant-design/icons'
+import { ReloadOutlined, GoldOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { Icon } from 'leaflet'
@@ -18,6 +19,7 @@ import { ModalAddingSub } from '@Admin/components/ModalAddingSub'
 import redMarkerIcon from '/map-pin-red.svg'
 import grayMarkerIcon from '/map-pin-gray.svg'
 import Input, { SearchProps } from 'antd/es/input'
+import { useCustomAlerts } from '@Common/hooks'
 
 type SubsidiaryType = {
   id: number
@@ -35,11 +37,15 @@ type PropType = {
 }
 
 export function Locals() {
+  const alert = useCustomAlerts()
+
   const { Search } = Input
 
   const [subsData, setSubsData] = useState<SubsidiaryType[]>()
 
   const [subSelected, setSubSelected] = useState<SubsidiaryType>()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const [isEditingModalOpen, setIsEditingModalOpen] = useState(false)
   const [isAddingModalOpen, setIsAddingModalOpen] = useState(false)
@@ -88,6 +94,7 @@ export function Locals() {
   }
 
   const handleOkDelete = async() => {
+    setIsLoading(true)
     const res = await fetch(`http://localhost:8000/subsidiary/subsidiary/${subSelected?.id}`,{
       headers: {
         "Content-Type": "application/json"
@@ -108,6 +115,7 @@ export function Locals() {
       })
     }
     setIsDeleteModalOpen(false)
+    setIsLoading(false)
     fetchData()
   }
   const handleCancelDelete = () => {
@@ -136,6 +144,10 @@ export function Locals() {
     const result = await res.json()
     setSubsData(result)
     setSubSelected(undefined)
+  }
+
+  const handleListStock = () => {
+    alert.notImplementedYet()
   }
 
   function CardHeader({ title, buttonName, handleFunction }: PropType) {
@@ -204,6 +216,10 @@ export function Locals() {
                   {subSelected.active ? 
                     <Button type='primary' danger onClick={() => setIsDeleteModalOpen(true)}>Desactivar</Button> : null}
                   <Button onClick={handleEditingModal}>Editar</Button>
+                  <Tooltip title="Listar stock">
+                    <Button icon={<GoldOutlined />} onClick={handleListStock}></Button>
+                  </Tooltip>
+
             </Flex>
               </>
                 
@@ -244,7 +260,7 @@ export function Locals() {
           onCancel={handleCancelDelete}
           cancelText="Cancelar"
           okText="Confirmar"
-          okButtonProps={{type:"primary", danger:true}}
+          okButtonProps={{type:"primary", danger:true, disabled:isLoading}}
         >
           <p>¿Está seguro que quiere desactivar la filial '{subSelected?.name}'?</p>
         </Modal>

@@ -83,6 +83,7 @@ export function ChangeLocal() {
     setSubSelected(marcador)
   }
   const handleOk = async() => {
+    setIsLoading(true)
     const res = await fetchPost(`http://localhost:8000/users/change-filial/${helperId}/${subSelected?.id}`,{})
     const result = await res.json()
     if(res.ok){
@@ -98,6 +99,7 @@ export function ChangeLocal() {
       })
     }
     setModalOpen(false)
+    setIsLoading(false)
     fetchHelperData()
     fetchSubsData()
   }
@@ -176,6 +178,7 @@ export function ChangeLocal() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        okButtonProps={{disabled: isLoading}}
         cancelText="Cancelar"
         okText="Confirmar"
       >

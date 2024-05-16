@@ -9,6 +9,7 @@ import {
   Table,
   TableColumnType,
   TableProps,
+  Tooltip,
 } from 'antd'
 import { FilterDropdownProps } from 'antd/es/table/interface'
 import {
@@ -280,11 +281,14 @@ export function Categories() {
               onClick={() => handleClickResume(record.id)}
             ></Button>
           )}
+          <Tooltip title="Editar categoría">
           <Button
             type="primary"
             icon={<EditOutlined />}
             onClick={() => showModalEdit(record)}
           ></Button>
+          </Tooltip>
+          
         </Space>
       ),
       width: '100px',

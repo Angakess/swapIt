@@ -217,10 +217,11 @@ export function Exchangers() {
       title: `Estado: ${searchText.user_state}`,
       dataIndex: 'user_state',
       filters: [
-        { text: 'Activo', value: 'Activo' },
-        { text: 'Inactivo', value: 'Inactivo' },
-        { text: 'Bloqueado', value: 'Bloqueado' },
-        { text: 'Eliminado', value: 'Eliminado' },
+        { text: 'Activo', value: 'activo' },
+        { text: 'Inactivo', value: 'inactivo' },
+        { text: 'Bloqueado', value: 'bloqueado' },
+        { text: 'Eliminado', value: 'eliminado' },
+        { text: 'Suspendido', value: 'suspendido'}
       ],
       onFilter: (value, record) => record.user_state === value,
       filterSearch: false,

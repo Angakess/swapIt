@@ -66,9 +66,10 @@ export function ExchangerProfile() {
           </>
         )
       }
-      return (
-        <>
-          <Button onClick={sendAddHelper} disabled={isLoading}>
+      if(data?.state.name === "activo"){
+        return (
+          <>
+            <Button onClick={sendAddHelper} disabled={isLoading}>
               Incorporar como ayudante
             </Button>
             <Button
@@ -79,6 +80,11 @@ export function ExchangerProfile() {
             >
               Bloquear
             </Button>
+          </>
+        )
+      }
+      return (
+        <>
         </>
       )
     }

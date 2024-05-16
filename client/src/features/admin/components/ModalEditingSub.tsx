@@ -51,6 +51,8 @@ export function ModalEditingSub({
     errorMessage: '',
   })
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setData((prevData) => ({
       ...prevData,
@@ -121,6 +123,7 @@ export function ModalEditingSub({
   }
 
   const handleOk = async () => {
+    setIsLoading(true)
     try {
       await fetch(
         `http://localhost:8000/subsidiary/subsidiary/${subData.id}/`,
@@ -138,6 +141,7 @@ export function ModalEditingSub({
       )
       fetchData()
       setIsModalOpen(false)
+      setIsLoading(false)
       setSubSelected(data)
     }catch (error) {
       Modal.error({
@@ -149,7 +153,7 @@ export function ModalEditingSub({
   const handleCancel = () => {
     console.log('CANCEL')
     setIsModalOpen(false)
-    setSubSelected(data)
+    
   }
 
   return (
@@ -166,7 +170,8 @@ export function ModalEditingSub({
           disabled:
             data.name === '' ||
             inputStatus.status === 'error' ||
-            inputNumberStatus.status === 'error',
+            inputNumberStatus.status === 'error' ||
+            isLoading
         }}
       >
         <Flex vertical gap="25px">
