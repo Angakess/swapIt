@@ -13,6 +13,7 @@ export function PostDetails({ post }: { post: PostModel }) {
       <DetailItem name="Estado" value={post.state_product} />
       <DetailItem name="Categoría" value={post.category.name} />
       <DetailItem name="Valor" value={post.value.toString()} />
+      <DetailItem name="Cantidad" value={post.stock_product.toString()} />
     </>
   )
 }
@@ -23,9 +24,9 @@ function DetailItem({ name, value }: { name: string; value: string }) {
       <Typography.Text
         strong
         style={{
-          minWidth: '4.5rem',
+          minWidth: '4.75rem',
           display: 'inline-block',
-          lineHeight: 1.75,
+          lineHeight: 2,
         }}
       >
         {name}:

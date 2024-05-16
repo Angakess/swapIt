@@ -47,6 +47,7 @@ export type PostModel = {
   state: StateModel
   category: CategoryModel
   state_product: ProductStateModel
+  stock_product: number
   image_1: string
   image_2: string | null
   image_3: string | null
