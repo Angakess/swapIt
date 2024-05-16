@@ -21,6 +21,7 @@ export type SubsidiaryModel = {
   x_coordinate: string
   y_coordinate: string
   max_helpers: number
+  cant_current_helpers: number
   active: boolean
 }
 
