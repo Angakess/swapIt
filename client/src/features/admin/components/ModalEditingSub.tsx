@@ -88,20 +88,20 @@ export function ModalEditingSub({
       ...prevData,
       max_helpers: value,
     }))
-    if (value === null) {
+    if ((value === null)) {
       setInputNumberStatus({
         status: '',
         errorMessage: 'La cantidad de ayudantes es obligatoria',
       })
       return
     }
-    if (value <= 0) {
+    /* if (value < 0) {
       setInputNumberStatus({
         status: 'error',
         errorMessage: 'La cantidad debe ser mayor a 0',
       })
       return
-    }
+    } */
     if (value < subData.cant_current_helpers) {
       setInputNumberStatus({
         status: 'error',
@@ -123,6 +123,13 @@ export function ModalEditingSub({
   }
 
   const handleOk = async () => {
+    if(!data.max_helpers){
+      setInputNumberStatus({
+        status: "error",
+        errorMessage: "Este campo es obligatorio"
+      })
+      return
+    }
     setIsLoading(true)
     try {
       await fetch(
@@ -190,6 +197,7 @@ export function ModalEditingSub({
             <InputNumber
               value={data.max_helpers}
               onChange={(value) => handleChangeCantHelpers(value)}
+              min={1}
             ></InputNumber>
             {inputNumberStatus.status ? (
               <p style={{ color: '#FF4D4F' }}>
