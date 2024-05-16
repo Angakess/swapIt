@@ -6,25 +6,26 @@ import { Button, Form, Input, InputNumber, Select, Upload, message } from 'antd'
 import { useEffect, useState } from 'react'
 
 const getFiliales = async () => {
-  const response = await getter("/subsidiary/subsidiaries/", {})
+  const response = await getter('/subsidiary/subsidiaries/', {})
   return { subsidiaries: response }
 }
 
 const getCategoryList = async () => {
-  const response = await getter("/category/list/", { active: "true" })
-    .then((response) => response.data)
+  const response = await getter('/category/list/', { active: 'true' }).then(
+    (response) => response.data
+  )
   return response
 }
 
-
 const updateValues = (response: any, setter: any) => {
   //@ts-ignore
-  setter(response.map((item) => ({
-    // Usar func para capitalizar
-    label: item.name,
-    value: item.id
-  })))
-
+  setter(
+    response.map((item) => ({
+      // Usar func para capitalizar
+      label: item.name,
+      value: item.id,
+    }))
+  )
 }
 
 export function PostAdd() {
@@ -32,9 +33,9 @@ export function PostAdd() {
   const [subsidiaries, setSubsidiaries] = useState<any[]>([])
   const [categories, setCategories] = useState<any[]>([])
   const stateProducts = [
-    { label: 'Nuevo', value: '1' },
-    { label: 'Usado', value: '2' },
-    { label: 'Reparado', value: '3' },
+    { label: 'Nuevo', value: 'NUEVO' },
+    { label: 'Usado', value: 'USADO' },
+    { label: 'Defectuoso', value: 'DEFECTUOSO' },
   ]
 
   useEffect(() => {
@@ -82,7 +83,7 @@ export function PostAdd() {
     formData.append('value', values.value)
     formData.append('user', user!.id.toString())
     formData.append('subsidiary', values.subsidiary)
-    formData.append('state', values.state)
+    formData.append('state', '2')
     formData.append('category', values.category)
     formData.append('state_product', values.state_product)
     formData.append('stock_product', values.stock_product)
@@ -120,7 +121,9 @@ export function PostAdd() {
           label="Descripcion"
           name="description"
           required={true}
-          rules={[{ required: true, message: 'Ingrese la descripción del producto' }]}
+          rules={[
+            { required: true, message: 'Ingrese la descripción del producto' },
+          ]}
           style={{ marginBottom: '0.25rem' }}
         >
           <Input.TextArea
@@ -147,7 +150,9 @@ export function PostAdd() {
           label="Filiales"
           name="subsidiary"
           required={true}
-          rules={[{ required: true, message: 'Por favor, seleccione la filial' }]}
+          rules={[
+            { required: true, message: 'Por favor, seleccione la filial' },
+          ]}
         >
           <Select
             placeholder="Elija la filial"
@@ -155,14 +160,15 @@ export function PostAdd() {
             style={{ width: '100%' }}
             options={subsidiaries}
           />
-
         </Form.Item>
 
         <Form.Item
           label="Categorías"
           name="category"
           required={true}
-          rules={[{ required: true, message: 'Por favor, seleccione la categoría' }]}
+          rules={[
+            { required: true, message: 'Por favor, seleccione la categoría' },
+          ]}
         >
           <Select
             placeholder="Elija la categoría"
@@ -172,13 +178,13 @@ export function PostAdd() {
           />
         </Form.Item>
 
-
-
         <Form.Item
           label="Estado"
           name="state_product"
           required={true}
-          rules={[{ required: true, message: 'Ingrese el estado del producto' }]}
+          rules={[
+            { required: true, message: 'Ingrese el estado del producto' },
+          ]}
         >
           <Select
             placeholder="Elija el estado del producto"
@@ -188,20 +194,17 @@ export function PostAdd() {
           />
         </Form.Item>
 
-
         <Form.Item
           label="Cantidad del producto"
           name="stock_product"
           required={true}
-          rules={[
-            { required: true, message: 'El minimo debe ser 1' },
-          ]}
+          rules={[{ required: true, message: 'El minimo debe ser 1' }]}
         >
           <Input
             placeholder="Ingrese la cantidad de unidades que tiene del producto"
             size="large"
             style={{ width: '100%' }}
-            type='number'
+            type="number"
             min={1}
           />
         </Form.Item>

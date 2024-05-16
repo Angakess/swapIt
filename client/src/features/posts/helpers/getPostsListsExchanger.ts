@@ -21,6 +21,7 @@ export type SubsidiaryModel = {
   x_coordinate: string
   y_coordinate: string
   max_helpers: number
+  cant_current_helpers: number
   active: boolean
 }
 
@@ -47,6 +48,7 @@ export type PostModel = {
   state: StateModel
   category: CategoryModel
   state_product: ProductStateModel
+  stock_product: number
   image_1: string
   image_2: string | null
   image_3: string | null
@@ -114,6 +116,16 @@ export async function getPostList({
 }
 
 //
+// getPostById
+
+export async function getPostById(id: number): Promise<PostModel | null> {
+  const resp = await fetch(`${SERVER_URL}/post/${id}`)
+  const data = await resp.json()
+
+  return data?.data?.post ?? null
+}
+
+//
 // getCategoryList
 
 type GetCategoryListOptions = {
@@ -157,9 +169,16 @@ export async function getCategoryList({
   return data.data?.categories ?? []
 }
 
-export async function getPostById(id: number): Promise<PostModel | null> {
-  const resp = await fetch(`${SERVER_URL}/post/${id}`)
+//
+// getSubsidiaries
+
+export async function getSubsidiaries({
+  search = '',
+}: { search?: string } = {}): Promise<SubsidiaryModel[]> {
+  const URL = `${SERVER_URL}/subsidiary/subsidiaries/?search=${search}`
+
+  const resp = await fetch(URL)
   const data = await resp.json()
 
-  return data?.data?.post ?? null
+  return data
 }

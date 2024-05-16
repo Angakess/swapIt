@@ -11,7 +11,7 @@ urlpatterns = [
     path('category/update/<int:pk>', views.CategoryUpdate.as_view()),
     # ------------------- VISTAS DE POST -------------------
     path('post/<int:pk>/', views.PostRetrieve.as_view()),
-    path('post/update/<int:id>/', views.PostUpdate.as_view()),
+    path('post/update/<int:pk>/', views.PostUpdate.as_view()),
     path('post/', views.PostCreate.as_view()),
     path('post/remove/<int:pk>', views.PostRemove.as_view()),
 

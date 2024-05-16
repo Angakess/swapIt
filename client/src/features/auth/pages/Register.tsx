@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import dayjs, { Dayjs } from 'dayjs'
+import { useState } from 'react'
+import { Dayjs } from 'dayjs'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   App,
@@ -54,20 +54,6 @@ export function Register() {
   const [form] = Form.useForm<RegisterFormData>()
 
   const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(() => {
-    form.setFieldsValue({
-      first_name: 'John',
-      last_name: 'Doe',
-      dni: '12345678',
-      email: 'jdoe@mail.com',
-      gender: 'MALE',
-      phone_number: '2211234567',
-      date_of_birth: dayjs('12/11/2001', 'DD/MM/YYYY'),
-      password: '1234',
-      confirmPassword: '1234',
-    })
-  }, [])
 
   const handleFinish: FormProps<RegisterFormData>['onFinish'] = async (
     fields
@@ -152,7 +138,7 @@ export function Register() {
             { validator: phoneValidator },
           ]}
         >
-          <Input placeholder="221 123-4567" size="large" />
+          <Input placeholder="2211234567" size="large" />
         </Form.Item>
 
         <Form.Item

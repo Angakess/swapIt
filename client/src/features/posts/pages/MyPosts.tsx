@@ -2,13 +2,14 @@ import { PlusOutlined } from '@ant-design/icons'
 import { PageTitle } from '@Common/components'
 import { useAuth } from '@Common/hooks'
 import { PostsList, SearchAndFilter } from '@Posts/components'
+import AddPostModal from '@Posts/components/AddPostModal'
 import {
   getCategoryList,
   getPostList,
   PostModel,
 } from '@Posts/helpers/getPostsListsExchanger'
 import { Button, Divider } from 'antd'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 type SelectOption = {
   label: string
@@ -28,6 +29,7 @@ export function MyPosts() {
   ])
 
   const [posts, setPosts] = useState<PostModel[]>([])
+  const [haveNewPosts, setHaveNewPosts] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   const [filterCategory, setFilterCategory] = useState('')
@@ -35,7 +37,9 @@ export function MyPosts() {
   const [filterStatus, setFilterStatus] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
-  async function handleSearch() {
+  const [addPostIsOpen, setAddPostIsOpen] = useState(false)
+
+  const handleSearch = useCallback(async () => {
     const p = await getPostList({
       userId: user!.id,
       search: searchValue,
@@ -43,8 +47,8 @@ export function MyPosts() {
       state: filterState,
       status: filterStatus,
     })
-    setPosts(p)
-  }
+    setPosts(p.filter(({ state }) => state.id !== 5))
+  }, [filterCategory, filterState, filterStatus, searchValue, user])
 
   useEffect(() => {
     ;(async () => {
@@ -55,17 +59,27 @@ export function MyPosts() {
       const p = await getPostList({
         userId: user!.id,
       })
-      setPosts(p)
+      setPosts(p.filter(({ state }) => state.id !== 5))
       setIsLoading(false)
     })()
   }, [])
+
+  // Actualizar listado en caso de crear un nuevo producto
+  useEffect(() => {
+    if (haveNewPosts) setHaveNewPosts(false)
+    handleSearch()
+  }, [handleSearch, haveNewPosts])
 
   return (
     <>
       <PageTitle
         title="Mis publicaciones"
         right={
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => setAddPostIsOpen(true)}
+          >
             Agregar
           </Button>
         }
@@ -88,7 +102,7 @@ export function MyPosts() {
           {
             placeholder: 'Estado del producto',
             options: [
-              { label: 'Todos los estados del producto', value: '' },
+              { label: 'Todos los estados de producto', value: '' },
               { label: 'Nuevo', value: 'NUEVO' },
               { label: 'Usado', value: 'USADO' },
               { label: 'Defectuoso', value: 'DEFECTUOSO' },
@@ -116,6 +130,12 @@ export function MyPosts() {
       <Divider />
 
       <PostsList posts={posts} isLoading={isLoading} showStatus />
+
+      <AddPostModal
+        isOpen={addPostIsOpen}
+        setIsOpen={setAddPostIsOpen}
+        setHaveNewPosts={setHaveNewPosts}
+      />
     </>
   )
 }

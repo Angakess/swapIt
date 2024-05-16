@@ -18,11 +18,13 @@ export function SearchAndFilter({
     <>
       <SearchBar {...searchBar} />
 
-      <Flex gap={'1rem'} style={{ marginBottom: '1rem' }}>
-        {filters.map((filter) => (
-          <SelectFilter key={filter.placeholder} {...filter} />
-        ))}
-      </Flex>
+      <div style={{ overflowX: 'auto' }}>
+        <Flex gap={'1rem'} style={{ marginBottom: '1rem' }}>
+          {filters.map((filter) => (
+            <SelectFilter key={filter.placeholder} {...filter} />
+          ))}
+        </Flex>
+      </div>
 
       <Flex justify="end">
         <Button type="primary" icon={<SearchOutlined />} onClick={handleSearch}>

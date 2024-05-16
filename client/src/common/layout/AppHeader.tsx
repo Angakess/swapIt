@@ -1,10 +1,11 @@
 import { LogoutOutlined, EditOutlined } from '@ant-design/icons'
 import { Button, Dropdown, Flex, theme } from 'antd'
 import { UserAvatar } from '@Common/components/UserAvatar'
-import { useAuth } from '@Common/hooks'
+import { useAuth, useCustomAlerts } from '@Common/hooks'
 import { Link } from 'react-router-dom'
 
 export function AppHeader() {
+  const customAlerts = useCustomAlerts()
   const { user, logOut, isLoggedIn } = useAuth()
   const { colorErrorActive } = theme.useToken().token
 
@@ -18,7 +19,7 @@ export function AppHeader() {
         <Button type="link" size="small">
           <Link to="/auth/login">Iniciar sesión</Link>
         </Button>
-        │
+        &#9474;
         <Button type="link" size="small">
           <Link to="/auth/register">Registrarse</Link>
         </Button>
@@ -39,6 +40,7 @@ export function AppHeader() {
               key: '1',
               icon: <EditOutlined />,
               label: 'Editar perfil',
+              onClick: customAlerts.notImplementedYet,
             },
             {
               key: '2',

@@ -1,3 +1,4 @@
+import itertools
 import coreapi
 from rest_framework.response import Response
 from rest_framework import generics
@@ -142,11 +143,16 @@ class CategoryList(generics.ListAPIView):
 
 
 class PostUpdate(generics.UpdateAPIView):
-    PostSerializer
+    queryset = Post.objects.all()
     serializer_class = PostSerializer
 
     def get_queryset(self):
         return Category.objects.all()
+
+    def partial_update(self, request, *args, **kwargs):
+        print("[partial_update][KWARGS] ", kwargs)
+        print("[partial_update][REQUEST] ", request.data)
+        return super().partial_update(request, *args, **kwargs)
 
 
 class PostRetrieve(generics.RetrieveAPIView):
@@ -180,8 +186,8 @@ class PostCreate(generics.CreateAPIView):
             }, status=status.HTTP_201_CREATED)
         return Response({
             'ok': False,
-            'messages': ['Error al crear el post'],
-            'data': {serializer.errors}
+            'messages': list(itertools.chain(*serializer.errors.values())),
+            'data': {}
         }, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
@@ -232,7 +238,7 @@ class PostRemove(generics.DestroyAPIView):
         try:
             print("[KWARGS] ", kwargs)
             post = Post.objects.filter(pk=kwargs['pk'])
-            post.update(state=2)
+            post.update(state=5)
             # Agregar cancelación de peticiones
             return Response(
                 {

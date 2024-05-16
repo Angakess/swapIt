@@ -269,7 +269,7 @@ class LoginUser(APIView):
             return Response(
                 {
                     'ok': False,
-                    'messages': ['Usuario ' + message + ', por favor comuníquese con el administrador en is2.caritas@hotmail.com'],
+                    'messages': ['Usuario ' + message + ' por favor comuníquese con el administrador en is2.caritas@hotmail.com'],
                     'data': {}
                 },
                 status=status.HTTP_404_NOT_FOUND
@@ -280,6 +280,16 @@ class LoginUser(APIView):
         print("md5_pass", md5_pass)
         print("user.password", user.password)
         if not user.password == md5_pass:
+            if user.role == Role.ADMIN:
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Usuario y/o contraseña incorrecta.'],
+                        'data': {}
+                    },
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
             if user.failed_login_attempts >= 2:
                 state = UserState.objects.get(id=2)
                 user.state = state
@@ -316,16 +326,16 @@ class LoginUser(APIView):
             )
 
         elif user.role == Role.ADMIN or user.role == Role.HELPER:
-            user.failed_login_attempts = 0
-            user.save()
             code_2fa = random.randint(100000, 999999)
-
             send_email_to_user(
                 email=[user.email],
                 subject='Codigo de 2FA: ' + user.first_name + ' '
                 + user.last_name,
                 message='Tu codigo de 2FA es: ' + str(code_2fa)
             )
+
+            user.failed_login_attempts = 0
+            user.save()
 
             return Response(
                 {
