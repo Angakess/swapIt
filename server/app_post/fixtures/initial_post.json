@@ -61,7 +61,7 @@
       "value": 5,
       "user": 24,
       "subsidiary": 2,
-      "state": 1,
+      "state": 2,
       "category": 1,
       "state_product": "USADO",
       "image_1": "post_images/post14_img1.jpg",
@@ -300,6 +300,24 @@
       "category": 3,
       "state_product": "NUEVO",
       "image_1": "post_images/post17_img1.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Herramientas varias",
+      "description": "Juego de herramientas",
+      "value": 3,
+      "user": 24,
+      "subsidiary": 1,
+      "state": 3,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/post18_img1.jpg",
       "image_2": null,
       "image_3": null,
       "image_4": null,

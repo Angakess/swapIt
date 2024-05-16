@@ -33,12 +33,16 @@ export function PostsStaff() {
   const [searchValue, setSearchValue] = useState('')
 
   async function handleSearch() {
-    const p = await getPostList({
+    const searchedPosts = await getPostList({
       search: searchValue,
       category: filterCategory,
       state: filterState,
       status: filterStatus,
     })
+
+    const p = searchedPosts.filter(
+      (po) => po.state.name === 'activo' || po.state.name === 'pendiente'
+    )
     setPosts(p)
   }
 
@@ -88,7 +92,7 @@ export function PostsStaff() {
             options: [
               { label: 'Todos los estados de la publicación', value: '' },
               { label: 'Activo', value: 'activo' },
-              { label: 'Pendiente', value: 'pendiente' }
+              { label: 'Pendiente', value: 'pendiente' },
             ],
             defaultValue: 'pendiente',
             value: filterStatus,

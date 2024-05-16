@@ -27,7 +27,13 @@ export type SubsidiaryModel = {
 
 export type StateModel = {
   id: number
-  name: string
+  name:
+    | 'activo'
+    | 'pendiente'
+    | 'suspendido'
+    | 'bloqueado'
+    | 'eliminado'
+    | 'rechazado'
 }
 
 export type CategoryModel = {
