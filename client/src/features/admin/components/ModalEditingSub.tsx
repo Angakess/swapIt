@@ -130,6 +130,13 @@ export function ModalEditingSub({
       })
       return
     }
+    if(data.max_helpers <= 0){
+      setInputNumberStatus({
+        status: "error",
+        errorMessage: "Número inválido"
+      })
+      return
+    }
     setIsLoading(true)
     try {
       await fetch(
@@ -160,6 +167,10 @@ export function ModalEditingSub({
   const handleCancel = () => {
     console.log('CANCEL')
     setIsModalOpen(false)
+    setInputNumberStatus({
+      status: "",
+      errorMessage: ""
+    })
     
   }
 
@@ -197,7 +208,6 @@ export function ModalEditingSub({
             <InputNumber
               value={data.max_helpers}
               onChange={(value) => handleChangeCantHelpers(value)}
-              min={1}
             ></InputNumber>
             {inputNumberStatus.status ? (
               <p style={{ color: '#FF4D4F' }}>

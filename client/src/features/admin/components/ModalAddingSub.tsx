@@ -57,6 +57,8 @@ export function ModalAddingSub({
 
   const [position, setPosition] = useState<LatLng>()
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const [inputStatus, setInputStatus] = useState<StatusType>({
     status: '',
     errorMessage: '',
@@ -117,9 +119,25 @@ export function ModalAddingSub({
   }
 
   const handleOk = async () => {
+    if(!data.max_helpers){
+      setInputNumberStatus({
+        status: "error",
+        errorMessage: "Este campo es obligatorio"
+      })
+      return
+    }
+    if(data.max_helpers <= 0){
+      setInputNumberStatus({
+        status: "error",
+        errorMessage: "Número inválido"
+      })
+      return
+    }
+    setIsLoading(true)
     await fetchPost('http://localhost:8000/subsidiary/subsidiary/', data)
     fetchData()
     setIsModalOpen(false)
+    setIsLoading(false)
     setData({
       name: '',
       x_coordinate: '',
@@ -130,6 +148,10 @@ export function ModalAddingSub({
   }
   const handleCancel = () => {
     setIsModalOpen(false)
+    setInputNumberStatus({
+      status: "",
+      errorMessage: ""
+    })
   }
 
   const blueMarker = new Icon({
@@ -191,8 +213,10 @@ export function ModalAddingSub({
             data.name === '' ||
             inputStatus.status === 'error' ||
             inputNumberStatus.status === 'error' ||
-            (!data.x_coordinate && !data.y_coordinate),
+            (!data.x_coordinate && !data.y_coordinate) ||
+            isLoading
         }}
+        cancelButtonProps={{disabled: isLoading}}
       >
         <Flex vertical gap="25px">
           <p>Seleccione un lugar en el mapa</p>
@@ -237,6 +261,7 @@ export function ModalAddingSub({
               value={data.max_helpers}
               status={inputNumberStatus.status}
               onChange={(value) => handleChangeCantHelpers(value)}
+              /* min={1} */
             ></InputNumber>
             {inputNumberStatus.status ? (
               <p style={{ color: '#FF4D4F' }}>

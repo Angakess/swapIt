@@ -6,7 +6,6 @@ import {
   DescriptionsProps,
   Empty,
   Flex,
-  Modal,
   Row,
   Tooltip,
 } from 'antd'
@@ -44,8 +43,6 @@ export function Locals() {
   const [subsData, setSubsData] = useState<SubsidiaryType[]>()
 
   const [subSelected, setSubSelected] = useState<SubsidiaryType>()
-
-  const [isLoading, setIsLoading] = useState(false)
 
   const [isEditingModalOpen, setIsEditingModalOpen] = useState(false)
   const [isAddingModalOpen, setIsAddingModalOpen] = useState(false)
