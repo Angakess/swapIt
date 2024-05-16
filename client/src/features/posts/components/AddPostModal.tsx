@@ -51,10 +51,9 @@ async function mapCategoiresToSelectOptions(): Promise<SelectOption[]> {
 
 async function mapSubsidiariesToSelectOption(): Promise<SelectOption[]> {
   const subsidiaries = await getSubsidiaries()
-  return subsidiaries.map(({ name, id }) => ({
-    label: name,
-    value: id.toString(),
-  }))
+  return subsidiaries
+    .filter(({ active }) => active)
+    .map(({ name, id }) => ({ label: name, value: id.toString() }))
 }
 
 export default function AddPostModal({
