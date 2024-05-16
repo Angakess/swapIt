@@ -1,8 +1,21 @@
+import { useAuth } from '@Common/hooks'
 import {
   getCategoryList,
   getSubsidiaries,
 } from '@Posts/helpers/getPostsListsExchanger'
-import { App, Col, Form, Input, InputNumber, Modal, Row, Select } from 'antd'
+import { UploadOutlined } from '@ant-design/icons'
+import {
+  App,
+  Button,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Row,
+  Select,
+  Upload,
+} from 'antd'
 import { useEffect, useState } from 'react'
 
 type AddPostModalProps = {
@@ -16,33 +29,88 @@ type SelectOption = {
 }
 
 type AddPostForm = {
-  name: string
-  description: string
-  value: number
-  stock_product: string
-  state_product: string
   category: string
+  description: string
+  images: { file: File; fileList: File[] }
+  name: string
+  state_product: string
+  stock_product: number
   subsidiary: string
+  value: number
 }
 
 async function mapCategoiresToSelectOptions(): Promise<SelectOption[]> {
   const categories = await getCategoryList()
-  return categories.map(({ name }) => ({ label: name, value: name }))
+  return categories.map(({ name, id }) => ({
+    label: name,
+    value: id.toString(),
+  }))
 }
 
 async function mapSubsidiariesToSelectOption(): Promise<SelectOption[]> {
   const subsidiaries = await getSubsidiaries()
-  return subsidiaries.map(({ name }) => ({ label: name, value: name }))
+  return subsidiaries.map(({ name, id }) => ({
+    label: name,
+    value: id.toString(),
+  }))
 }
 
 export default function AddPostModal({ isOpen, setIsOpen }: AddPostModalProps) {
+  const { user } = useAuth()
   const { notification } = App.useApp()
   const [confirmLoading, setConfirmLoading] = useState(false)
 
   const [categoriesOptions, setCategoriesOptions] = useState<SelectOption[]>([])
   const [subsidiaryOptions, setSubsidiaryOptions] = useState<SelectOption[]>([])
 
+  const [files, setFiles] = useState<File[]>([])
   const [form] = Form.useForm<AddPostForm>()
+
+  const handleFinish = async (values: AddPostForm) => {
+    console.log(values)
+
+    const formData = new FormData()
+    formData.append('name', values.name)
+    formData.append('description', values.description)
+    formData.append('value', values.value.toString())
+    formData.append('user', user!.id.toString())
+    formData.append('subsidiary', values.subsidiary)
+    formData.append('state', '2')
+    formData.append('category', values.category)
+    formData.append('state_product', values.state_product)
+    formData.append('stock_product', values.stock_product.toString())
+    files.forEach((file, index) => {
+      formData.append(`image_${index + 1}`, file)
+    })
+
+    const resp = await fetch('http://localhost:8000/post/', {
+      method: 'POST',
+      body: formData,
+    })
+
+    const data = await resp.json()
+
+    console.log(data)
+
+    if (resp.ok && data.ok) {
+      // Actualizar listado publicaciones
+      // Resetear formulario
+      // Notificar
+      // Cerrar modal
+    } else {
+    }
+
+    // form.resetFields()
+    // setIsOpen(false)
+    // setConfirmLoading(false)
+    // notification.success({
+    //   message: 'Publicación agregada correctamente',
+    //   description: 'Se ha agregado la publicación',
+    //   placement: 'topRight',
+    //   duration: 3,
+    //   style: { whiteSpace: 'pre-line' },
+    // })
+  }
 
   // Cargar datos en los select
   useEffect(() => {
@@ -50,30 +118,20 @@ export default function AddPostModal({ isOpen, setIsOpen }: AddPostModalProps) {
     mapSubsidiariesToSelectOption().then(setSubsidiaryOptions)
   }, [])
 
-  function handleOk() {
-    setConfirmLoading(true)
-    setTimeout(() => {
-      setIsOpen(false)
-      setConfirmLoading(false)
-      notification.success({
-        message: 'Publicación agregada correctamente',
-        description: 'Se ha agregado la publicación',
-        placement: 'topRight',
-        duration: 3,
-        style: { whiteSpace: 'pre-line' },
-      })
-    }, 2000)
-  }
-
   return (
     <Modal
       title="Agregar publicación"
       open={isOpen}
-      onOk={handleOk}
+      onOk={form.submit}
       onCancel={() => setIsOpen(false)}
       confirmLoading={confirmLoading}
     >
-      <Form layout="vertical" style={{ marginTop: '1.25rem' }} form={form}>
+      <Form
+        layout="vertical"
+        style={{ marginTop: '1.25rem' }}
+        form={form}
+        onFinish={handleFinish}
+      >
         <Form.Item
           label="Nombre"
           name="name"
@@ -130,7 +188,7 @@ export default function AddPostModal({ isOpen, setIsOpen }: AddPostModalProps) {
                 },
               ]}
             >
-              <InputNumber min={0} style={{ width: '100%' }} defaultValue={1} />
+              <InputNumber min={0} style={{ width: '100%' }} />
             </Form.Item>
           </Col>
 
@@ -179,6 +237,28 @@ export default function AddPostModal({ isOpen, setIsOpen }: AddPostModalProps) {
             </Form.Item>
           </Col>
         </Row>
+
+        <Form.Item
+          label="Imagenes"
+          name="images"
+          required={true}
+          rules={[{ required: true, message: 'Please enter the image' }]}
+        >
+          <Upload
+            name="file"
+            action=""
+            headers={{ authorization: 'authorization-text' }}
+            beforeUpload={(file) => {
+              setFiles([...files, file])
+              return false
+            }}
+            onChange={(info) => {
+              console.log(info)
+            }}
+          >
+            <Button icon={<UploadOutlined />}>Cargar imagen</Button>
+          </Upload>
+        </Form.Item>
       </Form>
     </Modal>
   )
