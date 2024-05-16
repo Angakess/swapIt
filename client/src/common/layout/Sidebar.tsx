@@ -129,7 +129,7 @@ export function Sidebar() {
         <Layout.Header
           style={{
             backgroundColor,
-            padding: '0 0.625rem',
+            padding: isCollapsed ? '0 0.625rem' : '0 0.875rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: isCollapsed ? 'center' : 'start',
