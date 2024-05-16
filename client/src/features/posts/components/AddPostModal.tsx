@@ -15,12 +15,14 @@ import {
   Row,
   Select,
   Upload,
+  UploadFile,
 } from 'antd'
 import { useEffect, useState } from 'react'
 
 type AddPostModalProps = {
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setHaveNewPosts: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type SelectOption = {
@@ -55,7 +57,11 @@ async function mapSubsidiariesToSelectOption(): Promise<SelectOption[]> {
   }))
 }
 
-export default function AddPostModal({ isOpen, setIsOpen }: AddPostModalProps) {
+export default function AddPostModal({
+  isOpen,
+  setIsOpen,
+  setHaveNewPosts,
+}: AddPostModalProps) {
   const { user } = useAuth()
   const { notification } = App.useApp()
   const [confirmLoading, setConfirmLoading] = useState(false)
@@ -63,11 +69,11 @@ export default function AddPostModal({ isOpen, setIsOpen }: AddPostModalProps) {
   const [categoriesOptions, setCategoriesOptions] = useState<SelectOption[]>([])
   const [subsidiaryOptions, setSubsidiaryOptions] = useState<SelectOption[]>([])
 
-  const [files, setFiles] = useState<File[]>([])
+  const [files, setFiles] = useState<UploadFile[]>([])
   const [form] = Form.useForm<AddPostForm>()
 
   const handleFinish = async (values: AddPostForm) => {
-    console.log(values)
+    setConfirmLoading(true)
 
     const formData = new FormData()
     formData.append('name', values.name)
@@ -90,26 +96,27 @@ export default function AddPostModal({ isOpen, setIsOpen }: AddPostModalProps) {
 
     const data = await resp.json()
 
-    console.log(data)
-
     if (resp.ok && data.ok) {
-      // Actualizar listado publicaciones
-      // Resetear formulario
-      // Notificar
-      // Cerrar modal
+      setHaveNewPosts(true)
+      form.resetFields()
+      notification.success({
+        message: 'Publicación agregada correctamente',
+        description: 'Se ha agregado la publicación',
+        placement: 'topRight',
+        duration: 3,
+        style: { whiteSpace: 'pre-line' },
+      })
+      setIsOpen(false)
     } else {
+      notification.error({
+        message: 'Ocurrió un error al crear la publicación',
+        description:
+          'Lo sentimos! No pudimos crear la publicación debido a un error inesperado. Inténtalo más tarde',
+        placement: 'topRight',
+        duration: 3,
+      })
     }
-
-    // form.resetFields()
-    // setIsOpen(false)
-    // setConfirmLoading(false)
-    // notification.success({
-    //   message: 'Publicación agregada correctamente',
-    //   description: 'Se ha agregado la publicación',
-    //   placement: 'topRight',
-    //   duration: 3,
-    //   style: { whiteSpace: 'pre-line' },
-    // })
+    setConfirmLoading(false)
   }
 
   // Cargar datos en los select
@@ -131,6 +138,7 @@ export default function AddPostModal({ isOpen, setIsOpen }: AddPostModalProps) {
         style={{ marginTop: '1.25rem' }}
         form={form}
         onFinish={handleFinish}
+        disabled={confirmLoading}
       >
         <Form.Item
           label="Nombre"
@@ -242,10 +250,9 @@ export default function AddPostModal({ isOpen, setIsOpen }: AddPostModalProps) {
           label="Imagenes"
           name="images"
           required={true}
-          rules={[{ required: true, message: 'Please enter the image' }]}
+          rules={[{ required: true, message: 'Cargue al menos una imagen' }]}
         >
           <Upload
-            name="file"
             action=""
             headers={{ authorization: 'authorization-text' }}
             beforeUpload={(file) => {
@@ -255,8 +262,14 @@ export default function AddPostModal({ isOpen, setIsOpen }: AddPostModalProps) {
             onChange={(info) => {
               console.log(info)
             }}
+            onRemove={(deletedFile) => {
+              setFiles(files.filter((f) => f.uid === deletedFile.uid))
+            }}
+            accept="image/png, image/jpeg"
           >
-            <Button icon={<UploadOutlined />}>Cargar imagen</Button>
+            <Button icon={<UploadOutlined />} disabled={files.length === 5}>
+              Cargar imagen
+            </Button>
           </Upload>
         </Form.Item>
       </Form>

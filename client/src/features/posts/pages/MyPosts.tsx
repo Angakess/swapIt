@@ -9,7 +9,7 @@ import {
   PostModel,
 } from '@Posts/helpers/getPostsListsExchanger'
 import { Button, Divider } from 'antd'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 type SelectOption = {
   label: string
@@ -29,6 +29,7 @@ export function MyPosts() {
   ])
 
   const [posts, setPosts] = useState<PostModel[]>([])
+  const [haveNewPosts, setHaveNewPosts] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   const [filterCategory, setFilterCategory] = useState('')
@@ -38,7 +39,7 @@ export function MyPosts() {
 
   const [addPostIsOpen, setAddPostIsOpen] = useState(false)
 
-  async function handleSearch() {
+  const handleSearch = useCallback(async () => {
     const p = await getPostList({
       userId: user!.id,
       search: searchValue,
@@ -47,7 +48,7 @@ export function MyPosts() {
       status: filterStatus,
     })
     setPosts(p)
-  }
+  }, [filterCategory, filterState, filterStatus, searchValue, user])
 
   useEffect(() => {
     ;(async () => {
@@ -62,6 +63,12 @@ export function MyPosts() {
       setIsLoading(false)
     })()
   }, [])
+
+  // Actualizar listado en caso de crear un nuevo producto
+  useEffect(() => {
+    if (haveNewPosts) setHaveNewPosts(false)
+    handleSearch()
+  }, [handleSearch, haveNewPosts])
 
   return (
     <>
@@ -124,7 +131,11 @@ export function MyPosts() {
 
       <PostsList posts={posts} isLoading={isLoading} showStatus />
 
-      <AddPostModal isOpen={addPostIsOpen} setIsOpen={setAddPostIsOpen} />
+      <AddPostModal
+        isOpen={addPostIsOpen}
+        setIsOpen={setAddPostIsOpen}
+        setHaveNewPosts={setHaveNewPosts}
+      />
     </>
   )
 }
