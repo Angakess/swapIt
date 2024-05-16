@@ -45,13 +45,13 @@ export function PostMainButton({ post }: { post: PostModel }) {
     return (
       <Button
         type="primary"
+        danger
         block
         size="large"
         style={{ fontWeight: '700', marginBottom: '1.5rem' }}
-        disabled
         onClick={alerts.notImplementedYet}
       >
-        Publicación activa
+        Dar de baja publicación
       </Button>
     )
   }
