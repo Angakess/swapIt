@@ -55,20 +55,6 @@ export function Register() {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
-    form.setFieldsValue({
-      first_name: 'John',
-      last_name: 'Doe',
-      dni: '12345678',
-      email: 'jdoe@mail.com',
-      gender: 'MALE',
-      phone_number: '2211234567',
-      date_of_birth: dayjs('12/11/2001', 'DD/MM/YYYY'),
-      password: '1234',
-      confirmPassword: '1234',
-    })
-  }, [])
-
   const handleFinish: FormProps<RegisterFormData>['onFinish'] = async (
     fields
   ) => {
