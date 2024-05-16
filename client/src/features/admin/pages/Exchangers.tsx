@@ -56,12 +56,6 @@ export function Exchangers() {
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: result.filter(
-          (item: DataType) =>
-            item.full_name.includes(searchText.full_name) &&
-            item.dni.includes(searchText.dni) &&
-            item.email.includes(searchText.email)
-        ),
       },
     })
   }

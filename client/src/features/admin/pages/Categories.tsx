@@ -28,6 +28,7 @@ interface DataType {
   id: number
   name: string
   active: boolean
+  [key: string]: string | number | boolean
 }
 
 type ColumnsType<T> = TableProps<T>['columns']
@@ -62,6 +63,41 @@ export function Categories() {
 
   const searchInput = useRef<InputRef>(null)
 
+  const handleTableChange: TableProps['onChange'] = (
+    pagination,
+    filters,
+    sorter
+  ) => {
+    // Seteamos los parámetros de la tabla
+    setTableParams({
+      pagination,
+      filters,
+      ...sorter,
+    })
+  
+    // Verificamos si el tamaño de la página ha cambiado para reiniciar los datos
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setData([])
+    }
+  
+    // Filtramos los datos según los filtros aplicados
+    const filteredData = data.filter((item: DataType) =>
+      Object.keys(filters).every((key: string) => {
+        if (filters[key]?.length === 0) return true
+        return filters[key]?.includes(item[key])
+      })
+    )
+  
+    // Actualizamos el total de elementos en la paginación
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...pagination,
+        total: filteredData.length,
+      },
+    })
+  }
+
   const fetchData = async () => {
     setIsLoading(true)
     const res = await fetch('http://localhost:8000/category/list/')
@@ -73,9 +109,6 @@ export function Categories() {
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: results.data.categories?.filter((item: DataType) =>
-          item.name.includes(searchCatName)
-        ).length,
       },
     })
   }
@@ -96,7 +129,7 @@ export function Categories() {
     searchCatName,
   ])
 
-  const handleTableChange: TableProps['onChange'] = (
+   /* const handleTableChange: TableProps['onChange'] = (
     pagination,
     filters,
     sorter
@@ -109,7 +142,10 @@ export function Categories() {
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
       setData([])
     }
-  }
+  } */
+
+  
+  
 
   const handleSearch = (
     selectedKeys: string[],
@@ -247,7 +283,7 @@ export function Categories() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: `Nombre: ${searchCatName}`,
+      title: `Nombre: ${searchCatName ? searchCatName : ""}`,
       dataIndex: 'name',
       render: (name) => `${name}`,
       width: '60%',
