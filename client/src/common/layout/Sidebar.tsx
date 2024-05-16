@@ -74,11 +74,6 @@ const items: Record<UserPermissions, SidebarProps> = {
         label: 'Mis Publicaciones',
         icon: <ProductOutlined />,
       },
-      {
-        key: '/posts/add',
-        label: 'Agregar Publicación',
-        icon: <UploadOutlined />,
-      },
     ],
   },
   HELPER: {

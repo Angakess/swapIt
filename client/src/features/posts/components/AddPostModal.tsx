@@ -249,7 +249,7 @@ export default function AddPostModal({
         <Form.Item
           label="Imagenes"
           name="images"
-          required={true}
+          required={false}
           rules={[{ required: true, message: 'Cargue al menos una imagen' }]}
         >
           <Upload
