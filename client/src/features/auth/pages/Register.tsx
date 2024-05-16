@@ -152,7 +152,7 @@ export function Register() {
             { validator: phoneValidator },
           ]}
         >
-          <Input placeholder="221 123-4567" size="large" />
+          <Input placeholder="2211234567" size="large" />
         </Form.Item>
 
         <Form.Item

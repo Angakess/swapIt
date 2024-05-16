@@ -40,6 +40,7 @@ class PostBaseSerializer(serializers.ModelSerializer):
             'state',
             'category',
             'state_product',
+            'stock_product',
             'image_1',
             'image_2',
             'image_3',

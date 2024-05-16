@@ -3,11 +3,11 @@ import { UploadOutlined } from '@ant-design/icons'
 import { Button, Form, Input, InputNumber, Select, Upload, message } from 'antd'
 import type { UploadProps } from 'antd'
 import { act, useEffect, useState } from 'react'
-import {getter} from '@Posts/helpers/getPostsListsExchanger'
+import { getter } from '@Posts/helpers/getPostsListsExchanger'
 
 const getFiliales = async () => {
-  const response = await getter("/subsidiary/subsidiaries/", {})
-  return {subsidiaries: response}
+  const response = await getter('/subsidiary/subsidiaries/', {})
+  return { subsidiaries: response }
 }
 
 export function PostAdd() {
@@ -19,7 +19,7 @@ export function PostAdd() {
     })
   }, [])
 
-  const {user} = useAuth()
+  const { user } = useAuth()
 
   /* 
     Modifcar:
@@ -115,7 +115,7 @@ export function PostAdd() {
             style={{ width: '100%' }}
           />
         </Form.Item>
-        
+
         <Form.Item
           label="Subsidiary"
           name="subsidiary"
@@ -127,8 +127,7 @@ export function PostAdd() {
             size="large"
             style={{ width: '100%' }}
             options={subsidiaries}
-            />
-
+          />
         </Form.Item>
 
         <Form.Item
@@ -171,7 +170,6 @@ export function PostAdd() {
             style={{ width: '100%' }}
           />
         </Form.Item>
-
 
         <Form.Item
           label="Product Stock"
