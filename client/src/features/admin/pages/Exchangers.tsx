@@ -19,6 +19,7 @@ export function Exchangers() {
     dni: string
     email: string
     user_state: string
+    [key: string]: string | number
   }
 
   interface TableParams {
@@ -69,7 +70,7 @@ export function Exchangers() {
     fetchData()
   }, [tableParams.pagination?.current, tableParams.pagination?.pageSize])
 
-  const handleTableChange: TableProps['onChange'] = (
+  /* const handleTableChange: TableProps['onChange'] = (
     pagination,
     filters,
     sorter
@@ -82,6 +83,41 @@ export function Exchangers() {
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
       setData([])
     }
+  } */
+
+  const handleTableChange: TableProps['onChange'] = (
+    pagination,
+    filters,
+    sorter
+  ) => {
+    // Seteamos los parámetros de la tabla
+    setTableParams({
+      pagination,
+      filters,
+      ...sorter,
+    })
+  
+    // Verificamos si el tamaño de la página ha cambiado para reiniciar los datos
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setData([])
+    }
+  
+    // Filtramos los datos según los filtros aplicados
+    const filteredData = data.filter((item: DataType) =>
+      Object.keys(filters).every((key: string) => {
+        if (filters[key]?.length === 0) return true
+        return filters[key]?.includes(item[key])
+      })
+    )
+  
+    // Actualizamos el total de elementos en la paginación
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...pagination,
+        total: filteredData.length,
+      },
+    })
   }
 
   const [searchText, setSearchText] = useState<DataType>({
@@ -136,7 +172,6 @@ export function Exchangers() {
       <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
         <Input
           ref={searchInput}
-          placeholder={`Buscar ${dataIndex}`}
           value={selectedKeys[0]}
           onChange={(e) =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
@@ -196,25 +231,25 @@ export function Exchangers() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: `Nombre: ${searchText.full_name}`,
+      title: `Nombre: ${searchText.full_name ? searchText.full_name : ""}`,
       dataIndex: 'full_name',
       render: (full_name) => `${full_name}`,
       width: '25%',
       ...getColumnSearchProps('full_name'),
     },
     {
-      title: `DNI: ${searchText.dni}`,
+      title: `DNI: ${searchText.dni ? searchText.dni : ""}`,
       dataIndex: 'dni',
       width: '20%',
       ...getColumnSearchProps('dni'),
     },
     {
-      title: `Email: ${searchText.email}`,
+      title: `Email: ${searchText.email ? searchText.email : ""}`,
       dataIndex: 'email',
       ...getColumnSearchProps('email'),
     },
     {
-      title: `Estado: ${searchText.user_state}`,
+      title: `Estado:`,
       dataIndex: 'user_state',
       filters: [
         { text: 'Activo', value: 'activo' },
