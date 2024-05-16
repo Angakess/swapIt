@@ -88,9 +88,7 @@ export function PostsStaff() {
             options: [
               { label: 'Todos los estados de la publicación', value: '' },
               { label: 'Activo', value: 'activo' },
-              { label: 'Pendiente', value: 'pendiente' },
-              { label: 'Suspendido', value: 'suspendido' },
-              { label: 'Rechazado', value: 'rechazado' },
+              { label: 'Pendiente', value: 'pendiente' }
             ],
             defaultValue: 'pendiente',
             value: filterStatus,
