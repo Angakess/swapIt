@@ -47,7 +47,7 @@ export function MyPosts() {
       state: filterState,
       status: filterStatus,
     })
-    setPosts(p)
+    setPosts(p.filter(({ state }) => state.id !== 5))
   }, [filterCategory, filterState, filterStatus, searchValue, user])
 
   useEffect(() => {
