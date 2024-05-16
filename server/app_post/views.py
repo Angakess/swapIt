@@ -44,9 +44,8 @@ class CategoryRemove(APIView):
                     'data': {}
                 }, status=status.HTTP_404_NOT_FOUND)
 
-            category.active = False
-            category.posts.filter(state=1).update(state=3)
-            category.save()
+            category.deactivate()
+
             return Response(
                 {
                     'ok': True,
@@ -81,9 +80,8 @@ class CategoryRestore(APIView):
                     'data': {}
                 }, status=status.HTTP_404_NOT_FOUND)
 
-            category.active = True
-            category.posts.filter(state=3).update(state=1)
-            category.save()
+            category.reactivate()
+
             return Response(
                 {
                     'ok': True,
