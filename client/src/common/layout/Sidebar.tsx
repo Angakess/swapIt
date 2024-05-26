@@ -4,7 +4,8 @@ import { Layout, Menu, theme } from 'antd'
 import { MenuProps } from 'antd/es/menu'
 import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 import {
-  UploadOutlined,
+  /* UploadOutlined, */
+  CalendarOutlined,
   UserOutlined,
   ContactsOutlined,
   ProductOutlined,
@@ -73,6 +74,11 @@ const items: Record<UserPermissions, SidebarProps> = {
         key: '/posts/my-posts',
         label: 'Mis Publicaciones',
         icon: <ProductOutlined />,
+      },
+      {
+        key: '/posts/my-turns',
+        label: 'Mis Turnos',
+        icon: <CalendarOutlined />,
       },
     ],
   },

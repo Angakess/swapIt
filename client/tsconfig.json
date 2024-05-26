@@ -27,7 +27,8 @@
       "@Admin/*": ["features/admin/*"],
       "@Auth/*": ["features/auth/*"],
       "@Home/*": ["features/home/*"],
-      "@Posts/*": ["features/posts/*"]
+      "@Posts/*": ["features/posts/*"],
+      "@Turns/*": ["features/turns/*"],
     }
   },
   "include": ["src"],
