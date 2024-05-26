@@ -90,12 +90,12 @@ export function Exchangers() {
       filters,
       ...sorter,
     })
-  
+
     // Verificamos si el tamaño de la página ha cambiado para reiniciar los datos
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
       setData([])
     }
-  
+
     // Filtramos los datos según los filtros aplicados
     const filteredData = data.filter((item: DataType) =>
       Object.keys(filters).every((key: string) => {
@@ -103,7 +103,7 @@ export function Exchangers() {
         return filters[key]?.includes(item[key])
       })
     )
-  
+
     // Actualizamos el total de elementos en la paginación
     setTableParams({
       ...tableParams,
@@ -225,20 +225,20 @@ export function Exchangers() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: `Nombre: ${searchText.full_name ? searchText.full_name : ""}`,
+      title: `Nombre: ${searchText.full_name ? searchText.full_name : ''}`,
       dataIndex: 'full_name',
       render: (full_name) => `${full_name}`,
       width: '25%',
       ...getColumnSearchProps('full_name'),
     },
     {
-      title: `DNI: ${searchText.dni ? searchText.dni : ""}`,
+      title: `DNI: ${searchText.dni ? searchText.dni : ''}`,
       dataIndex: 'dni',
       width: '20%',
       ...getColumnSearchProps('dni'),
     },
     {
-      title: `Email: ${searchText.email ? searchText.email : ""}`,
+      title: `Email: ${searchText.email ? searchText.email : ''}`,
       dataIndex: 'email',
       ...getColumnSearchProps('email'),
     },
@@ -250,7 +250,7 @@ export function Exchangers() {
         { text: 'Inactivo', value: 'inactivo' },
         { text: 'Bloqueado', value: 'bloqueado' },
         { text: 'Eliminado', value: 'eliminado' },
-        { text: 'Suspendido', value: 'suspendido'}
+        { text: 'Suspendido', value: 'suspendido' },
       ],
       onFilter: (value, record) => record.user_state === value,
       filterSearch: false,
@@ -261,10 +261,7 @@ export function Exchangers() {
       render: (_: any, record: DataType) => (
         <Space>
           <Link to={`/admin/exchangers/${record.id}`}>
-            <Button
-              type="primary"
-              icon={<UserOutlined />}
-            >
+            <Button type="primary" icon={<UserOutlined />}>
               Ver perfil
             </Button>
           </Link>

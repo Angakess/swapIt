@@ -32,7 +32,6 @@ type PropType = {
   helper: HelperType
 }
 export function ChangeLocal() {
-
   const parts = window.location.href.split('/')
   const helperId: number = parseInt(parts[parts.length - 1])
 
@@ -51,24 +50,29 @@ export function ChangeLocal() {
     setSubsData(result)
     setIsLoading(false)
   }
-  useEffect(() => {fetchSubsData()}, [])
+  useEffect(() => {
+    fetchSubsData()
+  }, [])
 
   const fetchHelperData = async () => {
     setIsLoading(true)
-    try{
-      const res = await fetch(`http://localhost:8000/users/get-helper/${helperId}`)
+    try {
+      const res = await fetch(
+        `http://localhost:8000/users/get-helper/${helperId}`
+      )
       const result = await res.json()
       setHelperData(result)
-    }
-    catch(error){
+    } catch (error) {
       Modal.error({
-        title: "Error",
-        content: "No se encontró al ayudante pedido"
+        title: 'Error',
+        content: 'No se encontró al ayudante pedido',
       })
     }
     setIsLoading(false)
   }
-  useEffect(() => {fetchHelperData()},[])
+  useEffect(() => {
+    fetchHelperData()
+  }, [])
 
   const handleMarkerClick = (marcador: SubsidiaryType, helper: HelperType) => {
     if (helper.subsidiary.id === marcador.id) {
@@ -82,20 +86,22 @@ export function ChangeLocal() {
     setModalOpen(true)
     setSubSelected(marcador)
   }
-  const handleOk = async() => {
+  const handleOk = async () => {
     setIsLoading(true)
-    const res = await fetchPost(`http://localhost:8000/users/change-filial/${helperId}/${subSelected?.id}`,{})
+    const res = await fetchPost(
+      `http://localhost:8000/users/change-filial/${helperId}/${subSelected?.id}`,
+      {}
+    )
     const result = await res.json()
-    if(res.ok){
+    if (res.ok) {
       Modal.success({
-        title:"Operación completada",
-        content: result.messages
+        title: 'Operación completada',
+        content: result.messages,
       })
-    }
-    else{
+    } else {
       Modal.error({
-        title:"Operación fallida",
-        content: result.messages
+        title: 'Operación fallida',
+        content: result.messages,
       })
     }
     setModalOpen(false)
@@ -130,15 +136,12 @@ export function ChangeLocal() {
     iconAnchor: [17, 46],
   })
 
-  const RelocateMap = ({helper}: PropType) => {
+  const RelocateMap = ({ helper }: PropType) => {
     const map = useMap()
     const x = parseFloat(helper.subsidiary.x_coordinate)
     const y = parseFloat(helper.subsidiary.y_coordinate)
-    map.flyTo([x,y])
-    return(
-      <>
-      </>
-    )
+    map.flyTo([x, y])
+    return <></>
   }
 
   return (
@@ -152,23 +155,25 @@ export function ChangeLocal() {
               zoomControl={false}
               style={{ borderRadius: '5px', height: '400px' }}
             >
-              {helperData && <RelocateMap helper={helperData}/>}
+              {helperData && <RelocateMap helper={helperData} />}
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              {(helperData && subsData) && subsData.map((marcador) => (
-                <Marker
-                  key={marcador.id}
-                  position={[
-                    parseFloat(marcador.x_coordinate),
-                    parseFloat(marcador.y_coordinate),
-                  ]}
-                  eventHandlers={{
-                    click: () => handleMarkerClick(marcador, helperData),
-                  }}
-                  icon={marcador.active ? redMarker : grayMarker}
-                >
-                  <Popup>{marcador.name}</Popup>
-                </Marker>
-              ))}
+              {helperData &&
+                subsData &&
+                subsData.map((marcador) => (
+                  <Marker
+                    key={marcador.id}
+                    position={[
+                      parseFloat(marcador.x_coordinate),
+                      parseFloat(marcador.y_coordinate),
+                    ]}
+                    eventHandlers={{
+                      click: () => handleMarkerClick(marcador, helperData),
+                    }}
+                    icon={marcador.active ? redMarker : grayMarker}
+                  >
+                    <Popup>{marcador.name}</Popup>
+                  </Marker>
+                ))}
             </MapContainer>
           </Card>
         </Col>
@@ -178,20 +183,32 @@ export function ChangeLocal() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        okButtonProps={{disabled: isLoading}}
+        okButtonProps={{ disabled: isLoading }}
         cancelText="Cancelar"
         okText="Confirmar"
       >
-        {(helperData && subSelected) && <>
-          <p>¿Está seguro que quiere cambiar la filial de {helperData.full_name}? </p>
-          <p>
-            {'('}De '{helperData.subsidiary.name}' a '{subSelected.name}'
-            {')'}
+        {helperData && subSelected && (
+          <>
+            <p>
+              ¿Está seguro que quiere cambiar la filial de{' '}
+              {helperData.full_name}?{' '}
+            </p>
+            <p>
+              {'('}De '{helperData.subsidiary.name}' a '{subSelected.name}'{')'}
+            </p>
+          </>
+        )}
+
+        {helperData &&
+        subSelected &&
+        helperData.subsidiary.cant_current_helpers === 1 ? (
+          <p style={{ fontWeight: 'bold' }}>
+            IMPORTANTE: Si {helperData.full_name} es cambiado de filial, la
+            filial '{helperData.subsidiary.name}' se quedará sin ayudantes, por
+            lo que se deshabilitará y se suspenderá todas las publicaciones
+            relacionadas
           </p>
-        </>}
-        
-        {helperData && subSelected && helperData.subsidiary.cant_current_helpers === 1 ? 
-        <p style={{fontWeight: "bold"}}>IMPORTANTE: Si {helperData.full_name} es cambiado de filial, la filial '{helperData.subsidiary.name}' se quedará sin ayudantes, por lo que se deshabilitará y se suspenderá todas las publicaciones relacionadas</p> : null}
+        ) : null}
       </Modal>
       <Modal
         title="Cambio de filial"
@@ -200,8 +217,7 @@ export function ChangeLocal() {
         onCancel={handleCancel}
         cancelText="Cancelar"
         okText="Confirmar"
-      >
-      </Modal>
+      ></Modal>
     </Spin>
   )
 }

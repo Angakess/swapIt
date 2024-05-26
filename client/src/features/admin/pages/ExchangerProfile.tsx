@@ -42,22 +42,26 @@ export function ExchangerProfile() {
       fetchData()
     }
     const sendUnlockAccount = () => {
-      console.log("Le desbloqueaste el inicio de sesión")
+      console.log('Le desbloqueaste el inicio de sesión')
       alert.notImplementedYet()
       fetchData()
     }
 
     const MakeButtons = () => {
-      if(data?.state.name === "suspendido"){
+      if (data?.state.name === 'suspendido') {
         return (
           <>
-            <Button type="primary" onClick={sendUnlockAccount} disabled={isLoading}>
+            <Button
+              type="primary"
+              onClick={sendUnlockAccount}
+              disabled={isLoading}
+            >
               Desbloquear inicio de sesión
             </Button>
           </>
         )
       }
-      if(data?.state.name === "bloqueado"){
+      if (data?.state.name === 'bloqueado') {
         return (
           <>
             <Button type="primary" onClick={sendUnblock} disabled={isLoading}>
@@ -66,7 +70,7 @@ export function ExchangerProfile() {
           </>
         )
       }
-      if(data?.state.name === "activo"){
+      if (data?.state.name === 'activo') {
         return (
           <>
             <Button onClick={sendAddHelper} disabled={isLoading}>
@@ -83,10 +87,7 @@ export function ExchangerProfile() {
           </>
         )
       }
-      return (
-        <>
-        </>
-      )
+      return <></>
     }
 
     return (

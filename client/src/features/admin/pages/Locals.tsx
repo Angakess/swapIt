@@ -59,9 +59,9 @@ export function Locals() {
       children: `${subSelected?.max_helpers}`,
     },
     {
-      key: "3",
-      label: "Cantidad actual de ayudantes",
-      children: `${subSelected?.cant_current_helpers}`
+      key: '3',
+      label: 'Cantidad actual de ayudantes',
+      children: `${subSelected?.cant_current_helpers}`,
     },
     {
       key: '4',
@@ -75,7 +75,9 @@ export function Locals() {
     const result = await res.json()
     setSubsData(result)
   }
-  useEffect(() => {fetchData()}, [])
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const handleMarkerClick = (marcador: SubsidiaryType) => {
     setSubSelected(marcador)
@@ -104,10 +106,13 @@ export function Locals() {
     iconAnchor: [17, 46],
   })
 
-  const handleSearch: SearchProps['onSearch'] = async(value, _e) => {
-    const res = await fetch('http://localhost:8000/subsidiary/subsidiaries/?' + new URLSearchParams({
-      search: value
-    }))
+  const handleSearch: SearchProps['onSearch'] = async (value, _e) => {
+    const res = await fetch(
+      'http://localhost:8000/subsidiary/subsidiaries/?' +
+        new URLSearchParams({
+          search: value,
+        })
+    )
     const result = await res.json()
     setSubsData(result)
     setSubSelected(undefined)
@@ -121,10 +126,19 @@ export function Locals() {
     return (
       <Flex align="center" gap="small">
         <h3 style={{ marginRight: 'auto', marginBottom: '0' }}>{title}</h3>
-        <Search placeholder="Ingrese el nombre de la filial que desea buscar" onSearch={handleSearch} style={{width: "60%"}}/>
-        <Button onClick={() =>{fetchData(); setSubSelected(undefined)}} icon={<ReloadOutlined />}>
-        </Button>
-        <Button onClick={handleFunction} type='primary'>
+        <Search
+          placeholder="Ingrese el nombre de la filial que desea buscar"
+          onSearch={handleSearch}
+          style={{ width: '60%' }}
+        />
+        <Button
+          onClick={() => {
+            fetchData()
+            setSubSelected(undefined)
+          }}
+          icon={<ReloadOutlined />}
+        ></Button>
+        <Button onClick={handleFunction} type="primary">
           {buttonName}
         </Button>
       </Flex>
@@ -145,31 +159,34 @@ export function Locals() {
             }
             style={{ width: '100%', height: '500px' }}
           >
-            {subsData && subsData?.length > 0 ?
-            <MapContainer
-            center={[-34.9135, -57.9463]}
-            zoom={12}
-            zoomControl={false}
-            style={{ borderRadius: '5px', height: '400px' }}
-          >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            {subsData && subsData.map((marcador) => (
-              <Marker
-                key={marcador.id}
-                position={[
-                  parseFloat(marcador.x_coordinate),
-                  parseFloat(marcador.y_coordinate),
-                ]}
-                eventHandlers={{
-                  click: () => handleMarkerClick(marcador),
-                }}
-                icon={marcador.active ? redMarker : grayMarker}
+            {subsData && subsData?.length > 0 ? (
+              <MapContainer
+                center={[-34.9135, -57.9463]}
+                zoom={12}
+                zoomControl={false}
+                style={{ borderRadius: '5px', height: '400px' }}
               >
-                <Popup>{marcador.name}</Popup>
-              </Marker>
-            ))}
-          </MapContainer> : <Empty description={<p>No hay filiales disponibles</p>}/>}
-            
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                {subsData &&
+                  subsData.map((marcador) => (
+                    <Marker
+                      key={marcador.id}
+                      position={[
+                        parseFloat(marcador.x_coordinate),
+                        parseFloat(marcador.y_coordinate),
+                      ]}
+                      eventHandlers={{
+                        click: () => handleMarkerClick(marcador),
+                      }}
+                      icon={marcador.active ? redMarker : grayMarker}
+                    >
+                      <Popup>{marcador.name}</Popup>
+                    </Marker>
+                  ))}
+              </MapContainer>
+            ) : (
+              <Empty description={<p>No hay filiales disponibles</p>} />
+            )}
           </Card>
         </Col>
       </Row>
@@ -177,17 +194,21 @@ export function Locals() {
         <Col span={24}>
           {subSelected ? (
             <Card
-              title={<>
-                <Flex align="center" gap="small">
-                  <h3 style={{ marginRight: 'auto', marginBottom: '0' }}>Información de la filial</h3>
-                  <Button onClick={handleEditingModal}>Editar</Button>
-                  <Tooltip title="Listar stock">
-                    <Button icon={<GoldOutlined />} onClick={handleListStock}></Button>
-                  </Tooltip>
-
-            </Flex>
-              </>
-                
+              title={
+                <>
+                  <Flex align="center" gap="small">
+                    <h3 style={{ marginRight: 'auto', marginBottom: '0' }}>
+                      Información de la filial
+                    </h3>
+                    <Button onClick={handleEditingModal}>Editar</Button>
+                    <Tooltip title="Listar stock">
+                      <Button
+                        icon={<GoldOutlined />}
+                        onClick={handleListStock}
+                      ></Button>
+                    </Tooltip>
+                  </Flex>
+                </>
               }
               style={{ marginBottom: '30px', marginTop: '10px' }}
             >
@@ -202,13 +223,14 @@ export function Locals() {
           ) : null}
         </Col>
       </Row>
-      {(subsData) ? 
-        (<ModalAddingSub
+      {subsData ? (
+        <ModalAddingSub
           subsData={subsData}
           isModalOpen={isAddingModalOpen}
           setIsModalOpen={setIsAddingModalOpen}
           fetchData={fetchData}
-        ></ModalAddingSub>) : null}
+        ></ModalAddingSub>
+      ) : null}
       {subSelected && subsData ? (
         <ModalEditingSub
           subData={subSelected}
@@ -217,7 +239,8 @@ export function Locals() {
           subsArray={subsData}
           fetchData={fetchData}
           setSubSelected={setSubSelected}
-        ></ModalEditingSub>) : null}
+        ></ModalEditingSub>
+      ) : null}
     </>
   )
 }

@@ -53,8 +53,8 @@ export function Categories() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [catSelected, setCatSelected] = useState<DataType>({
     id: -1,
-    name: "",
-    active: false
+    name: '',
+    active: false,
   })
   const [newName, setNewName] = useState('')
   const [inputStatus, setInputStatus] = useState<'' | 'error'>('')
@@ -74,12 +74,12 @@ export function Categories() {
       filters,
       ...sorter,
     })
-  
+
     // Verificamos si el tamaño de la página ha cambiado para reiniciar los datos
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
       setData([])
     }
-  
+
     // Filtramos los datos según los filtros aplicados
     const filteredData = data.filter((item: DataType) =>
       Object.keys(filters).every((key: string) => {
@@ -87,7 +87,7 @@ export function Categories() {
         return filters[key]?.includes(item[key])
       })
     )
-  
+
     // Actualizamos el total de elementos en la paginación
     setTableParams({
       ...tableParams,
@@ -129,7 +129,7 @@ export function Categories() {
     searchCatName,
   ])
 
-   /* const handleTableChange: TableProps['onChange'] = (
+  /* const handleTableChange: TableProps['onChange'] = (
     pagination,
     filters,
     sorter
@@ -143,9 +143,6 @@ export function Categories() {
       setData([])
     }
   } */
-
-  
-  
 
   const handleSearch = (
     selectedKeys: string[],
@@ -283,7 +280,7 @@ export function Categories() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: `Nombre: ${searchCatName ? searchCatName : ""}`,
+      title: `Nombre: ${searchCatName ? searchCatName : ''}`,
       dataIndex: 'name',
       render: (name) => `${name}`,
       width: '60%',
@@ -318,13 +315,12 @@ export function Categories() {
             ></Button>
           )}
           <Tooltip title="Editar categoría">
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => showModalEdit(record)}
-          ></Button>
+            <Button
+              type="primary"
+              icon={<EditOutlined />}
+              onClick={() => showModalEdit(record)}
+            ></Button>
           </Tooltip>
-          
         </Space>
       ),
       width: '100px',
@@ -437,9 +433,7 @@ export function Categories() {
           setInputStatus('')
         }}
       >
-        <p>
-          Ingrese un nuevo nombre para la categoría "{catSelected.name}"
-        </p>
+        <p>Ingrese un nuevo nombre para la categoría "{catSelected.name}"</p>
         <Input
           placeholder="Ingrese un nombre"
           onChange={handleChange}

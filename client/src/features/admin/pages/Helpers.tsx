@@ -64,23 +64,23 @@ export function Helpers() {
     subsidiary_name: '',
   })
   const columnNames = {
-    id: "",
-    full_name: "nombre",
-    dni: "DNI",
-    subsidiary_name: "filial",
-    subsidiary_cant_helpers: ""
+    id: '',
+    full_name: 'nombre',
+    dni: 'DNI',
+    subsidiary_name: 'filial',
+    subsidiary_cant_helpers: '',
   }
 
-  const fetchData = async() => {
+  const fetchData = async () => {
     setLoading(true)
-    const res = await fetch("http://localhost:8000/users/list-helpers/")
+    const res = await fetch('http://localhost:8000/users/list-helpers/')
     const result = await res.json()
     const transformedData = result.map((item: fetchType) => ({
-      id:item.id,
+      id: item.id,
       full_name: item.full_name,
       dni: item.dni,
       subsidiary_name: item.subsidiary.name,
-      subsidiary_cant_helpers: item.subsidiary.cant_current_helpers
+      subsidiary_cant_helpers: item.subsidiary.cant_current_helpers,
     }))
     setData(transformedData)
     setLoading(false)
@@ -88,10 +88,12 @@ export function Helpers() {
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: result.filter((item:any) =>
-          item.full_name.includes(searchText.full_name) &&
-          item.dni.includes(searchText.dni) &&
-          item.subsidiary.name.includes(searchText.subsidiary_name))
+        total: result.filter(
+          (item: any) =>
+            item.full_name.includes(searchText.full_name) &&
+            item.dni.includes(searchText.dni) &&
+            item.subsidiary.name.includes(searchText.subsidiary_name)
+        ),
       },
     })
   }
@@ -248,22 +250,18 @@ export function Helpers() {
       render: (_: any, record: DataType) => (
         <Space>
           <Link to={`/admin/helpers/change-local/${record.id}`}>
-          <Tooltip title="Cambiar filial">
-          <Button
-              type="primary"
-              icon={<ShopFilled />}
-            ></Button>
+            <Tooltip title="Cambiar filial">
+              <Button type="primary" icon={<ShopFilled />}></Button>
             </Tooltip>
           </Link>
           <Tooltip title="Desincorporar ayudante">
-          <Button
-            type="primary"
-            danger
-            icon={<UserDeleteOutlined />}
-            onClick={() => showModal(record)}
-          ></Button>
+            <Button
+              type="primary"
+              danger
+              icon={<UserDeleteOutlined />}
+              onClick={() => showModal(record)}
+            ></Button>
           </Tooltip>
-          
         </Space>
       ),
     },
@@ -276,25 +274,27 @@ export function Helpers() {
     setIsModalOpen(true)
     setHelperSelected(record)
   }
-  const handleOk = async() => {
+  const handleOk = async () => {
     setLoading(true)
-    const res = await fetch(`http://localhost:8000/users/disincorporate-helper/${helperSelected?.id}`,{
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "DELETE"
-    })
+    const res = await fetch(
+      `http://localhost:8000/users/disincorporate-helper/${helperSelected?.id}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'DELETE',
+      }
+    )
     const result = await res.json()
-    if(res.ok){
+    if (res.ok) {
       Modal.success({
-        title: "Operación completada",
-        content: result.messages
+        title: 'Operación completada',
+        content: result.messages,
       })
-    }
-    else{
+    } else {
       Modal.error({
-        title: "Operación fallida",
-        content: result.messages
+        title: 'Operación fallida',
+        content: result.messages,
       })
     }
     setIsModalOpen(false)
@@ -323,12 +323,18 @@ export function Helpers() {
         onCancel={handleCancel}
         cancelText="Cancelar"
         okText="Desincorporar"
-        okButtonProps={{ danger: true , disabled: loading}}
-        cancelButtonProps={{disabled: loading}}
+        okButtonProps={{ danger: true, disabled: loading }}
+        cancelButtonProps={{ disabled: loading }}
       >
         <p>¿Está seguro que quiere desincorporar a este ayudante?</p>
-        {helperSelected?.subsidiary_cant_helpers === 1 ? 
-        <p style={{fontWeight: "bold"}}>IMPORTANTE: Si {helperSelected.full_name} es desincorporado/a, la filial '{helperSelected.subsidiary_name}' se quedará sin ayudantes, lo que deshabilitará la sucursal y suspenderá todas las publicaciones relacionadas</p> : null}
+        {helperSelected?.subsidiary_cant_helpers === 1 ? (
+          <p style={{ fontWeight: 'bold' }}>
+            IMPORTANTE: Si {helperSelected.full_name} es desincorporado/a, la
+            filial '{helperSelected.subsidiary_name}' se quedará sin ayudantes,
+            lo que deshabilitará la sucursal y suspenderá todas las
+            publicaciones relacionadas
+          </p>
+        ) : null}
       </Modal>
     </>
   )
