@@ -1,4 +1,4 @@
-import { Card, Col, Row, Spin, Typography, theme } from 'antd'
+import { Alert, Card, Col, Row, Spin, Typography, theme } from 'antd'
 import { useParams } from 'react-router-dom'
 import {
   ImageCarousel,
@@ -56,13 +56,20 @@ export function Post() {
     <>
       <Row gutter={[24, 24]}>
         <Col xs={24} md={12} lg={14}>
-          <div style={{ overflow: 'hidden', borderRadius: borderRadiusLG }}>
+          <div
+            style={{
+              overflow: 'hidden',
+              borderRadius: borderRadiusLG,
+              marginBottom: '1.5rem',
+            }}
+          >
             <ImageCarousel
               // carouselProps={{ fade: true }}
               imagesUrls={images}
               imageHeight="400px"
             />
           </div>
+          <PostAlert post={post!} />
         </Col>
 
         <Col xs={24} md={12} lg={10}>
@@ -112,4 +119,34 @@ export function Post() {
       </Row>
     </>
   )
+}
+
+function PostAlert({ post }: { post: PostModel }) {
+  const { boxShadowTertiary } = theme.useToken().token
+
+  if (post.state.name === 'pendiente') {
+    return (
+      <Alert
+        message="Post pendiente"
+        description="Este post está pendiente porque todavía no fue evaluado por un ayudante"
+        type="warning"
+        showIcon
+        style={{ boxShadow: boxShadowTertiary }}
+      />
+    )
+  }
+
+  if (post.state.name === 'suspendido') {
+    return (
+      <Alert
+        message="Post supsendido"
+        description="Este post fue suspendido porque la filial a la pertenece o su categoría fueron suspendidas. Por favor, modifique la publicación para que pueda ser mostrada nuevamente"
+        type="error"
+        showIcon
+        style={{ boxShadow: boxShadowTertiary }}
+      />
+    )
+  }
+
+  return null
 }
