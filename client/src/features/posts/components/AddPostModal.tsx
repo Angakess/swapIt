@@ -12,6 +12,7 @@ import {
   Upload,
   UploadFile,
 } from 'antd'
+import { RcFile } from 'antd/es/upload'
 import { useEffect, useState } from 'react'
 
 import { useAuth } from '@Common/hooks'
@@ -66,7 +67,12 @@ export function AddPostModal({
   const [categoriesOptions, setCategoriesOptions] = useState<SelectOption[]>([])
   const [subsidiaryOptions, setSubsidiaryOptions] = useState<SelectOption[]>([])
 
-  const [files, setFiles] = useState<UploadFile[]>([])
+  /*
+    - files: tiene archivos de tipo File, para subir al servidor
+    - fileList: tiene archivos de tipo FileList, para manejar el componente Upload
+   */
+  const [files, setFiles] = useState<RcFile[]>([])
+  const [fileList, setFileList] = useState<UploadFile[]>([])
   const [form] = Form.useForm<AddPostForm>()
 
   const handleFinish = async (values: AddPostForm) => {
@@ -83,7 +89,7 @@ export function AddPostModal({
     formData.append('state_product', values.state_product)
     formData.append('stock_product', values.stock_product.toString())
     files.forEach((file, index) => {
-      formData.append(`image_${index + 1}`, file)
+      formData.append(`image_${index + 1}`, file as unknown as File)
     })
 
     const resp = await fetch('http://localhost:8000/post/', {
@@ -250,17 +256,16 @@ export function AddPostModal({
           rules={[{ required: true, message: 'Cargue al menos una imagen' }]}
         >
           <Upload
-            action=""
-            headers={{ authorization: 'authorization-text' }}
+            listType="picture"
+            fileList={fileList}
             beforeUpload={(file) => {
-              setFiles([...files, file])
+              setFiles((prevFiles) => [...prevFiles, file])
               return false
             }}
-            onChange={(info) => {
-              console.log(info)
-            }}
+            onChange={({ fileList }) => setFileList(fileList)}
             onRemove={(deletedFile) => {
-              setFiles(files.filter((f) => f.uid === deletedFile.uid))
+              setFiles(files.filter((f) => f.uid !== deletedFile.uid))
+              setFileList(fileList.filter((f) => f.uid !== deletedFile.uid))
             }}
             accept="image/png, image/jpeg"
           >
