@@ -25,15 +25,14 @@ export function ButtonCancelarTurno({
 
   return (
     <>
-    <Tooltip title="Cancelar turno">
+      <Tooltip title="Cancelar turno">
         <Button
-            type="primary"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleClick(record)}
+          type="primary"
+          danger
+          icon={<DeleteOutlined />}
+          onClick={() => handleClick(record)}
         ></Button>
-    </Tooltip>
-      
+      </Tooltip>
     </>
   )
 }

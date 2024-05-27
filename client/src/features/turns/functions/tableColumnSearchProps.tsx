@@ -1,6 +1,9 @@
 import { Button, Input, InputRef, Space, TableColumnType } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
-import { FilterConfirmProps, FilterDropdownProps } from 'antd/es/table/interface'
+import {
+  FilterConfirmProps,
+  FilterDropdownProps,
+} from 'antd/es/table/interface'
 
 type DataIndex = keyof DataType
 interface DataType {
@@ -13,8 +16,16 @@ interface DataType {
 
 export function tableColumnSearchProps(
   dataIndex: DataIndex,
-  handleSearch: (selectedKeys: string[], confirm: (param?: FilterConfirmProps | undefined) => void, dataIndex: keyof DataType) => void,
-  handleReset: (clearFilters: () => void, confirm: (param?: FilterConfirmProps | undefined) => void, dataIndex: keyof DataType) => void,
+  handleSearch: (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps | undefined) => void,
+    dataIndex: keyof DataType
+  ) => void,
+  handleReset: (
+    clearFilters: () => void,
+    confirm: (param?: FilterConfirmProps | undefined) => void,
+    dataIndex: keyof DataType
+  ) => void,
   searchInput: React.RefObject<InputRef>
 ): TableColumnType<DataType> {
   function handleFilterDropdown({

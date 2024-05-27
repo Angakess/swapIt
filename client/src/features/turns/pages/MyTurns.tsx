@@ -1,9 +1,4 @@
-import {
-  GetProp,
-  InputRef,
-  Space,
-  Table,
-} from 'antd'
+import { GetProp, InputRef, Space, Table } from 'antd'
 import { ColumnsType, TableProps } from 'antd/es/table'
 import { useEffect, useRef, useState } from 'react'
 import {
@@ -15,7 +10,7 @@ import MOCK_TURNS from '../MOCK_TURNS.json'
 import { ButtonCancelarTurno } from '@Turns/components/ButtonCancelarTurno'
 import { ButtonVerTurno } from '@Turns/components/ButtonVerTurno'
 import { ModalCancelarTurno } from '@Turns/components/ModalCancelarTurno'
-import { tableColumnSearchProps } from "@Turns/functions/tableColumnSearchProps"
+import { tableColumnSearchProps } from '@Turns/functions/tableColumnSearchProps'
 
 type DataIndex = keyof DataType
 interface DataType {
@@ -151,7 +146,12 @@ export function MyTurns() {
       title: `Filial: ${searchText.subsidiary}`,
       dataIndex: 'subsidiary',
       render: (sub) => `${sub}`,
-      ...tableColumnSearchProps('subsidiary', handleSearch, handleReset, searchInput),
+      ...tableColumnSearchProps(
+        'subsidiary',
+        handleSearch,
+        handleReset,
+        searchInput
+      ),
       sorter: (a, b) => a.subsidiary.localeCompare(b.subsidiary),
     },
     {
