@@ -1,17 +1,19 @@
 import { Alert, Card, Col, Row, Spin, Typography, theme } from 'antd'
+import { useEffect, useState } from 'react'
+import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import { useParams } from 'react-router-dom'
+
+import { Page404 } from '@Common/pages'
+import { getPostById } from '@Common/api/posts'
+import { PostModel } from '@Common/api/types'
+import { useAuth } from '@Common/hooks'
 import {
   ImageCarousel,
   PostDetails,
   PostMainButton,
   PostUser,
 } from '@Posts/components'
-import { MapContainer, Marker, TileLayer } from 'react-leaflet'
-import { Page404 } from '@Common/pages'
-import { useEffect, useState } from 'react'
-import { getPostById } from '@Common/api/posts'
-import { PostModel } from '@Common/api/types'
-import { useAuth } from '@Common/hooks'
+import { getPostImagesArray } from '@Posts/helpers'
 
 export function Post() {
   const { user } = useAuth()
@@ -40,12 +42,7 @@ export function Post() {
 
   useEffect(() => {
     if (isLoading || post === null) return
-
-    const arr = Object.entries(post)
-      .filter(([key, value]) => key.startsWith('image_') && value != null)
-      .map(([, value]) => value) as string[]
-
-    setImages(arr)
+    setImages(getPostImagesArray(post))
   }, [post, isLoading])
 
   // Si está cargando, mostrar spin de carga:

@@ -5,8 +5,10 @@
 // } from '@ant-design/icons'
 import { Card, Flex, Tag, Typography } from 'antd'
 import { Link } from 'react-router-dom'
-import { ImageCarousel } from './ImageCarousel'
+
 import { PostModel } from '@Common/api'
+import { getPostImagesArray } from '@Posts/helpers'
+import { ImageCarousel } from './ImageCarousel'
 
 const IMG_HEIGHT = '300px'
 
@@ -17,17 +19,18 @@ export function PostListItem({
   post: PostModel
   showStatus?: boolean
 }) {
-  const images = Object.entries(post)
-    .filter(([key, value]) => key.startsWith('image_') && value != null)
-    .map(([, value]) => value) as string[]
-
   return (
     <Link to={`/posts/${post.id}`}>
       <Card
         style={{ overflow: 'hidden', height: '100%', position: 'relative' }}
         styles={{ body: { height: `calc(100% - ${IMG_HEIGHT})` } }}
         hoverable
-        cover={<ImageCarousel imagesUrls={images} imageHeight={IMG_HEIGHT} />}
+        cover={
+          <ImageCarousel
+            imagesUrls={getPostImagesArray(post)}
+            imageHeight={IMG_HEIGHT}
+          />
+        }
         // actions={[
         //   <SettingOutlined key="setting" />,
         //   <EditOutlined key="edit" />,
