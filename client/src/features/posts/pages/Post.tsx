@@ -10,8 +10,11 @@ import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import { Page404 } from '@Common/pages'
 import { useEffect, useState } from 'react'
 import { PostModel, getPostById } from '@Posts/helpers/getPostsListsExchanger'
+import { useAuth } from '@Common/hooks'
 
 export function Post() {
+  const { user } = useAuth()
+
   const { borderRadiusLG } = theme.useToken().token
   const { id } = useParams()
 
@@ -44,14 +47,26 @@ export function Post() {
     setImages(arr)
   }, [post, isLoading])
 
+  // Si está cargando, mostrar spin de carga:
   if (isLoading) {
     return <Spin size="large" style={{ width: '100%' }} />
   }
 
-  if (!isLoading && post == null) {
+  // Si:
+  // - el post no existe
+  // - fue eliminado
+  // - no está activo y lo está viendo un intercambiador distinto al propietario
+  if (
+    post == null ||
+    post.state.name === 'eliminado' ||
+    (post!.user.id !== user!.id &&
+      user!.role === 'EXCHANGER' &&
+      post!.state.name !== 'activo')
+  ) {
     return <Page404 />
   }
 
+  // Cualquier otro caso, mostrar el componente:
   return (
     <>
       <Row gutter={[24, 24]}>
@@ -63,11 +78,7 @@ export function Post() {
               marginBottom: '1.5rem',
             }}
           >
-            <ImageCarousel
-              // carouselProps={{ fade: true }}
-              imagesUrls={images}
-              imageHeight="400px"
-            />
+            <ImageCarousel imagesUrls={images} imageHeight="400px" />
           </div>
           <PostAlert post={post!} />
         </Col>
@@ -122,7 +133,10 @@ export function Post() {
 }
 
 function PostAlert({ post }: { post: PostModel }) {
+  const { user } = useAuth()
   const { boxShadowTertiary } = theme.useToken().token
+
+  if (post.user.id !== user!.id) return null
 
   if (post.state.name === 'pendiente') {
     return (
