@@ -6,7 +6,7 @@
 import { Card, Flex, Tag, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { ImageCarousel } from './ImageCarousel'
-import { PostModel } from '@Posts/helpers/getPostsListsExchanger'
+import { PostModel } from '@Common/api'
 
 const IMG_HEIGHT = '300px'
 

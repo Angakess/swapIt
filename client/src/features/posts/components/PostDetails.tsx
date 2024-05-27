@@ -1,6 +1,6 @@
-import { useAuth } from '@Common/hooks'
-import { PostModel } from '@Posts/helpers/getPostsListsExchanger'
 import { Typography } from 'antd'
+import { useAuth } from '@Common/hooks'
+import { PostModel } from '@Common/api'
 
 export function PostDetails({ post }: { post: PostModel }) {
   const { user } = useAuth()

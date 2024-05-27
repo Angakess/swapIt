@@ -1,3 +1,4 @@
+export * from './AddPostModal'
 export * from './ImageCarousel'
 export * from './PostDetails'
 export * from './PostListItem'

@@ -1,8 +1,3 @@
-import { useAuth } from '@Common/hooks'
-import {
-  getCategoryList,
-  getSubsidiaries,
-} from '@Posts/helpers/getPostsListsExchanger'
 import { UploadOutlined } from '@ant-design/icons'
 import {
   App,
@@ -18,6 +13,9 @@ import {
   UploadFile,
 } from 'antd'
 import { useEffect, useState } from 'react'
+
+import { useAuth } from '@Common/hooks'
+import { getSubsidiaries, getCategoryList } from '@Common/api'
 
 type AddPostModalProps = {
   isOpen: boolean
@@ -56,7 +54,7 @@ async function mapSubsidiariesToSelectOption(): Promise<SelectOption[]> {
     .map(({ name, id }) => ({ label: name, value: id.toString() }))
 }
 
-export default function AddPostModal({
+export function AddPostModal({
   isOpen,
   setIsOpen,
   setHaveNewPosts,

@@ -1,6 +1,6 @@
 import { Col, Empty, Row, Spin } from 'antd'
+import { PostModel } from '@Common/api'
 import { PostListItem } from './PostListItem'
-import { PostModel } from '@Posts/helpers/getPostsListsExchanger'
 
 export function PostsList({
   posts,

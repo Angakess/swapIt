@@ -9,7 +9,8 @@ import {
 import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import { Page404 } from '@Common/pages'
 import { useEffect, useState } from 'react'
-import { PostModel, getPostById } from '@Posts/helpers/getPostsListsExchanger'
+import { getPostById } from '@Common/api/posts'
+import { PostModel } from '@Common/api/types'
 import { useAuth } from '@Common/hooks'
 
 export function Post() {

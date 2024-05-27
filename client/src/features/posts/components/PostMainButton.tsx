@@ -5,11 +5,11 @@ import {
   UserDeleteOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom'
 
 import { useAuth, useCustomAlerts } from '@Common/hooks'
-import { PostModel } from '@Posts/helpers/getPostsListsExchanger'
+import { PostModel } from '@Common/api'
 import { SERVER_URL } from 'constants'
-import { useNavigate } from 'react-router-dom'
 
 export function PostMainButton({ post }: { post: PostModel }) {
   const { user } = useAuth()
