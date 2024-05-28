@@ -41,8 +41,8 @@ export function CalendarTurn() {
       <ConfigProvider locale={esES}>
         <Calendar
           defaultValue={dayjs('08/06/2024', 'DD/MM/YYYY')} //Cambiar
-          fullscreen={true}
-          style={{ marginBottom: '5%' }}
+          fullscreen={false}
+          style={{ marginBottom: '0'}}
           mode="month"
           headerRender={({ value, onChange }) => {
             const start = 0

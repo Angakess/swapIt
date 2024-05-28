@@ -1,7 +1,8 @@
 import { ButtonCancelarTurno } from '@Turns/components/ButtonCancelarTurno'
 import { CalendarTurn } from '@Turns/components/CalendarTurn'
+import { MapWithTurn } from '@Turns/components/MapWithTurn'
 import { ModalCancelarTurno } from '@Turns/components/ModalCancelarTurno'
-import { Button, Card, Flex, Space } from 'antd'
+import { Button, Card, Col, Flex, Row, Space } from 'antd'
 import { useState } from 'react'
 
 export function Turn() {
@@ -65,18 +66,40 @@ export function Turn() {
           </>
         }
       >
-        <Flex align="center" style={{ marginBottom: '10px' }}>
-          <h3
-            style={{
-              fontWeight: 'bold',
-              marginBottom: '0',
-              marginRight: 'auto',
-            }}
-          >
-            Fecha del turno: {turnSelected.date}
-          </h3>
-        </Flex>
-        <CalendarTurn></CalendarTurn>
+        <Row gutter={32}>
+          <Col span={12}>
+            <h3
+              style={{
+                fontWeight: 'bold',
+                marginBottom: '10px',
+                marginRight: 'auto',
+              }}
+            >
+              Fecha del turno: {turnSelected.date}
+            </h3>
+
+            <CalendarTurn></CalendarTurn>
+          </Col>
+          <Col span={12}>
+            <h3
+              style={{
+                fontWeight: 'bold',
+                marginBottom: '10px',
+                marginRight: 'auto',
+              }}
+            >
+              Filial
+            </h3>
+            <MapWithTurn
+              sub={{
+                id: 1,
+                name: 'asdf',
+                x_coordinate: '-34.8',
+                y_coordinate: '-58',
+              }}
+            ></MapWithTurn>
+          </Col>
+        </Row>
       </Card>
 
       <ModalCancelarTurno
