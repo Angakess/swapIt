@@ -13,10 +13,12 @@ export function ButtonCancelarTurno({
   record,
   setModalOpen,
   setTurnSelected,
+  buttonText,
 }: {
   record: DataType
   setModalOpen: (x: boolean) => void
   setTurnSelected: (r: DataType) => void
+  buttonText?: string
 }) {
   function handleClick(record: DataType) {
     setModalOpen(true)
@@ -31,7 +33,7 @@ export function ButtonCancelarTurno({
           danger
           icon={<DeleteOutlined />}
           onClick={() => handleClick(record)}
-        ></Button>
+        >{buttonText ? buttonText : null}</Button>
       </Tooltip>
     </>
   )
