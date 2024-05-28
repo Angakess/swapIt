@@ -25,7 +25,7 @@ const dateCellRender = (value: Dayjs) => {
   return (
     <Flex align="center" justify="center">
       {value.isSame('06/08/2024', 'date') ? ( //Cambiar
-        <CheckCircleOutlined style={{ fontSize: '32px', color: '#14518B' }} />
+        <CheckCircleOutlined style={{ fontSize: '14px', color: '#14518B', paddingTop: "5px"}} />
       ) : null}
     </Flex>
   )
