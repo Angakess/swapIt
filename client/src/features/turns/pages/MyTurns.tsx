@@ -133,7 +133,7 @@ export function MyTurns() {
       ...tableColumnSearchProps('id', handleSearch, handleReset, searchInput),
     },
     {
-      title: `Fecha: ${searchText.date ? searchText.date : ""}`,
+      title: `Fecha: ${searchText.date ? searchText.date : ''}`,
       dataIndex: 'date',
       render: (date) => `${date}`,
       ...tableColumnSearchProps('date', handleSearch, handleReset, searchInput),

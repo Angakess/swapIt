@@ -1,11 +1,18 @@
-import { Button, DatePicker, Input, InputRef, Space, TableColumnType } from 'antd'
+import {
+  Button,
+  DatePicker,
+  Input,
+  InputRef,
+  Space,
+  TableColumnType,
+} from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import {
   FilterConfirmProps,
   FilterDropdownProps,
 } from 'antd/es/table/interface'
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 
 type DataIndex = keyof DataType
 interface DataType {
@@ -16,7 +23,7 @@ interface DataType {
   [key: string]: string | number | boolean
 }
 
-dayjs.extend(customParseFormat);
+dayjs.extend(customParseFormat)
 
 export function tableColumnSearchProps(
   dataIndex: DataIndex,
@@ -39,35 +46,37 @@ export function tableColumnSearchProps(
     clearFilters,
     close,
   }: FilterDropdownProps) {
+    const dateValue =
+      selectedKeys[0] && typeof selectedKeys[0] === 'string'
+        ? dayjs(selectedKeys[0], 'DD/MM/YYYY')
+        : null
 
-    const dateValue = selectedKeys[0] && typeof selectedKeys[0] === 'string' ? dayjs(selectedKeys[0], "DD/MM/YYYY") : null;
-    
     return (
       <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
-        {dataIndex === "date" ? 
-        <DatePicker
-            format={"DD-MM-YYYY"}
-            placeholder='Seleccione una fecha'
+        {dataIndex === 'date' ? (
+          <DatePicker
+            format={'DD-MM-YYYY'}
+            placeholder="Seleccione una fecha"
             value={dateValue}
             onChange={(date) => {
-                setSelectedKeys(date ? [date.format("DD/MM/YYYY")] : []);
+              setSelectedKeys(date ? [date.format('DD/MM/YYYY')] : [])
             }}
             allowClear={true}
             style={{ marginBottom: 8, display: 'block' }}
-        /> : 
-        
-        <Input
-          ref={searchInput}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() =>
-            handleSearch(selectedKeys as string[], confirm, dataIndex)
-          }
-          style={{ marginBottom: 8, display: 'block' }}
-        />}
-        
+          />
+        ) : (
+          <Input
+            ref={searchInput}
+            value={selectedKeys[0]}
+            onChange={(e) =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
+            style={{ marginBottom: 8, display: 'block' }}
+          />
+        )}
 
         <Space>
           <Button
