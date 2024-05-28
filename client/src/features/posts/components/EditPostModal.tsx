@@ -15,12 +15,18 @@ import {
 import { useEffect, useState } from 'react'
 
 import { useAuth } from '@Common/hooks'
-import { getSubsidiaries, getCategoryList } from '@Common/api'
+import { getSubsidiaries, getCategoryList, PostModel } from '@Common/api'
+import { getPostImagesArray } from '@Posts/helpers'
+import { RcFile } from 'antd/es/upload'
+import { SERVER_URL } from 'constants'
+import { imageValidator } from '@Common/helpers/validators'
+import { RuleObject } from 'antd/es/form'
 
 type EditPostModalProps = {
+  post: PostModel
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setHaveBeenUpdated: React.Dispatch<React.SetStateAction<boolean>>
+  setHasBeenUpdated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type SelectOption = {
@@ -39,7 +45,7 @@ type AddPostForm = {
   value: number
 }
 
-async function mapCategoiresToSelectOptions(): Promise<SelectOption[]> {
+async function mapCategoriesToSelectOptions(): Promise<SelectOption[]> {
   const categories = await getCategoryList()
   return categories.map(({ name, id }) => ({
     label: name,
@@ -55,9 +61,10 @@ async function mapSubsidiariesToSelectOption(): Promise<SelectOption[]> {
 }
 
 export function EditPostModal({
+  post,
   isOpen,
   setIsOpen,
-  setHaveBeenUpdated,
+  setHasBeenUpdated,
 }: EditPostModalProps) {
   const { user } = useAuth()
   const { notification } = App.useApp()
@@ -66,8 +73,11 @@ export function EditPostModal({
   const [categoriesOptions, setCategoriesOptions] = useState<SelectOption[]>([])
   const [subsidiaryOptions, setSubsidiaryOptions] = useState<SelectOption[]>([])
 
-  const [files, setFiles] = useState<UploadFile[]>([])
+  const [files, setFiles] = useState<RcFile[]>([])
+  const [fileList, setFileList] = useState<UploadFile[]>([])
   const [form] = Form.useForm<AddPostForm>()
+
+  console.log({ files, fileList })
 
   const handleFinish = async (values: AddPostForm) => {
     setConfirmLoading(true)
@@ -82,23 +92,32 @@ export function EditPostModal({
     formData.append('category', values.category)
     formData.append('state_product', values.state_product)
     formData.append('stock_product', values.stock_product.toString())
+
+    // Add files to formData
     files.forEach((file, index) => {
-      formData.append(`image_${index + 1}`, file)
+      formData.append(`image_${index + 1}`, file, file.name)
     })
 
-    const resp = await fetch('http://localhost:8000/post/', {
-      method: 'POST',
+    // Fill the rest of image fields with null
+    for (let i = files.length; i < 5; i++) {
+      formData.append(`image_${i + 1}`, '')
+    }
+
+    const resp = await fetch(`${SERVER_URL}/post/update/${post.id}/`, {
+      method: 'PATCH',
       body: formData,
     })
 
     const data = await resp.json()
 
+    console.log(data)
+
     if (resp.ok && data.ok) {
-      setHaveNewPosts(true)
+      setHasBeenUpdated(true)
       form.resetFields()
       notification.success({
-        message: 'Publicación agregada correctamente',
-        description: 'Se ha agregado la publicación',
+        message: 'Publicación editada correctamente',
+        description: 'Se ha editado la publicación.',
         placement: 'topRight',
         duration: 3,
         style: { whiteSpace: 'pre-line' },
@@ -106,9 +125,9 @@ export function EditPostModal({
       setIsOpen(false)
     } else {
       notification.error({
-        message: 'Ocurrió un error al crear la publicación',
+        message: 'Ocurrió un error al editar la publicación',
         description:
-          'Lo sentimos! No pudimos crear la publicación debido a un error inesperado. Inténtalo más tarde',
+          'Lo sentimos! No pudimos editar la publicación debido a un error inesperado. Inténtalo más tarde.',
         placement: 'topRight',
         duration: 3,
       })
@@ -118,13 +137,57 @@ export function EditPostModal({
 
   // Cargar datos en los select
   useEffect(() => {
-    mapCategoiresToSelectOptions().then(setCategoriesOptions)
+    mapCategoriesToSelectOptions().then(setCategoriesOptions)
     mapSubsidiariesToSelectOption().then(setSubsidiaryOptions)
+  }, [])
+
+  // Cargar formulario con los datos actuales
+  useEffect(() => {
+    ;(async () => {
+      setFileList(
+        getPostImagesArray(post).map((imageUrl, i) => ({
+          name: `Imagen ${i + 1}`,
+          uid: i.toString(),
+          url: imageUrl,
+        }))
+      )
+
+      const imageFiles: RcFile[] = await Promise.all(
+        getPostImagesArray(post).map(async (imageUrl, i) => {
+          const resp = await fetch(imageUrl)
+          const blob = await resp.blob()
+
+          const file: RcFile = new File(
+            [blob],
+            `Imagen_${i + 1}.${blob.type.split('/')[1]}`,
+            {
+              type: blob.type,
+            }
+          )
+          file.uid = i.toString()
+          return file
+        })
+      )
+
+      setFiles(imageFiles)
+    })()
+
+    form.setFieldsValue({
+      name: post.name,
+      description: post.description,
+      value: post.value,
+      stock_product: post.stock_product,
+      state_product: post.state_product,
+      category: post.category.active ? post.category.id.toString() : '',
+      subsidiary: post.subsidiary.active ? post.subsidiary.id.toString() : '',
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <Modal
-      title="Agregar publicación"
+      title="Editar publicación"
       open={isOpen}
       onOk={form.submit}
       onCancel={() => setIsOpen(false)}
@@ -136,6 +199,7 @@ export function EditPostModal({
         form={form}
         onFinish={handleFinish}
         disabled={confirmLoading}
+        onFinishFailed={() => console.log('[ onFinishFailed ] files', files)}
       >
         <Form.Item
           label="Nombre"
@@ -244,27 +308,33 @@ export function EditPostModal({
         </Row>
 
         <Form.Item
-          label="Imagenes"
+          label="Imágenes"
           name="images"
           required={false}
-          rules={[{ required: true, message: 'Cargue al menos una imagen' }]}
+          rules={[
+            {
+              validator: () => {
+                if (fileList.length > 0) return Promise.resolve()
+                return Promise.reject(new Error('Cargue al menos una imagen'))
+              },
+            },
+          ]}
         >
           <Upload
-            action=""
-            headers={{ authorization: 'authorization-text' }}
+            listType="picture"
+            fileList={fileList}
             beforeUpload={(file) => {
-              setFiles([...files, file])
+              setFiles((prevFiles) => [...prevFiles, file])
               return false
             }}
-            onChange={(info) => {
-              console.log(info)
-            }}
+            onChange={({ fileList }) => setFileList(fileList)}
             onRemove={(deletedFile) => {
-              setFiles(files.filter((f) => f.uid === deletedFile.uid))
+              setFiles(files.filter((f) => f.uid !== deletedFile.uid))
+              setFileList(fileList.filter((f) => f.uid !== deletedFile.uid))
             }}
             accept="image/png, image/jpeg"
           >
-            <Button icon={<UploadOutlined />} disabled={files.length === 5}>
+            <Button icon={<UploadOutlined />} disabled={fileList.length === 5}>
               Cargar imagen
             </Button>
           </Upload>

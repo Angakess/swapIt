@@ -146,13 +146,21 @@ class PostUpdate(generics.UpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-    def get_queryset(self):
-        return Category.objects.all()
-
     def partial_update(self, request, *args, **kwargs):
-        print("[partial_update][KWARGS] ", kwargs)
-        print("[partial_update][REQUEST] ", request.data)
-        return super().partial_update(request, *args, **kwargs)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                'ok': True,
+                'messages': ['Post actualizado exitosamente'],
+                'data': {'post': serializer.data}
+            })
+        return Response({
+            'ok': False,
+            'messages': list(itertools.chain(*serializer.errors.values())),
+            'data': {}
+        }, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
 class PostRetrieve(generics.RetrieveAPIView):

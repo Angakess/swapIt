@@ -89,7 +89,7 @@ export function AddPostModal({
     formData.append('state_product', values.state_product)
     formData.append('stock_product', values.stock_product.toString())
     files.forEach((file, index) => {
-      formData.append(`image_${index + 1}`, file as unknown as File)
+      formData.append(`image_${index + 1}`, file)
     })
 
     const resp = await fetch('http://localhost:8000/post/', {

@@ -4,11 +4,16 @@ import { useNavigate } from 'react-router-dom'
 import { useCustomAlerts } from '@Common/hooks'
 import { PostModel } from '@Common/api'
 import { SERVER_URL } from 'constants'
+import { EditPostModal } from '../EditPostModal'
+import { useState } from 'react'
 
 export function OwnerButtons({ post }: { post: PostModel }) {
   const { notification } = App.useApp()
   const alerts = useCustomAlerts()
   const navigate = useNavigate()
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [postHasBeenUpdated, setPostHasBeenUpdated] = useState(false)
 
   async function deletePost() {
     const resp = await fetch(`${SERVER_URL}/post/remove/${post.id}`, {
@@ -36,34 +41,42 @@ export function OwnerButtons({ post }: { post: PostModel }) {
   }
 
   return (
-    <Row gutter={[12, 12]} style={{ marginBottom: '1.5rem' }}>
-      <Col xs={24} sm={16}>
-        <Button
-          type="primary"
-          block
-          size="large"
-          style={{ fontWeight: '700' }}
-          onClick={alerts.notImplementedYet}
-        >
-          Editar
-        </Button>
-      </Col>
-      <Col xs={24} sm={8}>
-        <Popconfirm
-          title="Eliminar publicación"
-          description="¿Esta seguro que desea eliminar la publicación?"
-          okText="Sí, eliminar publicación"
-          cancelText="No, cancelar"
-          okType="danger"
-          placement="bottomLeft"
-          icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
-          onConfirm={deletePost}
-        >
-          <Button type="primary" danger block size="large">
-            Eliminar
+    <>
+      <Row gutter={[12, 12]} style={{ marginBottom: '1.5rem' }}>
+        <Col xs={24} sm={16}>
+          <Button
+            type="primary"
+            block
+            size="large"
+            style={{ fontWeight: '700' }}
+            onClick={() => setIsEditModalOpen(true)}
+          >
+            Editar
           </Button>
-        </Popconfirm>
-      </Col>
-    </Row>
+        </Col>
+        <Col xs={24} sm={8}>
+          <Popconfirm
+            title="Eliminar publicación"
+            description="¿Esta seguro que desea eliminar la publicación?"
+            okText="Sí, eliminar publicación"
+            cancelText="No, cancelar"
+            okType="danger"
+            placement="bottomLeft"
+            icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+            onConfirm={deletePost}
+          >
+            <Button type="primary" danger block size="large">
+              Eliminar
+            </Button>
+          </Popconfirm>
+        </Col>
+      </Row>
+      <EditPostModal
+        post={post}
+        isOpen={isEditModalOpen}
+        setIsOpen={setIsEditModalOpen}
+        setHasBeenUpdated={setPostHasBeenUpdated}
+      />
+    </>
   )
 }
