@@ -16,14 +16,8 @@ urlpatterns = [
     path('post/remove/<int:pk>', views.PostRemove.as_view()),
 
     path('post/list/', views.PostLists.as_view(),),
-    path('post/list/<int:id>/', views.PostListsExchanger.as_view(),),
+    path('post/list/<int:id>/', views.PostListsExchanger.as_view()),
     # ------------------- VISTAS DE POST STATE -------------------
     path('poststate/list/', views.PostStateList.as_view()),
-    path('poststate/create/', views.PostStateCreate.as_view(),)
-
-
-
-    #     re_path(r'^post/list/(?P<query>\d)(&)?{0,3}',
-    #             views.PostLists.as_view(),
-    #             name='post-lists-state'),
+    path('poststate/create/', views.PostStateCreate.as_view())
 ]
