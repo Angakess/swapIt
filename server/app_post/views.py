@@ -151,8 +151,8 @@ class PostUpdate(generics.UpdateAPIView):
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            # Use PostBaseSerializer to serialize the updated post
-            post_base_serializer = PostBaseSerializer(instance)
+            # Use PostBaseSerializer to serialize the updated post with the request context
+            post_base_serializer = PostBaseSerializer(instance, context={'request': request})
             return Response({
                 'ok': True,
                 'messages': ['Post actualizado exitosamente'],
