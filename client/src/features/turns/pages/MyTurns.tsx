@@ -10,7 +10,7 @@ import MOCK_TURNS from '../MOCK_TURNS.json'
 import { ButtonCancelarTurno } from '@Turns/components/ButtonCancelarTurno'
 import { ButtonVerTurno } from '@Turns/components/ButtonVerTurno'
 import { ModalCancelarTurno } from '@Turns/components/ModalCancelarTurno'
-import { tableColumnSearchProps } from '@Common/functions/tableColumnSearchProps'
+import { tableColumnSearchProps } from '@Turns/functions/tableColumnSearchProps'
 
 type DataIndex = keyof DataType
 interface DataType {

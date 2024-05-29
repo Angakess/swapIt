@@ -1,16 +1,20 @@
-import { GetProp, InputRef, Space } from "antd"
-import { ColumnsType, TablePaginationConfig } from "antd/es/table"
-import { FilterDropdownProps } from "antd/es/table/interface"
-import { Table, TableProps } from "antd/lib"
-import { useRef, useState } from "react"
-import { tableColumnSearchProps } from "@Common/functions/tableColumnSearchProps"
+import { Button, Flex, GetProp, InputRef, Space, Table } from 'antd'
+import { ColumnsType, TableProps } from 'antd/es/table'
+import { useEffect, useRef, useState } from 'react'
+import {
+  FilterDropdownProps,
+  TablePaginationConfig,
+} from 'antd/es/table/interface'
+import { tableColumnSearchProps } from '@Swaps/functions/tableColumnSearchProps'
 
-type DataIndex = keyof DataType
-interface DataType {
+import MOCK_SWAPS_TODAY from '@Swaps/MOCK_SWAPS_TODAY.json'
+
+type SwapIndex = keyof SwapType
+interface SwapType {
   id: number
-  date: string
-  subsidiary: string
-  confirmed: boolean
+  code: string
+  dniA: string
+  dniB: string
   [key: string]: string | number | boolean
 }
 interface TableParams {
@@ -21,145 +25,151 @@ interface TableParams {
 }
 
 export function SwapsList() {
+  const [data, setData] = useState<SwapType[]>([])
+  const [searchText, setSearchText] = useState({
+    id: 0,
+    code: '',
+    dni: '',
+  })
+  const [loading, setLoading] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [turnSelected, setTurnSelected] = useState<SwapType>()
+  const [tableParams, setTableParams] = useState<TableParams>({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  })
+  const searchInput = useRef<InputRef>(null)
 
-    const [data, setData] = useState<DataType[]>([])
-    const [searchText, setSearchText] = useState<DataType>({
-        id: 0,
-        date: '',
-        subsidiary: '',
-        confirmed: false,
+  const fetchData = () => {
+    setLoading(true)
+    /* const res = await fetch('http://localhost:8000/users/list-exchangers/')
+    const result = await res.json() */
+    const result = MOCK_SWAPS_TODAY
+    setData(result)
+    setLoading(false)
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+      },
+    })
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [tableParams.pagination?.current, tableParams.pagination?.pageSize])
+
+  const handleTableChange: TableProps['onChange'] = (
+    pagination,
+    filters,
+    sorter
+  ) => {
+    setTableParams({
+      pagination,
+      filters,
+      ...sorter,
+    })
+
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setData([])
+    }
+
+    const filteredData = data.filter((item: SwapType) =>
+      Object.keys(filters).every((key: string) => {
+        if (filters[key]?.length === 0) return true
+        return filters[key]?.includes(item[key])
       })
-      const [loading, setLoading] = useState(false)
-
-    const [tableParams, setTableParams] = useState<TableParams>({
-        pagination: {
-          current: 1,
-          pageSize: 10,
-        },
-      })
-      const searchInput = useRef<InputRef>(null)
-
-    const handleTableChange: TableProps['onChange'] = (
-        pagination,
-        filters,
-        sorter
-      ) => {
-        setTableParams({
-          pagination,
-          filters,
-          ...sorter,
-        })
-    
-        if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-          setData([])
-        }
-    
-        const filteredData = data.filter((item: DataType) =>
-          Object.keys(filters).every((key: string) => {
-            if (filters[key]?.length === 0) return true
-            return filters[key]?.includes(item[key])
-          })
-        )
-    
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...pagination,
-            total: filteredData.length,
-          },
-        })
-      }
-
-      const handleSearch = (
-        selectedKeys: string[],
-        confirm: FilterDropdownProps['confirm'],
-        dataIndex: DataIndex
-      ) => {
-        confirm(),
-          setSearchText((prevText) => {
-            return {
-              ...prevText,
-              [dataIndex]: selectedKeys[0],
-            }
-          })
-      }
-    
-      const handleReset = (
-        clearFilters: () => void,
-        confirm: FilterDropdownProps['confirm'],
-        dataIndex: DataIndex
-      ) => {
-        clearFilters()
-        setSearchText((searchText) => {
-          return {
-            ...searchText,
-            [dataIndex]: '',
-          }
-        })
-        confirm()
-      }
-
-    const columns: ColumnsType<DataType> = [
-        {
-          title: `ID: ${searchText.id ? searchText.id : ''}`,
-          dataIndex: 'id',
-          render: (id) => `${id}`,
-          ...tableColumnSearchProps('id', handleSearch, handleReset, searchInput),
-        },
-        {
-          title: `Fecha: ${searchText.date ? searchText.date : ''}`,
-          dataIndex: 'date',
-          render: (date) => `${date}`,
-          ...tableColumnSearchProps('date', handleSearch, handleReset, searchInput),
-    
-          //arreglar cuando este conectado al backend
-          sorter: (a, b) => a.date.localeCompare(b.date),
-          defaultSortOrder: 'ascend',
-        },
-        {
-          title: `Filial: ${searchText.subsidiary}`,
-          dataIndex: 'subsidiary',
-          render: (sub) => `${sub}`,
-          ...tableColumnSearchProps(
-            'subsidiary',
-            handleSearch,
-            handleReset,
-            searchInput
-          ),
-          sorter: (a, b) => a.subsidiary.localeCompare(b.subsidiary),
-        },
-        {
-          title: `Estado:`,
-          dataIndex: 'confirmed',
-          render: (confirmed) => (confirmed ? 'Confirmado' : 'Sin confirmar'),
-          filters: [
-            { text: 'Confirmado', value: true },
-            { text: 'Sin confirmar', value: false },
-          ],
-          onFilter: (value, record) => record.confirmed === value,
-          filterSearch: false,
-        },
-        {
-          title: 'Acciones',
-          render: (_: any, record: DataType) => (
-            <Space>
-              
-            </Space>
-          ),
-        },
-      ]
-
-    return (
-        <>
-            <Table
-            columns={columns}
-            rowKey={(record) => record.id}
-            dataSource={data}
-            pagination={tableParams.pagination}
-            loading={loading}
-            onChange={handleTableChange}
-            locale={{ emptyText: 'No hay turnos disponibles' }}
-        />
-        </>
     )
+
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...pagination,
+        total: filteredData.length,
+      },
+    })
+  }
+
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: FilterDropdownProps['confirm'],
+    SwapIndex: SwapIndex
+  ) => {
+    confirm(),
+      setSearchText((prevText) => {
+        return {
+          ...prevText,
+          [SwapIndex]: selectedKeys[0],
+        }
+      })
+  }
+
+  const handleReset = (
+    clearFilters: () => void,
+    confirm: FilterDropdownProps['confirm'],
+    SwapIndex: SwapIndex
+  ) => {
+    clearFilters()
+    setSearchText((searchText) => {
+      return {
+        ...searchText,
+        [SwapIndex]: '',
+      }
+    })
+    confirm()
+  }
+
+  const columns: ColumnsType<SwapType> = [
+    {
+      title: `Code: ${searchText.code ? searchText.code : ''}`,
+      dataIndex: 'code',
+      ...tableColumnSearchProps('code', handleSearch, handleReset, searchInput),
+    },
+    {
+      title: `DNIs: ${searchText.dni ? searchText.dni : ''}`,
+      render: (_: any, record: SwapType) => (
+        <>
+          <ul>
+            <li>{record.dniA}</li>
+            <li>{record.dniB}</li>
+          </ul>
+        </>
+      ),
+      ...tableColumnSearchProps('dni', handleSearch, handleReset, searchInput),
+      onFilter: (value, record) =>
+        record.dniA
+          .toString()
+          .toLowerCase()
+          .includes((value as string).toLowerCase()) ||
+        record.dniB
+          .toString()
+          .toLowerCase()
+          .includes((value as string).toLowerCase()),
+    },
+    {
+      title: 'Acciones',
+      width: '0',
+      render: (_: any, record: SwapType) => (
+        <Flex justify="center">
+          <Button></Button>
+        </Flex>
+      ),
+    },
+  ]
+
+  return (
+    <>
+      <Table
+        columns={columns}
+        rowKey={(record) => record.id}
+        dataSource={data}
+        pagination={tableParams.pagination}
+        loading={loading}
+        onChange={handleTableChange}
+        locale={{ emptyText: 'No hay turnos disponibles' }}
+      />
+    </>
+  )
 }
