@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'user',
     'app_post',
     'subsidiary',
+    'request',
     'corsheaders',
     'coreapi',
     'rest_framework',
