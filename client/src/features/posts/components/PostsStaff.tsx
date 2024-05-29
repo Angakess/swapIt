@@ -1,13 +1,10 @@
-import { Divider } from 'antd'
-import { PostsList } from './PostsList'
-import { PageTitle } from '@Common/components'
-import { SearchAndFilter } from './SearchAndFilter'
 import { useEffect, useState } from 'react'
-import {
-  PostModel,
-  getCategoryList,
-  getPostList,
-} from '@Posts/helpers/getPostsListsExchanger'
+import { Divider } from 'antd'
+
+import { getCategoryList, getPostList, PostModel } from '@Common/api'
+import { PageTitle } from '@Common/components'
+import { PostsList } from './PostsList'
+import { SearchAndFilter } from './SearchAndFilter'
 
 type SelectOption = {
   label: string

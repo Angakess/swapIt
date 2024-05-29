@@ -2,12 +2,8 @@ import { useEffect, useState } from 'react'
 import { Divider } from 'antd'
 
 import { useAuth } from '@Common/hooks'
+import { getCategoryList, getPostsListsExchanger, PostModel } from '@Common/api'
 import { PostsList, SearchAndFilter } from '@Posts/components'
-import {
-  PostModel,
-  getCategoryList,
-  getPostsListsExchanger,
-} from '@Posts/helpers/getPostsListsExchanger'
 import { PageTitle } from '@Common/components'
 
 type SelectOption = {

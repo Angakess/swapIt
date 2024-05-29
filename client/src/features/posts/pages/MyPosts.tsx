@@ -1,15 +1,11 @@
 import { PlusOutlined } from '@ant-design/icons'
-import { PageTitle } from '@Common/components'
-import { useAuth } from '@Common/hooks'
-import { PostsList, SearchAndFilter } from '@Posts/components'
-import AddPostModal from '@Posts/components/AddPostModal'
-import {
-  getCategoryList,
-  getPostList,
-  PostModel,
-} from '@Posts/helpers/getPostsListsExchanger'
 import { Button, Divider } from 'antd'
 import { useCallback, useEffect, useState } from 'react'
+
+import { getCategoryList, getPostList, PostModel } from '@Common/api'
+import { PageTitle } from '@Common/components'
+import { useAuth } from '@Common/hooks'
+import { PostsList, SearchAndFilter, AddPostModal } from '@Posts/components'
 
 type SelectOption = {
   label: string

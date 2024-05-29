@@ -12,16 +12,19 @@ import {
   Upload,
   UploadFile,
 } from 'antd'
-import { RcFile } from 'antd/es/upload'
 import { useEffect, useState } from 'react'
 
 import { useAuth } from '@Common/hooks'
-import { getSubsidiaries, getCategoryList } from '@Common/api'
+import { getSubsidiaries, getCategoryList, PostModel } from '@Common/api'
+import { getPostImagesArray } from '@Posts/helpers'
+import { RcFile } from 'antd/es/upload'
+import { SERVER_URL } from 'constants'
 
-type AddPostModalProps = {
+type EditPostModalProps = {
+  post: PostModel
+  setPost: React.Dispatch<React.SetStateAction<PostModel | null>>
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setHaveNewPosts: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type SelectOption = {
@@ -40,7 +43,7 @@ type AddPostForm = {
   value: number
 }
 
-async function mapCategoiresToSelectOptions(): Promise<SelectOption[]> {
+async function mapCategoriesToSelectOptions(): Promise<SelectOption[]> {
   const categories = await getCategoryList()
   return categories.map(({ name, id }) => ({
     label: name,
@@ -55,11 +58,12 @@ async function mapSubsidiariesToSelectOption(): Promise<SelectOption[]> {
     .map(({ name, id }) => ({ label: name, value: id.toString() }))
 }
 
-export function AddPostModal({
+export function EditPostModal({
+  post,
+  setPost,
   isOpen,
   setIsOpen,
-  setHaveNewPosts,
-}: AddPostModalProps) {
+}: EditPostModalProps) {
   const { user } = useAuth()
   const { notification } = App.useApp()
   const [confirmLoading, setConfirmLoading] = useState(false)
@@ -67,10 +71,6 @@ export function AddPostModal({
   const [categoriesOptions, setCategoriesOptions] = useState<SelectOption[]>([])
   const [subsidiaryOptions, setSubsidiaryOptions] = useState<SelectOption[]>([])
 
-  /*
-    - files: tiene archivos de tipo File, para subir al servidor
-    - fileList: tiene archivos de tipo FileList, para manejar el componente Upload
-   */
   const [files, setFiles] = useState<RcFile[]>([])
   const [fileList, setFileList] = useState<UploadFile[]>([])
   const [form] = Form.useForm<AddPostForm>()
@@ -88,23 +88,29 @@ export function AddPostModal({
     formData.append('category', values.category)
     formData.append('state_product', values.state_product)
     formData.append('stock_product', values.stock_product.toString())
+
+    // Add files to formData
     files.forEach((file, index) => {
-      formData.append(`image_${index + 1}`, file)
+      formData.append(`image_${index + 1}`, file, file.name)
     })
 
-    const resp = await fetch('http://localhost:8000/post/', {
-      method: 'POST',
+    // Fill the rest of image fields with null
+    for (let i = files.length; i < 5; i++) {
+      formData.append(`image_${i + 1}`, '')
+    }
+
+    const resp = await fetch(`${SERVER_URL}/post/update/${post.id}/`, {
+      method: 'PATCH',
       body: formData,
     })
 
     const data = await resp.json()
 
     if (resp.ok && data.ok) {
-      setHaveNewPosts(true)
-      form.resetFields()
+      setPost(data.data.post)
       notification.success({
-        message: 'Publicación agregada correctamente',
-        description: 'Se ha agregado la publicación',
+        message: 'Publicación editada correctamente',
+        description: 'Se ha editado la publicación.',
         placement: 'topRight',
         duration: 3,
         style: { whiteSpace: 'pre-line' },
@@ -112,9 +118,9 @@ export function AddPostModal({
       setIsOpen(false)
     } else {
       notification.error({
-        message: 'Ocurrió un error al crear la publicación',
+        message: 'Ocurrió un error al editar la publicación',
         description:
-          'Lo sentimos! No pudimos crear la publicación debido a un error inesperado. Inténtalo más tarde',
+          'Lo sentimos! No pudimos editar la publicación debido a un error inesperado. Inténtalo más tarde.',
         placement: 'topRight',
         duration: 3,
       })
@@ -124,13 +130,55 @@ export function AddPostModal({
 
   // Cargar datos en los select
   useEffect(() => {
-    mapCategoiresToSelectOptions().then(setCategoriesOptions)
+    mapCategoriesToSelectOptions().then(setCategoriesOptions)
     mapSubsidiariesToSelectOption().then(setSubsidiaryOptions)
   }, [])
 
+  // Cargar formulario con los datos actuales
+  useEffect(() => {
+    ;(async () => {
+      setFileList(
+        getPostImagesArray(post).map((imageUrl, i) => ({
+          name: `Imagen ${i + 1}`,
+          uid: i.toString(),
+          url: imageUrl,
+        }))
+      )
+
+      const imageFiles: RcFile[] = await Promise.all(
+        getPostImagesArray(post).map(async (imageUrl, i) => {
+          const resp = await fetch(imageUrl)
+          const blob = await resp.blob()
+
+          const file: RcFile = new File(
+            [blob],
+            `Imagen_${i + 1}.${blob.type.split('/')[1]}`,
+            {
+              type: blob.type,
+            }
+          )
+          file.uid = i.toString()
+          return file
+        })
+      )
+
+      setFiles(imageFiles)
+    })()
+
+    form.setFieldsValue({
+      name: post.name,
+      description: post.description,
+      value: post.value,
+      stock_product: post.stock_product,
+      state_product: post.state_product,
+      category: post.category.active ? post.category.id.toString() : '',
+      subsidiary: post.subsidiary.active ? post.subsidiary.id.toString() : '',
+    })
+  }, [form, post])
+
   return (
     <Modal
-      title="Agregar publicación"
+      title="Editar publicación"
       open={isOpen}
       onOk={form.submit}
       onCancel={() => setIsOpen(false)}
@@ -250,10 +298,17 @@ export function AddPostModal({
         </Row>
 
         <Form.Item
-          label="Imagenes"
+          label="Imágenes"
           name="images"
           required={false}
-          rules={[{ required: true, message: 'Cargue al menos una imagen' }]}
+          rules={[
+            {
+              validator: () => {
+                if (fileList.length > 0) return Promise.resolve()
+                return Promise.reject(new Error('Cargue al menos una imagen'))
+              },
+            },
+          ]}
         >
           <Upload
             listType="picture"
@@ -269,7 +324,7 @@ export function AddPostModal({
             }}
             accept="image/png, image/jpeg"
           >
-            <Button icon={<UploadOutlined />} disabled={files.length === 5}>
+            <Button icon={<UploadOutlined />} disabled={fileList.length === 5}>
               Cargar imagen
             </Button>
           </Upload>
