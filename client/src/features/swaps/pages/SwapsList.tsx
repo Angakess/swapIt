@@ -1,4 +1,4 @@
-import { Button, Flex, GetProp, InputRef, Space, Table } from 'antd'
+import { Flex, GetProp, InputRef, Table } from 'antd'
 import { ColumnsType, TableProps } from 'antd/es/table'
 import { useEffect, useRef, useState } from 'react'
 import {
@@ -33,8 +33,8 @@ export function SwapsList() {
     dni: '',
   })
   const [loading, setLoading] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
-  const [turnSelected, setTurnSelected] = useState<SwapType>()
+/*   const [modalOpen, setModalOpen] = useState(false)
+  const [turnSelected, setTurnSelected] = useState<SwapType>() */
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -124,9 +124,10 @@ export function SwapsList() {
 
   const columns: ColumnsType<SwapType> = [
     {
-      title: `Code: ${searchText.code ? searchText.code : ''}`,
+      title: `Codigo: ${searchText.code ? searchText.code : ''}`,
       dataIndex: 'code',
       ...tableColumnSearchProps('code', handleSearch, handleReset, searchInput),
+      width: "30%"
     },
     {
       title: `DNIs: ${searchText.dni ? searchText.dni : ''}`,
@@ -169,7 +170,7 @@ export function SwapsList() {
         pagination={tableParams.pagination}
         loading={loading}
         onChange={handleTableChange}
-        locale={{ emptyText: 'No hay turnos disponibles' }}
+        locale={{ emptyText: 'No hay trueques disponibles' }}
       />
     </>
   )
