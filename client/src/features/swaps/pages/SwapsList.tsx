@@ -6,6 +6,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface'
 import { tableColumnSearchProps } from '@Swaps/functions/tableColumnSearchProps'
+import { ButtonVerSwap } from "@Swaps/components/ButtonVerSwap"
 
 import MOCK_SWAPS_TODAY from '@Swaps/MOCK_SWAPS_TODAY.json'
 
@@ -153,7 +154,7 @@ export function SwapsList() {
       width: '0',
       render: (_: any, record: SwapType) => (
         <Flex justify="center">
-          <Button></Button>
+          <ButtonVerSwap swapId={record.id}></ButtonVerSwap>
         </Flex>
       ),
     },

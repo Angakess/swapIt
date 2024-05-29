@@ -9,8 +9,7 @@ export function SwapsRoutes() {
     <Routes>
       <Route element={<ProtectedRoute allowed={['HELPER']} />}>
         <Route path="/" element={<SwapsList />} />
-        <Route path="/swaps" element={<SwapsList />} />
-        <Route path="/swaps/:id" element={<Swap />} />
+        <Route path="/:id" element={<Swap />} />
         <Route path="/*" element={<Page404 />} />
       </Route>
     </Routes>
