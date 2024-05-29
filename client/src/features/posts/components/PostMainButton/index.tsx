@@ -4,12 +4,17 @@ import { ExchangerButtons } from './ExchangerButtons'
 import { StaffButtons } from './StaffButtons'
 import { OwnerButtons } from './OwnerButtons'
 
-export function PostMainButton({ post }: { post: PostModel }) {
+type PostMainButtonProps = {
+  post: PostModel
+  setPost: React.Dispatch<React.SetStateAction<PostModel | null>>
+}
+
+export function PostMainButton({ post, setPost }: PostMainButtonProps) {
   const { user } = useAuth()
 
   if (user!.role === 'EXCHANGER') {
     if (user!.id === post.user.id) {
-      return <OwnerButtons post={post} />
+      return <OwnerButtons post={post} setPost={setPost} />
     }
     return <ExchangerButtons />
   }

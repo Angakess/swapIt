@@ -38,7 +38,7 @@ export function Post() {
         setIsLoading(false)
       }
     })()
-  }, [])
+  }, [id])
 
   useEffect(() => {
     if (isLoading || post === null) return
@@ -87,7 +87,7 @@ export function Post() {
             bordered={false}
           >
             <Typography.Title level={3}>{post!.name}</Typography.Title>
-            <PostMainButton post={post!} />
+            <PostMainButton post={post!} setPost={setPost} />
             <PostDetails post={post!} />
           </Card>
 

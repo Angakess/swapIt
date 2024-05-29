@@ -1,19 +1,21 @@
 import { App, Button, Col, Popconfirm, Row } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
-import { useCustomAlerts } from '@Common/hooks'
 import { PostModel } from '@Common/api'
 import { SERVER_URL } from 'constants'
 import { EditPostModal } from '../EditPostModal'
 import { useState } from 'react'
 
-export function OwnerButtons({ post }: { post: PostModel }) {
+type OwnerButtonsProps = {
+  post: PostModel
+  setPost: React.Dispatch<React.SetStateAction<PostModel | null>>
+}
+
+export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
   const { notification } = App.useApp()
-  const alerts = useCustomAlerts()
   const navigate = useNavigate()
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  const [postHasBeenUpdated, setPostHasBeenUpdated] = useState(false)
 
   async function deletePost() {
     const resp = await fetch(`${SERVER_URL}/post/remove/${post.id}`, {
@@ -73,9 +75,9 @@ export function OwnerButtons({ post }: { post: PostModel }) {
       </Row>
       <EditPostModal
         post={post}
+        setPost={setPost}
         isOpen={isEditModalOpen}
         setIsOpen={setIsEditModalOpen}
-        setHasBeenUpdated={setPostHasBeenUpdated}
       />
     </>
   )

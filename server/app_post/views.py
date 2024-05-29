@@ -151,11 +151,13 @@ class PostUpdate(generics.UpdateAPIView):
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
+            # Use PostBaseSerializer to serialize the updated post
+            post_base_serializer = PostBaseSerializer(instance)
             return Response({
                 'ok': True,
                 'messages': ['Post actualizado exitosamente'],
-                'data': {'post': serializer.data}
-            })
+                'data': {'post': post_base_serializer.data}
+            }, status=status.HTTP_200_OK)
         return Response({
             'ok': False,
             'messages': list(itertools.chain(*serializer.errors.values())),

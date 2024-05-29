@@ -19,14 +19,12 @@ import { getSubsidiaries, getCategoryList, PostModel } from '@Common/api'
 import { getPostImagesArray } from '@Posts/helpers'
 import { RcFile } from 'antd/es/upload'
 import { SERVER_URL } from 'constants'
-import { imageValidator } from '@Common/helpers/validators'
-import { RuleObject } from 'antd/es/form'
 
 type EditPostModalProps = {
   post: PostModel
+  setPost: React.Dispatch<React.SetStateAction<PostModel | null>>
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setHasBeenUpdated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type SelectOption = {
@@ -62,9 +60,9 @@ async function mapSubsidiariesToSelectOption(): Promise<SelectOption[]> {
 
 export function EditPostModal({
   post,
+  setPost,
   isOpen,
   setIsOpen,
-  setHasBeenUpdated,
 }: EditPostModalProps) {
   const { user } = useAuth()
   const { notification } = App.useApp()
@@ -76,8 +74,6 @@ export function EditPostModal({
   const [files, setFiles] = useState<RcFile[]>([])
   const [fileList, setFileList] = useState<UploadFile[]>([])
   const [form] = Form.useForm<AddPostForm>()
-
-  console.log({ files, fileList })
 
   const handleFinish = async (values: AddPostForm) => {
     setConfirmLoading(true)
@@ -110,11 +106,8 @@ export function EditPostModal({
 
     const data = await resp.json()
 
-    console.log(data)
-
     if (resp.ok && data.ok) {
-      setHasBeenUpdated(true)
-      form.resetFields()
+      setPost(data.data.post)
       notification.success({
         message: 'Publicación editada correctamente',
         description: 'Se ha editado la publicación.',
@@ -181,9 +174,7 @@ export function EditPostModal({
       category: post.category.active ? post.category.id.toString() : '',
       subsidiary: post.subsidiary.active ? post.subsidiary.id.toString() : '',
     })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [form, post])
 
   return (
     <Modal
@@ -199,7 +190,6 @@ export function EditPostModal({
         form={form}
         onFinish={handleFinish}
         disabled={confirmLoading}
-        onFinishFailed={() => console.log('[ onFinishFailed ] files', files)}
       >
         <Form.Item
           label="Nombre"
