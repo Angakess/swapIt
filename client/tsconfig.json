@@ -29,6 +29,7 @@
       "@Home/*": ["features/home/*"],
       "@Posts/*": ["features/posts/*"],
       "@Turns/*": ["features/turns/*"],
+      "@Swaps/*": ["features/swaps/*"],
     }
   },
   "include": ["src"],

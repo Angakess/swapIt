@@ -6,6 +6,7 @@ import { AuthRoutes } from '@Auth/routes'
 import { HomeRoutes } from '@Home/routes'
 import { PostsRoutes } from '@Posts/routes'
 import { TurnsRoutes } from '@Turns/routes'
+import { SwapsRoutes } from '@Swaps/routes'
 
 // Pages
 import { Page404 } from '@Common/pages'
@@ -38,6 +39,7 @@ function App() {
         <Route path="/posts/*" element={<PostsRoutes />} />
         <Route path="/admin/*" element={<AdminRoutes />} />
         <Route path="/turns/*" element={<TurnsRoutes />} />
+        <Route path="/swaps/*" element={<SwapsRoutes />} />
       </Route>
 
       <Route path="/403" element={<Page403 />} />

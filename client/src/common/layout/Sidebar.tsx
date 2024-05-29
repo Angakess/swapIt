@@ -90,6 +90,11 @@ const items: Record<UserPermissions, SidebarProps> = {
         label: 'Publicaciones',
         icon: <AppstoreOutlined />,
       },
+      {
+        key: '/swaps',
+        label: 'Trueques del día',
+        icon: <AppstoreOutlined />,
+      },
     ],
   },
 }
