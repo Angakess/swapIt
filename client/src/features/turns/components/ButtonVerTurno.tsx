@@ -6,7 +6,7 @@ export function ButtonVerTurno({ turnId }: { turnId: number }) {
   return (
     <>
       <Tooltip title="Ver turno">
-        <Link to={`/posts/my-turns/${turnId}`}>
+        <Link to={`/turns/my-turns/${turnId}`}>
           <Button type="primary" icon={<CalendarFilled />}></Button>
         </Link>
       </Tooltip>

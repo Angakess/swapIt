@@ -76,7 +76,7 @@ const items: Record<UserPermissions, SidebarProps> = {
         icon: <ProductOutlined />,
       },
       {
-        key: '/posts/my-turns',
+        key: '/turns/my-turns',
         label: 'Mis Turnos',
         icon: <CalendarOutlined />,
       },
