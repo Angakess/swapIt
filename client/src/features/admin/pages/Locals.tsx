@@ -19,6 +19,7 @@ import redMarkerIcon from '/map-pin-red.svg'
 import grayMarkerIcon from '/map-pin-gray.svg'
 import Input, { SearchProps } from 'antd/es/input'
 import { useCustomAlerts } from '@Common/hooks'
+import { PageTitle } from '@Common/components'
 
 type SubsidiaryType = {
   id: number
@@ -147,6 +148,7 @@ export function Locals() {
 
   return (
     <>
+      <PageTitle title="Filiales" />
       <Row>
         <Col span={24}>
           <Card

@@ -17,6 +17,7 @@ import {
 import { useState, useEffect, useRef } from 'react'
 import type { FilterDropdownProps } from 'antd/es/table/interface'
 import { Link } from 'react-router-dom'
+import { PageTitle } from '@Common/components'
 
 export function Helpers() {
   type ColumnsType<T> = TableProps<T>['columns']
@@ -307,6 +308,7 @@ export function Helpers() {
 
   return (
     <>
+      <PageTitle title="Ayudantes" />
       <Table
         columns={columns}
         rowKey={(record) => record.id}

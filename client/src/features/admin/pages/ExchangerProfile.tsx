@@ -1,3 +1,4 @@
+import { PageTitle } from '@Common/components'
 import { useCustomAlerts } from '@Common/hooks'
 import {
   Button,
@@ -168,6 +169,7 @@ export function ExchangerProfile() {
 
   return (
     <Spin spinning={isLoading}>
+      <PageTitle title={`Intercambiador - ${data?.full_name}`} />
       <Card title={<CardHeader />}>
         <Descriptions
           bordered

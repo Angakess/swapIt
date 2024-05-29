@@ -5,6 +5,7 @@ import redMarkerIcon from '/map-pin-red.svg'
 import grayMarkerIcon from '/map-pin-gray.svg'
 import { Icon } from 'leaflet'
 import { fetchPost } from '@Common/helpers'
+import { PageTitle } from '@Common/components'
 
 type HelperType = {
   id: number
@@ -146,6 +147,7 @@ export function ChangeLocal() {
 
   return (
     <Spin spinning={isLoading}>
+      <PageTitle title={`Cambiar Filial - ${helperData?.full_name}`} />
       <Row>
         <Col span={24}>
           <Card title="Mapa" style={{ width: '100%', height: '500px' }}>

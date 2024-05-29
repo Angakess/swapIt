@@ -21,6 +21,7 @@ import {
 } from '@ant-design/icons'
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { fetchPost } from '@Common/helpers'
+import { PageTitle } from '@Common/components'
 /* import MOCK_DATA from "./MOCK_DATA_CAT.json" */
 
 type DataIndex = keyof DataType
@@ -404,14 +405,19 @@ export function Categories() {
 
   return (
     <>
-      <Button
-        type="primary"
-        icon={<PlusOutlined />}
-        style={{ marginBottom: '15px' }}
-        onClick={showModalNewCat}
-      >
-        Agregar categoría
-      </Button>
+      <PageTitle
+        title="Categorías"
+        right={
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            style={{ marginBottom: '15px' }}
+            onClick={showModalNewCat}
+          >
+            Agregar
+          </Button>
+        }
+      />
       <Table
         columns={columns}
         rowKey={(record) => record.id}
