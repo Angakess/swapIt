@@ -15,7 +15,6 @@
       "is_active": true,
       "gender": "OTHER",
       "state": 3,
-      "role": "ADMIN",
       "password": "482c811da5d5b4bc6d497ffa98491e38",
       "is_superuser": true
     }
@@ -25,6 +24,7 @@
 
   {
     "model": "user.useraccount",
+      "role": "ADMIN",
     "pk": 2,
     "fields": {
       "first_name": "Peterus",
