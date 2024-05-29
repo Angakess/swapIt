@@ -118,6 +118,7 @@ export function Turn() {
         <Row gutter={32} align="middle" justify="center">
             <Col span={10}>
               <PostListItem
+                //cambiar por objeto post
                 post={{
                   id: 1,
                   name: 'Camperón de hombre',
@@ -156,7 +157,7 @@ export function Turn() {
                   state_product: 'USADO',
                   stock_product: 1,
                   image_1:
-                    'http://localhost:8000/media/post_images/post1_img1.jpg',
+                    'http://localhost:8000/media/post_images/pantalon-de-hombre-venture.jpg',
                   image_2:
                     'http://localhost:8000/media/post_images/post1_img2.jpg',
                   image_3:
@@ -173,6 +174,7 @@ export function Turn() {
             </Col>
             <Col span={10}>
               <PostListItem
+              //cambiar por objeto post
                 post={{
                   id: 1,
                   name: 'Camperón de hombre',
@@ -211,7 +213,7 @@ export function Turn() {
                   state_product: 'USADO',
                   stock_product: 1,
                   image_1:
-                    'http://localhost:8000/media/post_images/post1_img1.jpg',
+                    'http://localhost:8000/media/post_images/pantalon-de-hombre-venture.jpg',
                   image_2:
                     'http://localhost:8000/media/post_images/post1_img2.jpg',
                   image_3:
