@@ -1,7 +1,7 @@
 import { Card, Col, Flex, Layout, Row } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
-export function AuthLayout({ children }: React.PropsWithChildren) {
+export function AuthLayout() {
   return (
     <Layout>
       <Layout.Content>
@@ -23,7 +23,7 @@ export function AuthLayout({ children }: React.PropsWithChildren) {
               bordered={false}
               styles={{ body: { padding: '2rem', marginBottom: '3rem' } }}
             >
-              {children}
+              {<Outlet />}
             </Card>
           </Col>
         </Row>

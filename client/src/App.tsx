@@ -14,6 +14,8 @@ import { Page403 } from '@Common/pages/Page403'
 // Others
 import { useAuth } from '@Common/hooks'
 import { UserPermissions } from '@Common/types'
+import { AuthLayout } from '@Auth/layouts'
+import { AppLayout } from '@Common/layout'
 
 const mainPages: Record<UserPermissions, string> = {
   ADMIN: '/admin/helpers',
@@ -27,11 +29,16 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/home/*" element={<HomeRoutes />} />
-      <Route path="/auth/*" element={<AuthRoutes />} />
-      <Route path="/posts/*" element={<PostsRoutes />} />
-      <Route path="/admin/*" element={<AdminRoutes />} />
-      <Route path="/turns/*" element={<TurnsRoutes />} />
+      <Route element={<AuthLayout />}>
+        <Route path="/auth/*" element={<AuthRoutes />} />
+      </Route>
+
+      <Route element={<AppLayout />}>
+        <Route path="/home/*" element={<HomeRoutes />} />
+        <Route path="/posts/*" element={<PostsRoutes />} />
+        <Route path="/admin/*" element={<AdminRoutes />} />
+        <Route path="/turns/*" element={<TurnsRoutes />} />
+      </Route>
 
       <Route path="/403" element={<Page403 />} />
       <Route

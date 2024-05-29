@@ -1,8 +1,10 @@
 import { Layout, theme } from 'antd'
+import { Outlet } from 'react-router-dom'
+
 import { Sidebar } from './Sidebar'
 import { AppHeader } from './AppHeader'
 
-export function AppLayout({ children }: { children: React.ReactNode }) {
+export function AppLayout() {
   const { colorBgContainer } = theme.useToken().token
 
   return (
@@ -27,7 +29,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             height: 'auto',
           }}
         >
-          <div style={{ paddingBottom: '2rem' }}>{children}</div>
+          <div style={{ paddingBottom: '2rem' }}>{<Outlet />}</div>
         </Layout.Content>
       </Layout>
     </Layout>
