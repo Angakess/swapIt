@@ -9,6 +9,7 @@ urlpatterns = [
     path('subsidiary/', include('subsidiary.urls')),
     path('users/', include('user.urls')),
     path('requests/', include('request.urls')),
+    path('ratings/', include('rating.urls')),
     path('admin/', admin.site.urls),
     path('docs/', include_docs_urls(title='Swap It API',
          permission_classes=[])),

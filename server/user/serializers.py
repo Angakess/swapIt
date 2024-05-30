@@ -36,6 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
             'password',
             'role',
             'id_subsidiary',
+            'rating'
         ]
 
 
@@ -82,6 +83,7 @@ class ListExchangerSerializer(serializers.ModelSerializer):
             'dni',
             'email',
             'user_state',
+            'rating'
         ]
 
 

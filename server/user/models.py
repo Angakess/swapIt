@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin,
                                         BaseUserManager)
 from subsidiary.models import Subsidiary
+from django.db.models import Avg
 
 
 class Role(models.TextChoices):
@@ -54,7 +55,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True, null=False)
     date_of_birth = models.DateField(null=False, blank=True)
     phone_number = models.CharField(max_length=30, null=False)
-
+    score = models.IntegerField(default=0)
     id_subsidiary = models.ForeignKey(
         Subsidiary, blank=True, null=True, on_delete=models.DO_NOTHING, related_name='users'
     )
@@ -83,6 +84,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    @property
+    def rating(self):
+        return self.ratings_received.aggregate(prom=Avg('score'))['prom'] or 0
 
     def __str__(self):
         return self.full_name
