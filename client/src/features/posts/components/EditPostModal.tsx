@@ -33,14 +33,13 @@ type SelectOption = {
 }
 
 type AddPostForm = {
-  category: string
-  description: string
-  images: { file: File; fileList: File[] }
   name: string
-  state_product: string
-  stock_product: number
-  subsidiary: string
+  description: string
   value: number
+  stock_product: number
+  state_product: string
+  category: string
+  subsidiary: string
 }
 
 async function mapCategoriesToSelectOptions(): Promise<SelectOption[]> {
@@ -153,10 +152,8 @@ export function EditPostModal({
           const file: RcFile = new File(
             [blob],
             `Imagen_${i + 1}.${blob.type.split('/')[1]}`,
-            {
-              type: blob.type,
-            }
-          )
+            { type: blob.type }
+          ) as RcFile
           file.uid = i.toString()
           return file
         })
@@ -183,6 +180,8 @@ export function EditPostModal({
       onOk={form.submit}
       onCancel={() => setIsOpen(false)}
       confirmLoading={confirmLoading}
+      okText="Editar"
+      cancelText="Cancelar"
     >
       <Form
         layout="vertical"
@@ -231,7 +230,7 @@ export function EditPostModal({
                   { value: 4 },
                   { value: 5 },
                 ]}
-              ></Select>
+              />
             </Form.Item>
           </Col>
 
@@ -240,12 +239,7 @@ export function EditPostModal({
               label="Cantidad"
               name="stock_product"
               required={false}
-              rules={[
-                {
-                  required: true,
-                  message: 'Ingrese una cantidad',
-                },
-              ]}
+              rules={[{ required: true, message: 'Ingrese una cantidad' }]}
             >
               <InputNumber min={0} style={{ width: '100%' }} />
             </Form.Item>
@@ -264,7 +258,7 @@ export function EditPostModal({
                   { label: 'Usado', value: 'USADO' },
                   { label: 'Defectuoso', value: 'DEFECTUOSO' },
                 ]}
-              ></Select>
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -281,7 +275,7 @@ export function EditPostModal({
                 options={categoriesOptions}
                 style={{ textTransform: 'capitalize' }}
                 dropdownStyle={{ textTransform: 'capitalize' }}
-              ></Select>
+              />
             </Form.Item>
           </Col>
 
@@ -292,7 +286,7 @@ export function EditPostModal({
               required={false}
               rules={[{ required: true, message: 'Ingrese un valor' }]}
             >
-              <Select options={subsidiaryOptions}></Select>
+              <Select options={subsidiaryOptions} />
             </Form.Item>
           </Col>
         </Row>
