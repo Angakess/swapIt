@@ -1,60 +1,18 @@
-import { UploadOutlined } from '@ant-design/icons'
-import {
-  App,
-  Button,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Row,
-  Select,
-  Upload,
-  UploadFile,
-} from 'antd'
+import { App, Form, Modal, UploadFile } from 'antd'
 import { useEffect, useState } from 'react'
 
 import { useAuth } from '@Common/hooks'
-import { getSubsidiaries, getCategoryList, PostModel } from '@Common/api'
+import { PostModel } from '@Common/api'
 import { getPostImagesArray } from '@Posts/helpers'
 import { RcFile } from 'antd/es/upload'
 import { SERVER_URL } from 'constants'
+import { PostCreateUpdateForm } from './PostCreateUpdate/PostCreateUpdateForm'
 
 type EditPostModalProps = {
   post: PostModel
   setPost: React.Dispatch<React.SetStateAction<PostModel | null>>
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-type SelectOption = {
-  label: string
-  value: string
-}
-
-type AddPostForm = {
-  name: string
-  description: string
-  value: number
-  stock_product: number
-  state_product: string
-  category: string
-  subsidiary: string
-}
-
-async function mapCategoriesToSelectOptions(): Promise<SelectOption[]> {
-  const categories = await getCategoryList()
-  return categories.map(({ name, id }) => ({
-    label: name,
-    value: id.toString(),
-  }))
-}
-
-async function mapSubsidiariesToSelectOption(): Promise<SelectOption[]> {
-  const subsidiaries = await getSubsidiaries()
-  return subsidiaries
-    .filter(({ active }) => active)
-    .map(({ name, id }) => ({ label: name, value: id.toString() }))
 }
 
 export function EditPostModal({
@@ -67,14 +25,11 @@ export function EditPostModal({
   const { notification } = App.useApp()
   const [confirmLoading, setConfirmLoading] = useState(false)
 
-  const [categoriesOptions, setCategoriesOptions] = useState<SelectOption[]>([])
-  const [subsidiaryOptions, setSubsidiaryOptions] = useState<SelectOption[]>([])
-
+  const [form] = Form.useForm<PostCreateUpdateForm>()
   const [files, setFiles] = useState<RcFile[]>([])
   const [fileList, setFileList] = useState<UploadFile[]>([])
-  const [form] = Form.useForm<AddPostForm>()
 
-  const handleFinish = async (values: AddPostForm) => {
+  const handleFinish = async (values: PostCreateUpdateForm) => {
     setConfirmLoading(true)
 
     const formData = new FormData()
@@ -127,12 +82,6 @@ export function EditPostModal({
     setConfirmLoading(false)
   }
 
-  // Cargar datos en los select
-  useEffect(() => {
-    mapCategoriesToSelectOptions().then(setCategoriesOptions)
-    mapSubsidiariesToSelectOption().then(setSubsidiaryOptions)
-  }, [])
-
   // Cargar formulario con los datos actuales
   useEffect(() => {
     ;(async () => {
@@ -183,147 +132,15 @@ export function EditPostModal({
       okText="Editar"
       cancelText="Cancelar"
     >
-      <Form
-        layout="vertical"
-        style={{ marginTop: '1.25rem' }}
+      <PostCreateUpdateForm
         form={form}
-        onFinish={handleFinish}
-        disabled={confirmLoading}
-      >
-        <Form.Item
-          label="Nombre"
-          name="name"
-          required={false}
-          rules={[
-            { required: true, message: 'Ingrese el nombre del producto' },
-          ]}
-        >
-          <Input placeholder="Nombre del producto" size="large" autoFocus />
-        </Form.Item>
-
-        <Form.Item
-          label="Descripción"
-          name="description"
-          required={false}
-          rules={[{ required: true, message: 'Ingrese una descripción' }]}
-        >
-          <Input.TextArea
-            placeholder="Descripción"
-            size="large"
-            autoSize={{ minRows: 3, maxRows: 10 }}
-          />
-        </Form.Item>
-
-        <Row gutter={[12, 12]}>
-          <Col xs={12} md={6}>
-            <Form.Item
-              label="Valor"
-              name="value"
-              required={false}
-              rules={[{ required: true, message: 'Ingrese un valor' }]}
-            >
-              <Select
-                options={[
-                  { value: 1 },
-                  { value: 2 },
-                  { value: 3 },
-                  { value: 4 },
-                  { value: 5 },
-                ]}
-              />
-            </Form.Item>
-          </Col>
-
-          <Col xs={12} md={6}>
-            <Form.Item
-              label="Cantidad"
-              name="stock_product"
-              required={false}
-              rules={[{ required: true, message: 'Ingrese una cantidad' }]}
-            >
-              <InputNumber min={0} style={{ width: '100%' }} />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} md={12}>
-            <Form.Item
-              label="Estado"
-              name="state_product"
-              required={false}
-              rules={[{ required: true, message: 'Ingrese un valor' }]}
-            >
-              <Select
-                options={[
-                  { label: 'Nuevo', value: 'NUEVO' },
-                  { label: 'Usado', value: 'USADO' },
-                  { label: 'Defectuoso', value: 'DEFECTUOSO' },
-                ]}
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={[12, 12]}>
-          <Col xs={24} md={12}>
-            <Form.Item
-              label="Categoría"
-              name="category"
-              required={false}
-              rules={[{ required: true, message: 'Ingrese un valor' }]}
-            >
-              <Select
-                options={categoriesOptions}
-                style={{ textTransform: 'capitalize' }}
-                dropdownStyle={{ textTransform: 'capitalize' }}
-              />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} md={12}>
-            <Form.Item
-              label="Filial"
-              name="subsidiary"
-              required={false}
-              rules={[{ required: true, message: 'Ingrese un valor' }]}
-            >
-              <Select options={subsidiaryOptions} />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Form.Item
-          label="Imágenes"
-          name="images"
-          required={false}
-          rules={[
-            {
-              validator: () => {
-                if (fileList.length > 0) return Promise.resolve()
-                return Promise.reject(new Error('Cargue al menos una imagen'))
-              },
-            },
-          ]}
-        >
-          <Upload
-            listType="picture"
-            fileList={fileList}
-            beforeUpload={(file) => {
-              setFiles((prevFiles) => [...prevFiles, file])
-              return false
-            }}
-            onChange={({ fileList }) => setFileList(fileList)}
-            onRemove={(deletedFile) => {
-              setFiles(files.filter((f) => f.uid !== deletedFile.uid))
-              setFileList(fileList.filter((f) => f.uid !== deletedFile.uid))
-            }}
-            accept="image/png, image/jpeg"
-          >
-            <Button icon={<UploadOutlined />} disabled={fileList.length === 5}>
-              Cargar imagen
-            </Button>
-          </Upload>
-        </Form.Item>
-      </Form>
+        files={files}
+        setFiles={setFiles}
+        fileList={fileList}
+        setFileList={setFileList}
+        handleFinish={handleFinish}
+        isLoading={confirmLoading}
+      />
     </Modal>
   )
 }
