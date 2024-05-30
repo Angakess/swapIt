@@ -1,15 +1,15 @@
-import { ButtonCancelarTurno } from '@Turns/components/ButtonCancelarTurno'
+/* import { ButtonCancelarTurno } from '@Turns/components/ButtonCancelarTurno' */
 import { CalendarTurn } from '@Turns/components/CalendarTurn'
 import { MapWithTurn } from '@Turns/components/MapWithTurn'
-import { ModalCancelarTurno } from '@Turns/components/ModalCancelarTurno'
-import { Button, Card, Col, Flex, Row, Space } from 'antd'
+/* import { ModalCancelarTurno } from '@Turns/components/ModalCancelarTurno' */
+import { Card, Col, Flex, Row } from 'antd'
 import { SwapOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { PostListItem } from '@Posts/components'
 
 export function Turn() {
-  const [loading, setLoading] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
+/*   const [loading, setLoading] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false) */
   const [turnSelected, setTurnSelected] = useState({
     id: 0,
     date: '00/00/0000',
@@ -17,7 +17,7 @@ export function Turn() {
     confirmed: true,
   })
 
-  function ButtonConfirmTurn() {
+  /* function ButtonConfirmTurn() {
     return (
       <>
         <Button type="primary">Confirmar</Button>
@@ -30,7 +30,7 @@ export function Turn() {
         <Button>Aplazar</Button>
       </>
     )
-  }
+  } */
 
   return (
     <>
@@ -47,7 +47,7 @@ export function Turn() {
               >
                 Info del turno
               </h3>
-              <Space size={'large'}>
+              {/* <Space size={'large'}>
                 <ButtonRescheduleTurn></ButtonRescheduleTurn>
 
                 <ButtonConfirmTurn></ButtonConfirmTurn>
@@ -63,7 +63,7 @@ export function Turn() {
                   setTurnSelected={setTurnSelected}
                   buttonText="Cancelar"
                 ></ButtonCancelarTurno>
-              </Space>
+              </Space> */}
             </Flex>
           </>
         }
@@ -117,10 +117,9 @@ export function Turn() {
         </Row>
 
         <Row gutter={32} align="middle">
-          <Col span={10} style={{ display: 'flex', justifyContent: 'center' }}>
+          <Col offset={4} style={{ display: 'flex', justifyContent: 'center' }}>
             <p style={{ fontWeight: 'bold' }}>Mi publicación</p>
           </Col>
-          <Col span={12}></Col>
         </Row>
 
         <Row gutter={32} align="middle" justify="center">
@@ -236,13 +235,13 @@ export function Turn() {
         </Row>
       </Card>
 
-      <ModalCancelarTurno
+      {/* <ModalCancelarTurno
         turnEstate={turnSelected?.confirmed}
         loading={loading}
         setLoading={setLoading}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
-      ></ModalCancelarTurno>
+      ></ModalCancelarTurno> */}
     </>
   )
 }

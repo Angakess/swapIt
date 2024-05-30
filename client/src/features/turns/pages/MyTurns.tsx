@@ -1,4 +1,4 @@
-import { GetProp, InputRef, Space, Table } from 'antd'
+import { Flex, GetProp, InputRef, Table } from 'antd'
 import { ColumnsType, TableProps } from 'antd/es/table'
 import { useEffect, useRef, useState } from 'react'
 import {
@@ -7,9 +7,9 @@ import {
 } from 'antd/es/table/interface'
 
 import MOCK_TURNS from '../MOCK_TURNS.json'
-import { ButtonCancelarTurno } from '@Turns/components/ButtonCancelarTurno'
+/* import { ButtonCancelarTurno } from '@Turns/components/ButtonCancelarTurno' */
 import { ButtonVerTurno } from '@Turns/components/ButtonVerTurno'
-import { ModalCancelarTurno } from '@Turns/components/ModalCancelarTurno'
+/* import { ModalCancelarTurno } from '@Turns/components/ModalCancelarTurno' */
 import { tableColumnSearchProps } from '@Turns/functions/tableColumnSearchProps'
 
 type DataIndex = keyof DataType
@@ -36,8 +36,8 @@ export function MyTurns() {
     confirmed: false,
   })
   const [loading, setLoading] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
-  const [turnSelected, setTurnSelected] = useState<DataType>()
+/*   const [modalOpen, setModalOpen] = useState(false)
+  const [turnSelected, setTurnSelected] = useState<DataType>() */
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -154,7 +154,10 @@ export function MyTurns() {
       ),
       sorter: (a, b) => a.subsidiary.localeCompare(b.subsidiary),
     },
-    {
+
+    // TURNO NO TIENE ESTADO, SI EXISTE ES PORQUE ES UN TURNO YA NEGOCIADO, CONFIRMADO, ETC
+
+    /* {
       title: `Estado:`,
       dataIndex: 'confirmed',
       render: (confirmed) => (confirmed ? 'Confirmado' : 'Sin confirmar'),
@@ -164,19 +167,20 @@ export function MyTurns() {
       ],
       onFilter: (value, record) => record.confirmed === value,
       filterSearch: false,
-    },
+    }, */
     {
       title: 'Acciones',
       render: (_: any, record: DataType) => (
-        <Space>
+        <Flex justify='center'>
           <ButtonVerTurno turnId={record.id}></ButtonVerTurno>
-          <ButtonCancelarTurno
+          {/* <ButtonCancelarTurno
             record={record}
             setModalOpen={setModalOpen}
             setTurnSelected={setTurnSelected}
-          ></ButtonCancelarTurno>
-        </Space>
+          ></ButtonCancelarTurno> */}
+        </Flex>
       ),
+      width: "0"
     },
   ]
 
@@ -191,13 +195,13 @@ export function MyTurns() {
         onChange={handleTableChange}
         locale={{ emptyText: 'No hay turnos disponibles' }}
       />
-      <ModalCancelarTurno
+      {/* <ModalCancelarTurno
         turnEstate={turnSelected?.confirmed}
         loading={loading}
         setLoading={setLoading}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
-      ></ModalCancelarTurno>
+      ></ModalCancelarTurno> */}
     </>
   )
 }
