@@ -137,6 +137,7 @@ export function MyTurns() {
       dataIndex: 'date',
       render: (date) => `${date}`,
       ...tableColumnSearchProps('date', handleSearch, handleReset, searchInput),
+      width: "25%",
 
       //arreglar cuando este conectado al backend
       sorter: (a, b) => a.date.localeCompare(b.date),

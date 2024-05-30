@@ -170,7 +170,7 @@ export function SwapsList() {
         pagination={tableParams.pagination}
         loading={loading}
         onChange={handleTableChange}
-        locale={{ emptyText: 'No hay trueques disponibles' }}
+        locale={{ emptyText: 'No hay trueques pendientes para el día de hoy' }}
       />
     </>
   )
