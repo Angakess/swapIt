@@ -19,6 +19,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'user',
+    'rating',
+    'turn',
     'app_post',
     'subsidiary',
     'request',
