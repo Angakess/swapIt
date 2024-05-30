@@ -1,18 +1,31 @@
 import { Button } from 'antd'
-import { useCustomAlerts } from '@Common/hooks'
+import { useState } from 'react'
+import { ExchangePostModal } from '../ExchangePostModal'
+import { PostModel } from '@Common/api'
 
-export function ExchangerButtons() {
-  const alerts = useCustomAlerts()
+type ExchangerButtonsProps = {
+  post: PostModel
+}
+
+export function ExchangerButtons({ post }: ExchangerButtonsProps) {
+  const [isExchangeModalOpen, setIsExchangeModalOpen] = useState(false)
 
   return (
-    <Button
-      type="primary"
-      block
-      size="large"
-      style={{ fontWeight: '700', marginBottom: '1.5rem' }}
-      onClick={alerts.notImplementedYet}
-    >
-      Intercambiar
-    </Button>
+    <>
+      <Button
+        type="primary"
+        block
+        size="large"
+        style={{ fontWeight: '700', marginBottom: '1.5rem' }}
+        onClick={() => setIsExchangeModalOpen(true)}
+      >
+        Intercambiar
+      </Button>
+      <ExchangePostModal
+        post={post}
+        isOpen={isExchangeModalOpen}
+        setIsOpen={setIsExchangeModalOpen}
+      />
+    </>
   )
 }
