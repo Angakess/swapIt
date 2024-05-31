@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 
 import { Page404 } from '@Common/pages'
 import { getPostById } from '@Common/api/posts'
-import { PostModel } from '@Common/api/types'
+import { PostModel, StateModel } from '@Common/api/types'
 import { useAuth } from '@Common/hooks'
 import {
   ImageCarousel,
@@ -52,11 +52,22 @@ export function Post() {
 
   // Si:
   // - el post no existe
-  // - fue eliminado
+  // - fue 'bloqueado', 'rechazado' o 'eliminado'
   // - no está activo y lo está viendo un intercambiador distinto al propietario
+  // entonces: 404.
+
+  // activo:     cualquiera.
+  // pendiente:  propietario y staff (para aprobar o rechazar).
+  // suspendido: propietario.
+  // bloqueado:  nadie.
+  // rechazado:  nadie.
+  // eliminado:  nadie.
+
   if (
     post == null ||
-    post.state.name === 'eliminado' ||
+    (['bloqueado', 'rechazado', 'eliminado'] as StateModel['name'][]).includes(
+      post.state.name
+    ) ||
     (post!.user.id !== user!.id &&
       user!.role === 'EXCHANGER' &&
       post!.state.name !== 'activo')

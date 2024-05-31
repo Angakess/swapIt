@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { getCategoryList, getPostList, PostModel } from '@Common/api'
 import { PageTitle } from '@Common/components'
 import { useAuth } from '@Common/hooks'
-import { PostsList, SearchAndFilter, AddPostModal } from '@Posts/components'
+import { PostsList, SearchAndFilter, PostCreateModal } from '@Posts/components'
 
 type SelectOption = {
   label: string
@@ -127,7 +127,7 @@ export function MyPosts() {
 
       <PostsList posts={posts} isLoading={isLoading} showStatus />
 
-      <AddPostModal
+      <PostCreateModal
         isOpen={addPostIsOpen}
         setIsOpen={setAddPostIsOpen}
         setHaveNewPosts={setHaveNewPosts}

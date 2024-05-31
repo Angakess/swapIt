@@ -249,7 +249,7 @@ class PostRemove(generics.DestroyAPIView):
             print("[KWARGS] ", kwargs)
             post = Post.objects.filter(pk=kwargs['pk'])
             post.update(state=5)
-            # Agregar cancelación de peticiones
+            # TODO: Agregar cancelación de peticiones
             return Response(
                 {
                     'ok': True,
@@ -263,6 +263,60 @@ class PostRemove(generics.DestroyAPIView):
                 'messages': ['Falta ID'],
                 'data': {}
             }, status=status.HTTP_400_BAD_REQUEST)
+        
+class PostModeration(APIView):
+    def post(self,request):
+        post_id = request.data.get('post_id')
+        post = Post.objects.filter(pk=post_id).first()
+
+        state_id = request.data.get('state_id')
+        state = PostState.objects.filter(pk=state_id).first()
+
+        new_value = request.data.get('value')
+        
+        # Publicacion aceptada
+        if state.name == 'activo':
+            post.state = state
+            if new_value:
+                post.value = new_value
+            post.save()
+            return Response({
+                'ok': True,
+                'messages': ['Post aprobado exitosamente'],
+                'data': {'post': PostSerializer(post).data}
+            }, status=status.HTTP_200_OK)
+
+        elif state.name == 'rechazado': #Post rechazado
+            if post.user.rejected_posts <4:
+                post.state = state
+                post.save()
+                post.user.rejected_posts += 1
+                post.user.save()
+                return Response({
+                    'ok': True,
+                    'messages': ['Post rechazado exitosamente'],
+                    'data': {'post': PostSerializer(post, context={'request': request}).data}
+                }, status=status.HTTP_200_OK)
+            else:
+                ok = post.user.review()
+                if ok:
+                    return Response({
+                        'ok': True,
+                        'messages': ['El usuario ha alcanzado el límite de publicaciones rechazadas, ha pasado al estado de revision'],
+                        'data': {}
+                    }, status=status.HTTP_200_OK)
+                else:
+                    return Response({
+                        'ok': False,
+                        'messages': ['Error al cambiar el estado del usuario'],
+                        'data': {}
+                    }, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({
+            'ok': False,
+            'messages': ['Estado no valido'],
+            'data': {}
+        }, status=status.HTTP_400_BAD_REQUEST)
 
 
 # ----------------------POST STATE----------------------

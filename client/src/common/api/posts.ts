@@ -1,5 +1,5 @@
 import { SERVER_URL } from 'constants'
-import { PostModel } from './types'
+import { PostModel, ProductStateModel, StateModel } from './types'
 
 //
 // getPostsListsExchanger
@@ -40,8 +40,8 @@ export async function getPostsListsExchanger({
 type GetPostListOptions = {
   userId?: string | number
   search?: string
-  state?: string
-  status?: string
+  state?: ProductStateModel | ''
+  status?: StateModel['name'] | ''
   category?: string
 }
 
