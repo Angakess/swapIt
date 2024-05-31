@@ -16,7 +16,7 @@ export function PostMainButton({ post, setPost }: PostMainButtonProps) {
     if (user!.id === post.user.id) {
       return <OwnerButtons post={post} setPost={setPost} />
     }
-    return <ExchangerButtons />
+    return <ExchangerButtons post={post} />
   }
 
   return <StaffButtons post={post} />
