@@ -3,8 +3,8 @@ import { QuestionCircleOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { PostModel } from '@Common/api'
 import { SERVER_URL } from 'constants'
-import { EditPostModal } from '../EditPostModal'
 import { useState } from 'react'
+import { PostUpdateModal } from '../PostCreateUpdate'
 
 type OwnerButtonsProps = {
   post: PostModel
@@ -73,7 +73,7 @@ export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
           </Popconfirm>
         </Col>
       </Row>
-      <EditPostModal
+      <PostUpdateModal
         post={post}
         setPost={setPost}
         isOpen={isEditModalOpen}

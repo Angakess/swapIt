@@ -1,27 +1,26 @@
-import { App, Form, Modal, UploadFile } from 'antd'
+import { App, Form, UploadFile } from 'antd'
 import { useEffect, useState } from 'react'
 
-import { useAuth } from '@Common/hooks'
 import { PostModel } from '@Common/api'
 import { getPostImagesArray } from '@Posts/helpers'
 import { RcFile } from 'antd/es/upload'
 import { SERVER_URL } from 'constants'
-import { PostCreateUpdateForm } from './PostCreateUpdate/PostCreateUpdateForm'
+import { PostCreateUpdateForm } from './PostCreateUpdateForm'
+import { PostCreateUpdateModal } from './PostCreateUpdateModal'
 
-type EditPostModalProps = {
+type PostUpdateModalProps = {
   post: PostModel
   setPost: React.Dispatch<React.SetStateAction<PostModel | null>>
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export function EditPostModal({
+export function PostUpdateModal({
   post,
   setPost,
   isOpen,
   setIsOpen,
-}: EditPostModalProps) {
-  const { user } = useAuth()
+}: PostUpdateModalProps) {
   const { notification } = App.useApp()
   const [confirmLoading, setConfirmLoading] = useState(false)
 
@@ -29,29 +28,8 @@ export function EditPostModal({
   const [files, setFiles] = useState<RcFile[]>([])
   const [fileList, setFileList] = useState<UploadFile[]>([])
 
-  const handleFinish = async (values: PostCreateUpdateForm) => {
+  async function handleFinish(formData: FormData) {
     setConfirmLoading(true)
-
-    const formData = new FormData()
-    formData.append('name', values.name)
-    formData.append('description', values.description)
-    formData.append('value', values.value.toString())
-    formData.append('user', user!.id.toString())
-    formData.append('subsidiary', values.subsidiary)
-    formData.append('state', '2')
-    formData.append('category', values.category)
-    formData.append('state_product', values.state_product)
-    formData.append('stock_product', values.stock_product.toString())
-
-    // Add files to formData
-    files.forEach((file, index) => {
-      formData.append(`image_${index + 1}`, file, file.name)
-    })
-
-    // Fill the rest of image fields with null
-    for (let i = files.length; i < 5; i++) {
-      formData.append(`image_${i + 1}`, '')
-    }
 
     const resp = await fetch(`${SERVER_URL}/post/update/${post.id}/`, {
       method: 'PATCH',
@@ -123,24 +101,18 @@ export function EditPostModal({
   }, [form, post])
 
   return (
-    <Modal
+    <PostCreateUpdateModal
       title="Editar publicación"
-      open={isOpen}
-      onOk={form.submit}
-      onCancel={() => setIsOpen(false)}
-      confirmLoading={confirmLoading}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      isLoading={confirmLoading}
       okText="Editar"
-      cancelText="Cancelar"
-    >
-      <PostCreateUpdateForm
-        form={form}
-        files={files}
-        setFiles={setFiles}
-        fileList={fileList}
-        setFileList={setFileList}
-        handleFinish={handleFinish}
-        isLoading={confirmLoading}
-      />
-    </Modal>
+      form={form}
+      files={files}
+      setFiles={setFiles}
+      fileList={fileList}
+      setFileList={setFileList}
+      handleFinish={handleFinish}
+    />
   )
 }
