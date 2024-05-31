@@ -120,6 +120,7 @@ class UserRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
         fields = [
+            'id',
             'first_name',
             'last_name',
             'dni',
