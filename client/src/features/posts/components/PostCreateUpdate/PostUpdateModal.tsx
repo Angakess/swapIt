@@ -96,7 +96,7 @@ export function PostUpdateModal({
     )
 
     const initialFileList: UploadFile[] = postImages.map((imageUrl, i) => ({
-      name: `Imagen ${i + 1}${imageUrl.split('.').pop()}`,
+      name: `Imagen ${i + 1}.${imageUrl.split('.').pop()}`,
       uid: i.toString(),
       url: imageUrl,
     }))
@@ -127,7 +127,7 @@ export function PostUpdateModal({
       initialValues.subsidiary !== values.subsidiary
 
     const filesUpdated =
-      JSON.stringify(initialFormValues!.files) !== JSON.stringify(files)
+      JSON.stringify(initialFormValues!.fileList) !== JSON.stringify(fileList)
 
     const result = formUpdated || filesUpdated
     setHasBeenUpdated(result)
@@ -135,12 +135,17 @@ export function PostUpdateModal({
   }
 
   function handleCancel() {
-    setIsOpen(false)
-    form.setFieldsValue(initialFormValues!.form)
-    setFiles(initialFormValues!.files)
-    setFileList(initialFormValues!.fileList)
-    form.validateFields()
-    setHasBeenUpdated(false)
+    if (initialFormValues) {
+      form.setFieldsValue(initialFormValues.form)
+      setFiles(initialFormValues.files)
+      setFileList(initialFormValues.fileList)
+
+      setTimeout(() => {
+        setHasBeenUpdated(false)
+        form.validateFields()
+        setIsOpen(false)
+      }, 0)
+    }
   }
 
   // Cargar formulario con los datos actuales
