@@ -11,7 +11,6 @@ import { useCustomAlerts } from '@Common/hooks'
 import { PostModel } from '@Common/api'
 
 export function StaffButtons({ post }: { post: PostModel }) {
-  const { colorSuccess } = theme.useToken().token
   const alerts = useCustomAlerts()
 
   if (post.state.name === 'activo') {
@@ -32,50 +31,70 @@ export function StaffButtons({ post }: { post: PostModel }) {
   return (
     <Row gutter={[12, 12]} style={{ marginBottom: '1.5rem' }}>
       <Col xs={12}>
-        <ConfigProvider theme={{ token: { colorPrimary: colorSuccess } }}>
-          <Dropdown.Button
-            type="primary"
-            icon={<DownOutlined />}
-            menu={{
-              items: [
-                {
-                  key: '1',
-                  icon: <EditOutlined />,
-                  label: 'Editar valor y aprobar',
-                  onClick: () => console.log('[CLICK] Edtiar valor y aprobar'),
-                },
-              ],
-            }}
-            placement="bottom"
-            onClick={() => console.log('[CLICK] Aprobar')}
-          >
-            <CheckOutlined /> Aprobar
-          </Dropdown.Button>
-        </ConfigProvider>
+        <ApproveButton />
       </Col>
 
       <Col xs={12}>
-        <Button
-          type="primary"
-          danger
-          block
-          icon={<CloseOutlined />}
-          onClick={alerts.notImplementedYet}
-        >
-          Rechazar
-        </Button>
+        <RejectButton />
       </Col>
 
       <Col xs={24}>
-        <Button
-          danger
-          block
-          icon={<UserDeleteOutlined />}
-          onClick={alerts.notImplementedYet}
-        >
-          Bloquear usuario
-        </Button>
+        <BlockUserButton />
       </Col>
     </Row>
+  )
+}
+
+function ApproveButton() {
+  const { colorSuccess } = theme.useToken().token
+
+  return (
+    <ConfigProvider theme={{ token: { colorPrimary: colorSuccess } }}>
+      <Dropdown.Button
+        type="primary"
+        icon={<DownOutlined />}
+        menu={{
+          items: [
+            {
+              key: '1',
+              icon: <EditOutlined />,
+              label: 'Editar valor y aprobar',
+              onClick: () => console.log('[CLICK] Editar valor y aprobar'),
+            },
+          ],
+        }}
+        placement="bottom"
+        onClick={() => console.log('[CLICK] Aprobar')}
+      >
+        <CheckOutlined /> Aprobar
+      </Dropdown.Button>
+    </ConfigProvider>
+  )
+}
+
+function RejectButton() {
+  return (
+    <Button
+      type="primary"
+      danger
+      block
+      icon={<CloseOutlined />}
+      onClick={() => console.log('[CLICK] Rechazar')}
+    >
+      Rechazar
+    </Button>
+  )
+}
+
+function BlockUserButton() {
+  return (
+    <Button
+      danger
+      block
+      icon={<UserDeleteOutlined />}
+      onClick={() => console.log('[CLICK] Block user')}
+    >
+      Bloquear usuario
+    </Button>
   )
 }
