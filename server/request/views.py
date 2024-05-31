@@ -21,8 +21,10 @@ class RequestList(generics.ListAPIView):
         'state__name',
         'post_maker',
         'post_receive',
-        'post_maker__user__dni',
-        'post_receive__user__dni',
+        'user_maker__dni',
+        'user_receive__dni',
+        'user_maker__id',
+        'user_receive__id',
     ]
 
 
