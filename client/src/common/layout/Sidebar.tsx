@@ -12,6 +12,7 @@ import {
   ShopOutlined,
   HomeOutlined,
   AppstoreOutlined,
+  SwapOutlined,
 } from '@ant-design/icons'
 import { UserPermissions } from '@Common/types'
 import { useAuth } from '@Common/hooks'
@@ -76,6 +77,11 @@ const items: Record<UserPermissions, SidebarProps> = {
         icon: <ProductOutlined />,
       },
       {
+        key: '/requests/my-requests',
+        label: 'Mis Solicitudes',
+        icon: <SwapOutlined />,
+      },
+      {
         key: '/turns/my-turns',
         label: 'Mis Turnos',
         icon: <CalendarOutlined />,
@@ -93,7 +99,7 @@ const items: Record<UserPermissions, SidebarProps> = {
       {
         key: '/swaps',
         label: 'Trueques del día',
-        icon: <AppstoreOutlined />,
+        icon: <SwapOutlined />,
       },
     ],
   },

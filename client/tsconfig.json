@@ -30,6 +30,7 @@
       "@Posts/*": ["features/posts/*"],
       "@Turns/*": ["features/turns/*"],
       "@Swaps/*": ["features/swaps/*"],
+      "@Requests/*": ["features/requests/*"],
     }
   },
   "include": ["src"],
