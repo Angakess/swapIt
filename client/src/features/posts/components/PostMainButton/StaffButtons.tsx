@@ -192,6 +192,23 @@ function RejectButton({
   isLoading,
   setIsLoading,
 }: ModerationButtonProps) {
+  const navigate = useNavigate()
+  const { sucessNotification, errorNotification } = useCustomAlerts()
+
+  async function handleReject() {
+    setIsLoading(true)
+    const resp = await moderatePost({ postId: post.id, moderation: 'reject' })
+
+    if (resp.ok) {
+      navigate('/posts', { replace: true })
+      sucessNotification('Publicación rechazada', resp.messages.join('\n'))
+    } else {
+      errorNotification('Ocurrió un error', resp.messages.join('\n'))
+    }
+
+    setIsLoading(false)
+  }
+
   return (
     <Button
       type="primary"
@@ -199,7 +216,7 @@ function RejectButton({
       block
       icon={<CloseOutlined />}
       disabled={isLoading}
-      onClick={() => console.log('[CLICK] Rechazar')}
+      onClick={handleReject}
     >
       Rechazar
     </Button>
