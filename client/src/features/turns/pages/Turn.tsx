@@ -45,7 +45,7 @@ export function Turn() {
                   marginRight: 'auto',
                 }}
               >
-                Info del turno
+                Información del turno
               </h3>
               {/* <Space size={'large'}>
                 <ButtonRescheduleTurn></ButtonRescheduleTurn>
@@ -90,7 +90,7 @@ export function Turn() {
                 marginRight: 'auto',
               }}
             >
-              Filial
+              Filial: {turnSelected.subsidiary ? turnSelected.subsidiary : null}
             </h3>
             <MapWithTurn
               sub={{
@@ -164,7 +164,7 @@ export function Turn() {
                 state_product: 'USADO',
                 stock_product: 1,
                 image_1:
-                  'http://localhost:8000/media/post_images/pantalon-de-hombre-venture.jpg',
+                  'http://localhost:8000/media/post_images/post1_img1.jpg',
                 image_2:
                   'http://localhost:8000/media/post_images/post1_img2.jpg',
                 image_3:
@@ -220,7 +220,7 @@ export function Turn() {
                 state_product: 'USADO',
                 stock_product: 1,
                 image_1:
-                  'http://localhost:8000/media/post_images/pantalon-de-hombre-venture.jpg',
+                  'http://localhost:8000/media/post_images/post1_img1.jpg',
                 image_2:
                   'http://localhost:8000/media/post_images/post1_img2.jpg',
                 image_3:

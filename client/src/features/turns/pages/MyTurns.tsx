@@ -11,13 +11,18 @@ import MOCK_TURNS from '../MOCK_TURNS.json'
 import { ButtonVerTurno } from '@Turns/components/ButtonVerTurno'
 /* import { ModalCancelarTurno } from '@Turns/components/ModalCancelarTurno' */
 import { tableColumnSearchProps } from '@Turns/functions/tableColumnSearchProps'
+import { Link } from 'react-router-dom'
+import dayjs from 'dayjs'
 
 type DataIndex = keyof DataType
 interface DataType {
   id: number
   date: string
   subsidiary: string
-  confirmed: boolean
+  myPostId: number
+  myPostName: string
+  otherPostId: number
+  otherPostName: string
   [key: string]: string | number | boolean
 }
 interface TableParams {
@@ -28,15 +33,21 @@ interface TableParams {
 }
 
 export function MyTurns() {
+  /* const MOCK_UN_POST = {
+    id: 2,
+    name: "UN PRODUCTO"
+  } */
+
   const [data, setData] = useState<DataType[]>([])
-  const [searchText, setSearchText] = useState<DataType>({
+  const [searchText, setSearchText] = useState({
     id: 0,
     date: '',
     subsidiary: '',
-    confirmed: false,
+    myPostName: '',
+    otherPostName: '',
   })
   const [loading, setLoading] = useState(false)
-/*   const [modalOpen, setModalOpen] = useState(false)
+  /*   const [modalOpen, setModalOpen] = useState(false)
   const [turnSelected, setTurnSelected] = useState<DataType>() */
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -126,21 +137,31 @@ export function MyTurns() {
   }
 
   const columns: ColumnsType<DataType> = [
-    {
+    /* {
       title: `ID: ${searchText.id ? searchText.id : ''}`,
       dataIndex: 'id',
       render: (id) => `${id}`,
       ...tableColumnSearchProps('id', handleSearch, handleReset, searchInput),
-    },
+    }, */
     {
       title: `Fecha: ${searchText.date ? searchText.date : ''}`,
       dataIndex: 'date',
       render: (date) => `${date}`,
       ...tableColumnSearchProps('date', handleSearch, handleReset, searchInput),
-      width: "25%",
+      width: '15%',
 
       //arreglar cuando este conectado al backend
-      sorter: (a, b) => a.date.localeCompare(b.date),
+      sorter: (a, b) => {
+        const dateA = dayjs(a.date, "DD/MM/YYYY")
+        const dateB = dayjs(b.date, "DD/MM/YYYY")
+        if(dateA.isBefore(dateA)){
+          return -1
+        }
+        if(dateA.isAfter(dateB)){
+          return 1
+        }
+        return 0
+      },/* a.date.localeCompare(b.date) */
       defaultSortOrder: 'ascend',
     },
     {
@@ -154,6 +175,39 @@ export function MyTurns() {
         searchInput
       ),
       sorter: (a, b) => a.subsidiary.localeCompare(b.subsidiary),
+      width: '25%',
+    },
+    {
+      title: `Mi publicación: ${searchText.myPostName}`,
+      dataIndex: 'myPostName',
+      render: (myPostName, record) => (
+        <Link to={`/posts/${record.myPostId}`}>
+          <p>{myPostName}</p>
+        </Link>
+      ),
+      ...tableColumnSearchProps(
+        'myPostName',
+        handleSearch,
+        handleReset,
+        searchInput
+      ),
+      width: '25%',
+    },
+    {
+      title: `Otra publicación: ${searchText.otherPostName}`,
+      dataIndex: 'otherPostName',
+      render: (otherPostName, record) => (
+        <Link to={`/posts/${record.id}`}>
+          <p>{otherPostName}</p>
+        </Link>
+      ),
+      ...tableColumnSearchProps(
+        'otherPostName',
+        handleSearch,
+        handleReset,
+        searchInput
+      ),
+      width: '25%',
     },
 
     // TURNO NO TIENE ESTADO, SI EXISTE ES PORQUE ES UN TURNO YA NEGOCIADO, CONFIRMADO, ETC
@@ -172,7 +226,7 @@ export function MyTurns() {
     {
       title: 'Acciones',
       render: (_: any, record: DataType) => (
-        <Flex justify='center'>
+        <Flex justify="center">
           <ButtonVerTurno turnId={record.id}></ButtonVerTurno>
           {/* <ButtonCancelarTurno
             record={record}
@@ -181,7 +235,7 @@ export function MyTurns() {
           ></ButtonCancelarTurno> */}
         </Flex>
       ),
-      width: "0"
+      width: '0',
     },
   ]
 

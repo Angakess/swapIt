@@ -19,7 +19,10 @@ interface DataType {
   id: number
   date: string
   subsidiary: string
-  confirmed: boolean
+  myPostId: number
+  myPostName: string
+  otherPostId: number
+  otherPostName: string
   [key: string]: string | number | boolean
 }
 
