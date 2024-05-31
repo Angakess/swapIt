@@ -1,9 +1,12 @@
-import { Button, Col, Row, theme } from 'antd'
+import { Button, Col, ConfigProvider, Dropdown, Row, theme } from 'antd'
 import {
+  DownOutlined,
   CheckOutlined,
   CloseOutlined,
   UserDeleteOutlined,
+  EditOutlined,
 } from '@ant-design/icons'
+
 import { useCustomAlerts } from '@Common/hooks'
 import { PostModel } from '@Common/api'
 
@@ -29,16 +32,28 @@ export function StaffButtons({ post }: { post: PostModel }) {
   return (
     <Row gutter={[12, 12]} style={{ marginBottom: '1.5rem' }}>
       <Col xs={12}>
-        <Button
-          type="primary"
-          block
-          icon={<CheckOutlined />}
-          style={{ backgroundColor: colorSuccess, boxShadow: 'none' }}
-          onClick={alerts.notImplementedYet}
-        >
-          Aprobar
-        </Button>
+        <ConfigProvider theme={{ token: { colorPrimary: colorSuccess } }}>
+          <Dropdown.Button
+            type="primary"
+            icon={<DownOutlined />}
+            menu={{
+              items: [
+                {
+                  key: '1',
+                  icon: <EditOutlined />,
+                  label: 'Editar valor y aprobar',
+                  onClick: () => console.log('[CLICK] Edtiar valor y aprobar'),
+                },
+              ],
+            }}
+            placement="bottom"
+            onClick={() => console.log('[CLICK] Aprobar')}
+          >
+            <CheckOutlined /> Aprobar
+          </Dropdown.Button>
+        </ConfigProvider>
       </Col>
+
       <Col xs={12}>
         <Button
           type="primary"
@@ -50,6 +65,7 @@ export function StaffButtons({ post }: { post: PostModel }) {
           Rechazar
         </Button>
       </Col>
+
       <Col xs={24}>
         <Button
           danger
