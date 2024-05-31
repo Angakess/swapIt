@@ -1,3 +1,9 @@
+export type GenericApiResponse<T> = {
+  ok: boolean
+  data: T
+  messages: string[]
+}
+
 export type UserModel = {
   id: number
   first_name: string
