@@ -14,5 +14,31 @@ export function useCustomAlerts() {
     })
   }
 
-  return { notImplementedYet }
+  function sucessNotification(
+    message: React.ReactNode,
+    description: React.ReactNode
+  ) {
+    notification.success({
+      message,
+      description,
+      placement: 'topRight',
+      duration: 3,
+      style: { whiteSpace: 'pre-line' },
+    })
+  }
+
+  function errorNotification(
+    message: React.ReactNode,
+    description: React.ReactNode
+  ) {
+    notification.error({
+      message,
+      description,
+      placement: 'topRight',
+      duration: 3,
+      style: { whiteSpace: 'pre-line' },
+    })
+  }
+
+  return { notImplementedYet, sucessNotification, errorNotification }
 }
