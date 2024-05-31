@@ -62,3 +62,21 @@ export type PostModel = {
   image_4: string | null
   image_5: string | null
 }
+
+export type PostBasicModel = {
+  id: number
+  name: string
+  description: string
+  value: number
+  user: number
+  subsidiary: number
+  state: number
+  category: number
+  state_product: ProductStateModel
+  stock_product: number
+  image_1: string
+  image_2: string | null
+  image_3: string | null
+  image_4: string | null
+  image_5: string | null
+}
