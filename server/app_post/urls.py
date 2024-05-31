@@ -17,6 +17,7 @@ urlpatterns = [
 
     path('post/list/', views.PostLists.as_view(),),
     path('post/list/<int:id>/', views.PostListsExchanger.as_view()),
+    path('post/moderate/', views.PostModeration.as_view()),
     # ------------------- VISTAS DE POST STATE -------------------
     path('poststate/list/', views.PostStateList.as_view()),
     path('poststate/create/', views.PostStateCreate.as_view())

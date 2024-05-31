@@ -3,6 +3,7 @@ from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin,
                                         BaseUserManager)
 from subsidiary.models import Subsidiary
 from django.db.models import Avg
+from common.email import send_email_to_user
 
 
 class Role(models.TextChoices):
@@ -55,6 +56,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True, null=False)
     date_of_birth = models.DateField(null=False, blank=True)
     phone_number = models.CharField(max_length=30, null=False)
+    rejected_posts = models.IntegerField(default=0)
     score = models.IntegerField(default=0)
     id_subsidiary = models.ForeignKey(
         Subsidiary, blank=True, null=True, on_delete=models.DO_NOTHING, related_name='users'
@@ -71,8 +73,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         max_length=10, choices=Role.choices, default=Role.EXCHANGER,
         null=False)
 
-    # TODO: ADD STATE USER
-
     objects = UserAccountManager()
 
     USERNAME_FIELD = 'dni'
@@ -88,6 +88,57 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     @property
     def rating(self):
         return self.ratings_received.aggregate(prom=Avg('score'))['prom'] or 0
+
+
+    def review(self):
+        #BAJA DE TURNOS
+        turns_made = self.turns_made.all()
+        received_emails = list(turns_made.values_list('user_received__email', flat=True).distinct())
+
+        turns_received = self.turns_received.all()
+        made_emails = list(turns_received.values_list('user_maker__email', flat=True).distinct())
+
+        try:
+            send_email_to_user(
+                email=received_emails + made_emails,
+                subject='Turnos cancelados del usuario ' + self.full_name,
+                message= 'Los turnos con el usuario' + self.full_name + 
+                    ' han sido cancelados, por lo que no debera asistir \n' +
+                    'Para saber sus proximos turnos, puede revisarlos en la aplicación. \n'
+            )
+
+            requests_receive = self.requests_receive.all()
+            requests_send = self.requests_send.all()
+
+            request_received_emails = list(requests_receive.values_list('user_maker__email', flat=True).distinct())
+            send_email_to_user(
+                email=request_received_emails,
+                subject='Solicitud de intercambio cancelada',
+                message='La solicitud de intercambio con el usuario ' + self.full_name + ' ha sido cancelada debido a que la publicacion del usuario se ha bloqueado. \n'
+            )
+
+            send_email_to_user(
+                email = [self.email],
+                subject='Cuenta en revisión',
+                message='Su cuenta ha pasado a un estado de revisión por haber excedido el límite de publicaciones rechazadas. \n'
+            )
+        except Exception as e:
+            print(e)
+            return False
+
+        turns_made.delete()
+        turns_received.delete()
+        requests_receive.delete()
+        requests_send.delete()
+
+        # BAJA DE PUBLICACIONES
+        posts = self.posts.all()
+        posts.update(state=4)
+        
+        self.state = UserState.objects.get(id=2)
+        self.save()
+
+        return True
 
     def __str__(self):
         return self.full_name
