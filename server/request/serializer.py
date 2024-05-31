@@ -1,4 +1,3 @@
-
 from rest_framework import serializers
 from app_post.serializer import PostRequestSerializer
 from request.models import Request, RequestState
@@ -18,6 +17,11 @@ class RequestSerializer(serializers.ModelSerializer):
     def get_state(self, obj):
         return obj.state.name
 
+    class Meta:
+        model = Request
+        fields = '__all__'
+
+class RequestCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
         fields = '__all__'

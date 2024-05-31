@@ -1,0 +1,26 @@
+[
+    {
+        "model": "request.requeststate",
+        "fields": {
+            "name": "aceptado"
+        }
+    },
+    {
+        "model": "request.requeststate",
+        "fields": {
+            "name": "pendiente"
+        }
+    },
+    {
+        "model": "request.requeststate",
+        "fields": {
+            "name": "rechazado"
+        }
+    },
+    {
+        "model": "request.requeststate",
+        "fields": {
+            "name": "semi-aceptado"
+        }
+    }
+]
