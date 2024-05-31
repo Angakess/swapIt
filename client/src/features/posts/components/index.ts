@@ -1,4 +1,3 @@
-export * from './AddPostModal'
 export * from './ExchangePostModal'
 export * from './ImageCarousel'
 export * from './PostCreateUpdate'

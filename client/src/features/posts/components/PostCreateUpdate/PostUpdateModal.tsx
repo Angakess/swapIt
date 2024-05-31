@@ -22,7 +22,7 @@ export function PostUpdateModal({
   setIsOpen,
 }: PostUpdateModalProps) {
   const { notification } = App.useApp()
-  const [confirmLoading, setConfirmLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const [form] = Form.useForm<PostCreateUpdateForm>()
   const [files, setFiles] = useState<RcFile[]>([])
@@ -36,7 +36,7 @@ export function PostUpdateModal({
   const [hasBeenUpdated, setHasBeenUpdated] = useState<boolean>(false)
 
   async function handleFinish(formData: FormData) {
-    setConfirmLoading(true)
+    setIsLoading(true)
 
     const resp = await fetch(`${SERVER_URL}/post/update/${post.id}/`, {
       method: 'PATCH',
@@ -64,7 +64,7 @@ export function PostUpdateModal({
         duration: 3,
       })
     }
-    setConfirmLoading(false)
+    setIsLoading(false)
   }
 
   const loadInitialValues = useCallback(async () => {
@@ -153,7 +153,7 @@ export function PostUpdateModal({
       title="Editar publicación"
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      isLoading={confirmLoading}
+      isLoading={isLoading}
       okText="Editar"
       form={form}
       files={files}
