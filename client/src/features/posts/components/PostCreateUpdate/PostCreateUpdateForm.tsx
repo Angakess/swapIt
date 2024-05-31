@@ -10,6 +10,7 @@ import {
   Row,
   Select,
   Upload,
+  FormProps,
 } from 'antd'
 import { RcFile, UploadFile } from 'antd/es/upload'
 import React, { useEffect, useState } from 'react'
@@ -52,6 +53,7 @@ type PostCreateUpdateFormProps = {
   setFileList: React.Dispatch<React.SetStateAction<UploadFile[]>>
   handleFinish: (values: PostCreateUpdateForm) => void
   isLoading: boolean
+  formProps?: FormProps
 }
 
 export function PostCreateUpdateForm({
@@ -62,6 +64,7 @@ export function PostCreateUpdateForm({
   setFileList,
   handleFinish,
   isLoading,
+  formProps,
 }: PostCreateUpdateFormProps) {
   const [categoriesOptions, setCategoriesOptions] = useState<SelectOption[]>([])
   const [subsidiaryOptions, setSubsidiaryOptions] = useState<SelectOption[]>([])
@@ -79,6 +82,7 @@ export function PostCreateUpdateForm({
       form={form}
       onFinish={handleFinish}
       disabled={isLoading}
+      {...formProps}
     >
       <Form.Item
         label="Nombre"

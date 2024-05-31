@@ -1,4 +1,4 @@
-import { FormInstance, Modal } from 'antd'
+import { FormInstance, FormProps, Modal, ModalProps } from 'antd'
 import { PostCreateUpdateForm } from './PostCreateUpdateForm'
 import { RcFile, UploadFile } from 'antd/es/upload'
 import { useAuth } from '@Common/hooks'
@@ -15,6 +15,8 @@ type PostCreateUpdateModalProps = {
   isLoading: boolean
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  modalProps?: ModalProps
+  formProps?: FormProps
 }
 
 export function PostCreateUpdateModal({
@@ -29,6 +31,8 @@ export function PostCreateUpdateModal({
   isLoading,
   isOpen,
   setIsOpen,
+  modalProps,
+  formProps,
 }: PostCreateUpdateModalProps) {
   const { user } = useAuth()
 
@@ -66,6 +70,7 @@ export function PostCreateUpdateModal({
       confirmLoading={isLoading}
       okText={okText}
       cancelText="Cancelar"
+      {...modalProps}
     >
       <PostCreateUpdateForm
         form={form}
@@ -75,6 +80,7 @@ export function PostCreateUpdateModal({
         setFileList={setFileList}
         handleFinish={onFinish}
         isLoading={isLoading}
+        formProps={formProps}
       />
     </Modal>
   )

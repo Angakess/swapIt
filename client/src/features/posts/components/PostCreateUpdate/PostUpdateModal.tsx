@@ -1,5 +1,5 @@
 import { App, Form, UploadFile } from 'antd'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { PostModel } from '@Common/api'
 import { getPostImagesArray } from '@Posts/helpers'
@@ -27,6 +27,13 @@ export function PostUpdateModal({
   const [form] = Form.useForm<PostCreateUpdateForm>()
   const [files, setFiles] = useState<RcFile[]>([])
   const [fileList, setFileList] = useState<UploadFile[]>([])
+
+  const [initialFormValues, setInitialFormValues] = useState<{
+    form: PostCreateUpdateForm
+    files: RcFile[]
+    fileList: UploadFile[]
+  }>()
+  const [hasBeenUpdated, setHasBeenUpdated] = useState<boolean>(false)
 
   async function handleFinish(formData: FormData) {
     setConfirmLoading(true)
@@ -60,36 +67,10 @@ export function PostUpdateModal({
     setConfirmLoading(false)
   }
 
-  // Cargar formulario con los datos actuales
-  useEffect(() => {
-    ;(async () => {
-      setFileList(
-        getPostImagesArray(post).map((imageUrl, i) => ({
-          name: `Imagen ${i + 1}`,
-          uid: i.toString(),
-          url: imageUrl,
-        }))
-      )
+  const loadInitialValues = useCallback(async () => {
+    const postImages = getPostImagesArray(post)
 
-      const imageFiles: RcFile[] = await Promise.all(
-        getPostImagesArray(post).map(async (imageUrl, i) => {
-          const resp = await fetch(imageUrl)
-          const blob = await resp.blob()
-
-          const file: RcFile = new File(
-            [blob],
-            `Imagen_${i + 1}.${blob.type.split('/')[1]}`,
-            { type: blob.type }
-          ) as RcFile
-          file.uid = i.toString()
-          return file
-        })
-      )
-
-      setFiles(imageFiles)
-    })()
-
-    form.setFieldsValue({
+    const initialFormValues: PostCreateUpdateForm = {
       name: post.name,
       description: post.description,
       value: post.value,
@@ -97,8 +78,75 @@ export function PostUpdateModal({
       state_product: post.state_product,
       category: post.category.active ? post.category.id.toString() : '',
       subsidiary: post.subsidiary.active ? post.subsidiary.id.toString() : '',
+    }
+
+    const initialImageFiles: RcFile[] = await Promise.all(
+      postImages.map(async (imageUrl, i) => {
+        const resp = await fetch(imageUrl)
+        const blob = await resp.blob()
+
+        const file: RcFile = new File(
+          [blob],
+          `Imagen_${i + 1}.${blob.type.split('/')[1]}`,
+          { type: blob.type }
+        ) as RcFile
+        file.uid = i.toString()
+        return file
+      })
+    )
+
+    const initialFileList: UploadFile[] = postImages.map((imageUrl, i) => ({
+      name: `Imagen ${i + 1}${imageUrl.split('.').pop()}`,
+      uid: i.toString(),
+      url: imageUrl,
+    }))
+
+    form.setFieldsValue(initialFormValues)
+    setFiles(initialImageFiles)
+    setFileList(initialFileList)
+
+    setInitialFormValues({
+      form: initialFormValues,
+      files: initialImageFiles,
+      fileList: initialFileList,
     })
   }, [form, post])
+
+  const checkIfUpdated = (values: PostCreateUpdateForm): boolean => {
+    const initialValues = initialFormValues!.form
+
+    // Comparar campos del formulario individualmente
+    const formUpdated =
+      initialValues.name !== values.name ||
+      initialValues.description.replace(/\r\n/g, '\n') !==
+        values.description.replace(/\r\n/g, '\n') ||
+      initialValues.value !== values.value ||
+      initialValues.stock_product !== values.stock_product ||
+      initialValues.state_product !== values.state_product ||
+      initialValues.category !== values.category ||
+      initialValues.subsidiary !== values.subsidiary
+
+    const filesUpdated =
+      JSON.stringify(initialFormValues!.files) !== JSON.stringify(files)
+
+    const result = formUpdated || filesUpdated
+    setHasBeenUpdated(result)
+    return result
+  }
+
+  function handleCancel() {
+    setIsOpen(false)
+    form.setFieldsValue(initialFormValues!.form)
+    setFiles(initialFormValues!.files)
+    setFileList(initialFormValues!.fileList)
+    form.validateFields()
+    setHasBeenUpdated(false)
+  }
+
+  // Cargar formulario con los datos actuales
+  useEffect(() => {
+    loadInitialValues()
+  }, [loadInitialValues])
 
   return (
     <PostCreateUpdateModal
@@ -113,6 +161,13 @@ export function PostUpdateModal({
       fileList={fileList}
       setFileList={setFileList}
       handleFinish={handleFinish}
+      modalProps={{
+        okButtonProps: { disabled: !hasBeenUpdated },
+        cancelButtonProps: { onClick: handleCancel },
+      }}
+      formProps={{
+        onValuesChange: (_changedValues, values) => checkIfUpdated(values),
+      }}
     />
   )
 }
