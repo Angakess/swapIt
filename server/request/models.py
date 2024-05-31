@@ -21,3 +21,4 @@ class Request(models.Model):
                                         related_name='requests_receive', null=False)
     state = models.ForeignKey(RequestState, on_delete=models.DO_NOTHING,
                               related_name='requests')
+    rejected = models.IntegerField(default=0)
