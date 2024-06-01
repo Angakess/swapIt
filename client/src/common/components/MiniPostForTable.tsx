@@ -1,7 +1,7 @@
 import { Image, Space } from 'antd'
 import { Link } from 'react-router-dom'
 
-export function MiniPostForList({
+export function MiniPostForTable({
   record,
 }: {
   record: { postId: number; postImg: string; postName: string }

@@ -13,6 +13,7 @@ import { ButtonVerTurno } from '@Turns/components/ButtonVerTurno'
 import { tableColumnSearchProps } from '@Turns/functions/tableColumnSearchProps'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
+import { MiniPostForTable } from '@Common/components'
 
 type DataIndex = keyof DataType
 interface DataType {
@@ -21,8 +22,10 @@ interface DataType {
   subsidiary: string
   myPostId: number
   myPostName: string
+  myPostImage: string
   otherPostId: number
   otherPostName: string
+  otherPostImage: string
   [key: string]: string | number | boolean
 }
 interface TableParams {
@@ -152,16 +155,16 @@ export function MyTurns() {
 
       //arreglar cuando este conectado al backend
       sorter: (a, b) => {
-        const dateA = dayjs(a.date, "DD/MM/YYYY")
-        const dateB = dayjs(b.date, "DD/MM/YYYY")
-        if(dateA.isBefore(dateA)){
+        const dateA = dayjs(a.date, 'DD/MM/YYYY')
+        const dateB = dayjs(b.date, 'DD/MM/YYYY')
+        if (dateA.isBefore(dateA)) {
           return -1
         }
-        if(dateA.isAfter(dateB)){
+        if (dateA.isAfter(dateB)) {
           return 1
         }
         return 0
-      },/* a.date.localeCompare(b.date) */
+      } /* a.date.localeCompare(b.date) */,
       defaultSortOrder: 'ascend',
     },
     {
@@ -181,9 +184,13 @@ export function MyTurns() {
       title: `Mi publicación: ${searchText.myPostName}`,
       dataIndex: 'myPostName',
       render: (myPostName, record) => (
-        <Link to={`/posts/${record.myPostId}`}>
-          <p>{myPostName}</p>
-        </Link>
+        <MiniPostForTable
+          record={{
+            postId: record.myPostId,
+            postImg: record.myPostImage,
+            postName: myPostName,
+          }}
+        ></MiniPostForTable>
       ),
       ...tableColumnSearchProps(
         'myPostName',
@@ -197,9 +204,13 @@ export function MyTurns() {
       title: `Otra publicación: ${searchText.otherPostName}`,
       dataIndex: 'otherPostName',
       render: (otherPostName, record) => (
-        <Link to={`/posts/${record.id}`}>
-          <p>{otherPostName}</p>
-        </Link>
+        <MiniPostForTable
+          record={{
+            postId: record.otherPostId,
+            postImg: record.otherPostImage,
+            postName: otherPostName,
+          }}
+        ></MiniPostForTable>
       ),
       ...tableColumnSearchProps(
         'otherPostName',

@@ -21,8 +21,10 @@ interface DataType {
   subsidiary: string
   myPostId: number
   myPostName: string
+  myPostImage: string
   otherPostId: number
   otherPostName: string
+  otherPostImage: string
   [key: string]: string | number | boolean
 }
 

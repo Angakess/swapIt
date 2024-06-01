@@ -15,7 +15,8 @@ import { useEffect, useRef, useState } from 'react'
 import { tableColumnSearchProps } from '@Requests/functions/tableColumnSearchProps'
 import { useAuth } from '@Common/hooks'
 import { Link } from 'react-router-dom'
-import { MiniPostForList } from './MiniPostForList'
+import { MiniPostForTable } from '@Common/components'
+
 
 type RequestIndex = keyof RequestType
 interface RequestType {
@@ -233,13 +234,13 @@ export function TableMyPetitions() {
       ),
       width: '40%',
       render: (_, record) => (
-        <MiniPostForList
+        <MiniPostForTable
           record={{
             postId: record.myPostId,
             postImg: record.myPostImage,
             postName: record.myPostName,
           }}
-        ></MiniPostForList>
+        ></MiniPostForTable>
       ),
     },
     {
@@ -253,13 +254,13 @@ export function TableMyPetitions() {
       ),
       width: '40%',
       render: (_, record) => (
-        <MiniPostForList
+        <MiniPostForTable
           record={{
             postId: record.otherPostId,
             postImg: record.otherPostImage,
             postName: record.otherPostName,
           }}
-        ></MiniPostForList>
+        ></MiniPostForTable>
       ),
     },
     {
