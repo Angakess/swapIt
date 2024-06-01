@@ -252,7 +252,7 @@ export function MyTurns() {
 
   return (
     <>
-    <PageTitle title='Mis turnos' />
+      <PageTitle title="Mis turnos" />
       <Table
         columns={columns}
         rowKey={(record) => record.id}
