@@ -5,8 +5,10 @@
     "subsidiary": "Silur Airport",
     "myPostId": 1,
     "myPostName": "American black bear",
+    "myPostImage": "",
     "otherPostId": 1,
-    "otherPostName": "Heron, grey"
+    "otherPostName": "Heron, grey",
+    "otherPostImage": ""
   },
   {
     "id": 2,
@@ -14,8 +16,10 @@
     "subsidiary": "Luau Airport",
     "myPostId": 2,
     "myPostName": "Raven, cape",
+    "myPostImage": "",
     "otherPostId": 2,
-    "otherPostName": "Dark-winged trumpeter"
+    "otherPostName": "Dark-winged trumpeter",
+    "otherPostImage": ""
   },
   {
     "id": 3,
@@ -23,8 +27,10 @@
     "subsidiary": "Balmaceda Airport",
     "myPostId": 3,
     "myPostName": "Crested screamer",
+    "myPostImage": "",
     "otherPostId": 3,
-    "otherPostName": "Downy woodpecker"
+    "otherPostName": "Downy woodpecker",
+    "otherPostImage": ""
   },
   {
     "id": 4,
@@ -32,8 +38,10 @@
     "subsidiary": "King Hussein Air College",
     "myPostId": 4,
     "myPostName": "Lesser masked weaver",
+    "myPostImage": "",
     "otherPostId": 4,
-    "otherPostName": "Egret, cattle"
+    "otherPostName": "Egret, cattle",
+    "otherPostImage": ""
   },
   {
     "id": 5,
@@ -41,8 +49,10 @@
     "subsidiary": "Melangguane Airport",
     "myPostId": 5,
     "myPostName": "Black vulture",
+    "myPostImage": "",
     "otherPostId": 5,
-    "otherPostName": "Wallaby, river"
+    "otherPostName": "Wallaby, river",
+    "otherPostImage": ""
   },
   {
     "id": 6,
@@ -50,8 +60,10 @@
     "subsidiary": "Porto Seguro Airport",
     "myPostId": 6,
     "myPostName": "Australian brush turkey",
+    "myPostImage": "",
     "otherPostId": 6,
-    "otherPostName": "Tarantula"
+    "otherPostName": "Tarantula",
+    "otherPostImage": ""
   },
   {
     "id": 7,
@@ -59,8 +71,10 @@
     "subsidiary": "Destin Executive Airport",
     "myPostId": 7,
     "myPostName": "Superb starling",
+    "myPostImage": "",
     "otherPostId": 7,
-    "otherPostName": "Woodpecker, red-headed"
+    "otherPostName": "Woodpecker, red-headed",
+    "otherPostImage": ""
   },
   {
     "id": 8,
@@ -68,8 +82,10 @@
     "subsidiary": "Stockholm Västerås Airport",
     "myPostId": 8,
     "myPostName": "Eland, common",
+    "myPostImage": "",
     "otherPostId": 8,
-    "otherPostName": "Tawny frogmouth"
+    "otherPostName": "Tawny frogmouth",
+    "otherPostImage": ""
   },
   {
     "id": 9,
@@ -77,8 +93,10 @@
     "subsidiary": "Bouarfa Airport",
     "myPostId": 9,
     "myPostName": "Crowned eagle",
+    "myPostImage": "",
     "otherPostId": 9,
-    "otherPostName": "Short-nosed bandicoot"
+    "otherPostName": "Short-nosed bandicoot",
+    "otherPostImage": ""
   },
   {
     "id": 10,
@@ -86,8 +104,10 @@
     "subsidiary": "Innamincka Airport",
     "myPostId": 10,
     "myPostName": "Kirk's dik dik",
+    "myPostImage": "",
     "otherPostId": 10,
-    "otherPostName": "Red-billed toucan"
+    "otherPostName": "Red-billed toucan",
+    "otherPostImage": ""
   },
   {
     "id": 11,
@@ -95,8 +115,10 @@
     "subsidiary": "Gloucestershire Airport",
     "myPostId": 11,
     "myPostName": "Coyote",
+    "myPostImage": "",
     "otherPostId": 11,
-    "otherPostName": "Turaco, violet-crested"
+    "otherPostName": "Turaco, violet-crested",
+    "otherPostImage": ""
   },
   {
     "id": 12,
@@ -104,8 +126,10 @@
     "subsidiary": "Robe Airport",
     "myPostId": 12,
     "myPostName": "Giant armadillo",
+    "myPostImage": "",
     "otherPostId": 12,
-    "otherPostName": "Polecat, african"
+    "otherPostName": "Polecat, african",
+    "otherPostImage": ""
   },
   {
     "id": 13,
@@ -113,8 +137,10 @@
     "subsidiary": "Nevatim Air Base",
     "myPostId": 13,
     "myPostName": "Red-tailed phascogale",
+    "myPostImage": "",
     "otherPostId": 13,
-    "otherPostName": "Possum, western pygmy"
+    "otherPostName": "Possum, western pygmy",
+    "otherPostImage": ""
   },
   {
     "id": 14,
@@ -122,8 +148,10 @@
     "subsidiary": "Brigadier D.H.E. Ruiz Airport",
     "myPostId": 14,
     "myPostName": "North American beaver",
+    "myPostImage": "",
     "otherPostId": 14,
-    "otherPostName": "Grenadier, purple"
+    "otherPostName": "Grenadier, purple",
+    "otherPostImage": ""
   },
   {
     "id": 15,
@@ -131,8 +159,10 @@
     "subsidiary": "Santo Ângelo Airport",
     "myPostId": 15,
     "myPostName": "American buffalo",
+    "myPostImage": "",
     "otherPostId": 15,
-    "otherPostName": "Least chipmunk"
+    "otherPostName": "Least chipmunk",
+    "otherPostImage": ""
   },
   {
     "id": 16,
@@ -140,8 +170,10 @@
     "subsidiary": "Novy Urengoy Airport",
     "myPostId": 16,
     "myPostName": "Tokay gecko",
+    "myPostImage": "",
     "otherPostId": 16,
-    "otherPostName": "Curlew, black"
+    "otherPostName": "Curlew, black",
+    "otherPostImage": ""
   },
   {
     "id": 17,
@@ -149,8 +181,10 @@
     "subsidiary": "La Primavera Airport",
     "myPostId": 17,
     "myPostName": "Australian spiny anteater",
+    "myPostImage": "",
     "otherPostId": 17,
-    "otherPostName": "Gray duiker"
+    "otherPostName": "Gray duiker",
+    "otherPostImage": ""
   },
   {
     "id": 18,
@@ -158,8 +192,10 @@
     "subsidiary": "Norwich International Airport",
     "myPostId": 18,
     "myPostName": "Mongoose, small indian",
+    "myPostImage": "",
     "otherPostId": 18,
-    "otherPostName": "Wallaby, river"
+    "otherPostName": "Wallaby, river",
+    "otherPostImage": ""
   },
   {
     "id": 19,
@@ -167,8 +203,10 @@
     "subsidiary": "Bardufoss Airport",
     "myPostId": 19,
     "myPostName": "Crow, pied",
+    "myPostImage": "",
     "otherPostId": 19,
-    "otherPostName": "Goose, canada"
+    "otherPostName": "Goose, canada",
+    "otherPostImage": ""
   },
   {
     "id": 20,
@@ -176,8 +214,10 @@
     "subsidiary": "Alakanuk Airport",
     "myPostId": 20,
     "myPostName": "Dragon, netted rock",
+    "myPostImage": "",
     "otherPostId": 20,
-    "otherPostName": "Marmot, yellow-bellied"
+    "otherPostName": "Marmot, yellow-bellied",
+    "otherPostImage": ""
   },
   {
     "id": 21,
@@ -185,43 +225,9 @@
     "subsidiary": "Virginia Airport",
     "myPostId": 21,
     "myPostName": "Goose, canada",
+    "myPostImage": "",
     "otherPostId": 21,
-    "otherPostName": "Flicker, field"
-  },
-  {
-    "id": 22,
-    "date": "22/10/2023",
-    "subsidiary": "Tep Tep Airport",
-    "myPostId": 22,
-    "myPostName": "Wagtail, african pied",
-    "otherPostId": 22,
-    "otherPostName": "Goose, canada"
-  },
-  {
-    "id": 23,
-    "date": "07/11/2023",
-    "subsidiary": "Khrabrovo Airport",
-    "myPostId": 23,
-    "myPostName": "Bohor reedbuck",
-    "otherPostId": 23,
-    "otherPostName": "Red lava crab"
-  },
-  {
-    "id": 24,
-    "date": "20/12/2023",
-    "subsidiary": "Daegu Airport",
-    "myPostId": 24,
-    "myPostName": "Painted stork",
-    "otherPostId": 24,
-    "otherPostName": "Mourning collared dove"
-  },
-  {
-    "id": 25,
-    "date": "05/12/2023",
-    "subsidiary": "Fria Airport",
-    "myPostId": 25,
-    "myPostName": "Bustard, stanley",
-    "otherPostId": 25,
-    "otherPostName": "Glossy ibis"
+    "otherPostName": "Flicker, field",
+    "otherPostImage": ""
   }
 ]
