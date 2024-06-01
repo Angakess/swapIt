@@ -13,7 +13,7 @@ import { ButtonVerTurno } from '@Turns/components/ButtonVerTurno'
 import { tableColumnSearchProps } from '@Turns/functions/tableColumnSearchProps'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
-import { MiniPostForTable } from '@Common/components'
+import { MiniPostForTable, PageTitle } from '@Common/components'
 
 type DataIndex = keyof DataType
 interface DataType {
@@ -252,6 +252,7 @@ export function MyTurns() {
 
   return (
     <>
+    <PageTitle title='Mis turnos' />
       <Table
         columns={columns}
         rowKey={(record) => record.id}
