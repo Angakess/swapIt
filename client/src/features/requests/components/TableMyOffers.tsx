@@ -210,9 +210,6 @@ export function TableMyOffers() {
       filters: [
         { text: 'Pendiente', value: 'Pendiente' },
         { text: 'Semi-aceptado', value: 'Semi-aceptado' },
-
-        //sacar este despues, solo esta para probar los fixtures (los fixtures de requests tiene errores)
-        { text: 'Aceptado', value: 'Aceptado' },
       ],
       onFilter: (value, record) => record.state === value,
       filterSearch: false,
