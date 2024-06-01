@@ -22,3 +22,5 @@ class Request(models.Model):
     state = models.ForeignKey(RequestState, on_delete=models.DO_NOTHING,
                               related_name='requests')
     rejected = models.IntegerField(default=0)
+
+    day_of_request = models.DateField(null=True,blank=True)

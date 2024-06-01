@@ -11,6 +11,8 @@ from user.models import UserAccount
 from app_post.models import Post
 from .models import RequestState
 from rest_framework.response import Response
+from datetime import datetime
+from common.email import send_email_to_user
 
 
 class RequestList(generics.ListAPIView):
@@ -174,7 +176,7 @@ class RequestCreate(APIView):
                     {
                         "ok": True,
                         "messages": ["Solicitud creada con éxito"],
-                        "data": {"Request": RequestSerializer(request_object).data},
+                        "data": {"request": RequestSerializer(request_object).data},
                     },
                     status=status.HTTP_200_OK,
                 )
@@ -194,6 +196,9 @@ class RequestAccept(APIView):
     def post(self, request):
         data = request.data
         request_id = data['request_id']
+        date_of_request = data['date_of_request']
+        date = datetime.strptime(date_of_request, "%Y-%m-%d").date()
+
         request_object = Request.objects.filter(id=request_id).first()
         if request_object is None:
             return Response(
@@ -201,17 +206,40 @@ class RequestAccept(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # TODO: Crear turno para esta solicitud aceptada
-        # TODO: Crear la logica de la aceptacion de fechas y demas.
-        # Semi aceptacion del intercambio
+        # Traigo todos los turnos que sean en esa filial y en esa fecha para evaluar si hay cupos disponibles.
+        subsidiary_day_requests= Request.objects.filter(post_receive__subsidiary = request_object.post_receive.subsidiary,day_of_request=date, state__id__in =[1,4]).count()
+        
+        if subsidiary_day_requests >= 50:
+            return Response(
+                {"ok": False, "messages": ["No hay cupos disponibles para la filial en la fecha solicitada."], "data":{}},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
         if request_object.post_receive.stock_product >= 1:
             request_object.state = RequestState.objects.filter(id=4).first()
             request_object.post_receive.stock_product -= 1
-            request_object.post_receive.save()
             request_object.rejected = 0
+            request_object.day_of_request = date
+
+            email = request_object.user_maker.email
+            subsidiary_recieve = request_object.post_receive.subsidiary.name
+            post_received_name = request_object.post_receive.name
+            post_maker_name = request_object.post_maker.name
+            user_receive_name = request_object.user_receive.full_name
+            
+            send_email_to_user(
+                email= [email],
+                subject='Solicitud aceptada.',
+                message= f"¡Hola! {user_receive_name} ha aceptado tu solicitud de {post_maker_name} por el producto {post_received_name}." +
+                            f"El intercambio se hace en la filial {subsidiary_recieve}, y {user_receive_name} propone el dia {date_of_request} para realizar el intercambio." +
+                            f"Para aceptar o rechazar la solicitud, ingresa al siguiente link http://localhost:5173/evaluate-requests/{request_id}" +
+                            "¡Gracias por confiar en swapit! :)"
+            )
+            request_object.post_receive.save()
             request_object.save()
             return Response(
-                {"ok": True, "messages": ["Solicitud aceptada con éxito"]},
+                {"ok": True, "messages": ["Solicitud aceptada con éxito"], "data":{ "request": RequestSerializer(request_object).data}},
                 status=status.HTTP_200_OK,
             )
 

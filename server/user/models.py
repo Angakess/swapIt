@@ -141,7 +141,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return True
 
     def __str__(self):
-        return self.full_name
+        return self.full_name + ' ' + str(self.id)
 
     class Meta:
         verbose_name = 'usuario'
