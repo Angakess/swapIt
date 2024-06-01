@@ -6,7 +6,7 @@
             "post_maker": 1,
             "post_receive": 3,
             "user_receive": 3,
-            "state": 1,
+            "state": 2,
             "rejected": 0
         }
     },
@@ -17,7 +17,7 @@
             "post_maker": 2,
             "post_receive": 4,
             "user_receive": 4,
-            "state": 1,
+            "state": 2,
             "rejected": 0
         }
     },
@@ -28,7 +28,7 @@
             "post_maker": 3,
             "post_receive": 5,
             "user_receive": 5,
-            "state": 1,
+            "state": 2,
             "rejected": 0
         }
     },
@@ -39,7 +39,7 @@
             "post_maker": 4,
             "post_receive": 6,
             "user_receive": 6,
-            "state": 1,
+            "state": 2,
             "rejected": 0
         }
     },
@@ -50,7 +50,7 @@
             "post_maker": 5,
             "post_receive": 9,
             "user_receive": 15,
-            "state": 1,
+            "state": 2,
             "rejected": 0
         }
     },
@@ -61,7 +61,7 @@
             "post_maker": 6,
             "post_receive": 9,
             "user_receive": 15,
-            "state": 1,
+            "state": 2,
             "rejected": 0
         }
     },
@@ -72,7 +72,7 @@
             "post_maker": 7,
             "post_receive": 9,
             "user_receive": 15,
-            "state": 1,
+            "state": 2,
             "rejected": 0
         }
     },
@@ -83,7 +83,7 @@
             "post_maker": 8,
             "post_receive": 7,
             "user_receive": 7,
-            "state": 1,
+            "state": 2,
             "rejected": 0
         }
     }
