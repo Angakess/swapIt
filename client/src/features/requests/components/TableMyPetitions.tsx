@@ -301,7 +301,7 @@ export function TableMyPetitions() {
         pagination={tableParams.pagination}
         loading={loading}
         onChange={handleTableChange}
-        locale={{ emptyText: 'No hay trueques pendientes para el día de hoy' }}
+        locale={{ emptyText: 'No hay solicitudes disponibles' }}
       />
     </>
   )

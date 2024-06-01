@@ -242,7 +242,7 @@ export function TableMyOffers() {
         dataSource={data}
         pagination={false}
         loading={loading}
-        locale={{ emptyText: 'No hay trueques pendientes para el día de hoy' }}
+        locale={{ emptyText: 'No hay solicitudes disponibles' }}
       />
     </>
   )
