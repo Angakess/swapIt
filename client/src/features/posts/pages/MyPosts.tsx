@@ -55,16 +55,23 @@ export function MyPosts() {
       const p = await getPostList({
         userId: user!.id,
       })
-      setPosts(p.filter(({ state }) => state.id !== 5))
+      setPosts(p.filter(({ state }) => state.id <= 3))
       setIsLoading(false)
     })()
   }, [])
 
   // Actualizar listado en caso de crear un nuevo producto
   useEffect(() => {
-    if (haveNewPosts) setHaveNewPosts(false)
-    handleSearch()
+    console.log('[useEffect] [handleSearch, haveNewPosts]')
+    if (haveNewPosts) {
+      setHaveNewPosts(false)
+      handleSearch()
+    }
   }, [handleSearch, haveNewPosts])
+
+  useEffect(() => {
+    console.log('[useEffect] [haveNewPosts]')
+  }, [haveNewPosts])
 
   return (
     <>
