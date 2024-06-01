@@ -87,18 +87,36 @@ class RequestCreate(APIView):
     # NOTE: No me fijo si el producto que ofrezco tiene stock, porque no debemos listarle productos sin stock para ofrecer.
     def post(self, request):
         data = request.data
-        id_user_maker = data["user_maker"]
-        id_post_maker = data["post_maker"]
-        id_user_receive = data["user_receive"]
-        id_post_receive = data["post_receive"]
+        id_user_maker = data['user_maker']
+        id_post_maker = data['post_maker']
+        id_user_receive = data['user_receive']
+        id_post_receive = data['post_receive']
 
-        request_object = Request.objects.filter(
-            user_maker__id=id_user_maker,
-            post_maker__id=id_post_maker,
-            user_receive__id=id_user_receive,
-            post_receive__id=id_post_receive,
-        ).first()
+        user_maker_data = UserAccount.objects.filter(id=id_user_maker).first()
+        user_receive_data = UserAccount.objects.filter(id=id_user_receive).first()
+        post_maker_data = Post.objects.filter(id=id_post_maker).first()
+        post_receive_data = Post.objects.filter(id=id_post_receive).first()
 
+        if (user_maker_data is None or user_receive_data is None or post_maker_data is None or post_receive_data is None):
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Error al crear la solicitud. No se encontraron los datos necesarios']
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if user_maker_data.requests_send.filter(state__id=2).count() >= 5:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['No puedes realizar más de 5 solicitudes pendientes']
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+    
+
+        request_object = Request.objects.filter(user_maker__id=id_user_maker, post_maker__id = id_post_maker, user_receive__id=id_user_receive, post_receive__id=id_post_receive).first()
         # Si no existe, creo la solicitud
         if request_object is None:
             user_maker = UserAccount.objects.filter(id=id_user_maker).first()
@@ -175,18 +193,8 @@ class RequestCreate(APIView):
 class RequestAccept(APIView):
     def post(self, request):
         data = request.data
-        id_user_maker = data["user_maker"]
-        id_post_maker = data["post_maker"]
-        id_user_receive = data["user_receive"]
-        id_post_receive = data["post_receive"]
-
-        request_object = Request.objects.filter(
-            user_maker__id=id_user_maker,
-            post_maker__id=id_post_maker,
-            user_receive__id=id_user_receive,
-            post_receive__id=id_post_receive,
-        ).first()
-
+        request_id = data['request_id']
+        request_object = Request.objects.filter(id=request_id).first()
         if request_object is None:
             return Response(
                 {"ok": False, "messages": ["No se encontró la solicitud."]},
@@ -221,17 +229,8 @@ class RequestAccept(APIView):
 class RequestReject(APIView):
     def post(self, request):
         data = request.data
-        id_user_maker = data["user_maker"]
-        id_post_maker = data["post_maker"]
-        id_user_receive = data["user_receive"]
-        id_post_receive = data["post_receive"]
-
-        request_object = Request.objects.filter(
-            user_maker__id=id_user_maker,
-            post_maker__id=id_post_maker,
-            user_receive__id=id_user_receive,
-            post_receive__id=id_post_receive,
-        ).first()
+        request_id = data['request_id']
+        request_object = Request.objects.filter(id=request_id).first()
 
         if request_object is None:
             return Response(
