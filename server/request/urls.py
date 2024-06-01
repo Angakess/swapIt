@@ -7,6 +7,7 @@ urlpatterns = [
     path("create/", views.RequestCreate.as_view()),
     path("accept/", views.RequestAccept.as_view()),
     path("reject/", views.RequestReject.as_view()),
+    path("confirm/", views.RequestConfirm.as_view()),
     path("list/", views.RequestList.as_view()),
     path("my_offerts/<int:user_id>", views.RequestListMaker.as_view()),
     path("my_requests/<int:user_id>", views.RequestListReceive.as_view()),
