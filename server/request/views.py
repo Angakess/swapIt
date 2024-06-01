@@ -365,7 +365,7 @@ class RequestConfirm(APIView):
         )
 
 
-class RequestMakedRejected(APIView):
+class RequestMakedCancel(APIView):
 
     def post(self, request):
         data = request.data
@@ -381,7 +381,8 @@ class RequestMakedRejected(APIView):
         # Incrementar el stock en 1
         request_object.post_maker.stock_product += 1
         request_object.post_maker.save()
-        if request_object.state.id == 3:
+
+        if request_object.state.id == 4:
             request_object.post_receive.stock_product += 1
             request_object.post_receive.save()
 
