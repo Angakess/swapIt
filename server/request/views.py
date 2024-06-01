@@ -52,7 +52,7 @@ class RequestListMaker(APIView):
             {
                 "ok": True,
                 "messages": ["Solicitudes encontradas"],
-                "data": {RequestSerializer(requests, many=True).data},
+                "data": {'requests' : RequestSerializer(requests, many=True).data},
             },
             status=status.HTTP_200_OK,
         )
@@ -79,7 +79,7 @@ class RequestListReceive(APIView):
             {
                 "ok": True,
                 "messages": ["Solicitudes encontradas"],
-                "data": {"Requests": RequestSerializer(requests, many=True).data},
+                "data": {"requests": RequestSerializer(requests, many=True).data},
             },
             status=status.HTTP_200_OK,
         )
@@ -103,7 +103,8 @@ class RequestCreate(APIView):
             return Response(
                 {
                     'ok': False,
-                    'messages': ['Error al crear la solicitud. No se encontraron los datos necesarios']
+                    'messages': ['Error al crear la solicitud. No se encontraron los datos necesarios'],
+                    'data':{}
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
@@ -112,7 +113,8 @@ class RequestCreate(APIView):
             return Response(
                 {
                     'ok': False,
-                    'messages': ['No puedes realizar más de 5 solicitudes pendientes']
+                    'messages': ['No puedes realizar más de 5 solicitudes pendientes'],
+                    'data':{}
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
@@ -150,7 +152,7 @@ class RequestCreate(APIView):
         # Si existe, y esta pendiente, avisamos que no puede solicitarla
         if request_object.state.id == 2:
             return Response(
-                {"ok": False, "messages": ["Ya tiene una solicitud pendiente"]},
+                {"ok": False, "messages": ["Ya tiene una solicitud pendiente"],'data':{}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -163,6 +165,7 @@ class RequestCreate(APIView):
                         "messages": [
                             "No se puede solicitar este trueque, ya fue rechazado dos veces"
                         ],
+                        'data':{}
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
@@ -187,6 +190,7 @@ class RequestCreate(APIView):
                 "messages": [
                     "Ya tienes una solicitud aceptada para este producto, no puedes solicitarlo nuevamente"
                 ],
+                'data':{}
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
@@ -202,7 +206,7 @@ class RequestAccept(APIView):
         request_object = Request.objects.filter(id=request_id).first()
         if request_object is None:
             return Response(
-                {"ok": False, "messages": ["No se encontró la solicitud."]},
+                {"ok": False, "messages": ["No se encontró la solicitud."], 'data':{}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -249,6 +253,7 @@ class RequestAccept(APIView):
                 "messages": [
                     "No puedes aceptar la solicitud, no tienes stock suficiente."
                 ],
+                'data':{}
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
@@ -262,7 +267,7 @@ class RequestReject(APIView):
 
         if request_object is None:
             return Response(
-                {"ok": False, "messages": ["No se encontró la solicitud"]},
+                {"ok": False, "messages": ["No se encontró la solicitud"], "data":{}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # Se rechaza la solicitud
@@ -272,7 +277,7 @@ class RequestReject(APIView):
         request_object.post_maker.save()
         request_object.save()
         return Response(
-            {"ok": True, "messages": ["Solicitud rechazada con éxito"]},
+            {"ok": True, "messages": ["Solicitud rechazada con éxito"], 'data':{}},
             status=status.HTTP_200_OK,
         )
 
@@ -287,7 +292,7 @@ class RequestMakedRejected(APIView):
         request_object = Request.objects.filter(pk=id_request, state__in=[2, 4]).first()
         if request_object is None:
             return Response(
-                {"ok": False, "messages": ["No se encontró la solicitud "]},
+                {"ok": False, "messages": ["No se encontró la solicitud "], 'data':{}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # Incrementar el stock en 1
@@ -299,7 +304,7 @@ class RequestMakedRejected(APIView):
 
         request_object.delete()
         return Response(
-            {"ok": True, "messages": ["Solicitud rechazada con éxito"]},
+            {"ok": True, "messages": ["Solicitud rechazada con éxito"], 'data':{}},
             status=status.HTTP_200_OK,
         )
 
