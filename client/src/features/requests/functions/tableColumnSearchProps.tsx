@@ -15,11 +15,17 @@ import {
   import customParseFormat from 'dayjs/plugin/customParseFormat'
   
   type RequestIndex = keyof RequestType
-interface RequestType {
-  id: number
-  
-  [key: string]: string | number | boolean
-}
+  interface RequestType {
+    id: number
+    myPostName: string
+    myPostId: number
+    myPostImage: string
+    otherPostName: string
+    otherPostId: number
+    otherPostImage: string
+    state: string
+    [key: string]: string | number | boolean
+  }
   
   dayjs.extend(customParseFormat)
   
