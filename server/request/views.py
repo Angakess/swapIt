@@ -31,30 +31,56 @@ class RequestList(generics.ListAPIView):
     ]
 
 
-class RequestListMaker(generics.ListAPIView):
-    def get_queryset(self):
-        return Request.objects.all()
+class RequestListMaker(APIView):
 
-    serializer_class = RequestSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = [
-        "post_maker",
-        "user_maker__dni",
-        "user_maker__id",
-    ]
+    def get(self, _request, user_id):
+        states = [2, 4]
+        requests = Request.objects.filter(user_maker__id=user_id, state__id__in=states)
+        if len(requests) == 0:
+            return Response(
+                {
+                    "ok": False,
+                    "messages": ["No se encontraron solicitudes"],
+                    "data": {},
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return Response(
+            {
+                "ok": True,
+                "messages": ["Solicitudes encontradas"],
+                "data": {"Requests": RequestSerializer(requests, many=True).data},
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
-class RequestListReceive(generics.ListAPIView):
-    def get_queryset(self):
-        return Request.objects.all()
+class RequestListReceive(APIView):
 
-    serializer_class = RequestSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = [
-        "post_receive",
-        "user_receive__dni",
-        "user_receive__id",
-    ]
+    def get(self, _request, user_id):
+        states = [2, 4]
+        requests = Request.objects.filter(
+            user_receive__id=user_id, state__id__in=states
+        )
+        if len(requests) == 0:
+            return Response(
+                {
+                    "ok": False,
+                    "messages": ["No se encontraron solicitudes"],
+                    "data": {},
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return Response(
+            {
+                "ok": True,
+                "messages": ["Solicitudes encontradas"],
+                "data": {"Requests": RequestSerializer(requests, many=True).data},
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 class RequestCreate(APIView):
