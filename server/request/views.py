@@ -50,7 +50,7 @@ class RequestListMaker(APIView):
             {
                 "ok": True,
                 "messages": ["Solicitudes encontradas"],
-                "data": {"Requests": RequestSerializer(requests, many=True).data},
+                "data": {RequestSerializer(requests, many=True).data},
             },
             status=status.HTTP_200_OK,
         )
@@ -243,6 +243,33 @@ class RequestReject(APIView):
         request_object.post_maker.stock_product += 1
         request_object.post_maker.save()
         request_object.save()
+        return Response(
+            {"ok": True, "messages": ["Solicitud rechazada con éxito"]},
+            status=status.HTTP_200_OK,
+        )
+
+
+class RequestMakedRejected(APIView):
+
+    def post(self, request):
+        data = request.data
+        # Validar que solo esté en pendiente
+        id_request = data["id_request"]
+
+        request_object = Request.objects.filter(pk=id_request, state__in=[2, 4]).first()
+        if request_object is None:
+            return Response(
+                {"ok": False, "messages": ["No se encontró la solicitud "]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        # Incrementar el stock en 1
+        request_object.post_maker.stock_product += 1
+        request_object.post_maker.save()
+        if request_object.state.id == 3:
+            request_object.post_receive.stock_product += 1
+            request_object.post_receive.save()
+
+        request_object.delete()
         return Response(
             {"ok": True, "messages": ["Solicitud rechazada con éxito"]},
             status=status.HTTP_200_OK,

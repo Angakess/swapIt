@@ -10,6 +10,7 @@ urlpatterns = [
     path("list/", views.RequestList.as_view()),
     path("my_offerts/<int:user_id>", views.RequestListMaker.as_view()),
     path("my_requests/<int:user_id>", views.RequestListReceive.as_view()),
+    path("reject_offert/", views.RequestMakedRejected.as_view()),
     path("state/", views.RequestStateCreateList.as_view()),
     # path('request/remove', views.RequestRemove.as_view(),),
     # path('request/restore', views.RequestRestore.as_view(),),
