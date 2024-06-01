@@ -6,9 +6,9 @@ export function MyRequests() {
     return (
         <>
             <PageTitle title="Mis solicitudes"></PageTitle>
-            <h1>Ofertas</h1>
+            <h2>Ofertas</h2>
             <TableMyOffers></TableMyOffers>
-            <h1>Pedidos</h1>
+            <h2>Pedidos</h2>
             <TableMyPetitions></TableMyPetitions>
         </>
     )
