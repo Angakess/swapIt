@@ -209,6 +209,15 @@ class RequestAccept(APIView):
                 {"ok": False, "messages": ["No se encontró la solicitud."], 'data':{}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        
+        recieved = request_object.post_receive
+        already_semi_accepted = Request.objects.filter(post_receive=recieved, state__id=4).exists()
+
+        if already_semi_accepted:
+            return Response(
+                {"ok": False, "messages": ["Ya tienes un solicitud aceptada en proceso para este producto."], 'data':{}},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         # Traigo todos los turnos que sean en esa filial y en esa fecha para evaluar si hay cupos disponibles.
         subsidiary_day_requests= Request.objects.filter(post_receive__subsidiary = request_object.post_receive.subsidiary,day_of_request=date, state__id__in =[1,4]).count()
@@ -279,6 +288,80 @@ class RequestReject(APIView):
         return Response(
             {"ok": True, "messages": ["Solicitud rechazada con éxito"], 'data':{}},
             status=status.HTTP_200_OK,
+        )
+    
+class RequestConfirm(APIView):
+    def post(self, request):
+        data = request.data
+        request_id = data['request_id']
+        user_maker_id = data['user_maker']
+
+        request_object = Request.objects.filter(id=request_id, user_maker__id = user_maker_id).first()
+        if request_object is None:
+            return Response(
+                {"ok": False, "messages": ["No se encontró la solicitud"], "data":{}},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        
+        decision = data['decision']
+
+        
+        if decision == 'accept': # Se acepta la solicitud
+            email = request_object.user_receive.email
+            send_email_to_user(
+                email= [email],
+                subject= 'Solicitud aceptada',
+                message= f"¡Hola! {request_object.user_maker.full_name} ha aceptado tu solicitud de intercambio." +
+                            f"El intercambio se realizará en la filial {request_object.post_receive.subsidiary.name} el día {request_object.day_of_request}." +
+                            f"Para más información, contactate con {request_object.user_maker.full_name}." +
+                            "¡Gracias por confiar en swapit! :)"
+            )
+            
+            # NOTE: Todas las solicitudes al producto que recibe la solicitud se ponen en estado rechazado,
+            #       sin incrementar los rechazos (se repone el stock de los otros productos ofertados).
+            
+            other_requests = Request.objects.filter(post_receive=request_object.post_receive).exclude(id=request_id)
+            other_requests.update(state=RequestState.objects.filter(id=3).first())
+            for other_request in other_requests:
+                other_request.post_maker.stock_product += 1
+                other_request.post_maker.save()
+                other_request.save()
+
+            # TODO: Crear un turno, con la informacion correspondiente.
+
+            request_object.state = RequestState.objects.filter(id=1).first()
+            request_object.save()
+            return Response(
+                {"ok": True, "messages": ["Solicitud confirmada con éxito"], 'data':{}},
+                status=status.HTTP_200_OK,
+            )
+        elif decision == 'reject': # Se rechaza la solicitud
+            email = request_object.user_receive.email
+            send_email_to_user(
+                email= [email],
+                subject= 'Solicitud rechazada',
+                message= f"¡Hola! {request_object.user_maker.full_name} ha rechazado tu solicitud de intercambio." +
+                            f"Para más información, contactate con {request_object.user_maker.full_name}." +
+                            "¡Gracias por confiar en swapit! :)"
+            )
+
+            # NOTE: Repongo el stock de ambos productos, y la solicitud pasa a un estado rechazado.
+            request_object.post_maker.stock_product += 1
+            request_object.post_receive.stock_product += 1
+            request_object.post_maker.save()
+            request_object.post_receive.save()
+            request_object.state = RequestState.objects.filter(id=3).first()
+            request.object.day_of_request = None
+            request_object.save()
+
+            return Response(
+                {"ok": True, "messages": ["Solicitud rechazada con éxito"], 'data':{}},
+                status=status.HTTP_200_OK,
+            )
+    
+        return Response(
+            {"ok": True, "messages": ["Error al procesar la solicitud"], 'data':{}},
+            status=status.HTTP_400_BAD_REQUEST,
         )
 
 
