@@ -55,8 +55,8 @@ export function PostCreateUpdateForm({
 
   // Cargar datos en los select
   useEffect(() => {
-    mapCategoriesToSelectOptions().then(setCategoriesOptions)
-    mapSubsidiariesToSelectOption().then(setSubsidiaryOptions)
+    mapCategoriesToSelectOptions('id').then(setCategoriesOptions)
+    mapSubsidiariesToSelectOption('id').then(setSubsidiaryOptions)
   }, [])
 
   return (

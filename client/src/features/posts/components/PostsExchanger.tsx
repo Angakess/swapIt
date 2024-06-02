@@ -2,19 +2,14 @@ import { useEffect, useState } from 'react'
 import { Divider } from 'antd'
 
 import { useAuth } from '@Common/hooks'
-import { getCategoryList, getPostsListsExchanger, PostModel } from '@Common/api'
-import { PostsList, SearchAndFilter } from '@Posts/components'
+import { getPostsListsExchanger, PostModel } from '@Common/api'
+import {
+  PostsList,
+  SearchAndFilter,
+  SearchAndFilterProps,
+} from '@Posts/components'
 import { PageTitle } from '@Common/components'
-
-type SelectOption = {
-  label: string
-  value: string
-}
-
-async function mapCategoiresToSelectOptions(): Promise<SelectOption[]> {
-  const categories = await getCategoryList()
-  return categories.map(({ name }) => ({ label: name, value: name }))
-}
+import { mapCategoriesToSelectOptions, SelectOption } from '@Posts/helpers'
 
 export function PostsExchanger() {
   const { user } = useAuth()
@@ -26,67 +21,58 @@ export function PostsExchanger() {
   const [posts, setPosts] = useState<PostModel[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const [filterCategory, setFilterCategory] = useState('')
-  const [filterState, setFilterState] = useState('')
-  const [searchValue, setSearchValue] = useState('')
+  function updatePosts(posts: PostModel[]) {
+    // Quedarse solo con las publicaciones con estado
+    // 'activo'
+    setPosts(posts.filter(({ state }) => state.id === 1))
+  }
 
-  async function handleSearch() {
-    const p = await getPostsListsExchanger({
+  const handleSearch: SearchAndFilterProps['onSearch'] = async (values) => {
+    setIsLoading(true)
+    const searchPosts = await getPostsListsExchanger({
       excludeUserId: user!.id,
-      search: searchValue,
-      category: filterCategory,
-      state: filterState,
       status: 'activo',
+      ...values,
     })
-    setPosts(p)
+    updatePosts(searchPosts)
+    setIsLoading(false)
   }
 
   useEffect(() => {
-    ;(async () => {
-      const categories = await mapCategoiresToSelectOptions()
+    mapCategoriesToSelectOptions('name').then((categories) =>
       setCategoriesOptions([...categoriesOptions, ...categories])
-    })()
-    ;(async () => {
-      const p = await getPostsListsExchanger({
-        excludeUserId: user!.id,
-        status: 'activo',
-      })
-      setPosts(p)
-      setIsLoading(false)
-    })()
+    )
+
+    getPostsListsExchanger({ excludeUserId: user!.id, status: 'activo' }).then(
+      (posts) => {
+        updatePosts(posts)
+        setIsLoading(false)
+      }
+    )
   }, [])
 
   return (
     <>
       <PageTitle title="Publicaciones" />
       <SearchAndFilter
-        searchBar={{
-          placeholder: 'Busca una publicación',
-          value: searchValue,
-          handleChange: (e) => setSearchValue(e.target.value),
-        }}
-        filters={[
-          {
-            placeholder: 'Categoría',
+        searchPlaceholder="Busca una publicación"
+        disabled={isLoading}
+        onSearch={handleSearch}
+        filters={{
+          category: {
+            initialValue: '',
             options: categoriesOptions,
-            defaultValue: '',
-            value: filterCategory,
-            handleChange: setFilterCategory,
           },
-          {
-            placeholder: 'Estado',
+          state: {
+            initialValue: '',
             options: [
-              { label: 'Todos los estados', value: '' },
+              { label: 'Todos los estados de producto', value: '' },
               { label: 'Nuevo', value: 'NUEVO' },
               { label: 'Usado', value: 'USADO' },
               { label: 'Defectuoso', value: 'DEFECTUOSO' },
             ],
-            defaultValue: '',
-            value: filterState,
-            handleChange: setFilterState,
           },
-        ]}
-        handleSearch={handleSearch}
+        }}
       />
       <Divider />
       <PostsList posts={posts} isLoading={isLoading} />
