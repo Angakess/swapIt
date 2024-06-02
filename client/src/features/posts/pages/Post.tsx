@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 
 import { Page404 } from '@Common/pages'
 import { getPostById } from '@Common/api/posts'
-import { PostModel, PostStateModel } from "@Common/api/posts"
+import { PostModel, PostStateModel } from '@Common/api/posts'
 import { useAuth } from '@Common/hooks'
 import {
   ImageCarousel,

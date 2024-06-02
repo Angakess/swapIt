@@ -13,6 +13,8 @@ type PostUpdateModalProps = {
   setPost: React.Dispatch<React.SetStateAction<PostModel | null>>
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  isLoading: boolean
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export function PostUpdateModal({
@@ -20,9 +22,10 @@ export function PostUpdateModal({
   setPost,
   isOpen,
   setIsOpen,
+  isLoading,
+  setIsLoading,
 }: PostUpdateModalProps) {
   const { notification } = App.useApp()
-  const [isLoading, setIsLoading] = useState(false)
 
   const [form] = Form.useForm<PostCreateUpdateForm>()
   const [files, setFiles] = useState<RcFile[]>([])
@@ -169,7 +172,7 @@ export function PostUpdateModal({
       handleFinish={handleFinish}
       modalProps={{
         okButtonProps: { disabled: !hasBeenUpdated },
-        cancelButtonProps: { onClick: handleCancel },
+        cancelButtonProps: { disabled: isLoading, onClick: handleCancel },
       }}
       formProps={{
         onValuesChange: (_changedValues, values) => checkIfUpdated(values),
