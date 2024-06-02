@@ -223,11 +223,7 @@ function RejectButton({
   )
 }
 
-function BlockUserButton({
-  post,
-  isLoading,
-  setIsLoading,
-}: ModerationButtonProps) {
+function BlockUserButton({ isLoading }: ModerationButtonProps) {
   return (
     <Button
       danger

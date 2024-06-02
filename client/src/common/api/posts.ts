@@ -14,8 +14,8 @@ import { fetchPost } from '@Common/helpers'
 type GetPostsListsExchangerOptions = {
   excludeUserId: number
   search?: string
-  state?: string
-  status?: string
+  state?: ProductStateModel | ''
+  status?: StateModel['name'] | ''
   category?: string
 }
 
