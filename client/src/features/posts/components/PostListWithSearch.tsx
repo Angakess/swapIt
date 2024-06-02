@@ -3,16 +3,16 @@ import { SearchAndFilter, SearchAndFilterProps } from './SearchAndFilter'
 import { SelectOption, mapCategoriesToSelectOptions } from '@Posts/helpers'
 import { Divider } from 'antd'
 import { PostsList } from './PostsList'
-import { PostModel, StateModel } from '@Common/api'
+import { PostModel, PostStateModel } from '@Common/api'
 
 export type PostListWithSearchProps = {
   posts: PostModel[]
   setPosts: React.Dispatch<React.SetStateAction<PostModel[]>>
   isLoading: boolean
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-  filterStates: StateModel['name'][]
+  filterStates: PostStateModel['name'][]
   fetchPosts: (values: Record<string, string>) => Promise<PostModel[]>
-  initialFetchPostsStatus?: StateModel['name'] | ''
+  initialFetchPostsStatus?: PostStateModel['name'] | ''
   showStatus?: boolean
   additionalFilters?: SearchAndFilterProps['filters']
 }

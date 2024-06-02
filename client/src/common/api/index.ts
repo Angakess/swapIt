@@ -1,6 +1,5 @@
-export * from './types'
-
 export * from './categories'
 export * from './posts'
 export * from './subsidiaries'
-// export * from './users'
+export * from './types'
+export * from './users'

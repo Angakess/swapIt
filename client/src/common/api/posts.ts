@@ -1,12 +1,61 @@
 import { SERVER_URL } from 'constants'
-import {
-  GenericApiResponse,
-  PostBasicModel,
-  PostModel,
-  ProductStateModel,
-  StateModel,
-} from './types'
+import { GenericApiResponse } from './types'
 import { fetchPost } from '@Common/helpers'
+import { CategoryModel } from './categories'
+import { SubsidiaryModel } from './subsidiaries'
+import { UserModel } from './users'
+
+//
+// Post types
+
+export type PostStateModel = {
+  id: number
+  name:
+    | 'activo'
+    | 'pendiente'
+    | 'suspendido'
+    | 'bloqueado'
+    | 'eliminado'
+    | 'rechazado'
+}
+
+export type ProductStateModel = 'NUEVO' | 'USADO' | 'DEFECTUOSO'
+
+export type PostModel = {
+  id: number
+  name: string
+  description: string
+  value: number
+  user: UserModel
+  subsidiary: SubsidiaryModel
+  state: PostStateModel
+  category: CategoryModel
+  state_product: ProductStateModel
+  stock_product: number
+  image_1: string
+  image_2: string | null
+  image_3: string | null
+  image_4: string | null
+  image_5: string | null
+}
+
+export type PostBasicModel = {
+  id: number
+  name: string
+  description: string
+  value: number
+  user: number
+  subsidiary: number
+  state: number
+  category: number
+  state_product: ProductStateModel
+  stock_product: number
+  image_1: string
+  image_2: string | null
+  image_3: string | null
+  image_4: string | null
+  image_5: string | null
+}
 
 //
 // getPostsListsExchanger
@@ -15,7 +64,7 @@ type GetPostsListsExchangerOptions = {
   excludeUserId: number
   search?: string
   state?: ProductStateModel | ''
-  status?: StateModel['name'] | ''
+  status?: PostStateModel['name'] | ''
   category?: string
 }
 
@@ -48,7 +97,7 @@ type GetPostListOptions = {
   userId?: string | number
   search?: string
   state?: ProductStateModel | ''
-  status?: StateModel['name'] | ''
+  status?: PostStateModel['name'] | ''
   category?: string
 }
 

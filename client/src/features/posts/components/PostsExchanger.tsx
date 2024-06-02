@@ -4,10 +4,10 @@ import {
   PostListWithSearchProps,
 } from './PostListWithSearch'
 import { useCallback, useState } from 'react'
-import { PostModel, StateModel, getPostsListsExchanger } from '@Common/api'
+import { PostModel, PostStateModel, getPostsListsExchanger } from '@Common/api'
 import { useAuth } from '@Common/hooks'
 
-const filterStates: StateModel['name'][] = ['activo']
+const filterStates: PostStateModel['name'][] = ['activo']
 
 export function PostsExchanger() {
   const { user } = useAuth()

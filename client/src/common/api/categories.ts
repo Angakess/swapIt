@@ -1,5 +1,16 @@
 import { SERVER_URL } from 'constants'
-import { CategoryModel } from './types'
+
+//
+// Categories types
+
+export type CategoryModel = {
+  id: number
+  name: string
+  active: boolean
+}
+
+//
+// getCategoryList
 
 type GetCategoryListOptions = {
   search?: string

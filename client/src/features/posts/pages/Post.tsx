@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 
 import { Page404 } from '@Common/pages'
 import { getPostById } from '@Common/api/posts'
-import { PostModel, StateModel } from '@Common/api/types'
+import { PostModel, PostStateModel } from "@Common/api/posts"
 import { useAuth } from '@Common/hooks'
 import {
   ImageCarousel,
@@ -64,7 +64,7 @@ export function Post() {
   // rechazado:  nadie.
   // eliminado:  nadie.
 
-  const invalidStates: StateModel['name'][] = [
+  const invalidStates: PostStateModel['name'][] = [
     'bloqueado',
     'rechazado',
     'eliminado',

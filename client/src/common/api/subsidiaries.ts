@@ -1,5 +1,17 @@
 import { SERVER_URL } from 'constants'
-import { SubsidiaryModel } from './types'
+
+//
+// Subsidiaries types
+
+export type SubsidiaryModel = {
+  id: number
+  name: string
+  x_coordinate: string
+  y_coordinate: string
+  max_helpers: number
+  cant_current_helpers: number
+  active: boolean
+}
 
 //
 // getSubsidiaries
