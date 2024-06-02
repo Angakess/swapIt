@@ -4,7 +4,7 @@ from .serializers import RequestSerializer, RequestStateSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from user.models import UserAccount
-from app_post.models import Post
+from app_post.models import Post, PostState
 from rest_framework.response import Response
 from datetime import datetime
 from common.email import send_email_to_user
@@ -135,7 +135,10 @@ class RequestCreate(APIView):
             post_receive = Post.objects.filter(id=id_post_receive).first()
             state = RequestState.objects.filter(id=2).first()
 
-            # Restamos el stock
+            # Restamos el stock y en caso de quedar en 0, cambiamos el estado del producto
+            if post_maker.stock_product <= 1:
+                post_maker.state = PostState.objects.filter(id=6).first()
+
             post_maker.stock_product -= 1
             post_maker.save()
 
@@ -182,6 +185,11 @@ class RequestCreate(APIView):
             # Si ya fue rechazada solo una vez, la paso a pendiente
             else:
                 request_object.state = RequestState.objects.filter(id=2).first()
+                
+                # Restamos el stock y en caso de quedar en 0, cambiamos el estado del producto
+                if request_object.post_maker.stock_product <= 1:
+                    request_object.post_maker.state = PostState.objects.filter(id=6).first()
+
                 request_object.post_maker.stock_product -= 1
                 request_object.post_maker.save()
                 request_object.save()
@@ -258,6 +266,11 @@ class RequestAccept(APIView):
 
         if request_object.post_receive.stock_product >= 1:
             request_object.state = RequestState.objects.filter(id=4).first()
+            
+            # Restamos el stock y en caso de quedar en 0, cambiamos el estado del producto
+            if request_object.post_receive.stock_product <= 1:
+                    request_object.post_receive.state = PostState.objects.filter(id=6).first()
+
             request_object.post_receive.stock_product -= 1
             request_object.rejected = 0
             request_object.day_of_request = date
@@ -313,6 +326,10 @@ class RequestReject(APIView):
         # Se rechaza la solicitud
         request_object.state = RequestState.objects.filter(id=3).first()
         request_object.rejected += 1
+
+        if request_object.post_maker.stock_product == 0:
+            request_object.post_maker.state = PostState.objects.filter(id=1).first()
+
         request_object.post_maker.stock_product += 1
         request_object.post_maker.save()
         request_object.save()
@@ -358,6 +375,10 @@ class RequestConfirm(APIView):
             ).exclude(id=request_id)
             other_requests.update(state=RequestState.objects.filter(id=3).first())
             for other_request in other_requests:
+
+                if other_request.post_maker.stock_product == 0:
+                    other_request.post_maker.state = PostState.objects.filter(id=1).first()
+
                 other_request.post_maker.stock_product += 1
                 other_request.post_maker.save()
                 other_request.save()
@@ -385,8 +406,14 @@ class RequestConfirm(APIView):
             )
 
             # NOTE: Repongo el stock de ambos productos, y la solicitud pasa a un estado rechazado.
+            if request_object.post_maker.stock_product == 0:
+                    request_object.post_maker.state = PostState.objects.filter(id=1).first()
             request_object.post_maker.stock_product += 1
+
+            if request_object.post_receive.stock_product == 0:
+                    request_object.post_receive.state = PostState.objects.filter(id=1).first()
             request_object.post_receive.stock_product += 1
+            
             request_object.post_maker.save()
             request_object.post_receive.save()
             request_object.state = RequestState.objects.filter(id=3).first()
@@ -405,7 +432,6 @@ class RequestConfirm(APIView):
 
 
 class RequestMakedCancel(APIView):
-
     def post(self, request):
         data = request.data
         # Validar que solo esté en pendiente
@@ -417,11 +443,15 @@ class RequestMakedCancel(APIView):
                 {"ok": False, "messages": ["No se encontró la solicitud "], "data": {}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        # Incrementar el stock en 1
+        # Incrementar el stock en 1        
+        if request_object.post_maker.stock_product == 0:
+                request_object.post_maker.state = PostState.objects.filter(id=1).first()
         request_object.post_maker.stock_product += 1
         request_object.post_maker.save()
 
         if request_object.state.id == 4:
+            if request_object.post_receive.stock_product == 0:
+                    request_object.post_receive.state = PostState.objects.filter(id=1).first()
             request_object.post_receive.stock_product += 1
             request_object.post_receive.save()
 

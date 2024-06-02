@@ -123,7 +123,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
                 message='Su cuenta ha pasado a un estado de revisión por haber excedido el límite de publicaciones rechazadas. \n'
             )
         except Exception as e:
-            print(e)
             return False
 
         turns_made.delete()

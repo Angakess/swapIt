@@ -147,6 +147,7 @@ class PostUpdate(generics.UpdateAPIView):
     serializer_class = PostSerializer
 
     def partial_update(self, request, *args, **kwargs):
+        #TODO: Evaluar que pasa con las solicitudes, ofertas, y trueques semi-aceptados y aceptados
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         if serializer.is_valid():
