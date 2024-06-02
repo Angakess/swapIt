@@ -1,4 +1,8 @@
-import { getCategoryList, getSubsidiaries } from '@Common/api'
+import {
+  SelectOption,
+  mapCategoriesToSelectOptions,
+  mapSubsidiariesToSelectOption,
+} from '@Posts/helpers'
 import { UploadOutlined } from '@ant-design/icons'
 import {
   Button,
@@ -14,26 +18,6 @@ import {
 } from 'antd'
 import { RcFile, UploadFile } from 'antd/es/upload'
 import React, { useEffect, useState } from 'react'
-
-type SelectOption = {
-  label: string
-  value: string
-}
-
-async function mapCategoriesToSelectOptions(): Promise<SelectOption[]> {
-  const categories = await getCategoryList()
-  return categories.map(({ name, id }) => ({
-    label: name,
-    value: id.toString(),
-  }))
-}
-
-async function mapSubsidiariesToSelectOption(): Promise<SelectOption[]> {
-  const subsidiaries = await getSubsidiaries()
-  return subsidiaries
-    .filter(({ active }) => active)
-    .map(({ name, id }) => ({ label: name, value: id.toString() }))
-}
 
 export type PostCreateUpdateForm = {
   name: string
@@ -71,8 +55,8 @@ export function PostCreateUpdateForm({
 
   // Cargar datos en los select
   useEffect(() => {
-    mapCategoriesToSelectOptions().then(setCategoriesOptions)
-    mapSubsidiariesToSelectOption().then(setSubsidiaryOptions)
+    mapCategoriesToSelectOptions('id').then(setCategoriesOptions)
+    mapSubsidiariesToSelectOption('id').then(setSubsidiaryOptions)
   }, [])
 
   return (

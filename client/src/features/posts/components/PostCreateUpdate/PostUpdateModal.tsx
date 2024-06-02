@@ -151,7 +151,8 @@ export function PostUpdateModal({
   // Cargar formulario con los datos actuales
   useEffect(() => {
     loadInitialValues()
-  }, [loadInitialValues])
+    setHasBeenUpdated(false)
+  }, [loadInitialValues, post])
 
   return (
     <PostCreateUpdateModal

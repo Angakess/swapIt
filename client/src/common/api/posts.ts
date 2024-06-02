@@ -1,5 +1,12 @@
 import { SERVER_URL } from 'constants'
-import { PostModel, ProductStateModel, StateModel } from './types'
+import {
+  GenericApiResponse,
+  PostBasicModel,
+  PostModel,
+  ProductStateModel,
+  StateModel,
+} from './types'
+import { fetchPost } from '@Common/helpers'
 
 //
 // getPostsListsExchanger
@@ -68,4 +75,31 @@ export async function getPostById(id: number): Promise<PostModel | null> {
   const data = await resp.json()
 
   return data?.data?.post ?? null
+}
+
+//
+// moderatePost
+
+type ModeratePostOptions = {
+  postId: number
+  moderation: 'approve' | 'reject'
+  newValue?: number
+}
+
+export async function moderatePost({
+  postId,
+  moderation,
+  newValue,
+}: ModeratePostOptions): Promise<GenericApiResponse<{ post: PostBasicModel }>> {
+  // Si se aprueba pone el estado en 1 (activo), sino en 6 (rechazado)
+  const stateId = moderation === 'approve' ? 1 : 6
+
+  const resp = await fetchPost(`${SERVER_URL}/post/moderate/`, {
+    post_id: postId,
+    state_id: stateId,
+    value: newValue,
+  })
+
+  const data: GenericApiResponse<{ post: PostBasicModel }> = await resp.json()
+  return data
 }

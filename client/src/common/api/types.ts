@@ -1,3 +1,9 @@
+export type GenericApiResponse<T> = {
+  ok: boolean
+  data: T
+  messages: string[]
+}
+
 export type UserModel = {
   id: number
   first_name: string
@@ -48,6 +54,24 @@ export type PostModel = {
   subsidiary: SubsidiaryModel
   state: StateModel
   category: CategoryModel
+  state_product: ProductStateModel
+  stock_product: number
+  image_1: string
+  image_2: string | null
+  image_3: string | null
+  image_4: string | null
+  image_5: string | null
+}
+
+export type PostBasicModel = {
+  id: number
+  name: string
+  description: string
+  value: number
+  user: number
+  subsidiary: number
+  state: number
+  category: number
   state_product: ProductStateModel
   stock_product: number
   image_1: string

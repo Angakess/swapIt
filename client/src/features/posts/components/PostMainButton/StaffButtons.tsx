@@ -1,15 +1,30 @@
-import { Button, Col, Row, theme } from 'antd'
 import {
+  Button,
+  Col,
+  ConfigProvider,
+  Dropdown,
+  Form,
+  Modal,
+  Row,
+  Select,
+  theme,
+} from 'antd'
+import {
+  DownOutlined,
   CheckOutlined,
   CloseOutlined,
   UserDeleteOutlined,
+  EditOutlined,
 } from '@ant-design/icons'
+
 import { useCustomAlerts } from '@Common/hooks'
-import { PostModel } from '@Common/api'
+import { PostModel, moderatePost } from '@Common/api'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export function StaffButtons({ post }: { post: PostModel }) {
-  const { colorSuccess } = theme.useToken().token
   const alerts = useCustomAlerts()
+  const [isLoading, setIsLoading] = useState(false)
 
   if (post.state.name === 'activo') {
     return (
@@ -29,37 +44,199 @@ export function StaffButtons({ post }: { post: PostModel }) {
   return (
     <Row gutter={[12, 12]} style={{ marginBottom: '1.5rem' }}>
       <Col xs={12}>
-        <Button
-          type="primary"
-          block
-          icon={<CheckOutlined />}
-          style={{ backgroundColor: colorSuccess, boxShadow: 'none' }}
-          onClick={alerts.notImplementedYet}
-        >
-          Aprobar
-        </Button>
+        <ApproveButton
+          post={post}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
       </Col>
+
       <Col xs={12}>
-        <Button
-          type="primary"
-          danger
-          block
-          icon={<CloseOutlined />}
-          onClick={alerts.notImplementedYet}
-        >
-          Rechazar
-        </Button>
+        <RejectButton
+          post={post}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
       </Col>
+
       <Col xs={24}>
-        <Button
-          danger
-          block
-          icon={<UserDeleteOutlined />}
-          onClick={alerts.notImplementedYet}
-        >
-          Bloquear usuario
-        </Button>
+        <BlockUserButton
+          post={post}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
       </Col>
     </Row>
+  )
+}
+
+type ModerationButtonProps = {
+  post: PostModel
+  isLoading: boolean
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+function ApproveButton({
+  post,
+  isLoading,
+  setIsLoading,
+}: ModerationButtonProps) {
+  const navigate = useNavigate()
+  const { sucessNotification, errorNotification } = useCustomAlerts()
+  const { colorSuccess } = theme.useToken().token
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [form] = Form.useForm<{ newValue: number }>()
+
+  async function handleApprove() {
+    setIsLoading(true)
+    const resp = await moderatePost({ postId: post.id, moderation: 'approve' })
+
+    if (resp.ok) {
+      navigate('/posts', { replace: true })
+      sucessNotification(
+        'Publicación aprobada',
+        'La publicación fue aprobada con éxito y ya está visible para intercambiar'
+      )
+    } else {
+      errorNotification('Ocurrió un error', resp.messages.join('\n'))
+    }
+
+    setIsLoading(false)
+  }
+
+  async function handleEditValueAndApprove() {
+    const resp = await moderatePost({
+      postId: post.id,
+      moderation: 'approve',
+      newValue: form.getFieldValue('newValue'),
+    })
+
+    if (resp.ok) {
+      navigate('/posts', { replace: true })
+      sucessNotification(
+        'Publicación aprobada',
+        'La publicación fue aprobada con éxito y ya está visible para intercambiar'
+      )
+    } else {
+      errorNotification('Ocurrió un error', resp.messages.join('\n'))
+    }
+  }
+
+  useEffect(() => {
+    form.setFieldValue('newValue', post.value)
+  }, [form, post.value])
+
+  return (
+    <>
+      <ConfigProvider theme={{ token: { colorPrimary: colorSuccess } }}>
+        <Dropdown.Button
+          type="primary"
+          icon={<DownOutlined />}
+          disabled={isLoading}
+          menu={{
+            items: [
+              {
+                key: '1',
+                icon: <EditOutlined />,
+                label: 'Editar valor y aprobar',
+                onClick: () => setIsModalOpen(true),
+              },
+            ],
+          }}
+          placement="bottom"
+          onClick={handleApprove}
+        >
+          <CheckOutlined /> Aprobar
+        </Dropdown.Button>
+      </ConfigProvider>
+      <Modal
+        title="Editar valor y aprobar"
+        open={isModalOpen}
+        onOk={form.submit}
+        onCancel={() => setIsModalOpen(false)}
+        confirmLoading={isLoading}
+        okText="Editar y aprobar"
+        cancelText="Cancelar"
+        okButtonProps={{ style: { backgroundColor: colorSuccess } }}
+      >
+        <Form
+          layout="vertical"
+          form={form}
+          onFinish={handleEditValueAndApprove}
+        >
+          <Form.Item
+            label="Nuevo valor"
+            name="newValue"
+            required={false}
+            rules={[{ required: true, message: 'Ingrese un valor' }]}
+          >
+            <Select
+              options={[
+                { value: 1 },
+                { value: 2 },
+                { value: 3 },
+                { value: 4 },
+                { value: 5 },
+              ]}
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
+  )
+}
+
+function RejectButton({
+  post,
+  isLoading,
+  setIsLoading,
+}: ModerationButtonProps) {
+  const navigate = useNavigate()
+  const { sucessNotification, errorNotification } = useCustomAlerts()
+
+  async function handleReject() {
+    setIsLoading(true)
+    const resp = await moderatePost({ postId: post.id, moderation: 'reject' })
+
+    if (resp.ok) {
+      navigate('/posts', { replace: true })
+      sucessNotification('Publicación rechazada', resp.messages.join('\n'))
+    } else {
+      errorNotification('Ocurrió un error', resp.messages.join('\n'))
+    }
+
+    setIsLoading(false)
+  }
+
+  return (
+    <Button
+      type="primary"
+      danger
+      block
+      icon={<CloseOutlined />}
+      disabled={isLoading}
+      onClick={handleReject}
+    >
+      Rechazar
+    </Button>
+  )
+}
+
+function BlockUserButton({
+  post,
+  isLoading,
+  setIsLoading,
+}: ModerationButtonProps) {
+  return (
+    <Button
+      danger
+      block
+      icon={<UserDeleteOutlined />}
+      disabled={isLoading}
+      onClick={() => console.log('[CLICK] Block user')}
+    >
+      Bloquear usuario
+    </Button>
   )
 }

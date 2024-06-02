@@ -10,9 +10,11 @@ export function PageTitle({ title, right }: PageTitleProps) {
     <Flex
       align="center"
       justify="space-between"
-      style={{ marginBottom: '1rem' }}
+      style={{ marginBottom: '2.375rem' }}
     >
-      <Typography.Title level={2}>{title}</Typography.Title>
+      <Typography.Title level={2} style={{ margin: '0' }}>
+        {title}
+      </Typography.Title>
       {right}
     </Flex>
   )

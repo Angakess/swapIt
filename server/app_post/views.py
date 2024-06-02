@@ -192,7 +192,7 @@ class PostCreate(generics.CreateAPIView):
             return Response({
                 'ok': True,
                 'messages': ['Post creado exitosamente'],
-                'data': {'post': serializer.data}
+                'data': {'post': PostBaseSerializer(serializer.instance, context={'request': request}).data}
             }, status=status.HTTP_201_CREATED)
         return Response({
             'ok': False,
