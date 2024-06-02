@@ -459,6 +459,39 @@ class ChangeHelperFilial(APIView):
             },
             status=status.HTTP_200_OK
         )
+    
+class PutInReviewUser(APIView):
+    def get(self, request, user_id):
+        user = UserAccount.objects.filter(pk=user_id).first()
+        if user is None:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Usuario no encontrado'],
+                    'data': {}
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        ok = user.review()
+        if ok:
+            return Response(
+                {
+                    'ok': True,
+                    'messages': ['Usuario puesto en revision exitosamente'],
+                    'data': {}
+                },
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            {
+                'ok': False,
+                'messages': ['Error al cambiar el estado del usuario. Intente de nuevo mas tarde.'],
+                'data': {}
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
         
         

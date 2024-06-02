@@ -134,7 +134,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         posts = self.posts.all()
         posts.update(state=4)
         
-        self.state = UserState.objects.get(id=2)
+        self.state = UserState.objects.get(id=1)
         self.save()
 
         return True

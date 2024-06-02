@@ -311,7 +311,7 @@ class PostModeration(APIView):
                         'ok': False,
                         'messages': ['Error al cambiar el estado del usuario'],
                         'data': {}
-                    }, status=status.HTTP_400_BAD_REQUEST)
+                    }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response({
             'ok': False,
