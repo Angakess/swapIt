@@ -1,5 +1,5 @@
 import { SwapOutlined } from '@ant-design/icons'
-import { Button, Flex, List, Modal, Typography } from 'antd'
+import { Button, Empty, Flex, List, Modal, Typography } from 'antd'
 import { PostModel, getPostList } from '@Common/api'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@Common/hooks'
@@ -11,6 +11,7 @@ type ExchangePostModalProps = {
 }
 
 export function ExchangePostModal({
+  post,
   isOpen,
   setIsOpen,
 }: ExchangePostModalProps) {
@@ -22,11 +23,15 @@ export function ExchangePostModal({
   useEffect(() => {
     ;(async () => {
       setIsLoading(true)
-      const p = await getPostList({ userId: user!.id, status: 'activo' })
+      const p = await getPostList({
+        userId: user!.id,
+        status: 'activo',
+        category: post.category.name,
+      })
       setMyPosts(p)
       setIsLoading(false)
     })()
-  }, [])
+  }, [post.category.name, user])
 
   return (
     <Modal
@@ -35,7 +40,7 @@ export function ExchangePostModal({
       onCancel={() => setIsOpen(false)}
       footer={null}
     >
-      <ExchangePostsList isLoading={isLoading} posts={myPosts} />
+      <ExchangePostsList isLoading={isLoading} posts={myPosts} post={post} />
     </Modal>
   )
 }
@@ -43,9 +48,10 @@ export function ExchangePostModal({
 type ExchangePostsListProps = {
   isLoading: boolean
   posts: PostModel[]
+  post: PostModel
 }
 
-function ExchangePostsList({ isLoading, posts }: ExchangePostsListProps) {
+function ExchangePostsList({ isLoading, posts, post }: ExchangePostsListProps) {
   return (
     <List
       size="large"
@@ -79,6 +85,15 @@ function ExchangePostsList({ isLoading, posts }: ExchangePostsListProps) {
           </Flex>
         </List.Item>
       )}
+      locale={{
+        emptyText: (
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={`No tienes productos disponibles para intercambiar que pertenezcan a la categoría ${post.category.name}.`}
+            style={{ textWrap: 'balance' }}
+          />
+        ),
+      }}
     />
   )
 }
