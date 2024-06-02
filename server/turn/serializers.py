@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from .models import Turn
 from subsidiary.serializers import SubsidiarySerializer
-from user.serializers import UserSerializer
-from request.serializers import RequestSerializer
+from user.serializers import UserRequestSerializer
+from request.serializers import RequestForListTurnSerializer, RequestSerializer
 
 # code_maker = models.CharField(max_length=255)
 # code_received = models.CharField(max_length=255)
@@ -21,10 +21,45 @@ from request.serializers import RequestSerializer
 
 class TurnSerializer(serializers.ModelSerializer):
     subsidiary = SubsidiarySerializer()
-    user_maker = UserSerializer()
-    user_received = UserSerializer()
+    user_maker = UserRequestSerializer()
+    user_received = UserRequestSerializer()
     request = RequestSerializer()
 
     class Meta:
         model = Turn
         fields = "__all__"
+
+
+class TurnExchangerListSerializer(serializers.ModelSerializer):
+    request = RequestForListTurnSerializer()
+
+    class Meta:
+        model = Turn
+        fields = ["id", "request"]
+
+
+class TurnHelperListSerializer(serializers.ModelSerializer):
+    user_maker = UserRequestSerializer()
+    user_received = UserRequestSerializer()
+
+    class Meta:
+        model = Turn
+        fields = ["id", "user_maker", "user_received", "state"]
+
+
+# [
+#     {
+#         "id": 3,
+#         "user_maker": {
+#             "first_name": "Rena",
+#             "last_name": "Longcake",
+#             "dni": "23309342",
+#         },
+#         "user_received": {
+#             "first_name": "Jacquelynn",
+#             "last_name": "Gettings",
+#             "dni": "11153471",
+#         },
+#         "state": 1
+#     }
+# ]
