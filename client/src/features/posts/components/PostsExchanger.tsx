@@ -16,7 +16,7 @@ export function PostsExchanger() {
   const [isLoading, setIsLoading] = useState(true)
 
   const fetchPosts: PostListWithSearchProps['fetchPosts'] = useCallback(
-    (values: Record<string, string>) => {
+    (values) => {
       return getPostsListsExchanger({
         excludeUserId: user!.id,
         status: 'activo',
