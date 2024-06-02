@@ -154,7 +154,7 @@ class RequestCreate(APIView):
                 {
                     "ok": True,
                     "messages": ["Solicitud creada con éxito"],
-                    "data": {"Request": RequestSerializer(request_created).data},
+                    "data": {"request": RequestSerializer(request_created).data},
                 },
                 status=status.HTTP_200_OK,
             )

@@ -16,12 +16,15 @@ export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
   const navigate = useNavigate()
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   async function deletePost() {
+    setIsLoading(true)
     const resp = await fetch(`${SERVER_URL}/post/remove/${post.id}`, {
       method: 'DELETE',
     })
     const data = await resp.json()
+    setIsLoading(false)
 
     if (resp.ok && data.ok) {
       notification.success({
@@ -52,6 +55,7 @@ export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
             size="large"
             style={{ fontWeight: '700' }}
             onClick={() => setIsEditModalOpen(true)}
+            disabled={isLoading}
           >
             Editar
           </Button>
@@ -67,7 +71,13 @@ export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
             icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
             onConfirm={deletePost}
           >
-            <Button type="primary" danger block size="large">
+            <Button
+              type="primary"
+              danger
+              block
+              size="large"
+              disabled={isLoading}
+            >
               Eliminar
             </Button>
           </Popconfirm>
@@ -78,6 +88,8 @@ export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
         setPost={setPost}
         isOpen={isEditModalOpen}
         setIsOpen={setIsEditModalOpen}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
     </>
   )

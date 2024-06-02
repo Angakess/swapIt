@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { PageTitle } from '@Common/components'
-import { PostModel, StateModel, getPostList } from '@Common/api'
+import { PostModel, PostStateModel, getPostList } from '@Common/api'
 import {
   PostListWithSearch,
   PostListWithSearchProps,
 } from './PostListWithSearch'
 
-const filterStates: StateModel['name'][] = ['activo', 'pendiente']
+const filterStates: PostStateModel['name'][] = ['activo', 'pendiente']
 
 const additionalFilters = {
   status: {

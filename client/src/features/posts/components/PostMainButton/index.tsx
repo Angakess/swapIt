@@ -19,5 +19,5 @@ export function PostMainButton({ post, setPost }: PostMainButtonProps) {
     return <ExchangerButtons post={post} />
   }
 
-  return <StaffButtons post={post} setPost={setPost} />
+  return <StaffButtons post={post} />
 }

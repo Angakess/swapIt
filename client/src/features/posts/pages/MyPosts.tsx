@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons'
-import { getPostList, PostModel, StateModel } from '@Common/api'
+import { getPostList, PostModel, PostStateModel } from '@Common/api'
 import { PageTitle } from '@Common/components'
 import { useAuth } from '@Common/hooks'
 import {
@@ -10,7 +10,7 @@ import {
 import { Button } from 'antd'
 import { useCallback, useState } from 'react'
 
-const filterStates: StateModel['name'][] = ['activo', 'pendiente', 'suspendido']
+const filterStates: PostStateModel['name'][] = ['activo', 'pendiente', 'suspendido']
 
 export function MyPosts() {
   const { user } = useAuth()

@@ -82,7 +82,7 @@ function ApproveButton({
   setIsLoading,
 }: ModerationButtonProps) {
   const navigate = useNavigate()
-  const { sucessNotification, errorNotification } = useCustomAlerts()
+  const { successNotification, errorNotification } = useCustomAlerts()
   const { colorSuccess } = theme.useToken().token
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -94,7 +94,7 @@ function ApproveButton({
 
     if (resp.ok) {
       navigate('/posts', { replace: true })
-      sucessNotification(
+      successNotification(
         'Publicación aprobada',
         'La publicación fue aprobada con éxito y ya está visible para intercambiar'
       )
@@ -114,7 +114,7 @@ function ApproveButton({
 
     if (resp.ok) {
       navigate('/posts', { replace: true })
-      sucessNotification(
+      successNotification(
         'Publicación aprobada',
         'La publicación fue aprobada con éxito y ya está visible para intercambiar'
       )
@@ -193,7 +193,7 @@ function RejectButton({
   setIsLoading,
 }: ModerationButtonProps) {
   const navigate = useNavigate()
-  const { sucessNotification, errorNotification } = useCustomAlerts()
+  const { successNotification, errorNotification } = useCustomAlerts()
 
   async function handleReject() {
     setIsLoading(true)
@@ -201,7 +201,7 @@ function RejectButton({
 
     if (resp.ok) {
       navigate('/posts', { replace: true })
-      sucessNotification('Publicación rechazada', resp.messages.join('\n'))
+      successNotification('Publicación rechazada', resp.messages.join('\n'))
     } else {
       errorNotification('Ocurrió un error', resp.messages.join('\n'))
     }
@@ -223,11 +223,7 @@ function RejectButton({
   )
 }
 
-function BlockUserButton({
-  post,
-  isLoading,
-  setIsLoading,
-}: ModerationButtonProps) {
+function BlockUserButton({ isLoading }: ModerationButtonProps) {
   return (
     <Button
       danger

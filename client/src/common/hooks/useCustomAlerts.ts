@@ -14,7 +14,7 @@ export function useCustomAlerts() {
     })
   }
 
-  function sucessNotification(
+  function successNotification(
     message: React.ReactNode,
     description: React.ReactNode
   ) {
@@ -40,5 +40,5 @@ export function useCustomAlerts() {
     })
   }
 
-  return { notImplementedYet, sucessNotification, errorNotification }
+  return { notImplementedYet, successNotification, errorNotification }
 }
