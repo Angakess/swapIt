@@ -214,22 +214,16 @@ class PostCreate(generics.CreateAPIView):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(
-                {
-                    "ok": True,
-                    "messages": ["Post creado exitosamente"],
-                    "data": {"post": serializer.data},
-                },
-                status=status.HTTP_201_CREATED,
-            )
-        return Response(
-            {
-                "ok": False,
-                "messages": list(itertools.chain(*serializer.errors.values())),
-                "data": {},
-            },
-            status=status.HTTP_406_NOT_ACCEPTABLE,
-        )
+            return Response({
+                'ok': True,
+                'messages': ['Post creado exitosamente'],
+                'data': {'post': PostBaseSerializer(serializer.instance, context={'request': request}).data}
+            }, status=status.HTTP_201_CREATED)
+        return Response({
+            'ok': False,
+            'messages': list(itertools.chain(*serializer.errors.values())),
+            'data': {}
+        }, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
 class PostLists(generics.ListAPIView):

@@ -12,7 +12,7 @@ export type PostListWithSearchProps = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
   filterStates: StateModel['name'][]
   fetchPosts: (values: Record<string, string>) => Promise<PostModel[]>
-  initialFetchPostsStatus: StateModel['name']
+  initialFetchPostsStatus?: StateModel['name'] | ''
   showStatus?: boolean
   additionalFilters?: SearchAndFilterProps['filters']
 }
@@ -24,7 +24,7 @@ export function PostListWithSearch({
   setIsLoading,
   filterStates,
   fetchPosts,
-  initialFetchPostsStatus,
+  initialFetchPostsStatus = '',
   showStatus = false,
   additionalFilters = {},
 }: PostListWithSearchProps) {
