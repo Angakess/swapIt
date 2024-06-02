@@ -4,17 +4,18 @@ import { RcFile, UploadFile } from 'antd/es/upload'
 
 import { PostCreateUpdateModal } from './PostCreateUpdateModal'
 import { PostCreateUpdateForm } from './PostCreateUpdateForm'
+import { PostModel } from '@Common/api'
 
 type PostCreateModalProps = {
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setHaveNewPosts: React.Dispatch<React.SetStateAction<boolean>>
+  setPosts: React.Dispatch<React.SetStateAction<PostModel[]>>
 }
 
 export function PostCreateModal({
   isOpen,
   setIsOpen,
-  setHaveNewPosts,
+  setPosts,
 }: PostCreateModalProps) {
   const { notification } = App.useApp()
 
@@ -35,7 +36,7 @@ export function PostCreateModal({
     const data = await resp.json()
 
     if (resp.ok && data.ok) {
-      setHaveNewPosts(true)
+      setPosts((prevPosts) => [...prevPosts, data.data.post])
       form.resetFields()
       notification.success({
         message: 'Publicación agregada correctamente',
