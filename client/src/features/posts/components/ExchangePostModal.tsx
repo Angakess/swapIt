@@ -60,7 +60,7 @@ function ExchangePostsList({
   posts,
   postReceiver,
 }: ExchangePostsListProps) {
-  const { successNotification } = useCustomAlerts()
+  const { successNotification, errorNotification } = useCustomAlerts()
 
   async function handleRequest(postMaker: PostModel) {
     console.log('maker', postMaker)
@@ -73,15 +73,16 @@ function ExchangePostsList({
       post_receive: postReceiver.id,
     })
 
-    console.log(resp)
-
     if (resp.ok) {
       successNotification(
         'Solicitud creada con éxito',
         'Se ha enviado una solicitud de intercambio.'
       )
     } else {
-      
+      errorNotification(
+        'Ocurrió un error al enviar la solicitud',
+        resp.messages.join('\n')
+      )
     }
   }
 

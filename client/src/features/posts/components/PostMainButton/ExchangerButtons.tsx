@@ -22,7 +22,7 @@ export function ExchangerButtons({ post }: ExchangerButtonsProps) {
         Intercambiar
       </Button>
       <ExchangePostModal
-        post={post}
+        postReceiver={post}
         isOpen={isExchangeModalOpen}
         setIsOpen={setIsExchangeModalOpen}
       />
