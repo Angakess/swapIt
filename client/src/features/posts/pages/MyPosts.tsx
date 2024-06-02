@@ -1,21 +1,17 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { Button, Divider } from 'antd'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { getCategoryList, getPostList, PostModel } from '@Common/api'
+import { getPostList, PostModel } from '@Common/api'
 import { PageTitle } from '@Common/components'
 import { useAuth } from '@Common/hooks'
-import { PostsList, SearchAndFilter, PostCreateModal } from '@Posts/components'
-
-type SelectOption = {
-  label: string
-  value: string
-}
-
-async function mapCategoiresToSelectOptions(): Promise<SelectOption[]> {
-  const categories = await getCategoryList()
-  return categories.map(({ name }) => ({ label: name, value: name }))
-}
+import {
+  PostsList,
+  SearchAndFilter,
+  PostCreateModal,
+  SearchAndFilterProps,
+} from '@Posts/components'
+import { mapCategoriesToSelectOptions, SelectOption } from '@Posts/helpers'
 
 export function MyPosts() {
   const { user } = useAuth()
@@ -25,53 +21,45 @@ export function MyPosts() {
   ])
 
   const [posts, setPosts] = useState<PostModel[]>([])
-  const [haveNewPosts, setHaveNewPosts] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-
-  const [filterCategory, setFilterCategory] = useState('')
-  const [filterState, setFilterState] = useState('')
-  const [filterStatus, setFilterStatus] = useState('')
-  const [searchValue, setSearchValue] = useState('')
+  const [haveNewPosts, setHaveNewPosts] = useState(false)
 
   const [addPostIsOpen, setAddPostIsOpen] = useState(false)
 
-  const handleSearch = useCallback(async () => {
-    const p = await getPostList({
-      userId: user!.id,
-      search: searchValue,
-      category: filterCategory,
-      state: filterState,
-      status: filterStatus,
-    })
-    setPosts(p.filter(({ state }) => state.id !== 5))
-  }, [filterCategory, filterState, filterStatus, searchValue, user])
+  function updatePosts(posts: PostModel[]) {
+    // Quedarse solo con las publicaciones con estado
+    // 'activo', 'pendiente' o 'suspendido'
+    setPosts(posts.filter(({ state }) => state.id <= 3))
+  }
+
+  const handleSearch: SearchAndFilterProps['onSearch'] = async (values) => {
+    setIsLoading(true)
+    const searchPosts = await getPostList({ userId: user!.id, ...values })
+    updatePosts(searchPosts)
+    setIsLoading(false)
+  }
 
   useEffect(() => {
-    ;(async () => {
-      const categories = await mapCategoiresToSelectOptions()
+    mapCategoriesToSelectOptions('name').then((categories) =>
       setCategoriesOption([...categoriesOptions, ...categories])
-    })()
-    ;(async () => {
-      const p = await getPostList({
-        userId: user!.id,
-      })
-      setPosts(p.filter(({ state }) => state.id <= 3))
+    )
+
+    getPostList({ userId: user!.id }).then((posts) => {
+      updatePosts(posts)
       setIsLoading(false)
-    })()
+    })
   }, [])
 
   // Actualizar listado en caso de crear un nuevo producto
   useEffect(() => {
-    console.log('[useEffect] [handleSearch, haveNewPosts]')
     if (haveNewPosts) {
       setHaveNewPosts(false)
-      handleSearch()
+      getPostList({ userId: user!.id }).then((posts) => {
+        updatePosts(posts)
+        setIsLoading(false)
+      })
     }
-  }, [handleSearch, haveNewPosts])
-
-  useEffect(() => {
-    console.log('[useEffect] [haveNewPosts]')
-  }, [haveNewPosts])
+  }, [haveNewPosts, user])
 
   return (
     <>
@@ -89,46 +77,33 @@ export function MyPosts() {
       />
 
       <SearchAndFilter
-        searchBar={{
-          placeholder: 'Busca una publicación',
-          value: searchValue,
-          handleChange: (e) => setSearchValue(e.target.value),
-        }}
-        filters={[
-          {
-            placeholder: 'Categoría',
+        searchPlaceholder="Busca una publicación"
+        disabled={isLoading}
+        onSearch={handleSearch}
+        filters={{
+          category: {
+            initialValue: '',
             options: categoriesOptions,
-            defaultValue: '',
-            value: filterCategory,
-            handleChange: setFilterCategory,
           },
-          {
-            placeholder: 'Estado del producto',
+          state: {
+            initialValue: '',
             options: [
               { label: 'Todos los estados de producto', value: '' },
               { label: 'Nuevo', value: 'NUEVO' },
               { label: 'Usado', value: 'USADO' },
               { label: 'Defectuoso', value: 'DEFECTUOSO' },
             ],
-            defaultValue: '',
-            value: filterState,
-            handleChange: setFilterState,
           },
-          {
-            placeholder: 'Estado de la publicación',
+          status: {
+            initialValue: '',
             options: [
               { label: 'Todos los estados de la publicación', value: '' },
               { label: 'Activo', value: 'activo' },
               { label: 'Pendiente', value: 'pendiente' },
               { label: 'Suspendido', value: 'suspendido' },
-              { label: 'Rechazado', value: 'rechazado' },
             ],
-            defaultValue: '',
-            value: filterStatus,
-            handleChange: setFilterStatus,
           },
-        ]}
-        handleSearch={handleSearch}
+        }}
       />
       <Divider />
 

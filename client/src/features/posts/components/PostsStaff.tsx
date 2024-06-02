@@ -1,20 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Divider } from 'antd'
 
-import { getCategoryList, getPostList, PostModel } from '@Common/api'
+import { getPostList, PostModel } from '@Common/api'
 import { PageTitle } from '@Common/components'
 import { PostsList } from './PostsList'
-import { SearchAndFilter } from './SearchAndFilter'
-
-type SelectOption = {
-  label: string
-  value: string
-}
-
-async function mapCategoiresToSelectOptions(): Promise<SelectOption[]> {
-  const categories = await getCategoryList()
-  return categories.map(({ name }) => ({ label: name, value: name }))
-}
+import { SearchAndFilter, SearchAndFilterProps } from './SearchAndFilter'
+import { mapCategoriesToSelectOptions, SelectOption } from '@Posts/helpers'
 
 export function PostsStaff() {
   const [categoriesOptions, setCategoriesOptions] = useState<SelectOption[]>([
@@ -24,79 +15,60 @@ export function PostsStaff() {
   const [posts, setPosts] = useState<PostModel[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const [filterCategory, setFilterCategory] = useState('')
-  const [filterState, setFilterState] = useState('')
-  const [filterStatus, setFilterStatus] = useState('pendiente')
-  const [searchValue, setSearchValue] = useState('')
+  function updatePosts(posts: PostModel[]) {
+    // Quedarse solo con las publicaciones con estado
+    // 'activo' o 'pendiente'
+    setPosts(posts.filter(({ state }) => state.id <= 2))
+  }
 
-  async function handleSearch() {
-    const searchedPosts = await getPostList({
-      search: searchValue,
-      category: filterCategory,
-      state: filterState,
-      status: filterStatus,
-    })
-
-    const p = searchedPosts.filter(
-      (po) => po.state.name === 'activo' || po.state.name === 'pendiente'
-    )
-    setPosts(p)
+  const handleSearch: SearchAndFilterProps['onSearch'] = async (values) => {
+    setIsLoading(true)
+    const searchPosts = await getPostList(values)
+    updatePosts(searchPosts)
+    setIsLoading(false)
   }
 
   useEffect(() => {
-    ;(async () => {
-      const categories = await mapCategoiresToSelectOptions()
+    mapCategoriesToSelectOptions('name').then((categories) =>
       setCategoriesOptions([...categoriesOptions, ...categories])
-    })()
-    ;(async () => {
-      const p = await getPostList({ status: filterStatus })
-      setPosts(p)
+    )
+
+    getPostList({ status: 'pendiente' }).then((posts) => {
+      updatePosts(posts)
       setIsLoading(false)
-    })()
+    })
   }, [])
 
   return (
     <>
       <PageTitle title="Publicaciones" />
       <SearchAndFilter
-        searchBar={{
-          placeholder: 'Busca una publicación',
-          value: searchValue,
-          handleChange: (e) => setSearchValue(e.target.value),
-        }}
-        filters={[
-          {
-            placeholder: 'Categoría',
+        searchPlaceholder="Busca una publicación"
+        disabled={isLoading}
+        onSearch={handleSearch}
+        filters={{
+          category: {
+            initialValue: '',
             options: categoriesOptions,
-            defaultValue: '',
-            value: filterCategory,
-            handleChange: setFilterCategory,
           },
-          {
-            placeholder: 'Estado producto',
+          state: {
+            initialValue: '',
             options: [
               { label: 'Todos los estados de producto', value: '' },
               { label: 'Nuevo', value: 'NUEVO' },
               { label: 'Usado', value: 'USADO' },
               { label: 'Defectuoso', value: 'DEFECTUOSO' },
             ],
-            defaultValue: '',
-            value: filterState,
-            handleChange: setFilterState,
           },
-          {
-            placeholder: 'Estado de la publicación',
+          status: {
+            initialValue: 'pendiente',
             options: [
               { label: 'Todos los estados de la publicación', value: '' },
               { label: 'Activo', value: 'activo' },
               { label: 'Pendiente', value: 'pendiente' },
             ],
-            defaultValue: 'pendiente',
-            value: filterStatus,
-            handleChange: setFilterStatus,
           },
-        ]}
-        handleSearch={handleSearch}
+        }}
       />
       <Divider />
       <PostsList posts={posts} isLoading={isLoading} showStatus />

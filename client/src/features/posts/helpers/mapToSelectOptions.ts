@@ -5,17 +5,24 @@ export type SelectOption = {
   value: string
 }
 
-export async function mapCategoriesToSelectOptions(): Promise<SelectOption[]> {
+export async function mapCategoriesToSelectOptions(
+  value: 'id' | 'name'
+): Promise<SelectOption[]> {
   const categories = await getCategoryList()
-  return categories.map(({ name, id }) => ({
-    label: name,
-    value: id.toString(),
+  return categories.map((category) => ({
+    label: category.name,
+    value: category[value].toString(),
   }))
 }
 
-export async function mapSubsidiariesToSelectOption(): Promise<SelectOption[]> {
+export async function mapSubsidiariesToSelectOption(
+  value: 'id' | 'name'
+): Promise<SelectOption[]> {
   const subsidiaries = await getSubsidiaries()
   return subsidiaries
     .filter(({ active }) => active)
-    .map(({ name, id }) => ({ label: name, value: id.toString() }))
+    .map((subsidiary) => ({
+      label: subsidiary.name,
+      value: subsidiary[value].toString(),
+    }))
 }
