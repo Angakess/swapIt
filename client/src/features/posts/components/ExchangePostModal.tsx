@@ -1,17 +1,17 @@
 import { SwapOutlined } from '@ant-design/icons'
 import { Button, Empty, Flex, List, Modal, Typography } from 'antd'
-import { PostModel, getPostList } from '@Common/api'
+import { PostModel, createRequest, getPostList } from '@Common/api'
 import { useEffect, useState } from 'react'
-import { useAuth } from '@Common/hooks'
+import { useAuth, useCustomAlerts } from '@Common/hooks'
 
 type ExchangePostModalProps = {
-  post: PostModel
+  postReceiver: PostModel
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export function ExchangePostModal({
-  post,
+  postReceiver,
   isOpen,
   setIsOpen,
 }: ExchangePostModalProps) {
@@ -26,12 +26,12 @@ export function ExchangePostModal({
       const p = await getPostList({
         userId: user!.id,
         status: 'activo',
-        category: post.category.name,
+        category: postReceiver.category.name,
       })
       setMyPosts(p)
       setIsLoading(false)
     })()
-  }, [post.category.name, user])
+  }, [postReceiver.category.name, user])
 
   return (
     <Modal
@@ -40,7 +40,11 @@ export function ExchangePostModal({
       onCancel={() => setIsOpen(false)}
       footer={null}
     >
-      <ExchangePostsList isLoading={isLoading} posts={myPosts} post={post} />
+      <ExchangePostsList
+        isLoading={isLoading}
+        posts={myPosts}
+        postReceiver={postReceiver}
+      />
     </Modal>
   )
 }
@@ -48,10 +52,39 @@ export function ExchangePostModal({
 type ExchangePostsListProps = {
   isLoading: boolean
   posts: PostModel[]
-  post: PostModel
+  postReceiver: PostModel
 }
 
-function ExchangePostsList({ isLoading, posts, post }: ExchangePostsListProps) {
+function ExchangePostsList({
+  isLoading,
+  posts,
+  postReceiver,
+}: ExchangePostsListProps) {
+  const { successNotification } = useCustomAlerts()
+
+  async function handleRequest(postMaker: PostModel) {
+    console.log('maker', postMaker)
+    console.log('receive', postReceiver)
+
+    const resp = await createRequest({
+      user_maker: postMaker.user.id,
+      post_maker: postMaker.id,
+      user_receive: postReceiver.user.id,
+      post_receive: postReceiver.id,
+    })
+
+    console.log(resp)
+
+    if (resp.ok) {
+      successNotification(
+        'Solicitud creada con éxito',
+        'Se ha enviado una solicitud de intercambio.'
+      )
+    } else {
+      
+    }
+  }
+
   return (
     <List
       size="large"
@@ -79,7 +112,11 @@ function ExchangePostsList({ isLoading, posts, post }: ExchangePostsListProps) {
               </Typography.Text>
             </Flex>
 
-            <Button type="primary" icon={<SwapOutlined />}>
+            <Button
+              type="primary"
+              icon={<SwapOutlined />}
+              onClick={() => handleRequest(post)}
+            >
               Solicitar
             </Button>
           </Flex>
@@ -89,7 +126,7 @@ function ExchangePostsList({ isLoading, posts, post }: ExchangePostsListProps) {
         emptyText: (
           <Empty
             image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description={`No tienes productos disponibles para intercambiar que pertenezcan a la categoría ${post.category.name}.`}
+            description={`No tienes productos disponibles para intercambiar que pertenezcan a la categoría ${postReceiver.category.name}.`}
             style={{ textWrap: 'balance' }}
           />
         ),
