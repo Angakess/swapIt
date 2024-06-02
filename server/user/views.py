@@ -15,6 +15,7 @@ import itertools
 from user.models import Role, UserState
 import coreschema
 from rest_framework.schemas import AutoSchema
+from rating.models import Rating
 
 
 class CreateUser(generics.CreateAPIView):
@@ -57,6 +58,9 @@ class CreateUser(generics.CreateAPIView):
                 + ' http://localhost:5173/auth/email-verification/' +
                 str(generated_code)
             )
+
+            admin = UserAccount.objects.filter(role=Role.ADMIN).first()
+            calification = Rating.objects.create(score=5, comment="Bienvenido a swapit :)", user_maker=admin, user_received=user)
 
             return Response(
                 {
