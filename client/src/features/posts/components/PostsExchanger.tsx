@@ -1,81 +1,43 @@
-import { useEffect, useState } from 'react'
-import { Divider } from 'antd'
-
-import { useAuth } from '@Common/hooks'
-import { getPostsListsExchanger, PostModel } from '@Common/api'
-import {
-  PostsList,
-  SearchAndFilter,
-  SearchAndFilterProps,
-} from '@Posts/components'
 import { PageTitle } from '@Common/components'
-import { mapCategoriesToSelectOptions, SelectOption } from '@Posts/helpers'
+import {
+  PostListWithSearch,
+  PostListWithSearchProps,
+} from './PostListWithSearch'
+import { useCallback, useState } from 'react'
+import { PostModel, StateModel, getPostsListsExchanger } from '@Common/api'
+import { useAuth } from '@Common/hooks'
+
+const filterStates: StateModel['name'][] = ['activo']
 
 export function PostsExchanger() {
   const { user } = useAuth()
 
-  const [categoriesOptions, setCategoriesOptions] = useState<SelectOption[]>([
-    { label: 'Todas las categorías', value: '' },
-  ])
-
   const [posts, setPosts] = useState<PostModel[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  function updatePosts(posts: PostModel[]) {
-    // Quedarse solo con las publicaciones con estado
-    // 'activo'
-    setPosts(posts.filter(({ state }) => state.id === 1))
-  }
-
-  const handleSearch: SearchAndFilterProps['onSearch'] = async (values) => {
-    setIsLoading(true)
-    const searchPosts = await getPostsListsExchanger({
-      excludeUserId: user!.id,
-      status: 'activo',
-      ...values,
-    })
-    updatePosts(searchPosts)
-    setIsLoading(false)
-  }
-
-  useEffect(() => {
-    mapCategoriesToSelectOptions('name').then((categories) =>
-      setCategoriesOptions([...categoriesOptions, ...categories])
-    )
-
-    getPostsListsExchanger({ excludeUserId: user!.id, status: 'activo' }).then(
-      (posts) => {
-        updatePosts(posts)
-        setIsLoading(false)
-      }
-    )
-  }, [])
+  const fetchPosts: PostListWithSearchProps['fetchPosts'] = useCallback(
+    (values: Record<string, string>) => {
+      return getPostsListsExchanger({
+        excludeUserId: user!.id,
+        status: 'activo',
+        ...values,
+      })
+    },
+    [user]
+  )
 
   return (
     <>
       <PageTitle title="Publicaciones" />
-      <SearchAndFilter
-        searchPlaceholder="Busca una publicación"
-        disabled={isLoading}
-        onSearch={handleSearch}
-        filters={{
-          category: {
-            initialValue: '',
-            options: categoriesOptions,
-          },
-          state: {
-            initialValue: '',
-            options: [
-              { label: 'Todos los estados de producto', value: '' },
-              { label: 'Nuevo', value: 'NUEVO' },
-              { label: 'Usado', value: 'USADO' },
-              { label: 'Defectuoso', value: 'DEFECTUOSO' },
-            ],
-          },
-        }}
+      <PostListWithSearch
+        posts={posts}
+        setPosts={setPosts}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        filterStates={filterStates}
+        fetchPosts={fetchPosts}
+        initialFetchPostsStatus="activo"
       />
-      <Divider />
-      <PostsList posts={posts} isLoading={isLoading} />
     </>
   )
 }
