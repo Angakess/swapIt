@@ -60,7 +60,7 @@ class CreateUser(generics.CreateAPIView):
             )
 
             admin = UserAccount.objects.filter(role=Role.ADMIN).first()
-            calification = Rating.objects.create(score=5, comment="Bienvenido a swapit :)", user_maker=admin, user_received=user)
+            calification = Rating.objects.create(score=5, comment="Bienvenido a SwapIt! :)", user_maker=admin, user_received=user)
 
             return Response(
                 {

@@ -1,0 +1,119 @@
+[
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 12
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 13
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 14
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 15
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 16
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 17
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 18
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 19
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 20
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 21
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 22
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 23
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt! :)",
+      "user_maker": 1,
+      "user_received": 24
+    }
+  }
+]
