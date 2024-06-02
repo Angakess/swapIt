@@ -2,6 +2,7 @@ import { fetchPost } from '@Common/helpers'
 import { PostModel } from './posts'
 import { GenericApiResponse } from './types'
 import { SERVER_URL } from 'constants'
+import { createQueryURL } from '@Common/helpers/createQueryURL'
 
 //
 // Requests types
@@ -37,4 +38,44 @@ export async function createRequest(
 ): Promise<GenericApiResponse<{ request: RequestModel }>> {
   const resp = await fetchPost(`${SERVER_URL}/requests/create/`, request)
   return await resp.json()
+}
+
+//
+// getRequestList
+
+type GetRequestListOptions = {
+  search?: string
+  stateName?: string
+  postMakerId?: string | number
+  postReceiverId?: string | number
+  userMakerDni?: string
+  userReceiverDni?: string
+  userMakerId?: string | number
+  userReceiverId?: string | number
+}
+
+export async function getRequestList({
+  search = '',
+  stateName = '',
+  postMakerId = '',
+  postReceiverId = '',
+  userMakerDni = '',
+  userReceiverDni = '',
+  userMakerId = '',
+  userReceiverId = '',
+}: GetRequestListOptions = {}) {
+  const url = createQueryURL('/requests/list/', {
+    search: search,
+    state__name: stateName,
+    post_maker: postMakerId.toString(),
+    post_receive: postReceiverId.toString(),
+    user_maker__dni: userMakerDni,
+    user_receive__dni: userReceiverDni,
+    user_maker__id: userMakerId.toString(),
+    user_receive__id: userReceiverId.toString(),
+  })
+
+  const resp = await fetch(url)
+  const data = await resp.json()
+  return data
 }
