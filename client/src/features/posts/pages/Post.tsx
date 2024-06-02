@@ -53,9 +53,10 @@ export function Post() {
   // Si:
   // - el post no existe
   // - fue 'bloqueado', 'rechazado' o 'eliminado'
-  // - no está activo y lo está viendo un intercambiador distinto al propietario
+  // - lo está viendo un usuario distinto al propietario y no está activo
   // entonces: 404.
 
+  // Estado de publicación: quién puede verla
   // activo:     cualquiera.
   // pendiente:  propietario y staff (para aprobar o rechazar).
   // suspendido: propietario.
@@ -63,14 +64,21 @@ export function Post() {
   // rechazado:  nadie.
   // eliminado:  nadie.
 
+  const invalidStates: StateModel['name'][] = [
+    'bloqueado',
+    'rechazado',
+    'eliminado',
+  ]
+
   if (
     post == null ||
-    (['bloqueado', 'rechazado', 'eliminado'] as StateModel['name'][]).includes(
-      post.state.name
-    ) ||
-    (post!.user.id !== user!.id &&
-      user!.role === 'EXCHANGER' &&
-      post!.state.name !== 'activo')
+    invalidStates.includes(post.state.name) ||
+    (user!.role === 'EXCHANGER' &&
+      post!.user.id !== user!.id &&
+      post!.state.name !== 'activo') ||
+    (user!.role !== 'EXCHANGER' &&
+      post!.state.name !== 'activo' &&
+      post!.state.name !== 'pendiente')
   ) {
     return <Page404 />
   }
