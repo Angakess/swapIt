@@ -146,7 +146,9 @@ export function TableMyPetitions() {
 
     const newData: RequestType[] = []
 
-    transformData(result, newData)
+    if(result.ok){
+      transformData(result, newData)
+    }
 
     setData(newData)
     setLoading(false)
