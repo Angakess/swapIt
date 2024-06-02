@@ -111,6 +111,16 @@ class RequestCreate(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        if user_maker_data.rating <=3:
+            return Response(
+                {
+                    "ok":False,
+                    "messages": ["No puedes realizar solicitudes si tienes un promedio menor a 3 en calificaciones."],
+                    "data": {},
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         if user_maker_data.requests_send.filter(state__id=2).count() >= 5:
             return Response(
                 {
