@@ -34,5 +34,11 @@
         "fields": {
             "name": "rechazado"
         }
+    },
+    {
+        "model": "app_post.poststate",
+        "fields": {
+            "name": "sin-stock"
+        }
     }
 ]
