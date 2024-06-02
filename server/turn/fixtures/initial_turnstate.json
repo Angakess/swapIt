@@ -1,0 +1,20 @@
+[
+    {
+        "model": "turn.turnstate",
+        "fields": {
+            "name": "pendiente"
+        }
+    },
+    {
+        "model": "turn.turnstate",
+        "fields": {
+            "name": "efectuado"
+        }
+    },
+    {
+        "model": "turn.turnstate",
+        "fields": {
+            "name": "no efectuado"
+        }
+    }
+]

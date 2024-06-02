@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Turn
+from .models import Turn, TurnState
 from subsidiary.serializers import SubsidiarySerializer
 from user.serializers import UserRequestSerializer
 from request.serializers import RequestForListTurnSerializer, RequestSerializer
@@ -19,11 +19,18 @@ from request.serializers import RequestForListTurnSerializer, RequestSerializer
 # )
 
 
+class TurnStateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TurnState
+        fields = "__all__"
+
+
 class TurnSerializer(serializers.ModelSerializer):
     subsidiary = SubsidiarySerializer()
     user_maker = UserRequestSerializer()
     user_received = UserRequestSerializer()
     request = RequestSerializer()
+    state = TurnStateSerializer()
 
     class Meta:
         model = Turn
