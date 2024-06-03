@@ -55,6 +55,8 @@ export function PostCreateModal({
         duration: 3,
       })
     }
+    setFileList([])
+    setFiles([])
     setIsLoading(false)
   }
 
