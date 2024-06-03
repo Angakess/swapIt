@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from app_post.serializer import PostRequestSerializer, PostBaseSerializer
+from app_post.serializer import PostBaseSerializer
 from request.models import Request, RequestState
 
 
@@ -10,8 +10,8 @@ class RequestStateSerializer(serializers.ModelSerializer):
 
 
 class RequestSerializer(serializers.ModelSerializer):
-    post_maker = PostRequestSerializer()
-    post_receive = PostRequestSerializer()
+    post_maker = PostBaseSerializer()
+    post_receive = PostBaseSerializer()
     state = serializers.SerializerMethodField("get_state")
 
     def get_state(self, obj):
@@ -29,8 +29,8 @@ class RequestCreateSerializer(serializers.ModelSerializer):
 
 
 class RequestForListTurnSerializer(serializers.ModelSerializer):
-    post_maker = PostRequestSerializer()
-    post_receive = PostRequestSerializer()
+    post_maker = PostBaseSerializer()
+    post_receive = PostBaseSerializer()
     state = serializers.SerializerMethodField("get_state")
 
     def get_state(self, obj):

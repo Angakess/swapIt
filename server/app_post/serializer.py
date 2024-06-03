@@ -59,30 +59,3 @@ class PostBaseSerializer(serializers.ModelSerializer):
             'image_4',
             'image_5',
         ]
-
-
-class PostRequestSerializer(serializers.ModelSerializer):
-    user = UserRequestSerializer()
-    subsidiary = SubsidiaryRequestSerializer()
-    category = serializers.SerializerMethodField('get_category_name')
-
-    def get_category_name(self, obj):
-        return obj.category.name
-
-    class Meta:
-        model = Post
-        fields = [
-            'id',
-            'name',
-            'description',
-            'value',
-            'user',
-            'subsidiary',
-            'category',
-            'state_product',
-            'image_1',
-            'image_2',
-            'image_3',
-            'image_4',
-            'image_5',
-        ]
