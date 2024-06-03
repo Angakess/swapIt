@@ -6,17 +6,117 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface'
 import { tableColumnSearchProps } from '@Swaps/functions/tableColumnSearchProps'
-import { ButtonVerSwap } from "@Swaps/components/ButtonVerSwap"
+import { ButtonVerSwap } from '@Swaps/components/ButtonVerSwap'
 
 import MOCK_SWAPS_TODAY from '@Swaps/MOCK_SWAPS_TODAY.json'
 
 type SwapIndex = keyof SwapType
 interface SwapType {
   id: number
-  code: string
   dniA: string
+  nameA: string
   dniB: string
+  nameB: string
   [key: string]: string | number | boolean
+}
+interface FetchType {
+  id: number
+  subsidiary: {
+    id: number
+    name: string
+    x_coordinate: string
+    y_coordinate: string
+    max_helpers: number
+    cant_current_helpers: number
+    active: boolean
+  }
+  user_maker: {
+    first_name: string
+    last_name: string
+    dni: string
+    email: string
+    gender: string
+    date_of_birth: string
+    phone_number: string
+    password: string
+    role: string
+    id_subsidiary: number | null
+    rating: number
+  }
+  user_received: {
+    first_name: string
+    last_name: string
+    dni: string
+    email: string
+    gender: string
+    date_of_birth: string
+    phone_number: string
+    password: string
+    role: string
+    id_subsidiary: number | null
+    rating: number
+  }
+  request: {
+    id: number
+    post_maker: {
+      id: number
+      name: string
+      description: string
+      value: number
+      user: {
+        id: number
+        first_name: string
+        last_name: string
+        dni: string
+        email: string
+      }
+      subsidiary: {
+        name: string
+        x_coordinate: string
+        y_coordinate: string
+      }
+      category: string
+      state_product: string
+      image_1: string
+      image_2: string | null
+      image_3: string | null
+      image_4: string | null
+      image_5: string | null
+    }
+    post_receive: {
+      id: number
+      name: string
+      description: string
+      value: number
+      user: {
+        id: number
+        first_name: string
+        last_name: string
+        dni: string
+        email: string
+      }
+      subsidiary: {
+        name: string
+        x_coordinate: string
+        y_coordinate: string
+      }
+      category: string
+      state_product: string
+      image_1: string
+      image_2: string | null
+      image_3: string | null
+      image_4: string | null
+      image_5: string | null
+    }
+    state: string
+    rejected: number
+    day_of_request: string
+    user_maker: number
+    user_receive: number
+  }
+  code_maker: string
+  code_received: string
+  state: number
 }
 interface TableParams {
   pagination?: TablePaginationConfig
@@ -33,8 +133,6 @@ export function SwapsList() {
     dni: '',
   })
   const [loading, setLoading] = useState(false)
-/*   const [modalOpen, setModalOpen] = useState(false)
-  const [turnSelected, setTurnSelected] = useState<SwapType>() */
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -43,12 +141,29 @@ export function SwapsList() {
   })
   const searchInput = useRef<InputRef>(null)
 
-  const fetchData = () => {
+  function transformData(element: FetchType): SwapType {
+    return {
+      id: element.id,
+      dniA: element.user_maker.dni,
+      nameA: element.user_maker.first_name + ' ' + element.user_maker.last_name,
+      dniB: element.user_received.dni,
+      nameB: element.user_received.first_name + ' ' + element.user_received,
+    }
+  }
+
+  const fetchData = async () => {
     setLoading(true)
-    /* const res = await fetch('http://localhost:8000/users/list-exchangers/')
-    const result = await res.json() */
-    const result = MOCK_SWAPS_TODAY
-    setData(result)
+    const res = await fetch(`http://localhost:8000/turns/list_today/`)
+    const result = await res.json()
+    /* const result = MOCK_SWAPS_TODAY
+    setData(result) */
+
+    const newData: SwapType[] = []
+    result.forEach((element: FetchType) => {
+      const newElement: SwapType = transformData(element)
+      newData.push(newElement)
+    })
+
     setLoading(false)
     setTableParams({
       ...tableParams,
@@ -124,31 +239,38 @@ export function SwapsList() {
 
   const columns: ColumnsType<SwapType> = [
     {
-      title: `Codigo: ${searchText.code ? searchText.code : ''}`,
-      dataIndex: 'code',
-      ...tableColumnSearchProps('code', handleSearch, handleReset, searchInput),
-      width: "30%"
+      title: `DNI Ofrecedor: ${searchText.code ? searchText.code : ''}`,
+      dataIndex: 'dniA',
+      ...tableColumnSearchProps('dniA', handleSearch, handleReset, searchInput),
+      width: '30%',
     },
     {
-      title: `DNIs: ${searchText.dni ? searchText.dni : ''}`,
-      render: (_: any, record: SwapType) => (
-        <>
-          <ul>
-            <li>{record.dniA}</li>
-            <li>{record.dniB}</li>
-          </ul>
-        </>
+      title: `Nombre Ofrecedor: ${searchText.code ? searchText.code : ''}`,
+      dataIndex: 'nameA',
+      ...tableColumnSearchProps(
+        'nameA',
+        handleSearch,
+        handleReset,
+        searchInput
       ),
-      ...tableColumnSearchProps('dni', handleSearch, handleReset, searchInput),
-      onFilter: (value, record) =>
-        record.dniA
-          .toString()
-          .toLowerCase()
-          .includes((value as string).toLowerCase()) ||
-        record.dniB
-          .toString()
-          .toLowerCase()
-          .includes((value as string).toLowerCase()),
+      width: '30%',
+    },
+    {
+      title: `DNI Ofrecido: ${searchText.code ? searchText.code : ''}`,
+      dataIndex: 'dniB',
+      ...tableColumnSearchProps('dniB', handleSearch, handleReset, searchInput),
+      width: '30%',
+    },
+    {
+      title: `Nombre Ofrecido: ${searchText.code ? searchText.code : ''}`,
+      dataIndex: 'nameB',
+      ...tableColumnSearchProps(
+        'nameB',
+        handleSearch,
+        handleReset,
+        searchInput
+      ),
+      width: '30%',
     },
     {
       title: 'Acciones',
