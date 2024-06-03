@@ -532,7 +532,7 @@ class RequestDetailById(generics.RetrieveAPIView):
         request_id = kwargs.get('request_id')
         try:
             request_obj = Request.objects.get(id=request_id)
-            serializer = self.serializer_class(request_obj)
+            serializer = self.serializer_class(request_obj, context={'request': request})
             return Response(
                 {"ok": True, "messages": [], "data": serializer.data},
                 status=status.HTTP_200_OK,
