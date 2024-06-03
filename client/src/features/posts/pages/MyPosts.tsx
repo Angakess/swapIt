@@ -10,7 +10,12 @@ import {
 import { Button } from 'antd'
 import { useCallback, useState } from 'react'
 
-const filterStates: PostStateModel['name'][] = ['activo', 'pendiente', 'suspendido']
+const filterStates: PostStateModel['name'][] = [
+  'activo',
+  'pendiente',
+  'suspendido',
+  'sin-stock',
+]
 
 export function MyPosts() {
   const { user } = useAuth()
