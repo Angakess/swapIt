@@ -522,3 +522,23 @@ class ResquestStateVIEWs(generics.RetrieveUpdateDestroyAPIView):
 class RequestStateCreateList(generics.ListCreateAPIView):
     queryset = RequestState.objects.all()
     serializer_class = RequestStateSerializer
+
+
+class RequestDetailById(generics.RetrieveAPIView):
+    queryset = Request.objects.all()
+    serializer_class = RequestSerializer
+
+    def get(self, request, *args, **kwargs):
+        request_id = kwargs.get('request_id')
+        try:
+            request_obj = Request.objects.get(id=request_id)
+            serializer = self.serializer_class(request_obj)
+            return Response(
+                {"ok": True, "messages": [], "data": serializer.data},
+                status=status.HTTP_200_OK,
+            )
+        except Request.DoesNotExist:
+            return Response(
+                {"ok": False, "messages": ["No se encontró la solicitud"], "data": {}},
+                status=status.HTTP_404_NOT_FOUND,
+            )
