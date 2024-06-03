@@ -298,7 +298,7 @@ class RequestAccept(APIView):
                 subject="Solicitud aceptada.",
                 message=f"¡Hola! {user_receive_name} ha aceptado tu solicitud de {post_maker_name} por el producto {post_received_name}."
                 + f"El intercambio se hace en la filial {subsidiary_recieve}, y {user_receive_name} propone el dia {date_of_request} para realizar el intercambio."
-                + f"Para aceptar o rechazar la solicitud, ingresa al siguiente link http://localhost:5173/requests/evalute/{request_id}"
+                + f"Para aceptar o rechazar la solicitud, ingresa al siguiente link http://localhost:5173/requests/my-requests/{request_id}"
                 + "¡Gracias por confiar en swapit! :)",
             )
             request_object.post_receive.save()
