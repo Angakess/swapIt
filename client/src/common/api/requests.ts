@@ -79,3 +79,12 @@ export async function getRequestList({
   const data = await resp.json()
   return data
 }
+
+//
+// getRequestById
+
+export async function getRequestById(id: number): Promise<RequestModel | null> {
+  const resp = await fetch(`${SERVER_URL}/requests/list/${id}/`)
+  const data: GenericApiResponse<RequestModel> = await resp.json()
+  return data.ok ? data.data : null
+}
