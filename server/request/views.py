@@ -149,7 +149,7 @@ class RequestCreate(APIView):
 
             # Restamos el stock y en caso de quedar en 0, cambiamos el estado del producto
             if post_maker.stock_product <= 1:
-                post_maker.state = PostState.objects.filter(id=6).first()
+                post_maker.state = PostState.objects.filter(id=7).first()
 
             post_maker.stock_product -= 1
             post_maker.save()
