@@ -8,6 +8,8 @@ from app_post.models import Post, PostState
 from rest_framework.response import Response
 from datetime import datetime
 from common.email import send_email_to_user
+from turn.models import Turn, TurnState
+import random
 
 
 class RequestList(generics.ListAPIView):
@@ -296,7 +298,7 @@ class RequestAccept(APIView):
                 subject="Solicitud aceptada.",
                 message=f"¡Hola! {user_receive_name} ha aceptado tu solicitud de {post_maker_name} por el producto {post_received_name}."
                 + f"El intercambio se hace en la filial {subsidiary_recieve}, y {user_receive_name} propone el dia {date_of_request} para realizar el intercambio."
-                + f"Para aceptar o rechazar la solicitud, ingresa al siguiente link http://localhost:5173/evaluate-requests/{request_id}"
+                + f"Para aceptar o rechazar la solicitud, ingresa al siguiente link http://localhost:5173/requests/evalute/{request_id}"
                 + "¡Gracias por confiar en swapit! :)",
             )
             request_object.post_receive.save()
@@ -358,6 +360,14 @@ class RequestConfirm(APIView):
         request_object = Request.objects.filter(
             id=request_id, user_maker__id=user_maker_id
         ).first()
+
+        turn_already_exists  =  Turn.objects.filter(request=request_object).first()
+        if turn_already_exists:
+            return Response(
+                {"ok": False, "messages": ["Esta solicitud ya ha sido procesada"], "data": {}},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         if request_object is None:
             return Response(
                 {"ok": False, "messages": ["No se encontró la solicitud"], "data": {}},
@@ -367,14 +377,34 @@ class RequestConfirm(APIView):
         decision = data["decision"]
 
         if decision == "accept":  # Se acepta la solicitud
-            email = request_object.user_receive.email
+            code_maker = 'M-' + str(random.randint(100000, 999999))
+            code_received = 'R-' + str(random.randint(100000, 999999))
+
+            email_received = request_object.user_receive.email
+            email_maker = request_object.user_maker.email
+            full_name_maker = request_object.user_maker.full_name
+            full_name_received = request_object.user_receive.full_name
+            post_received_name = request_object.post_receive.name
+            post_maker_name = request_object.post_maker.name
+
             send_email_to_user(
-                email=[email],
+                email=[email_received],
                 subject="Solicitud aceptada",
-                message=f"¡Hola! {request_object.user_maker.full_name} ha aceptado tu solicitud de intercambio."
-                + f"El intercambio se realizará en la filial {request_object.post_receive.subsidiary.name} el día {request_object.day_of_request}."
-                + f"Para más información, contactate con {request_object.user_maker.full_name}."
-                + "¡Gracias por confiar en swapit! :)",
+                message=f"¡Hola {full_name_received}! {full_name_maker} ha aceptado la fecha propuesta para intercambiar tu {post_received_name} por su {post_maker_name}. \n"
+                + f"El intercambio se realizará en la filial {request_object.post_receive.subsidiary.name} el día {request_object.day_of_request}. \n"
+                + f"Tu código para asistir al intercambio es {code_received}.\n"
+                + f"Podés contactarte con {full_name_maker} a través de su correo {email_maker}. \n"
+                + "¡Gracias por confiar en SwapIt! :)",
+            )
+
+            send_email_to_user(
+                email=[email_maker],
+                subject="Solicitud aceptada",
+                message=f"¡Hola, {full_name_maker}! Has pactado un intercambio con {full_name_received} para intercambiar tu {post_maker_name} por su {post_received_name}. \n"
+                + f"El intercambio se realizará en la filial {request_object.post_receive.subsidiary.name} el día {request_object.day_of_request}. \n"
+                + f"Tu código para asistir al intercambio es {code_maker}. \n"
+                + f"Podés contactarte con {full_name_received} a través de su correo {email_received}. \n"
+                + "¡Gracias por confiar en SwapIt! :)",
             )
 
             # NOTE: Todas las solicitudes al producto que recibe la solicitud se ponen en estado rechazado,
@@ -393,8 +423,17 @@ class RequestConfirm(APIView):
                 other_request.post_maker.save()
                 other_request.save()
 
-            # TODO: Crear un turno, con la informacion correspondiente.
-
+            turn_state = TurnState.objects.filter(id=1).first()
+            turn = Turn.objects.create(
+                code_maker=code_maker,
+                code_received=code_received,
+                state=turn_state,
+                subsidiary=request_object.post_receive.subsidiary,
+                user_maker=request_object.user_maker,
+                user_received=request_object.user_receive,
+                request=request_object,
+            )
+            
             request_object.state = RequestState.objects.filter(id=1).first()
             request_object.save()
             return Response(
