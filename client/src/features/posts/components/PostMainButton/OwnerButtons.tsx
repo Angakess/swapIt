@@ -1,5 +1,5 @@
-import { App, Button, Col, Popconfirm, Row } from 'antd'
-import { QuestionCircleOutlined } from '@ant-design/icons'
+import { App, Button, Col, Popconfirm, Row, theme } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { PostModel } from '@Common/api'
 import { SERVER_URL } from 'constants'
@@ -12,6 +12,7 @@ type OwnerButtonsProps = {
 }
 
 export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
+  const { colorError } = theme.useToken().token
   const { notification } = App.useApp()
   const navigate = useNavigate()
 
@@ -68,7 +69,7 @@ export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
             cancelText="No, cancelar"
             okType="danger"
             placement="bottomLeft"
-            icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+            icon={<ExclamationCircleOutlined style={{ color: colorError }} />}
             onConfirm={deletePost}
           >
             <Button

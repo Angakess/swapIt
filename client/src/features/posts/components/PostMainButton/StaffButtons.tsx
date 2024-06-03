@@ -1,3 +1,4 @@
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import {
   Button,
   Col,
@@ -5,6 +6,7 @@ import {
   Dropdown,
   Form,
   Modal,
+  Popconfirm,
   Row,
   Select,
   theme,
@@ -228,6 +230,7 @@ function BlockUserButton({
   isLoading,
   setIsLoading,
 }: ModerationButtonProps) {
+  const { colorError } = theme.useToken().token
   const navigate = useNavigate()
   const { successNotification, errorNotification } = useCustomAlerts()
 
@@ -239,8 +242,8 @@ function BlockUserButton({
     if (data.ok) {
       navigate('/posts', { replace: true })
       successNotification(
-        'Usuario puesto en revisión',
-        `El usuario ${post.user.first_name} ${post.user.last_name} fue puesto en revisión satisfactoriamente`
+        'Usuario bloqueado',
+        `El usuario ${post.user.first_name} ${post.user.last_name} fue bloqueado correctamente`
       )
     } else {
       errorNotification('Ocurrió un error', data.messages.join('\n'))
@@ -248,14 +251,20 @@ function BlockUserButton({
   }
 
   return (
-    <Button
-      danger
-      block
-      icon={<UserDeleteOutlined />}
-      disabled={isLoading}
-      onClick={handleDelete}
+    <Popconfirm
+      title="Bloquear usuario"
+      description="¿Seguro que desea bloquear al usuario?"
+      okText="Sí, bloquear usuario"
+      cancelText="No, cancelar"
+      okType="danger"
+      placement="bottom"
+      icon={<ExclamationCircleOutlined style={{ color: colorError }} />}
+      onConfirm={handleDelete}
+      cancelButtonProps={{ disabled: isLoading }}
     >
-      Bloquear usuario
-    </Button>
+      <Button danger block icon={<UserDeleteOutlined />} disabled={isLoading}>
+        Bloquear usuario
+      </Button>
+    </Popconfirm>
   )
 }
