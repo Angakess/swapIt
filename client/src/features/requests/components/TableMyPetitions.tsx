@@ -17,7 +17,6 @@ import { useAuth } from '@Common/hooks'
 import { Link } from 'react-router-dom'
 import { MiniPostForTable } from '@Common/components'
 
-
 type RequestIndex = keyof RequestType
 interface RequestType {
   id: number
@@ -146,7 +145,7 @@ export function TableMyPetitions() {
 
     const newData: RequestType[] = []
 
-    if(result.ok){
+    if (result.ok) {
       transformData(result, newData)
     }
 
@@ -302,6 +301,7 @@ export function TableMyPetitions() {
         loading={loading}
         onChange={handleTableChange}
         locale={{ emptyText: 'No hay solicitudes disponibles' }}
+        style={{ marginBottom: '2rem' }}
       />
     </>
   )
