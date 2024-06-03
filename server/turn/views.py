@@ -7,7 +7,9 @@ from .serializers import (
     TurnHelperListSerializer,
     TurnExchangerListSerializer,
     TurnSerializer,
+    TurnDetailSerializer
 )
+from rest_framework import generics
 
 
 class ListMyTurns(APIView):
@@ -72,3 +74,7 @@ class TurnsRejectView(APIView):
             },
             status=status.HTTP_200_OK,
         )
+    
+class DetailTurnView(generics.RetrieveAPIView):
+    queryset = Turn.objects.all()
+    serializer_class = TurnDetailSerializer

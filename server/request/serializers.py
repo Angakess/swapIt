@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from app_post.serializer import PostRequestSerializer
+from app_post.serializer import PostRequestSerializer, PostBaseSerializer
 from request.models import Request, RequestState
 
 
@@ -39,3 +39,12 @@ class RequestForListTurnSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
         exclude = ["user_maker", "user_receive"]
+
+
+class RequestTurnDetailSerializer(serializers.ModelSerializer):
+    post_maker = PostBaseSerializer()
+    post_receive = PostBaseSerializer()
+
+    class Meta:
+        model = Request
+        fields = ["id", "post_maker", "post_receive"]

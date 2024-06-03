@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Turn, TurnState
 from subsidiary.serializers import SubsidiarySerializer
 from user.serializers import UserRequestSerializer
-from request.serializers import RequestForListTurnSerializer, RequestSerializer
+from request.serializers import RequestForListTurnSerializer, RequestSerializer, RequestTurnDetailSerializer
 
 # code_maker = models.CharField(max_length=255)
 # code_received = models.CharField(max_length=255)
@@ -52,6 +52,16 @@ class TurnHelperListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Turn
         fields = ["id", "user_maker", "user_received", "state"]
+
+
+class TurnDetailSerializer(serializers.ModelSerializer):
+    request = RequestTurnDetailSerializer()
+    class Meta:
+        model = Turn
+        fields = [
+            'id',
+            'request'
+        ]
 
 
 # [
