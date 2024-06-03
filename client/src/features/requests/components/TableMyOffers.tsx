@@ -1,4 +1,4 @@
-import { Button, Flex, InputRef, Tooltip } from 'antd'
+import { Button, Flex, InputRef, Tooltip, theme } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { ColumnsType } from 'antd/es/table'
 import { FilterDropdownProps } from 'antd/es/table/interface'
@@ -124,7 +124,7 @@ export function TableMyOffers() {
 
     const newData: RequestType[] = []
 
-    if(result.ok){
+    if (result.ok) {
       transformData(result, newData)
     }
 
@@ -242,6 +242,7 @@ export function TableMyOffers() {
         pagination={false}
         loading={loading}
         locale={{ emptyText: 'No hay solicitudes disponibles' }}
+        style={{ marginBottom: '2rem' }}
       />
     </>
   )

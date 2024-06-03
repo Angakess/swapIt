@@ -17,6 +17,7 @@ export type PostStateModel = {
     | 'bloqueado'
     | 'eliminado'
     | 'rechazado'
+    | 'sin-stock'
 }
 
 export type ProductStateModel = 'NUEVO' | 'USADO' | 'DEFECTUOSO'

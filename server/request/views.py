@@ -149,7 +149,7 @@ class RequestCreate(APIView):
 
             # Restamos el stock y en caso de quedar en 0, cambiamos el estado del producto
             if post_maker.stock_product <= 1:
-                post_maker.state = PostState.objects.filter(id=6).first()
+                post_maker.state = PostState.objects.filter(id=7).first()
 
             post_maker.stock_product -= 1
             post_maker.save()
@@ -298,7 +298,7 @@ class RequestAccept(APIView):
                 subject="Solicitud aceptada.",
                 message=f"¡Hola! {user_receive_name} ha aceptado tu solicitud de {post_maker_name} por el producto {post_received_name}."
                 + f"El intercambio se hace en la filial {subsidiary_recieve}, y {user_receive_name} propone el dia {date_of_request} para realizar el intercambio."
-                + f"Para aceptar o rechazar la solicitud, ingresa al siguiente link http://localhost:5173/requests/evalute/{request_id}"
+                + f"Para aceptar o rechazar la solicitud, ingresa al siguiente link http://localhost:5173/requests/my-requests/{request_id}"
                 + "¡Gracias por confiar en swapit! :)",
             )
             request_object.post_receive.save()
@@ -522,3 +522,23 @@ class ResquestStateVIEWs(generics.RetrieveUpdateDestroyAPIView):
 class RequestStateCreateList(generics.ListCreateAPIView):
     queryset = RequestState.objects.all()
     serializer_class = RequestStateSerializer
+
+
+class RequestDetailById(generics.RetrieveAPIView):
+    queryset = Request.objects.all()
+    serializer_class = RequestSerializer
+
+    def get(self, request, *args, **kwargs):
+        request_id = kwargs.get('request_id')
+        try:
+            request_obj = Request.objects.get(id=request_id)
+            serializer = self.serializer_class(request_obj)
+            return Response(
+                {"ok": True, "messages": [], "data": serializer.data},
+                status=status.HTTP_200_OK,
+            )
+        except Request.DoesNotExist:
+            return Response(
+                {"ok": False, "messages": ["No se encontró la solicitud"], "data": {}},
+                status=status.HTTP_404_NOT_FOUND,
+            )
