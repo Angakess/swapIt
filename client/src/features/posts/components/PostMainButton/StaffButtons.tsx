@@ -18,7 +18,7 @@ import {
 } from '@ant-design/icons'
 
 import { useCustomAlerts } from '@Common/hooks'
-import { PostModel, moderatePost } from '@Common/api'
+import { PostModel, moderatePost, putUserInReview } from '@Common/api'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -223,14 +223,37 @@ function RejectButton({
   )
 }
 
-function BlockUserButton({ isLoading }: ModerationButtonProps) {
+function BlockUserButton({
+  post,
+  isLoading,
+  setIsLoading,
+}: ModerationButtonProps) {
+  const navigate = useNavigate()
+  const { successNotification, errorNotification } = useCustomAlerts()
+
+  async function handleDelete() {
+    setIsLoading(true)
+    const data = await putUserInReview(post.user.id)
+    setIsLoading(false)
+
+    if (data.ok) {
+      navigate('/posts', { replace: true })
+      successNotification(
+        'Usuario puesto en revisión',
+        `El usuario ${post.user.first_name} ${post.user.last_name} fue puesto en revisión satisfactoriamente`
+      )
+    } else {
+      errorNotification('Ocurrió un error', data.messages.join('\n'))
+    }
+  }
+
   return (
     <Button
       danger
       block
       icon={<UserDeleteOutlined />}
       disabled={isLoading}
-      onClick={() => console.log('[CLICK] Block user')}
+      onClick={handleDelete}
     >
       Bloquear usuario
     </Button>
