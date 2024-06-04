@@ -126,3 +126,11 @@ class UserRequestSerializer(serializers.ModelSerializer):
             'dni',
             'email'
         ]
+
+class UserOnlyNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAccount
+        fields = [
+            'first_name',
+            'last_name'
+        ]
