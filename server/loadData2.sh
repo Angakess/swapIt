@@ -6,6 +6,5 @@ python manage.py loaddata initial_category.json   \
                           initial_post2.json      \
                           initial_requeststate.json \
                           initial_turnstate.json  \
-                          initial_turn2.json       \
-
-
+                          initial_turn2.json      \
+                          initial_rating2.json

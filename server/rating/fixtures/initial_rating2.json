@@ -1,0 +1,470 @@
+[
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 101
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 102
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 103
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 104
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 105
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 106
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 107
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 108
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 109
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 110
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 111
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 112
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 113
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 114
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 115
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 116
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 117
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 118
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 119
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 120
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 121
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 122
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 123
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 124
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 125
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 126
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 127
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 128
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 129
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 130
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 131
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 132
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 133
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 134
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 135
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 136
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 137
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 138
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 139
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 140
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 141
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 142
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 143
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 144
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 145
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 146
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 147
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 148
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 149
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 150
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 151
+    }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 5,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 152
+    }
+  }
+]
