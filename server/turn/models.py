@@ -1,7 +1,7 @@
 from django.db import models
 from subsidiary.models import Subsidiary
 from user.models import UserAccount
-from request.models import Request
+from app_post.models import Post
 
 
 class TurnState(models.Model):
@@ -19,6 +19,11 @@ class Turn(models.Model):
     user_received = models.ForeignKey(
         UserAccount, on_delete=models.DO_NOTHING, related_name="turns_received"
     )
-    request = models.ForeignKey(
-        Request, on_delete=models.DO_NOTHING, related_name="turns"
-    )
+
+    post_maker = models.ForeignKey(Post, on_delete=models.DO_NOTHING,
+                                   related_name='turns_send', null=True, blank=True)
+
+    post_receive = models.ForeignKey(Post, on_delete=models.DO_NOTHING,
+                                     related_name='turns_receive', null=True, blank=True)
+
+    day_of_turn = models.DateField(null=True,blank=True)

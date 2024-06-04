@@ -39,12 +39,3 @@ class RequestForListTurnSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
         exclude = ["user_maker", "user_receive"]
-
-
-class RequestTurnDetailSerializer(serializers.ModelSerializer):
-    post_maker = PostBaseSerializer()
-    post_receive = PostBaseSerializer()
-
-    class Meta:
-        model = Request
-        fields = ["id", "post_maker", "post_receive"]

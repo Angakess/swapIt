@@ -37,6 +37,7 @@ class ListTurnsTodayView(APIView):
 
 
 class TurnsValidateView(APIView):
+    #TODO: Evaluar si una vez que se valida el turno, se debe eliminar esa request
     def post(self, request):
         data = request.data
         id_turn = data.get("id_turn")

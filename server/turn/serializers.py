@@ -2,7 +2,8 @@ from rest_framework import serializers
 from .models import Turn, TurnState
 from subsidiary.serializers import SubsidiarySerializer
 from user.serializers import UserRequestSerializer
-from request.serializers import RequestForListTurnSerializer, RequestSerializer, RequestTurnDetailSerializer
+from request.serializers import RequestForListTurnSerializer, RequestSerializer
+from app_post.serializer import PostBaseSerializer, PostRequestSerializer
 
 # code_maker = models.CharField(max_length=255)
 # code_received = models.CharField(max_length=255)
@@ -29,7 +30,8 @@ class TurnSerializer(serializers.ModelSerializer):
     subsidiary = SubsidiarySerializer()
     user_maker = UserRequestSerializer()
     user_received = UserRequestSerializer()
-    request = RequestSerializer()
+    post_maker = PostRequestSerializer()
+    post_receive = PostRequestSerializer()
     state = TurnStateSerializer()
 
     class Meta:
@@ -38,11 +40,12 @@ class TurnSerializer(serializers.ModelSerializer):
 
 
 class TurnExchangerListSerializer(serializers.ModelSerializer):
-    request = RequestForListTurnSerializer()
+    post_maker = PostRequestSerializer()
+    post_receive = PostRequestSerializer()
 
     class Meta:
         model = Turn
-        fields = ["id", "request"]
+        fields = ["id", "post_maker", "post_receive"]
 
 
 class TurnHelperListSerializer(serializers.ModelSerializer):
@@ -55,15 +58,16 @@ class TurnHelperListSerializer(serializers.ModelSerializer):
 
 
 class TurnDetailSerializer(serializers.ModelSerializer):
-    request = RequestTurnDetailSerializer()
+    post_maker = PostBaseSerializer()
+    post_receive = PostBaseSerializer()
+    
     class Meta:
         model = Turn
         fields = [
             'id',
-            'request'
+            'post_maker',
+            'post_receive',
         ]
-
-
 # [
 #     {
 #         "id": 3,
