@@ -1,27 +1,61 @@
+import { UserRatingModel, getUserRatings } from '@Common/api'
 import { UserAvatar } from '@Common/components/UserAvatar'
+import { getAverageRating } from '@Common/helpers'
 import { StarFilled } from '@ant-design/icons'
-import { Flex, Space, Typography, theme } from 'antd'
+import { Flex, Space, Spin, Typography, theme } from 'antd'
+import { useEffect, useState } from 'react'
 
 type PostUserProps = {
+  userId: number
   firstName: string
   lastName: string
 }
 
-export function PostUser({ firstName, lastName }: PostUserProps) {
-  const { colorPrimary } = theme.useToken().token
+export function PostUser({ userId, firstName, lastName }: PostUserProps) {
+  const [isLoading, setIsLoading] = useState(true)
+  const [ratings, setRatings] = useState<UserRatingModel[]>([])
+
+  useEffect(() => {
+    setIsLoading(true)
+    getUserRatings(userId).then((fetchedRatings) => {
+      setRatings(fetchedRatings)
+      setIsLoading(false)
+    })
+  }, [userId])
 
   return (
-    <Flex justify="space-between">
+    <Flex
+      justify="space-between"
+      align="center"
+      style={{ cursor: 'pointer' }}
+      onClick={() => console.log('[click] PostUser')}
+    >
       <UserAvatar firstName={firstName} lastName={lastName} size="large" />
-      <Space>
-        <StarFilled style={{ color: colorPrimary, fontSize: '1rem' }} />
-        <Typography.Text>
-          4.7{' '}
-          <Typography.Text italic type="secondary">
-            (15)
-          </Typography.Text>
-        </Typography.Text>
-      </Space>
+      <Stars isLoading={isLoading} ratings={ratings} />
     </Flex>
+  )
+}
+
+function Stars({
+  isLoading,
+  ratings,
+}: {
+  isLoading: boolean
+  ratings: UserRatingModel[]
+}) {
+  const { colorPrimary } = theme.useToken().token
+
+  if (isLoading) return <Spin style={{ height: '20px' }} />
+
+  return (
+    <Space>
+      <StarFilled style={{ color: colorPrimary, fontSize: '1.25em' }} />
+      <Typography.Text>
+        {getAverageRating(ratings).toFixed(2)}{' '}
+        <Typography.Text italic type="secondary">
+          ({ratings.length})
+        </Typography.Text>
+      </Typography.Text>
+    </Space>
   )
 }
