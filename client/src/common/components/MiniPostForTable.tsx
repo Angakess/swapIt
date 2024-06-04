@@ -1,4 +1,5 @@
 import { Image, Space } from 'antd'
+import { SERVER_URL } from 'constants'
 import { Link } from 'react-router-dom'
 
 export function MiniPostForTable({
@@ -13,8 +14,8 @@ export function MiniPostForTable({
           <Image
             height={'50px'}
             width={'50px'}
-            style={{ borderRadius: '5px' }}
-            src={`http://localhost:8000${record.postImg}`}
+            style={{ borderRadius: '5px', objectFit: 'contain' }}
+            src={`${SERVER_URL}${record.postImg}`}
             preview={false}
           ></Image>
           <p style={{ marginBottom: '0' }}>{record.postName}</p>
