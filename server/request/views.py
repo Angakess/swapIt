@@ -13,7 +13,6 @@ import random
 
 
 class RequestList(generics.ListAPIView):
-
     def get_queryset(self):
         return Request.objects.all()
 
@@ -31,7 +30,6 @@ class RequestList(generics.ListAPIView):
 
 
 class RequestListMaker(APIView):
-
     def get(self, _request, user_id):
         states = [2, 4]
         requests = Request.objects.filter(user_maker__id=user_id, state__id__in=states)
@@ -56,7 +54,6 @@ class RequestListMaker(APIView):
 
 
 class RequestListReceive(APIView):
-
     def get(self, _request, user_id):
         states = [2, 4]
         requests = Request.objects.filter(
@@ -123,11 +120,11 @@ class RequestCreate(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        if user_maker_data.requests_send.filter(state__id=2).count() >= 5:
+        if user_maker_data.requests_send.filter(state__id__in=[2,4]).count() >= 5:
             return Response(
                 {
                     "ok": False,
-                    "messages": ["No puedes realizar más de 5 solicitudes pendientes"],
+                    "messages": ["No puedes tener más de 5 solicitudes pendientes."],
                     "data": {},
                 },
                 status=status.HTTP_400_BAD_REQUEST,
@@ -146,13 +143,6 @@ class RequestCreate(APIView):
             user_receive = UserAccount.objects.filter(id=id_user_receive).first()
             post_receive = Post.objects.filter(id=id_post_receive).first()
             state = RequestState.objects.filter(id=2).first()
-
-            # Restamos el stock y en caso de quedar en 0, cambiamos el estado del producto
-            if post_maker.stock_product <= 1:
-                post_maker.state = PostState.objects.filter(id=7).first()
-
-            post_maker.stock_product -= 1
-            post_maker.save()
 
             request_created = Request.objects.create(
                 post_maker=post_maker,
@@ -175,7 +165,7 @@ class RequestCreate(APIView):
             return Response(
                 {
                     "ok": False,
-                    "messages": ["Ya tiene una solicitud pendiente"],
+                    "messages": ["Ya tienes una solicitud pendiente para este producto."],
                     "data": {},
                 },
                 status=status.HTTP_400_BAD_REQUEST,
@@ -188,7 +178,7 @@ class RequestCreate(APIView):
                     {
                         "ok": False,
                         "messages": [
-                            "No se puede solicitar este trueque, ya fue rechazado dos veces"
+                            "No se puede solicitar este trueque, ya fue rechazado dos veces."
                         ],
                         "data": {},
                     },
@@ -197,13 +187,6 @@ class RequestCreate(APIView):
             # Si ya fue rechazada solo una vez, la paso a pendiente
             else:
                 request_object.state = RequestState.objects.filter(id=2).first()
-                
-                # Restamos el stock y en caso de quedar en 0, cambiamos el estado del producto
-                if request_object.post_maker.stock_product <= 1:
-                    request_object.post_maker.state = PostState.objects.filter(id=6).first()
-
-                request_object.post_maker.stock_product -= 1
-                request_object.post_maker.save()
                 request_object.save()
                 return Response(
                     {
@@ -219,7 +202,7 @@ class RequestCreate(APIView):
             {
                 "ok": False,
                 "messages": [
-                    "Ya tienes una solicitud aceptada para este producto, no puedes solicitarlo nuevamente"
+                    "Ya tienes un intercambio pendiente para este producto, no puedes solicitarlo nuevamente."
                 ],
                 "data": {},
             },
@@ -262,9 +245,10 @@ class RequestAccept(APIView):
         subsidiary_day_requests = Request.objects.filter(
             post_receive__subsidiary=request_object.post_receive.subsidiary,
             day_of_request=date,
-            state__id__in=[1, 4],
+            state__id=4, 
         ).count()
 
+        # TODO: Sumar ademas, al subsidiary_day_requests los turnos pactados para esa filial en esa fecha
         if subsidiary_day_requests >= 50:
             return Response(
                 {
@@ -280,11 +264,6 @@ class RequestAccept(APIView):
         if request_object.post_receive.stock_product >= 1:
             request_object.state = RequestState.objects.filter(id=4).first()
             
-            # Restamos el stock y en caso de quedar en 0, cambiamos el estado del producto
-            if request_object.post_receive.stock_product <= 1:
-                    request_object.post_receive.state = PostState.objects.filter(id=6).first()
-
-            request_object.post_receive.stock_product -= 1
             request_object.rejected = 0
             request_object.day_of_request = date
 
@@ -302,7 +281,6 @@ class RequestAccept(APIView):
                 + f"Podes aceptar o rechazar la solicitud desde la sección mis solicitudes en la página web."
                 + "¡Gracias por confiar en swapit! :)",
             )
-            request_object.post_receive.save()
             request_object.save()
             return Response(
                 {
@@ -340,11 +318,6 @@ class RequestReject(APIView):
         request_object.state = RequestState.objects.filter(id=3).first()
         request_object.rejected += 1
 
-        if request_object.post_maker.stock_product == 0:
-            request_object.post_maker.state = PostState.objects.filter(id=1).first()
-
-        request_object.post_maker.stock_product += 1
-        request_object.post_maker.save()
         request_object.save()
         return Response(
             {"ok": True, "messages": ["Solicitud rechazada con éxito"], "data": {}},
@@ -401,21 +374,11 @@ class RequestConfirm(APIView):
                 + "¡Gracias por confiar en SwapIt! :)",
             )
 
-            # NOTE: Todas las solicitudes al producto que recibe la solicitud se ponen en estado rechazado,
-            #       sin incrementar los rechazos (se repone el stock de los otros productos ofertados).
-
             other_requests = Request.objects.filter(
                 post_receive=request_object.post_receive
             ).exclude(id=request_id)
+
             other_requests.update(state=RequestState.objects.filter(id=3).first())
-            for other_request in other_requests:
-
-                if other_request.post_maker.stock_product == 0:
-                    other_request.post_maker.state = PostState.objects.filter(id=1).first()
-
-                other_request.post_maker.stock_product += 1
-                other_request.post_maker.save()
-                other_request.save()
 
             turn_state = TurnState.objects.filter(id=1).first()
             turn = Turn.objects.create(
@@ -429,11 +392,29 @@ class RequestConfirm(APIView):
                 post_receive = request_object.post_receive,
                 day_of_turn = request_object.day_of_request,
             )
+
+            # Actualizo el stock y el estado de el producto que hace la solicitud
+            if request_object.post_maker.stock_product <= 1:
+                request_object.post_maker.state = PostState.objects.filter(id=7).first()
+                request_object.post_maker.posts_send.all().exclude(id=request_object.id).update(state=PostState.objects.filter(id=3).first())
+
+            request_object.post_maker.stock_product -= 1
+
+            # Actualizo el stock y el estado de el producto que recibe la solicitud
+            if request_object.post_receive.stock_product <= 1:
+                request_object.post_receive.state = PostState.objects.filter(id=7).first()
+                request_object.post_receive.posts_send.all().exclude(id=request_object.id).update(state=PostState.objects.filter(id=3).first())
+
+            request_object.post_receive.stock_product -= 1
+            
+            request_object.post_maker.save()
+            request_object.post_receive.save()
+
             request_object.delete()
             return Response(
                 {
                     "ok": True,
-                    "messages": ["Solicitud confirmada con éxito"],
+                    "messages": ["Solicitud confirmada con éxito."],
                     "data": {"turn_id": turn.id},
                 },
                 status=status.HTTP_200_OK,
@@ -443,33 +424,20 @@ class RequestConfirm(APIView):
             send_email_to_user(
                 email=[email],
                 subject="Solicitud rechazada",
-                message=f"¡Hola! {request_object.user_maker.full_name} ha rechazado tu solicitud de intercambio."
-                + f"Para más información, contactate con {request_object.user_maker.full_name}."
-                + "¡Gracias por confiar en swapit! :)",
+                message=f"¡Hola! {request_object.user_maker.full_name} ha rechazado tu solicitud de intercambio. ¡Gracias por confiar en swapit! :)"
             )
 
-            # NOTE: Repongo el stock de ambos productos, y la solicitud pasa a un estado rechazado.
-            if request_object.post_maker.stock_product == 0:
-                    request_object.post_maker.state = PostState.objects.filter(id=1).first()
-            request_object.post_maker.stock_product += 1
-
-            if request_object.post_receive.stock_product == 0:
-                    request_object.post_receive.state = PostState.objects.filter(id=1).first()
-            request_object.post_receive.stock_product += 1
-            
-            request_object.post_maker.save()
-            request_object.post_receive.save()
             request_object.state = RequestState.objects.filter(id=3).first()
             request.object.day_of_request = None
             request_object.save()
 
             return Response(
-                {"ok": True, "messages": ["Solicitud rechazada con éxito"], "data": {}},
+                {"ok": True, "messages": ["Solicitud rechazada con éxito."], "data": {}},
                 status=status.HTTP_200_OK,
             )
 
         return Response(
-            {"ok": True, "messages": ["Error al procesar la solicitud"], "data": {}},
+            {"ok": True, "messages": ["Error al procesar la solicitud."], "data": {}},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
@@ -486,21 +454,11 @@ class RequestMakedCancel(APIView):
                 {"ok": False, "messages": ["No se encontró la solicitud "], "data": {}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        # Incrementar el stock en 1        
-        if request_object.post_maker.stock_product == 0:
-                request_object.post_maker.state = PostState.objects.filter(id=1).first()
-        request_object.post_maker.stock_product += 1
-        request_object.post_maker.save()
 
-        if request_object.state.id == 4:
-            if request_object.post_receive.stock_product == 0:
-                    request_object.post_receive.state = PostState.objects.filter(id=1).first()
-            request_object.post_receive.stock_product += 1
-            request_object.post_receive.save()
-
-        request_object.delete()
+        request_object.state = RequestState.objects.filter(id=3).first()
+        request_object.save()
         return Response(
-            {"ok": True, "messages": ["Solicitud rechazada con éxito"], "data": {}},
+            {"ok": True, "messages": ["Solicitud cancelada con éxito"], "data": {}},
             status=status.HTTP_200_OK,
         )
 

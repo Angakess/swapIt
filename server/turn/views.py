@@ -94,6 +94,7 @@ class TurnsValidateView(APIView):
 
 
 class TurnsRejectView(APIView):
+    # TODO: Actualizar stock
     def post(self, request):
         data = request.data
         ids_turns = [item["id_turn"] for item in data]
