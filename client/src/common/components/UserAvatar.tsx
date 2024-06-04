@@ -4,12 +4,14 @@ import { AvatarProps } from 'antd/es/skeleton/Avatar'
 type UserAvatarProps = {
   firstName: string
   lastName: string
+  score?: number
   order?: 'avatarFirst' | 'nameFirst'
 } & AvatarProps
 
 export function UserAvatar({
   firstName,
   lastName,
+  score,
   order = 'avatarFirst',
   ...props
 }: UserAvatarProps) {
@@ -25,7 +27,12 @@ export function UserAvatar({
         {(firstName[0] + lastName[0]).toUpperCase()}
       </Avatar>
       <Typography.Text>
-        {firstName} {lastName}
+        {firstName} {lastName}{' '}
+        {score && (
+          <Typography.Text type="secondary" italic>
+            ({score} puntos)
+          </Typography.Text>
+        )}
       </Typography.Text>
     </Flex>
   )

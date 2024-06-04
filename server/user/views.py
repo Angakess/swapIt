@@ -18,6 +18,28 @@ from rest_framework.schemas import AutoSchema
 from rating.models import Rating
 
 
+class UserScore(APIView):
+    def get(self, request, user_id):
+        user = UserAccount.objects.filter(pk=user_id).first()
+        if user is None:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Usuario no encontrado'],
+                    'data': {}
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        return Response(
+            {
+                'ok': True,
+                'messages': ['Puntuacion obtenida'],
+                'data': {'score': user.score}
+            },
+            status=status.HTTP_200_OK
+        )
+
 class CreateUser(generics.CreateAPIView):
     """
         Register user pls
