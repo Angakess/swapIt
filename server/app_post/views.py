@@ -311,7 +311,7 @@ class PostRemove(generics.DestroyAPIView):
             print("[KWARGS] ", kwargs)
             post = Post.objects.filter(pk=kwargs["pk"])
             post.update(state=5)
-            # TODO: Agregar cancelación de peticiones
+            # TODO: Evaluar que sucede con las requests y turnos en los que esta participando.
             return Response(
                 {
                     "ok": True,

@@ -248,6 +248,7 @@ class RequestAccept(APIView):
             state__id=4, 
         ).count()
 
+        # TODO: Contar todos los estados
         # TODO: Sumar ademas, al subsidiary_day_requests los turnos pactados para esa filial en esa fecha
         if subsidiary_day_requests >= 50:
             return Response(
