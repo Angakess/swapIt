@@ -7,7 +7,9 @@ from .serializers import (
     TurnHelperListSerializer,
     TurnExchangerListSerializer,
     TurnSerializer,
+    TurnDetailSerializer
 )
+from rest_framework import generics
 
 
 class ListMyTurns(APIView):
@@ -35,6 +37,7 @@ class ListTurnsTodayView(APIView):
 
 
 class TurnsValidateView(APIView):
+    #TODO: Evaluar si una vez que se valida el turno, se debe eliminar esa request
     def post(self, request):
         data = request.data
         id_turn = data.get("id_turn")
@@ -72,3 +75,7 @@ class TurnsRejectView(APIView):
             },
             status=status.HTTP_200_OK,
         )
+    
+class DetailTurnView(generics.RetrieveAPIView):
+    queryset = Turn.objects.all()
+    serializer_class = TurnDetailSerializer

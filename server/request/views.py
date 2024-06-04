@@ -213,6 +213,7 @@ class RequestCreate(APIView):
                     },
                     status=status.HTTP_200_OK,
                 )
+
         # Si ya fue aceptada, informo que no se puede solicitar este trueque
         return Response(
             {
@@ -298,7 +299,7 @@ class RequestAccept(APIView):
                 subject="Solicitud aceptada.",
                 message=f"¡Hola! {user_receive_name} ha aceptado tu solicitud de {post_maker_name} por el producto {post_received_name}."
                 + f"El intercambio se hace en la filial {subsidiary_recieve}, y {user_receive_name} propone el dia {date_of_request} para realizar el intercambio."
-                + f"Para aceptar o rechazar la solicitud, ingresa al siguiente link http://localhost:5173/requests/my-requests/{request_id}"
+                + f"Podes aceptar o rechazar la solicitud desde la sección mis solicitudes en la página web."
                 + "¡Gracias por confiar en swapit! :)",
             )
             request_object.post_receive.save()
@@ -360,13 +361,6 @@ class RequestConfirm(APIView):
         request_object = Request.objects.filter(
             id=request_id, user_maker__id=user_maker_id
         ).first()
-
-        turn_already_exists  =  Turn.objects.filter(request=request_object).first()
-        if turn_already_exists:
-            return Response(
-                {"ok": False, "messages": ["Esta solicitud ya ha sido procesada"], "data": {}},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
 
         if request_object is None:
             return Response(
@@ -431,16 +425,16 @@ class RequestConfirm(APIView):
                 subsidiary=request_object.post_receive.subsidiary,
                 user_maker=request_object.user_maker,
                 user_received=request_object.user_receive,
-                request=request_object,
+                post_maker = request_object.post_maker,
+                post_receive = request_object.post_receive,
+                day_of_turn = request_object.day_of_request,
             )
-            
-            request_object.state = RequestState.objects.filter(id=1).first()
-            request_object.save()
+            request_object.delete()
             return Response(
                 {
                     "ok": True,
                     "messages": ["Solicitud confirmada con éxito"],
-                    "data": {},
+                    "data": {"turn_id": turn.id},
                 },
                 status=status.HTTP_200_OK,
             )
@@ -532,7 +526,7 @@ class RequestDetailById(generics.RetrieveAPIView):
         request_id = kwargs.get('request_id')
         try:
             request_obj = Request.objects.get(id=request_id)
-            serializer = self.serializer_class(request_obj)
+            serializer = self.serializer_class(request_obj, context={'request': request})
             return Response(
                 {"ok": True, "messages": [], "data": serializer.data},
                 status=status.HTTP_200_OK,

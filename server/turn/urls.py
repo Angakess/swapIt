@@ -7,4 +7,5 @@ urlpatterns = [
     path("list_today/", views.ListTurnsTodayView.as_view()),
     path("validate/", views.TurnsValidateView.as_view()),
     path("reject/", views.TurnsRejectView.as_view()),
+    path("detail/<int:pk>/", views.DetailTurnView.as_view(), name="turn_detail"),
 ]
