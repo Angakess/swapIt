@@ -3,22 +3,24 @@ import { Button, Dropdown, Flex, theme } from 'antd'
 import { UserAvatar } from '@Common/components/UserAvatar'
 import { useAuth, useCustomAlerts } from '@Common/hooks'
 import { Link } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { getUserScore } from '@Common/api'
 
 export function AppHeader() {
   const customAlerts = useCustomAlerts()
   const { user, logOut, isLoggedIn } = useAuth()
   const { colorErrorActive } = theme.useToken().token
+  const [userScore, setUserScore] = useState<number>()
 
   useEffect(() => {
-    const INTERVAL_MS = 1000 * 60 * 5 // 5 minutos
-
     if (user?.role !== 'EXCHANGER') return
 
-    console.log('me traigo los puntos')
+    const INTERVAL_MS = 1000 * 60 * 5 // 5 minutos
+
+    getUserScore(user.id).then(setUserScore)
 
     const interval = setInterval(() => {
-      console.log('actualizo los puntos')
+      getUserScore(user.id).then(setUserScore)
     }, INTERVAL_MS)
 
     return () => clearInterval(interval)
@@ -74,7 +76,7 @@ export function AppHeader() {
           <UserAvatar
             firstName={user!.first_name}
             lastName={user!.last_name}
-            score={user?.role === 'EXCHANGER' ? 10 : undefined}
+            score={userScore}
             order="nameFirst"
           />
         </div>

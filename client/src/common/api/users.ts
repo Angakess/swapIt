@@ -25,3 +25,14 @@ export async function putUserInReview(
   const resp = await fetch(`${SERVER_URL}/users/put-in-review/${userId}`)
   return await resp.json()
 }
+
+//
+// getUserScore
+
+export async function getUserScore(
+  userId: number
+): Promise<number | undefined> {
+  const resp = await fetch(`${SERVER_URL}/users/score/${userId}`)
+  const data: GenericApiResponse<{ score: number }> = await resp.json()
+  return data?.ok ? data.data.score : undefined
+}
