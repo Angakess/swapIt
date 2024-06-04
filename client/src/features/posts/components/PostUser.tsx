@@ -32,7 +32,7 @@ export function PostUser({ userId, firstName, lastName }: PostUserProps) {
         justify="space-between"
         align="center"
         style={{ cursor: 'pointer' }}
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => !isLoading && setIsModalOpen(true)}
       >
         <UserAvatar firstName={firstName} lastName={lastName} size="large" />
         <Stars isLoading={isLoading} ratings={ratings} />

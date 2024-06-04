@@ -7,6 +7,7 @@ type ListRatingsModalProps = {
   isOpen: boolean
   setIsOpen: React.Dispatch<SetStateAction<boolean>>
   ratings: UserRatingModel[]
+  isLoading?: boolean
 }
 
 export function ListRatingsModal({
@@ -14,6 +15,7 @@ export function ListRatingsModal({
   isOpen,
   setIsOpen,
   ratings,
+  isLoading = false,
 }: ListRatingsModalProps) {
   return (
     <Modal
@@ -24,6 +26,7 @@ export function ListRatingsModal({
     >
       <List
         size="large"
+        loading={isLoading}
         dataSource={ratings}
         renderItem={(rating) => <RatingItem rating={rating} />}
       />
