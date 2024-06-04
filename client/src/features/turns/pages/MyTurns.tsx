@@ -7,13 +7,11 @@ import {
 } from 'antd/es/table/interface'
 
 import MOCK_TURNS from '../MOCK_TURNS.json'
-/* import { ButtonCancelarTurno } from '@Turns/components/ButtonCancelarTurno' */
 import { ButtonVerTurno } from '@Turns/components/ButtonVerTurno'
-/* import { ModalCancelarTurno } from '@Turns/components/ModalCancelarTurno' */
 import { tableColumnSearchProps } from '@Turns/functions/tableColumnSearchProps'
-import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { MiniPostForTable, PageTitle } from '@Common/components'
+import { useAuth } from '@Common/hooks'
 
 type DataIndex = keyof DataType
 interface DataType {
@@ -34,13 +32,62 @@ interface TableParams {
   sortOrder?: string
   filters?: Parameters<GetProp<TableProps, 'onChange'>>[1]
 }
+interface FetchType {
+  id: number
+  request: {
+    id: number
+    post_maker: {
+      id: number
+      name: string
+      description: string
+      value: number
+      user: {
+        id: number
+        first_name: string
+        last_name: string
+        dni: string
+        email: string
+      }
+      subsidiary: {
+        name: string
+        x_coordinate: string
+        y_coordinate: string
+      }
+      category: string
+      state_product: string
+      image_1: string | null
+      image_2: string | null
+    }
+    post_receive: {
+      id: number
+      name: string
+      description: string
+      value: number
+      user: {
+        id: number
+        first_name: string
+        last_name: string
+        dni: string
+        email: string
+      }
+      subsidiary: {
+        name: string
+        x_coordinate: string
+        y_coordinate: string
+      }
+      category: string
+      state_product: string
+      image_1: string | null
+      image_2: string | null
+    }
+    state: string
+    rejected: number
+    day_of_request: string
+  }
+}
 
 export function MyTurns() {
-  /* const MOCK_UN_POST = {
-    id: 2,
-    name: "UN PRODUCTO"
-  } */
-
+  const { user } = useAuth()
   const [data, setData] = useState<DataType[]>([])
   const [searchText, setSearchText] = useState({
     id: 0,
@@ -50,8 +97,6 @@ export function MyTurns() {
     otherPostName: '',
   })
   const [loading, setLoading] = useState(false)
-  /*   const [modalOpen, setModalOpen] = useState(false)
-  const [turnSelected, setTurnSelected] = useState<DataType>() */
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -60,12 +105,63 @@ export function MyTurns() {
   })
   const searchInput = useRef<InputRef>(null)
 
-  const fetchData = () => {
+  function transformData(result: FetchType): DataType {
+    const aux = {
+      myPostId: 0,
+      myPostName: '',
+      myPostImage: '',
+      otherPostId: 0,
+      otherPostName: '',
+      otherPostImage: '',
+    }
+
+    if (user?.id === result.request.post_maker.user.id) {
+      aux.myPostId = result.request.post_maker.id
+      aux.myPostName = result.request.post_maker.name
+      aux.myPostImage = '' /* result.post_maker.image_1 */
+      aux.otherPostId = result.request.post_receive.id
+      aux.otherPostName = result.request.post_receive.name
+      aux.otherPostImage = '' /* result.post_receive.image_1 */
+    } else {
+      aux.myPostId = result.request.post_receive.id
+      aux.myPostName = result.request.post_receive.name
+      aux.myPostImage = '' /* result.post_maker.image_1 */
+      aux.otherPostId = result.request.post_maker.id
+      aux.otherPostName = result.request.post_maker.name
+      aux.otherPostImage = '' /* result.post_receive.image_1 */
+    }
+
+    return {
+      id: result.id,
+      date: result.request.day_of_request, //Viene con formato "YYYY-MM-DD",
+      subsidiary: result.request.post_receive.subsidiary.name,
+      myPostId: aux.myPostId,
+      myPostName: aux.myPostName,
+      myPostImage: aux.myPostImage,
+      otherPostId: aux.otherPostId,
+      otherPostName: aux.myPostName,
+      otherPostImage: aux.otherPostImage,
+    }
+  }
+
+  const fetchData = async() => {
     setLoading(true)
-    /* const res = await fetch('http://localhost:8000/users/list-exchangers/')
-    const result = await res.json() */
-    const result = MOCK_TURNS
-    setData(result)
+    const res = await fetch(`http://localhost:8000/turns/my_turns/${user?.id}`)
+
+
+    const result = await res.json()
+    const newData: DataType[] = []
+    result.forEach((element: FetchType) => {
+      const newElement:DataType = transformData(element)
+      newData.push(newElement)
+    });
+    setData(newData)
+
+
+    /* const result = MOCK_TURNS
+    setData(result) */
+
+
     setLoading(false)
     setTableParams({
       ...tableParams,
@@ -140,23 +236,18 @@ export function MyTurns() {
   }
 
   const columns: ColumnsType<DataType> = [
-    /* {
-      title: `ID: ${searchText.id ? searchText.id : ''}`,
-      dataIndex: 'id',
-      render: (id) => `${id}`,
-      ...tableColumnSearchProps('id', handleSearch, handleReset, searchInput),
-    }, */
     {
       title: `Fecha: ${searchText.date ? searchText.date : ''}`,
       dataIndex: 'date',
-      render: (date) => `${date}`,
+      render: (date) => {
+        const parts = date.split("-")
+        return(`${parts[2]}/${parts[1]}/${parts[0]}`)
+      },
       ...tableColumnSearchProps('date', handleSearch, handleReset, searchInput),
       width: '15%',
-
-      //arreglar cuando este conectado al backend
       sorter: (a, b) => {
-        const dateA = dayjs(a.date, 'DD/MM/YYYY')
-        const dateB = dayjs(b.date, 'DD/MM/YYYY')
+        const dateA = dayjs(a.date, 'YYYY-MM-DD')
+        const dateB = dayjs(b.date, 'YYYY-MM-DD')
         if (dateA.isBefore(dateA)) {
           return -1
         }
@@ -164,7 +255,7 @@ export function MyTurns() {
           return 1
         }
         return 0
-      } /* a.date.localeCompare(b.date) */,
+      },
       defaultSortOrder: 'ascend',
     },
     {
@@ -220,30 +311,11 @@ export function MyTurns() {
       ),
       width: '25%',
     },
-
-    // TURNO NO TIENE ESTADO, SI EXISTE ES PORQUE ES UN TURNO YA NEGOCIADO, CONFIRMADO, ETC
-
-    /* {
-      title: `Estado:`,
-      dataIndex: 'confirmed',
-      render: (confirmed) => (confirmed ? 'Confirmado' : 'Sin confirmar'),
-      filters: [
-        { text: 'Confirmado', value: true },
-        { text: 'Sin confirmar', value: false },
-      ],
-      onFilter: (value, record) => record.confirmed === value,
-      filterSearch: false,
-    }, */
     {
       title: 'Acciones',
       render: (_: any, record: DataType) => (
         <Flex justify="center">
           <ButtonVerTurno turnId={record.id}></ButtonVerTurno>
-          {/* <ButtonCancelarTurno
-            record={record}
-            setModalOpen={setModalOpen}
-            setTurnSelected={setTurnSelected}
-          ></ButtonCancelarTurno> */}
         </Flex>
       ),
       width: '0',
@@ -262,13 +334,6 @@ export function MyTurns() {
         onChange={handleTableChange}
         locale={{ emptyText: 'No hay turnos disponibles' }}
       />
-      {/* <ModalCancelarTurno
-        turnEstate={turnSelected?.confirmed}
-        loading={loading}
-        setLoading={setLoading}
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-      ></ModalCancelarTurno> */}
     </>
   )
 }

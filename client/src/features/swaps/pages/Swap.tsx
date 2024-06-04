@@ -1,11 +1,19 @@
 import { PostListItem, PostUser } from '@Posts/components'
-import { Card, Col, Flex, Input, Row, Spin } from 'antd'
+import { Button, Card, Col, Flex, Input, Modal, Row, Space, Spin } from 'antd'
 import { SwapOutlined } from '@ant-design/icons'
 import { ButtonConfirmSwap } from '@Swaps/components/ButtonConfirmSwap'
 import { useEffect, useState } from 'react'
+import { ButtonRejectSwap } from '@Swaps/components/ButtonRejectSwap'
+import { useNavigate } from 'react-router-dom'
 
 export function Swap() {
+  const parts = window.location.href.split('/')
+  const swapId: number = parseInt(parts[parts.length - 1])
+
   const gutter = 32
+
+  const [existe, setExiste] = useState(true)
+  const navigate = useNavigate()
 
   const [confirmDisabled, setConfirmDisabled] = useState(true)
   const [loading, setLoading] = useState(false)
@@ -28,10 +36,10 @@ export function Swap() {
     }))
   }
   function validateInputs() {
-    if (inputCodes.inputA === '' && inputCodes.inputB === '') {
+    if (inputCodes.inputA === '' || inputCodes.inputB === '') {
       setInputError({
         errorStatus: 'error',
-        errorMessage: 'Ingrese al menos un código',
+        errorMessage: 'Ingrese ambos códigos',
       })
       setConfirmDisabled(true)
       return
@@ -46,6 +54,29 @@ export function Swap() {
 
   return (
     <>
+      {!existe ? (
+        <Modal
+          open={true}
+          centered
+          closable={false}
+          okButtonProps={{ hidden: true, disabled: true }}
+          cancelButtonProps={{ hidden: true, disabled: true }}
+        >
+          <Flex justify="center">
+            <p style={{ fontSize: '20px' }}>Este trueque ha sido eliminado</p>
+          </Flex>
+          <Flex justify="center">
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => navigate('/', { replace: true })}
+            >
+              Volver
+            </Button>
+          </Flex>
+        </Modal>
+      ) : null}
+
       <Spin spinning={loading}>
         <Card
           title={
@@ -60,12 +91,23 @@ export function Swap() {
                 >
                   Efectivización del trueque
                 </h3>
-                <ButtonConfirmSwap
-                  confirmDisabled={confirmDisabled}
-                  inputCodes={inputCodes}
-                  loading={loading}
-                  setLoading={setLoading}
-                ></ButtonConfirmSwap>
+                <Space>
+                  <ButtonRejectSwap
+                    loading={loading}
+                    setLoading={setLoading}
+                    existe={existe}
+                    setExiste={setExiste}
+                  ></ButtonRejectSwap>
+                  <ButtonConfirmSwap
+                    confirmDisabled={confirmDisabled}
+                    idTurn={swapId}
+                    inputCodes={inputCodes}
+                    loading={loading}
+                    setLoading={setLoading}
+                    existe={existe}
+                    setExist={setExiste}
+                  ></ButtonConfirmSwap>
+                </Space>
               </Flex>
             </>
           }
@@ -259,6 +301,18 @@ export function Swap() {
           </Row>
         </Card>
       </Spin>
+      {/*       ) : (
+        <>
+          <Card>
+            <Flex justify="center">
+              <p style={{ fontSize: '20px' }}>Este trueque ha sido eliminado</p>
+            </Flex>
+            <Flex justify="center">
+              <Button type='primary' size='large' onClick={() => navigate('/', { replace: true })}>Volver</Button>
+            </Flex>
+          </Card>
+        </>
+      )} */}
     </>
   )
 }

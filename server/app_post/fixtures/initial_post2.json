@@ -1,0 +1,4034 @@
+[
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Camperón de hombre",
+      "description": "Camperón XL con bolsillos dentro y forro interior extraíble, excelente estado\nMedidas:\n- sisa: 65 cm\n- largo: 88 cm\n- manga: 61 cm",
+      "value": 4,
+      "user": 103,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Camisa de mujer",
+      "description": "Camisa L de algodón, en muy buen estado\nMedidas:\n- sisa: 50 cm\n- largo: 70 cm\n- manga: 55 cm",
+      "value": 3,
+      "user": 104,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Pantalones de hombre",
+      "description": "Pantalones de jean talla 42, en buen estado\nMedidas:\n- cintura: 90 cm\n- largo: 110 cm",
+      "value": 2,
+      "user": 105,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Zapatos de mujer",
+      "description": "Zapatos talla 38, en excelente estado",
+      "value": 5,
+      "user": 106,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 2,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Herramienta multiusos",
+      "description": "Herramienta multiusos en buen estado, ideal para trabajos de bricolaje",
+      "value": 3,
+      "user": 107,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mochila escolar",
+      "description": "Mochila escolar en buen estado, con varios compartimentos",
+      "value": 2,
+      "user": 101,
+      "subsidiary": 1,
+      "state": 2,
+      "category": 1,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Camiseta deportiva",
+      "description": "Camiseta deportiva talla M, en buen estado",
+      "value": 3,
+      "user": 102,
+      "subsidiary": 2,
+      "state": 2,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Herramienta de jardinería",
+      "description": "Herramienta de jardinería en buen estado",
+      "value": 4,
+      "user": 103,
+      "subsidiary": 3,
+      "state": 2,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Libro de texto",
+      "description": "Libro de texto en buen estado, ideal para estudiantes de secundaria",
+      "value": 1,
+      "user": 104,
+      "subsidiary": 4,
+      "state": 2,
+      "category": 1,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de limpieza",
+      "description": "Set de limpieza nuevo, incluye escoba, recogedor y fregona",
+      "value": 5,
+      "user": 105,
+      "subsidiary": 5,
+      "state": 2,
+      "category": 4,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de camping",
+      "description": "Mesa plegable de camping, en buen estado",
+      "value": 3,
+      "user": 106,
+      "subsidiary": 1,
+      "state": 3,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla de oficina",
+      "description": "Silla de oficina ergonómica, en buen estado",
+      "value": 4,
+      "user": 107,
+      "subsidiary": 2,
+      "state": 3,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cafetera",
+      "description": "Cafetera de cápsulas, en excelente estado",
+      "value": 5,
+      "user": 101,
+      "subsidiary": 3,
+      "state": 3,
+      "category": 5,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Camperón de mujer",
+      "description": "Camperón L con bolsillos, en excelente estado",
+      "value": 4,
+      "user": 102,
+      "subsidiary": 4,
+      "state": 3,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Microondas",
+      "description": "Microondas en buen estado, poco uso",
+      "value": 3,
+      "user": 103,
+      "subsidiary": 5,
+      "state": 4,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Televisor",
+      "description": "Televisor LED 32 pulgadas, en buen estado",
+      "value": 4,
+      "user": 104,
+      "subsidiary": 1,
+      "state": 4,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Computadora portátil",
+      "description": "Laptop en buen estado, ideal para uso diario",
+      "value": 5,
+      "user": 105,
+      "subsidiary": 2,
+      "state": 4,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Auriculares",
+      "description": "Auriculares inalámbricos, en excelente estado",
+      "value": 3,
+      "user": 106,
+      "subsidiary": 3,
+      "state": 5,
+      "category": 5,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Botas de trekking",
+      "description": "Botas de trekking talla 42, en buen estado",
+      "value": 4,
+      "user": 107,
+      "subsidiary": 4,
+      "state": 5,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cochecito de bebé",
+      "description": "Cochecito de bebé en buen estado",
+      "value": 3,
+      "user": 101,
+      "subsidiary": 5,
+      "state": 6,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio",
+      "description": "Escritorio en buen estado, con cajones",
+      "value": 4,
+      "user": 102,
+      "subsidiary": 1,
+      "state": 6,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Bicicleta",
+      "description": "Bicicleta de montaña en buen estado",
+      "value": 5,
+      "user": 103,
+      "subsidiary": 2,
+      "state": 7,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Tablet",
+      "description": "Tablet en buen estado, ideal para lectura",
+      "value": 3,
+      "user": 104,
+      "subsidiary": 3,
+      "state": 7,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juguete educativo",
+      "description": "Juguete educativo en excelente estado, ideal para niños",
+      "value": 4,
+      "user": 105,
+      "subsidiary": 4,
+      "state": 7,
+      "category": 1,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Zapatillas deportivas",
+      "description": "Zapatillas deportivas talla 40, en excelente estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Guitarra acústica",
+      "description": "Guitarra acústica en buen estado, incluye funda",
+      "value": 5,
+      "user": 111,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cámara fotográfica",
+      "description": "Cámara digital en buen estado, poco uso",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Chaqueta de cuero",
+      "description": "Chaqueta de cuero talla M, en buen estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Teléfono móvil",
+      "description": "Teléfono móvil en buen estado, incluye cargador",
+      "value": 5,
+      "user": 111,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Patines en línea",
+      "description": "Patines en línea talla 42, en buen estado",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juego de herramientas",
+      "description": "Juego de herramientas completo, en buen estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": "post_images/default.jpg",
+      "image_5": "post_images/default.jpg"
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Saco de dormir",
+      "description": "Saco de dormir en buen estado, ideal para camping",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de platos",
+      "description": "Set de platos de porcelana, en buen estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Bicicleta de montaña",
+      "description": "Bicicleta de montaña en buen estado, incluye casco",
+      "value": 5,
+      "user": 111,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": "post_images/default.jpg",
+      "image_5": "post_images/default.jpg"
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Conjunto de té",
+      "description": "Conjunto de té de porcelana, en excelente estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cafetera",
+      "description": "Cafetera en buen estado, poco uso",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Raqueta de tenis",
+      "description": "Raqueta de tenis en buen estado, incluye funda",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de comedor",
+      "description": "Mesa de comedor de madera, en excelente estado",
+      "value": 5,
+      "user": 111,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla ergonómica",
+      "description": "Silla ergonómica para oficina, en buen estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Lámpara de pie",
+      "description": "Lámpara de pie moderna, en buen estado",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Reloj de pared",
+      "description": "Reloj de pared en buen estado, diseño vintage",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Aspiradora",
+      "description": "Aspiradora en buen estado, funciona perfectamente",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juego de sábanas",
+      "description": "Juego de sábanas de algodón, en buen estado",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Planta decorativa",
+      "description": "Planta artificial para decoración, en buen estado",
+      "value": 2,
+      "user": 111,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juego de llaves inglesas",
+      "description": "Juego completo de llaves inglesas, en buen estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Libro de cocina",
+      "description": "Libro de cocina con recetas internacionales",
+      "value": 2,
+      "user": 111,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 1,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Micrófono de estudio",
+      "description": "Micrófono de condensador, en buen estado",
+      "value": 5,
+      "user": 111,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Smartwatch",
+      "description": "Smartwatch en excelente estado, incluye cargador",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de cubiertos",
+      "description": "Set de cubiertos de acero inoxidable, en buen estado",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cámara GoPro",
+      "description": "Cámara GoPro en excelente estado, con accesorios",
+      "value": 5,
+      "user": 111,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Monitor de computadora",
+      "description": "Monitor de 24 pulgadas en buen estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Impresora multifunción",
+      "description": "Impresora multifunción en buen estado, incluye tinta",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": "post_images/default.jpg",
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mochila de viaje",
+      "description": "Mochila de viaje de 60 litros, en buen estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Parrilla portátil",
+      "description": "Parrilla portátil en buen estado, ideal para camping",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Gafas de sol",
+      "description": "Gafas de sol polarizadas, en excelente estado",
+      "value": 2,
+      "user": 111,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Taladro inalámbrico",
+      "description": "Taladro inalámbrico con batería recargable, en buen estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Licuadora",
+      "description": "Licuadora en buen estado, poco uso",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Bicicleta estática",
+      "description": "Bicicleta estática en buen estado, ideal para ejercicio en casa",
+      "value": 5,
+      "user": 111,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Parlantes Bluetooth",
+      "description": "Parlantes Bluetooth portátiles, en buen estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juego de maletas",
+      "description": "Juego de maletas de viaje, en buen estado",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Estufa eléctrica",
+      "description": "Estufa eléctrica en buen estado, poco uso",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Tabla de planchar",
+      "description": "Tabla de planchar plegable, en buen estado",
+      "value": 2,
+      "user": 111,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla plegable",
+      "description": "Silla plegable portátil, en buen estado",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": "post_images/default.jpg",
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juguetes para niños",
+      "description": "Set de juguetes para niños, en buen estado",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 1,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Ventilador de pie",
+      "description": "Ventilador de pie en buen estado, poco uso",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cortadora de césped",
+      "description": "Cortadora de césped en buen estado, poco uso",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Ropa deportiva",
+      "description": "Conjunto de ropa deportiva para hombre, en buen estado",
+      "value": 2,
+      "user": 111,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juego de sartenes",
+      "description": "Juego de sartenes antiadherentes, en buen estado",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": "post_images/default.jpg",
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cámara fotográfica",
+      "description": "Cámara fotográfica digital en buen estado, incluye accesorios",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Tetera eléctrica",
+      "description": "Tetera eléctrica en buen estado, poco uso",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Auriculares inalámbricos",
+      "description": "Auriculares inalámbricos en buen estado, poco uso",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de jardinería",
+      "description": "Set completo de herramientas de jardinería, en buen estado",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Patines",
+      "description": "Patines en línea, en buen estado, poco uso",
+      "value": 3,
+      "user": 111,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Colchón inflable",
+      "description": "Colchón inflable en buen estado, incluye bomba",
+      "value": 4,
+      "user": 111,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de comedor",
+      "description": "Mesa de comedor para seis personas, en buen estado",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio de oficina",
+      "description": "Escritorio de oficina en buen estado, ideal para trabajar en casa",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cafetera de cápsulas",
+      "description": "Cafetera de cápsulas en excelente estado, poco uso",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juego de toallas",
+      "description": "Juego de toallas de baño, en buen estado",
+      "value": 2,
+      "user": 112,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cámara de seguridad",
+      "description": "Cámara de seguridad inalámbrica, en buen estado",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sofá cama",
+      "description": "Sofá cama en buen estado, cómodo y práctico",
+      "value": 5,
+      "user": 112,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juego de sábanas",
+      "description": "Juego de sábanas para cama doble, en buen estado",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Freidora de aire",
+      "description": "Freidora de aire en excelente estado, poco uso",
+      "value": 5,
+      "user": 112,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Microondas",
+      "description": "Microondas en buen estado, poco uso",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": "post_images/default.jpg",
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Aspiradora",
+      "description": "Aspiradora en buen estado, ideal para limpieza del hogar",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Bicicleta de montaña",
+      "description": "Bicicleta de montaña en buen estado, ideal para aventuras al aire libre",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla de oficina",
+      "description": "Silla de oficina ergonómica en buen estado, ajustable y cómoda",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juego de cubiertos",
+      "description": "Juego de cubiertos de acero inoxidable, en buen estado",
+      "value": 2,
+      "user": 112,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Impresora multifunción",
+      "description": "Impresora multifunción en buen estado, incluye cartuchos de tinta",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de herramientas",
+      "description": "Set completo de herramientas manuales, en buen estado",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Licuadora",
+      "description": "Licuadora en buen estado, ideal para preparar batidos y jugos",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cámara de acción",
+      "description": "Cámara de acción resistente al agua, en buen estado",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": "post_images/default.jpg",
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Máquina de coser",
+      "description": "Máquina de coser eléctrica en buen estado, incluye accesorios",
+      "value": 5,
+      "user": 112,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Plancha de vapor",
+      "description": "Plancha de vapor en buen estado, ideal para dejar la ropa impecable",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de utensilios de cocina",
+      "description": "Set completo de utensilios de cocina, en buen estado",
+      "value": 2,
+      "user": 112,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Smartwatch",
+      "description": "Smartwatch en buen estado, compatible con dispositivos Android e iOS",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de noche",
+      "description": "Mesa de noche con cajón, en buen estado",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Plancha de pelo",
+      "description": "Plancha de pelo en buen estado, ideal para alisar y rizar",
+      "value": 2,
+      "user": 112,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Robot aspirador",
+      "description": "Robot aspirador en buen estado, programable y fácil de usar",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sillón reclinable",
+      "description": "Sillón reclinable en buen estado, cómodo y funcional",
+      "value": 5,
+      "user": 112,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Batería externa",
+      "description": "Batería externa para cargar dispositivos móviles, en buen estado",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Lavavajillas",
+      "description": "Lavavajillas en buen estado, ideal para ahorrar tiempo en la cocina",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cafetera italiana",
+      "description": "Cafetera italiana en buen estado, perfecta para preparar café espresso",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juego de cuchillos",
+      "description": "Juego de cuchillos de cocina en buen estado, con base de madera",
+      "value": 2,
+      "user": 112,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Altavoces Bluetooth",
+      "description": "Altavoces Bluetooth en buen estado, con sonido de alta calidad",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Monitor de computadora",
+      "description": "Monitor de computadora en buen estado, resolución Full HD",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sartén antiadherente",
+      "description": "Sartén antiadherente en buen estado, ideal para cocinar sin grasa",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Máquina de café espresso",
+      "description": "Máquina de café espresso en buen estado, incluye vaporizador de leche",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Caja de herramientas",
+      "description": "Caja de herramientas con variedad de herramientas manuales, en buen estado",
+      "value": 5,
+      "user": 112,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": "post_images/default.jpg",
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de centro",
+      "description": "Mesa de centro de estilo moderno, en buen estado",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Báscula de cocina",
+      "description": "Báscula de cocina digital en buen estado, precisa y fácil de usar",
+      "value": 2,
+      "user": 112,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Batidora de mano",
+      "description": "Batidora de mano en buen estado, ideal para preparar masas y salsas",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mueble de almacenaje",
+      "description": "Mueble de almacenaje con varios compartimentos, en buen estado",
+      "value": 5,
+      "user": 112,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cortadora de césped",
+      "description": "Cortadora de césped en buen estado, ideal para mantener el jardín",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Hervidor eléctrico",
+      "description": "Hervidor eléctrico en buen estado, capacidad de 1 litro",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Lámpara de escritorio",
+      "description": "Lámpara de escritorio ajustable, en buen estado",
+      "value": 2,
+      "user": 112,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Máquina de hacer hielo",
+      "description": "Máquina de hacer hielo en buen estado, ideal para fiestas y reuniones",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Estufa eléctrica",
+      "description": "Estufa eléctrica en buen estado, ideal para calentar espacios pequeños",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de maletas",
+      "description": "Set de maletas en buen estado, diferentes tamaños y colores",
+      "value": 5,
+      "user": 112,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Tostadora",
+      "description": "Tostadora en buen estado, perfecta para preparar desayunos rápidos",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cámara de seguridad",
+      "description": "Cámara de seguridad para el hogar, en buen estado",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de comedor",
+      "description": "Mesa de comedor en buen estado, capacidad para seis personas",
+      "value": 5,
+      "user": 112,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cortina opaca",
+      "description": "Cortina opaca en buen estado, ideal para bloquear la luz solar",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Licuadora de alta potencia",
+      "description": "Licuadora de alta potencia en buen estado, perfecta para preparar smoothies",
+      "value": 4,
+      "user": 112,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Ventilador de torre",
+      "description": "Ventilador de torre en buen estado, tres velocidades y temporizador",
+      "value": 3,
+      "user": 112,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Bicicleta de montaña",
+      "description": "Bicicleta de montaña en buen estado, talla M, con suspensión delantera",
+      "value": 4,
+      "user": 120,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla de oficina",
+      "description": "Silla de oficina ergonómica en buen estado, ajustable en altura y respaldo",
+      "value": 3,
+      "user": 120,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Juego de ollas",
+      "description": "Juego de ollas en buen estado, antiadherentes y con tapas de vidrio",
+      "value": 4,
+      "user": 120,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Lavadora",
+      "description": "Lavadora en buen estado, capacidad de carga 7 kg, varias funciones de lavado",
+      "value": 5,
+      "user": 120,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Caja de herramientas",
+      "description": "Caja de herramientas con variedad de herramientas manuales, en buen estado",
+      "value": 4,
+      "user": 120,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "PlayStation 4",
+      "description": "Consola PlayStation 4 en buen estado, incluye un control y cables",
+      "value": 4,
+      "user": 121,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de centro",
+      "description": "Mesa de centro de madera en buen estado, diseño moderno",
+      "value": 3,
+      "user": 121,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Impresora multifunción",
+      "description": "Impresora multifunción en buen estado, impresión, escaneo y copiado",
+      "value": 2,
+      "user": 121,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Robot de cocina",
+      "description": "Robot de cocina en buen estado, varias funciones y programas preestablecidos",
+      "value": 4,
+      "user": 121,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sofá cama",
+      "description": "Sofá cama en buen estado, práctico y cómodo, ideal para espacios pequeños",
+      "value": 5,
+      "user": 121,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Televisor LED",
+      "description": "Televisor LED de 55 pulgadas en buen estado, resolución 4K",
+      "value": 4,
+      "user": 122,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de comedor",
+      "description": "Mesa de comedor extensible en buen estado, capacidad para ocho personas",
+      "value": 3,
+      "user": 122,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Refrigerador",
+      "description": "Refrigerador de dos puertas en buen estado, capacidad 350 litros",
+      "value": 2,
+      "user": 122,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Aspiradora sin bolsa",
+      "description": "Aspiradora sin bolsa en buen estado, potencia de succión alta",
+      "value": 4,
+      "user": 122,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sillón reclinable",
+      "description": "Sillón reclinable en buen estado, tapizado en cuero sintético",
+      "value": 5,
+      "user": 122,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Portátil ASUS",
+      "description": "Portátil ASUS en buen estado, procesador Intel Core i5, 8GB de RAM, 256GB SSD",
+      "value": 4,
+      "user": 123,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de estudio",
+      "description": "Mesa de estudio en buen estado, diseño compacto, ideal para espacios reducidos",
+      "value": 3,
+      "user": 123,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Smartwatch",
+      "description": "Smartwatch en buen estado, compatible con Android e iOS, monitor de actividad",
+      "value": 2,
+      "user": 123,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Licuadora de alta velocidad",
+      "description": "Licuadora de alta velocidad en buen estado, jarra de vidrio resistente",
+      "value": 4,
+      "user": 123,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cama individual",
+      "description": "Cama individual en buen estado, incluye colchón y somier",
+      "value": 5,
+      "user": 123,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "iPhone 11 Pro",
+      "description": "iPhone 11 Pro en buen estado, color gris espacial, capacidad de 256GB",
+      "value": 4,
+      "user": 124,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio de madera",
+      "description": "Escritorio de madera en buen estado, diseño clásico, amplio espacio de trabajo",
+      "value": 3,
+      "user": 124,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Altavoces Bluetooth",
+      "description": "Altavoces Bluetooth en buen estado, sonido de alta fidelidad, batería recargable",
+      "value": 2,
+      "user": 124,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cafetera espresso",
+      "description": "Cafetera espresso en buen estado, prepara café de alta calidad",
+      "value": 4,
+      "user": 124,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sofá de tres plazas",
+      "description": "Sofá de tres plazas en buen estado, tapizado en tela resistente",
+      "value": 5,
+      "user": 124,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Laptop Lenovo",
+      "description": "Laptop Lenovo en buen estado, procesador Intel Core i7, 16GB de RAM, 512GB SSD",
+      "value": 4,
+      "user": 125,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla gaming",
+      "description": "Silla gaming en buen estado, diseño ergonómico, soporte lumbar ajustable",
+      "value": 3,
+      "user": 125,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Auriculares inalámbricos",
+      "description": "Auriculares inalámbricos en buen estado, calidad de sonido premium, cancelación de ruido",
+      "value": 2,
+      "user": 125,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Batidora de mano",
+      "description": "Batidora de mano en buen estado, potencia de 800W, incluye accesorios",
+      "value": 4,
+      "user": 125,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de escritorio",
+      "description": "Mesa de escritorio en buen estado, amplia superficie de trabajo, acabado resistente",
+      "value": 5,
+      "user": 125,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Smart TV Samsung",
+      "description": "Smart TV Samsung en buen estado, pantalla LED de 55 pulgadas, resolución 4K",
+      "value": 4,
+      "user": 126,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de cocina",
+      "description": "Mesa de cocina en buen estado, diseño moderno, espacio para cuatro comensales",
+      "value": 3,
+      "user": 126,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cámara digital",
+      "description": "Cámara digital en buen estado, resolución de 20 megapíxeles, zoom óptico 5x",
+      "value": 2,
+      "user": 126,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Microondas",
+      "description": "Microondas en buen estado, capacidad de 20 litros, varias funciones de cocción",
+      "value": 4,
+      "user": 126,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla de comedor",
+      "description": "Silla de comedor en buen estado, tapizada en cuero sintético, diseño elegante",
+      "value": 5,
+      "user": 126,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Televisor LG",
+      "description": "Televisor LG en buen estado, pantalla LED de 65 pulgadas, resolución 4K",
+      "value": 4,
+      "user": 127,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio con estantería",
+      "description": "Escritorio con estantería en buen estado, diseño moderno, múltiples compartimentos",
+      "value": 3,
+      "user": 127,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Barra de sonido",
+      "description": "Barra de sonido en buen estado, potencia de salida de 100W, conexión Bluetooth",
+      "value": 2,
+      "user": 127,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Robot aspirador",
+      "description": "Robot aspirador en buen estado, programable, función de mapeo inteligente",
+      "value": 4,
+      "user": 127,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sofá esquinero",
+      "description": "Sofá esquinero en buen estado, diseño contemporáneo, tapizado en tela",
+      "value": 5,
+      "user": 127,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "iPhone 12 Pro",
+      "description": "iPhone 12 Pro en buen estado, color plata, capacidad de 128GB",
+      "value": 4,
+      "user": 128,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio de estudio",
+      "description": "Escritorio de estudio en buen estado, diseño moderno, incluye silla a juego",
+      "value": 3,
+      "user": 128,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Auriculares Sony",
+      "description": "Auriculares Sony en buen estado, cancelación de ruido, conexión Bluetooth",
+      "value": 2,
+      "user": 128,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cafetera de cápsulas",
+      "description": "Cafetera de cápsulas en buen estado, compatible con Nespresso, incluye depósito de agua",
+      "value": 4,
+      "user": 128,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de centro",
+      "description": "Mesa de centro en buen estado, estilo minimalista, acabado en madera",
+      "value": 5,
+      "user": 128,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Televisor Sony",
+      "description": "Televisor Sony en buen estado, pantalla LED de 55 pulgadas, resolución Full HD",
+      "value": 4,
+      "user": 129,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de ordenador",
+      "description": "Mesa de ordenador en buen estado, amplio espacio para periféricos, diseño ergonómico",
+      "value": 3,
+      "user": 129,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Auriculares Bose",
+      "description": "Auriculares Bose en buen estado, cancelación de ruido activa, sonido envolvente",
+      "value": 2,
+      "user": 129,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Robot de cocina",
+      "description": "Robot de cocina en buen estado, múltiples funciones preprogramadas, fácil de limpiar",
+      "value": 4,
+      "user": 129,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sillón reclinable",
+      "description": "Sillón reclinable en buen estado, tapizado en cuero, función de masaje",
+      "value": 5,
+      "user": 129,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Laptop HP",
+      "description": "Laptop HP en buen estado, pantalla de 15.6 pulgadas, procesador AMD Ryzen 5, 8GB de RAM, 256GB SSD",
+      "value": 4,
+      "user": 130,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio minimalista",
+      "description": "Escritorio minimalista en buen estado, diseño moderno, acabado en madera",
+      "value": 3,
+      "user": 130,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Auriculares JBL",
+      "description": "Auriculares JBL en buen estado, diseño plegable, calidad de sonido premium",
+      "value": 2,
+      "user": 130,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Licuadora",
+      "description": "Licuadora en buen estado, potencia de 700W, cuchillas de acero inoxidable",
+      "value": 4,
+      "user": 130,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sofá cama",
+      "description": "Sofá cama en buen estado, diseño versátil, tapizado en tela",
+      "value": 5,
+      "user": 130,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Smartphone Samsung Galaxy S20",
+      "description": "Smartphone Samsung Galaxy S20 en buen estado, color negro, 128GB de almacenamiento",
+      "value": 4,
+      "user": 131,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de estudio",
+      "description": "Mesa de estudio en buen estado, diseño moderno, amplio espacio de trabajo",
+      "value": 3,
+      "user": 131,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Altavoces Bluetooth",
+      "description": "Altavoces Bluetooth en buen estado, conexión inalámbrica, sonido de alta calidad",
+      "value": 2,
+      "user": 131,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Robot de limpieza",
+      "description": "Robot de limpieza en buen estado, navegación inteligente, función de mapeo",
+      "value": 4,
+      "user": 131,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla de escritorio",
+      "description": "Silla de escritorio en buen estado, ergonómica, ajustable en altura",
+      "value": 5,
+      "user": 131,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Televisor LG 4K",
+      "description": "Televisor LG 4K en buen estado, pantalla de 55 pulgadas, Smart TV con WebOS",
+      "value": 4,
+      "user": 132,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio de oficina",
+      "description": "Escritorio de oficina en buen estado, amplio espacio de trabajo, diseño contemporáneo",
+      "value": 3,
+      "user": 132,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Auriculares inalámbricos",
+      "description": "Auriculares inalámbricos en buen estado, conexión Bluetooth, batería de larga duración",
+      "value": 2,
+      "user": 132,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Aspiradora sin bolsa",
+      "description": "Aspiradora sin bolsa en buen estado, potencia de succión alta, filtro HEPA",
+      "value": 4,
+      "user": 132,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla ergonómica",
+      "description": "Silla ergonómica en buen estado, diseño ajustable, soporte lumbar",
+      "value": 5,
+      "user": 132,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Smart TV Samsung",
+      "description": "Smart TV Samsung en buen estado, pantalla de 50 pulgadas, resolución 4K",
+      "value": 4,
+      "user": 133,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio con cajones",
+      "description": "Escritorio con cajones en buen estado, diseño moderno, espacio para almacenamiento",
+      "value": 3,
+      "user": 133,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Altavoces Bose",
+      "description": "Altavoces Bose en buen estado, sonido de alta fidelidad, conexión Bluetooth",
+      "value": 2,
+      "user": 133,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Batidora de mano",
+      "description": "Batidora de mano en buen estado, potencia de 400W, accesorios incluidos",
+      "value": 4,
+      "user": 133,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de comedor",
+      "description": "Mesa de comedor en buen estado, diseño elegante, capacidad para 6 personas",
+      "value": 5,
+      "user": 133,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Portátil Lenovo",
+      "description": "Portátil Lenovo en buen estado, pantalla de 14 pulgadas, procesador Intel Core i5, 8GB de RAM, 512GB SSD",
+      "value": 4,
+      "user": 134,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio de madera",
+      "description": "Escritorio de madera en buen estado, diseño clásico, amplio espacio de trabajo",
+      "value": 3,
+      "user": 134,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Altavoces Sony",
+      "description": "Altavoces Sony en buen estado, sonido potente, diseño compacto",
+      "value": 2,
+      "user": 134,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Licuadora de jugos",
+      "description": "Licuadora de jugos en buen estado, potencia de 600W, cuchillas de acero inoxidable",
+      "value": 4,
+      "user": 134,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Sofá de cuero",
+      "description": "Sofá de cuero en buen estado, diseño contemporáneo, color negro",
+      "value": 5,
+      "user": 134,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Smartphone Xiaomi Mi 10",
+      "description": "Smartphone Xiaomi Mi 10 en buen estado, color negro, 128GB de almacenamiento",
+      "value": 4,
+      "user": 135,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de estudio",
+      "description": "Mesa de estudio en buen estado, diseño moderno, amplio espacio de trabajo",
+      "value": 3,
+      "user": 135,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Auriculares inalámbricos",
+      "description": "Auriculares inalámbricos en buen estado, conexión Bluetooth, batería de larga duración",
+      "value": 2,
+      "user": 135,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Batidora de mano",
+      "description": "Batidora de mano en buen estado, potencia de 400W, accesorios incluidos",
+      "value": 4,
+      "user": 135,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de comedor",
+      "description": "Mesa de comedor en buen estado, diseño elegante, capacidad para 6 personas",
+      "value": 5,
+      "user": 135,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Televisor Samsung 4K",
+      "description": "Televisor Samsung 4K en buen estado, pantalla de 55 pulgadas, Smart TV con tecnología HDR",
+      "value": 4,
+      "user": 136,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio ajustable",
+      "description": "Escritorio ajustable en buen estado, altura regulable, superficie amplia",
+      "value": 3,
+      "user": 136,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Altavoces Bluetooth JBL",
+      "description": "Altavoces Bluetooth JBL en buen estado, sonido potente, diseño compacto",
+      "value": 2,
+      "user": 136,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Robot aspirador",
+      "description": "Robot aspirador en buen estado, navegación inteligente, función de mapeo",
+      "value": 4,
+      "user": 136,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla de oficina",
+      "description": "Silla de oficina en buen estado, diseño ergonómico, soporte lumbar",
+      "value": 5,
+      "user": 136,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "iPhone 12 Pro Max",
+      "description": "iPhone 12 Pro Max en buen estado, color plata, 256GB de almacenamiento",
+      "value": 4,
+      "user": 137,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio de madera",
+      "description": "Escritorio de madera en buen estado, diseño clásico, amplio espacio de trabajo",
+      "value": 3,
+      "user": 137,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Altavoces Sony",
+      "description": "Altavoces Sony en buen estado, sonido potente, diseño compacto",
+      "value": 2,
+      "user": 137,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Batidora de mano",
+      "description": "Batidora de mano en buen estado, potencia de 400W, accesorios incluidos",
+      "value": 4,
+      "user": 137,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de comedor",
+      "description": "Mesa de comedor en buen estado, diseño elegante, capacidad para 6 personas",
+      "value": 5,
+      "user": 137,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Macbook Pro 2020",
+      "description": "Macbook Pro 2020 en buen estado, procesador Intel Core i7, 16GB de RAM, 512GB SSD",
+      "value": 4,
+      "user": 138,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Escritorio ajustable",
+      "description": "Escritorio ajustable en buen estado, altura regulable, superficie amplia",
+      "value": 3,
+      "user": 138,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Altavoces Bluetooth JBL",
+      "description": "Altavoces Bluetooth JBL en buen estado, sonido potente, diseño compacto",
+      "value": 2,
+      "user": 138,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Robot aspirador",
+      "description": "Robot aspirador en buen estado, navegación inteligente, función de mapeo",
+      "value": 4,
+      "user": 138,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Silla de oficina",
+      "description": "Silla de oficina en buen estado, diseño ergonómico, soporte lumbar",
+      "value": 5,
+      "user": 138,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Cámara Canon EOS 80D",
+      "description": "Cámara Canon EOS 80D en buen estado, sensor CMOS de 24.2MP, grabación de video Full HD",
+      "value": 4,
+      "user": 139,
+      "subsidiary": 1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de trabajo",
+      "description": "Mesa de trabajo en buen estado, diseño moderno, amplio espacio de almacenamiento",
+      "value": 3,
+      "user": 139,
+      "subsidiary": 2,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Auriculares inalámbricos",
+      "description": "Auriculares inalámbricos en buen estado, conexión Bluetooth, batería de larga duración",
+      "value": 2,
+      "user": 139,
+      "subsidiary": 3,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Batidora de mano",
+      "description": "Batidora de mano en buen estado, potencia de 400W, accesorios incluidos",
+      "value": 4,
+      "user": 139,
+      "subsidiary": 4,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Mesa de comedor",
+      "description": "Mesa de comedor en buen estado, diseño elegante, capacidad para 6 personas",
+      "value": 5,
+      "user": 139,
+      "subsidiary": 5,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  }
+]

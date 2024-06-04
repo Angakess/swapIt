@@ -17,9 +17,10 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 type SwapIndex = keyof SwapType
 interface SwapType {
   id: number
-  code: string
   dniA: string
+  nameA: string
   dniB: string
+  nameB: string
   [key: string]: string | number | boolean
 }
 

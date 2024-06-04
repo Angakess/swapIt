@@ -45,7 +45,7 @@
   },
   {
     "id": 5,
-    "date": "01/08/2023",
+    "date": "2023-08-01",
     "subsidiary": "Melangguane Airport",
     "myPostId": 5,
     "myPostName": "Black vulture",
@@ -56,7 +56,7 @@
   },
   {
     "id": 6,
-    "date": "13/09/2023",
+    "date": "2023-09-13",
     "subsidiary": "Porto Seguro Airport",
     "myPostId": 6,
     "myPostName": "Australian brush turkey",
@@ -67,7 +67,7 @@
   },
   {
     "id": 7,
-    "date": "14/10/2023",
+    "date": "2023-10-14",
     "subsidiary": "Destin Executive Airport",
     "myPostId": 7,
     "myPostName": "Superb starling",

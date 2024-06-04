@@ -2,6 +2,8 @@ import itertools
 import coreapi
 from rest_framework.response import Response
 from rest_framework import generics
+
+from common.email import send_email_to_user
 from .models import Category, Post, PostState
 from .serializer import (
     CategorySerializer,
@@ -48,7 +50,8 @@ class CategoryRemove(APIView):
             category = Category.objects.filter(pk=pk).first()
             if not category:
                 return Response(
-                    {"ok": False, "messages": ["Categoria no encontrada"], "data": {}},
+                    {"ok": False, "messages": [
+                        "Categoria no encontrada"], "data": {}},
                     status=status.HTTP_404_NOT_FOUND,
                 )
 
@@ -88,7 +91,8 @@ class CategoryRestore(APIView):
             category = Category.objects.filter(pk=pk).first()
             if not category:
                 return Response(
-                    {"ok": False, "messages": ["Categoria no encontrada"], "data": {}},
+                    {"ok": False, "messages": [
+                        "Categoria no encontrada"], "data": {}},
                     status=status.HTTP_404_NOT_FOUND,
                 )
 
@@ -160,16 +164,45 @@ class PostUpdate(generics.UpdateAPIView):
     serializer_class = PostSerializer
 
     def partial_update(self, request, *args, **kwargs):
-        #TODO: Evaluar que pasa con las solicitudes, ofertas, y trueques semi-aceptados y aceptados
+        # TODO: Evaluar que pasa con las solicitudes, ofertas, y trueques semi-aceptados y aceptados
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
-        post_request = Post.objects.filter(pk=kwargs["pk"]).first()
+
+        # Yo soy el que recibe el post -> La solicitud se cancela
+        requests = instance.posts_receive.all()
+        emails_requests = list(requests.values_list(
+            'user__email', flat=True).distinct())
+        send_email_to_user(
+            email=emails_requests,
+            subject="Solicitud de intercambio enviada cancelada",
+            message="La solicitud de intercambio enviada" +
+            " ha sido cancelada dado que" +
+            " el propietario modifico la publicación " +
+            instance.name + ". \n"
+        )
+        requests.delete()
+        # Yo soy el que mando el post -> La oferta se cancela
+        requests = instance.posts_send.all()
+        emails_requests = list(requests.values_list(
+            'user__email', flat=True).distinct())
+        send_email_to_user(
+            email=requests,
+            subject="Solicitud de intercambio recibida cancelada",
+            message="La oferta de intercambio recibida " +
+            " ha sido cancelada dado que el propietario modifico " +
+            "la publicación " +
+            instance.name + ". \n"
+        )
+        requests.delete()
+
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            # Use PostBaseSerializer to serialize the updated post with the request context
+
             post_base_serializer = PostBaseSerializer(
                 instance, context={"request": request}
             )
+
             return Response(
                 {
                     "ok": True,
@@ -196,11 +229,14 @@ class PostRetrieve(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
+        editable = instance.posts_send.all().count(
+        ) == 0 and instance.posts_receive.all().count() == 0
         return Response(
             {
                 "ok": True,
                 "messages": ["Post encontrado"],
-                "data": {"post": serializer.data},
+                "data": {"post": serializer.data,
+                         "editable": editable},
             },
             status=status.HTTP_200_OK,
         )

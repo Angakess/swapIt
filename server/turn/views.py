@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from    user.models import UserAccount
+from user.models import UserAccount
 from .models import Turn, TurnState
 from .serializers import (
     TurnHelperListSerializer,
@@ -55,7 +55,7 @@ class ListTurnsTodayView(APIView):
         helper = UserAccount.objects.get(id=id_helper)
         turns = Turn.objects.filter(
             subsidiary__id=helper.id_subsidiary.id,
-            request__day_of_request=date
+            day_of_turn=date
         )
         serializer = TurnHelperListSerializer(turns, many=True)
         return Response(serializer.data)
