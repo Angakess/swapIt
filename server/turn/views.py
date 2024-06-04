@@ -1,7 +1,10 @@
 from django.shortcuts import render
+from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
+from    user.models import UserAccount
 from .models import Turn, TurnState
 from .serializers import (
     TurnHelperListSerializer,
@@ -10,6 +13,26 @@ from .serializers import (
     TurnDetailSerializer
 )
 from rest_framework import generics
+
+
+class ListTurnsByPostId(APIView):
+
+    def get(self, request, id_post):
+        turns = Turn.objects.filter(Q(post_maker__id=id_post) |
+                                    Q(post_receive__id=id_post))
+        serializer = TurnExchangerListSerializer(turns, many=True)
+        if not serializer.data:
+            return Response({
+                "ok": False,
+                "messages": ["No se encontraron turnos."],
+                "data": {}
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        return Response({
+            "ok": True,
+            "messages": ["Turnos encontrados."],
+            "data": serializer.data
+        })
 
 
 class ListMyTurns(APIView):
@@ -28,24 +51,28 @@ class ListMyTurns(APIView):
 class ListTurnsTodayView(APIView):
     def post(self, request):
         data = request.data
-        date, subsidiary = data.get("date"), data.get("id_subsidiary")
+        date, id_helper = data.get("date"), data.get("id_helper")
+        helper = UserAccount.objects.get(id=id_helper)
         turns = Turn.objects.filter(
-            subsidiary__id=subsidiary, request__day_of_request=date
+            subsidiary__id=helper.id_subsidiary.id,
+            request__day_of_request=date
         )
         serializer = TurnHelperListSerializer(turns, many=True)
         return Response(serializer.data)
 
 
 class TurnsValidateView(APIView):
-    #TODO: Evaluar si una vez que se valida el turno, se debe eliminar esa request
+    # TODO: Evaluar si una vez que se valida el turno, se debe eliminar esa request
     def post(self, request):
         data = request.data
         id_turn = data.get("id_turn")
         turn = Turn.objects.get(id=id_turn)
-        code_maker, code_received = data.get("code_maker"), data.get("code_received")
+        code_maker, code_received = data.get(
+            "code_maker"), data.get("code_received")
         if code_maker != turn.code_maker or code_received != turn.code_received:
             return Response(
-                {"ok": False, "messages": ["Los códigos no coinciden."], "data": {}},
+                {"ok": False, "messages": [
+                    "Los códigos no coinciden."], "data": {}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         turn.state = TurnState.objects.get(name="efectuado")
@@ -75,7 +102,8 @@ class TurnsRejectView(APIView):
             },
             status=status.HTTP_200_OK,
         )
-    
+
+
 class DetailTurnView(generics.RetrieveAPIView):
     queryset = Turn.objects.all()
     serializer_class = TurnDetailSerializer

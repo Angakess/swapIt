@@ -3,8 +3,7 @@ from .models import Turn, TurnState
 from subsidiary.serializers import SubsidiarySerializer
 from user.serializers import UserRequestSerializer
 from request.serializers import RequestForListTurnSerializer, RequestSerializer
-from app_post.serializer import PostBaseSerializer, PostRequestSerializer
-
+from app_post.serializer import PostBaseSerializer
 # code_maker = models.CharField(max_length=255)
 # code_received = models.CharField(max_length=255)
 # state = models.ForeignKey(TurnState, on_delete=models.DO_NOTHING)
@@ -30,8 +29,8 @@ class TurnSerializer(serializers.ModelSerializer):
     subsidiary = SubsidiarySerializer()
     user_maker = UserRequestSerializer()
     user_received = UserRequestSerializer()
-    post_maker = PostRequestSerializer()
-    post_receive = PostRequestSerializer()
+    post_maker = PostBaseSerializer()
+    post_receive = PostBaseSerializer()
     state = TurnStateSerializer()
 
     class Meta:
@@ -40,8 +39,8 @@ class TurnSerializer(serializers.ModelSerializer):
 
 
 class TurnExchangerListSerializer(serializers.ModelSerializer):
-    post_maker = PostRequestSerializer()
-    post_receive = PostRequestSerializer()
+    post_maker = PostBaseSerializer()
+    post_receive = PostBaseSerializer()
 
     class Meta:
         model = Turn
