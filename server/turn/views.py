@@ -55,7 +55,7 @@ class ListTurnsTodayView(APIView):
         helper = UserAccount.objects.get(id=id_helper)
         turns = Turn.objects.filter(
             subsidiary__id=helper.id_subsidiary.id,
-            request__day_of_request=date
+            day_of_turn=date
         )
         serializer = TurnHelperListSerializer(turns, many=True)
         return Response(serializer.data)
