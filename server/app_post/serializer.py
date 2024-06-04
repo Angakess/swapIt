@@ -1,7 +1,7 @@
 from .models import Category, Post, PostState
 from rest_framework import serializers
-from user.serializers import UserCreatedSerializer, UserRequestSerializer
-from subsidiary.serializers import SubsidiaryRequestSerializer, SubsidiarySerializer
+from user.serializers import UserCreatedSerializer
+from subsidiary.serializers import SubsidiarySerializer
 
 
 class CategoryRequestSerializer(serializers.ModelSerializer):

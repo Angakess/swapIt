@@ -163,6 +163,7 @@ class PostUpdate(generics.UpdateAPIView):
         #TODO: Evaluar que pasa con las solicitudes, ofertas, y trueques semi-aceptados y aceptados
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
+        post_request = Post.objects.filter(pk=kwargs["pk"]).first()
         if serializer.is_valid():
             serializer.save()
             # Use PostBaseSerializer to serialize the updated post with the request context
