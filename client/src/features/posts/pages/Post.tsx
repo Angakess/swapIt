@@ -112,6 +112,7 @@ export function Post() {
 
           <Card style={{ marginBottom: '1.5rem' }}>
             <PostUser
+              userId={post!.user.id}
               firstName={post!.user.first_name}
               lastName={post!.user.last_name}
             />

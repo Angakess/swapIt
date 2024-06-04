@@ -28,7 +28,7 @@ export function UserAvatar({
       </Avatar>
       <Typography.Text>
         {firstName} {lastName}{' '}
-        {score && (
+        {score != undefined && (
           <Typography.Text type="secondary" italic>
             ({score} puntos)
           </Typography.Text>
