@@ -1,4 +1,5 @@
 import { UserRatingModel, getUserRatings } from '@Common/api'
+import { ListRatingsModal } from '@Common/components'
 import { UserAvatar } from '@Common/components/UserAvatar'
 import { getAverageRating } from '@Common/helpers'
 import { StarFilled } from '@ant-design/icons'
@@ -15,6 +16,8 @@ export function PostUser({ userId, firstName, lastName }: PostUserProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [ratings, setRatings] = useState<UserRatingModel[]>([])
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   useEffect(() => {
     setIsLoading(true)
     getUserRatings(userId).then((fetchedRatings) => {
@@ -24,15 +27,23 @@ export function PostUser({ userId, firstName, lastName }: PostUserProps) {
   }, [userId])
 
   return (
-    <Flex
-      justify="space-between"
-      align="center"
-      style={{ cursor: 'pointer' }}
-      onClick={() => console.log('[click] PostUser')}
-    >
-      <UserAvatar firstName={firstName} lastName={lastName} size="large" />
-      <Stars isLoading={isLoading} ratings={ratings} />
-    </Flex>
+    <>
+      <Flex
+        justify="space-between"
+        align="center"
+        style={{ cursor: 'pointer' }}
+        onClick={() => setIsModalOpen(true)}
+      >
+        <UserAvatar firstName={firstName} lastName={lastName} size="large" />
+        <Stars isLoading={isLoading} ratings={ratings} />
+      </Flex>
+      <ListRatingsModal
+        title={`Calificaciones de ${firstName} ${lastName}`}
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        ratings={ratings}
+      />
+    </>
   )
 }
 
