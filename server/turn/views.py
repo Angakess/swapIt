@@ -60,9 +60,8 @@ class ListTurnsTodayView(APIView):
         serializer = TurnHelperListSerializer(turns, many=True)
         return Response(serializer.data)
 
-
 class TurnsValidateView(APIView):
-    # TODO: Evaluar si una vez que se valida el turno, se debe eliminar esa request
+    #TODO: Enviar a los usuarios un email para que califiquen al otro usuario.
     def post(self, request):
         data = request.data
         id_turn = data.get("id_turn")
@@ -76,6 +75,14 @@ class TurnsValidateView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         turn.state = TurnState.objects.get(name="efectuado")
+        score_maker = turn.post_maker.value
+        score_received = turn.post_receive.value
+
+        turn.user_maker.score += score_maker
+        turn.user_received.score += score_received
+        turn.user_maker.save()
+        turn.user_received.save()
+
         turn.save()
         return Response(
             {"ok": True, "messages": ["Turno validado."], "data": {}},
