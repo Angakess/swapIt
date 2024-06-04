@@ -168,28 +168,31 @@ class PostUpdate(generics.UpdateAPIView):
         instance = self.get_object()
 
         # Yo soy el que recibe el post -> La solicitud se cancela
-        for post in instance.posts_receive.all():
-            send_email_to_user(
-                email=[post.user.email],
-                subject="Solicitud de intercambio enviada cancelada",
-                message="La solicitud de intercambio " + post.name +
-                " ha sido cancelada dado que"+
-                " el propietario modifico la publicación " +
-                instance.name + ". \n"
-            )
-            post.delete()
+        requests = instance.posts_receive.all()
+        emails_requests = list(requests.values_list(
+            'user__email', flat=True).distinct())
+        send_email_to_user(
+            email=emails_requests,
+            subject="Solicitud de intercambio enviada cancelada",
+            message="La solicitud de intercambio enviada" +
+            " ha sido cancelada dado que" +
+            " el propietario modifico la publicación " +
+            instance.name + ". \n"
+        )
+        requests.delete()
         # Yo soy el que mando el post -> La oferta se cancela
-        for post in instance.posts_send.all():
-            send_email_to_user(
-                email=[post.user.email],
-                subject="Solicitud de intercambio recibida cancelada",
-                message="La oferta de intercambio recibida por la publicacion" + 
-                post.name +
-                " ha sido cancelada dado que el propietario modifico "+
-                "la publicación " +
-                instance.name + ". \n"
-            )
-            post.delete()
+        requests = instance.posts_send.all()
+        emails_requests = list(requests.values_list(
+            'user__email', flat=True).distinct())
+        send_email_to_user(
+            email=requests,
+            subject="Solicitud de intercambio recibida cancelada",
+            message="La oferta de intercambio recibida " +
+            " ha sido cancelada dado que el propietario modifico " +
+            "la publicación " +
+            instance.name + ". \n"
+        )
+        requests.delete()
 
         serializer = self.get_serializer(
             instance, data=request.data, partial=True)
