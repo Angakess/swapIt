@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from    user.models import UserAccount
+from user.models import UserAccount
 from .models import Turn, TurnState
 from .serializers import (
     TurnHelperListSerializer,
