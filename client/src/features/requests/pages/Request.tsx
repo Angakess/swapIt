@@ -7,7 +7,6 @@ import { useAuth } from '@Common/hooks'
 import { Page404 } from '@Common/pages'
 import { PageTitle } from '@Common/components'
 import { PostListItem, PostSubsidiary } from '@Posts/components'
-import dayjs, { Dayjs } from 'dayjs'
 
 export function Request() {
   const { id } = useParams()

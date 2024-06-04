@@ -3,11 +3,26 @@ import { Button, Dropdown, Flex, theme } from 'antd'
 import { UserAvatar } from '@Common/components/UserAvatar'
 import { useAuth, useCustomAlerts } from '@Common/hooks'
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 
 export function AppHeader() {
   const customAlerts = useCustomAlerts()
   const { user, logOut, isLoggedIn } = useAuth()
   const { colorErrorActive } = theme.useToken().token
+
+  useEffect(() => {
+    const INTERVAL_MS = 1000 * 60 * 5 // 5 minutos
+
+    if (user?.role !== 'EXCHANGER') return
+
+    console.log('me traigo los puntos')
+
+    const interval = setInterval(() => {
+      console.log('actualizo los puntos')
+    }, INTERVAL_MS)
+
+    return () => clearInterval(interval)
+  }, [user])
 
   if (!isLoggedIn()) {
     return (
@@ -59,6 +74,7 @@ export function AppHeader() {
           <UserAvatar
             firstName={user!.first_name}
             lastName={user!.last_name}
+            score={user?.role === 'EXCHANGER' ? 10 : undefined}
             order="nameFirst"
           />
         </div>
