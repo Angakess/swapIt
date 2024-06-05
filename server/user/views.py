@@ -87,11 +87,11 @@ class CreateUser(generics.CreateAPIView):
             except:
                 return Response(
                     {
-                        'ok': True,
+                        'ok': False,
                         'messages': ['Usuario creado exitosamente. Hubo un problema al enviar el correo. Para recibir su código de activación, intente iniciar sesión.'],
                         'data': {'user': UserCreatedSerializer(user).data}
                     },
-                    status=status.HTTP_201_CREATED
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
             
             return Response(
