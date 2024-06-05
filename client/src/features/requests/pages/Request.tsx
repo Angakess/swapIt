@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Badge, Button, Calendar, Card, Col, Row, Spin, Typography } from 'antd'
+import { Badge, Calendar, Card, Col, Row, Spin, Typography } from 'antd'
 
 import { RequestModel, getRequestById } from '@Common/api'
 import { useAuth } from '@Common/hooks'
 import { Page404 } from '@Common/pages'
 import { PageTitle } from '@Common/components'
 import { PostListItem, PostSubsidiary } from '@Posts/components'
+import { RequestMainButton } from '@Requests/components'
 
 export function Request() {
   const { id } = useParams()
@@ -69,9 +70,7 @@ export function Request() {
 
         <Col xs={24} md={24} lg={8} style={{ maxHeight: '30rem' }}>
           <Card style={{ marginBottom: '1.5rem' }}>
-            <Button type="primary" block>
-              Button
-            </Button>
+            <RequestMainButton request={request} />
           </Card>
 
           <Row gutter={[24, 24]}>

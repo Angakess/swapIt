@@ -88,3 +88,37 @@ export async function getRequestById(id: number): Promise<RequestModel | null> {
   const data: GenericApiResponse<RequestModel> = await resp.json()
   return data.ok ? data.data : null
 }
+
+//
+// acceptRequest
+
+export async function acceptRequest() {}
+
+//
+// rejectRequest
+
+export async function rejectRequest(
+  id: number
+): Promise<GenericApiResponse<Record<string, never>>> {
+  const resp = await fetchPost(`${SERVER_URL}/requests/reject/`, {
+    id_request: id,
+  })
+  return await resp.json()
+}
+
+//
+// cancelRequest
+
+export async function cancelRequestMade(
+  id: number
+): Promise<GenericApiResponse<Record<string, never>>> {
+  const resp = await fetchPost(`${SERVER_URL}/requests/cancel_request/`, {
+    id_request: id,
+  })
+  return await resp.json()
+}
+
+//
+// cancelRequestReceived
+
+export async function cancelRequestReceived() {}
