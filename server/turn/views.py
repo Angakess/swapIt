@@ -115,7 +115,6 @@ class TurnsValidateView(APIView):
 
 
 
-
 class TurnsRejectView(APIView):
     def post(self, request):
         data = request.data
