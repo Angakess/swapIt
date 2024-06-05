@@ -158,6 +158,11 @@ class CategoryList(generics.ListAPIView):
 
 
 # ----------------------POST----------------------
+# CASO 1: Sin solicitudes ni turnos
+# CASO 2: Con solicitudes -> Recibidas o enviadas
+# CASO 3: Con turnos -> Recibidos o enviados
+# CASO 4: Con solicitudes y turnos
+# CASO 5: Con solicitudes y turnos aceptados
 
 
 class PostUpdate(generics.UpdateAPIView):
@@ -168,16 +173,16 @@ class PostUpdate(generics.UpdateAPIView):
         
 
         instance = self.get_object()
-
+        #FIXME: Revisar que pasa si mi post está en alguna request como maker y no como receiver 
         # La request donde el post es el solicitado
         requests_receive = instance.posts_receive.all()
-        emails_makers = list(requests_receive.values_list(
-            'user_maker__email', flat=True).distinct())
+        emails_makers = list(requests_receive.values_list('user_maker__email', flat=True).distinct())
 
         # La request donde el post es el solicitante
         requests_send = instance.posts_send.all()
         emails_received = list(requests_send.values_list(
             'user_receive__email', flat=True).distinct())
+        
         try:
             send_email_to_user(
                 email=emails_makers,
@@ -197,8 +202,7 @@ class PostUpdate(generics.UpdateAPIView):
                 instance.name + ". \n"
             )
 
-            requests_receive.update(
-                state=RequestState.objects.get(name="rechazado"))
+            requests_receive.update(state=RequestState.objects.get(name="rechazado"))
             requests_send.update(
                 state=RequestState.objects.get(name="rechazado"))
         except Exception as _e:
@@ -243,16 +247,19 @@ class PostRetrieve(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        condition = {"state__in": [1, 3]}
-        posts_send = instance.posts_send.filter(condition).count()
-        posts_receive = instance.posts_receive.filter(condition).count()
+        condition = {"state__id__in": [1, 4]}
+        posts_send = instance.posts_send.filter(**condition).exists()
+        posts_receive = instance.posts_receive.filter(**condition).exists()
+        post_turn_s = instance.turns_send.filter(state__id=1).exists()
+        post_turn_r = instance.turns_receive.filter(state__id=1).exists()
+        cumple = posts_send or posts_receive or post_turn_s or post_turn_r
 
         return Response(
             {
                 "ok": True,
                 "messages": ["Post encontrado"],
                 "data": {"post": serializer.data,
-                         "editable": not (posts_send+posts_receive)},
+                         "editable": not (cumple)},
             },
             status=status.HTTP_200_OK,
         )
@@ -324,15 +331,27 @@ class PostRemove(generics.DestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         try:
-            print("[KWARGS] ", kwargs)
-            post = Post.objects.filter(pk=kwargs["pk"])
-            post.update(state=5)
-            # TODO: Evaluar que sucede con las requests y turnos en los que esta participando.
+            
+            post = Post.objects.filter(pk=kwargs["pk"]).first()
+
+            condition = {"state__id__in": [1, 4]}
+            in_request_maker = post.posts_send.filter(**condition).exists()
+            in_request_receive = post.posts_receive.filter(**condition).exists()
+            post_turn_s = post.turns_send.filter(state__id=1).exists()
+            post_turn_r = post.turns_receive.filter(state__id=1).exists()
+            if  in_request_maker or in_request_receive or post_turn_s or post_turn_r:
+                return Response({
+                    'ok': False,
+                    'messages': ['No se puede eliminar el post'],
+                    'data': {}
+                }, status=status.HTTP_406_NOT_ACCEPTABLE)
+            post.state=PostState.objects.get(id=5)
+            post.save()
             return Response(
                 {
                     "ok": True,
                     "messages": ["Post eliminado exitosamente"],
-                    "data": {"post": PostSerializer(post.first()).data},
+                    "data": {"post": PostSerializer(post).data},
                 },
                 status=status.HTTP_200_OK,
             )
@@ -342,6 +361,7 @@ class PostRemove(generics.DestroyAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+            # TODO: Evaluar que sucede con las requests y turnos en los que esta participando.
 
 class PostModeration(APIView):
     def post(self, request):
