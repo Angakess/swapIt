@@ -32,15 +32,25 @@ class SubsidiaryDetails(generics.RetrieveUpdateDestroyAPIView):
                 status=status.HTTP_412_PRECONDITION_FAILED
             )
         
-        subsidiary.deactivate()
+        ok = subsidiary.deactivate()
 
-        return Response(
+        if ok:
+            return Response(
+                    {
+                        'ok': True,
+                        'messages': ['Filial eliminada correctamente'],
+                        'data': {}
+                    },
+                    status=status.HTTP_200_OK
+                )
+        else:
+            return Response(
                 {
-                    'ok': True,
-                    'messages': ['Filial eliminada correctamente'],
+                    'ok': False,
+                    'messages': ['Error al eliminar la categoria, hubieron problemas al enviar los correos.'],
                     'data': {}
                 },
-                status=status.HTTP_200_OK
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
     serializer_class = SubsidiarySerializer

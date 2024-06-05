@@ -71,19 +71,29 @@ class CreateUser(generics.CreateAPIView):
             user_register = UserRegister.objects.create(
                 code=str(generated_code), user=user)
 
-            send_email_to_user(
-                email=[user_register.user.email],
-                subject='Activación de cuenta de: ' +
-                user_register.user.first_name + ' '
-                + user_register.user.last_name,
-                message='Ingrese a la siguiente url'
-                + ' http://localhost:5173/auth/email-verification/' +
-                str(generated_code)
-            )
-
             admin = UserAccount.objects.filter(role=Role.ADMIN).first()
             calification = Rating.objects.create(score=5, comment="Bienvenido a SwapIt! :)", user_maker=admin, user_received=user)
 
+            try:
+                send_email_to_user(
+                    email=[user_register.user.email],
+                    subject='Activación de cuenta de: ' +
+                    user_register.user.first_name + ' '
+                    + user_register.user.last_name,
+                    message='Ingrese a la siguiente url'
+                    + ' http://localhost:5173/auth/email-verification/' +
+                    str(generated_code)
+                )
+            except:
+                return Response(
+                    {
+                        'ok': True,
+                        'messages': ['Usuario creado exitosamente. Hubo un problema al enviar el correo. Para recibir su código de activación, intente iniciar sesión.'],
+                        'data': {'user': UserCreatedSerializer(user).data}
+                    },
+                    status=status.HTTP_201_CREATED
+                )
+            
             return Response(
                 {
                     'ok': True,
@@ -91,6 +101,7 @@ class CreateUser(generics.CreateAPIView):
                     'data': {'user': UserCreatedSerializer(user).data},
                 }, status=status.HTTP_201_CREATED
             )
+
         return Response(
             {
                 'ok': False,
@@ -165,15 +176,26 @@ class ForgotPassword(APIView):
             user__dni=dni).first()
 
         if (already_has_code is not None):
-            send_email_to_user(
-                email=[already_has_code.user.email],
-                subject='Recuperacion de contraseña de: ' +
-                already_has_code.user.first_name + ' '
-                + already_has_code.user.last_name,
-                message='Ingrese a la siguiente url'
-                + ' http://localhost:5173/auth/reset-password/' +
-                str(already_has_code.code)
-            )
+            try:
+                send_email_to_user(
+                    email=[already_has_code.user.email],
+                    subject='Recuperacion de contraseña de: ' +
+                    already_has_code.user.first_name + ' '
+                    + already_has_code.user.last_name,
+                    message='Ingrese a la siguiente url'
+                    + ' http://localhost:5173/auth/reset-password/' +
+                    str(already_has_code.code)
+                )
+            except:
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Hubo un problema al enviar el correo. Intente más tarde'],
+                        'data': {}
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
             return Response(
                 {
                     'ok': True,
@@ -184,18 +206,28 @@ class ForgotPassword(APIView):
             )
 
         generated_code = random.randint(100000, 999999)
+        try:
+            send_email_to_user(
+                email=[user_forgot_password.user.email],
+                subject='Recuperacion de contraseña de: ' +
+                user_forgot_password.user.first_name + ' '
+                + user_forgot_password.user.last_name,
+                message='Ingrese a la siguiente url'
+                + ' http://localhost:5173/auth/reset-password/' +
+                str(generated_code)
+            )
+        except:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Hubo un problema al enviar el correo. Intente más tarde'],
+                    'data': {}
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
         user_forgot_password = UserForgotPassword.objects.create(
             code=str(generated_code), user=user)
-
-        send_email_to_user(
-            email=[user_forgot_password.user.email],
-            subject='Recuperacion de contraseña de: ' +
-            user_forgot_password.user.first_name + ' '
-            + user_forgot_password.user.last_name,
-            message='Ingrese a la siguiente url'
-            + ' http://localhost:5173/auth/reset-password/' +
-            str(generated_code)
-        )
 
         return Response(
             {
@@ -266,15 +298,26 @@ class LoginUser(APIView):
             user_register = UserRegister.objects.filter(
                 user__dni=user.dni).first()
 
-            send_email_to_user(
-                email=[user_register.user.email],
-                subject='Activación de cuenta de: ' +
-                user_register.user.first_name + ' '
-                + user_register.user.last_name,
-                message='Ingrese a la siguiente url'
-                + ' http://localhost:5173/auth/email-verification/' +
-                str(user_register.code)
-            )
+            try:
+                send_email_to_user(
+                    email=[user_register.user.email],
+                    subject='Activación de cuenta de: ' +
+                    user_register.user.first_name + ' '
+                    + user_register.user.last_name,
+                    message='Ingrese a la siguiente url'
+                    + ' http://localhost:5173/auth/email-verification/' +
+                    str(user_register.code)
+                )
+            except:
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Error al hacer login. Hubo un problema al enviar el correo. Intente más tarde'],
+                        'data': {}
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
             return Response(
                 {
                     'ok': False,
@@ -353,12 +396,22 @@ class LoginUser(APIView):
 
         elif user.role == Role.ADMIN or user.role == Role.HELPER:
             code_2fa = random.randint(100000, 999999)
-            send_email_to_user(
-                email=[user.email],
-                subject='Codigo de 2FA: ' + user.first_name + ' '
-                + user.last_name,
-                message='Tu codigo de 2FA es: ' + str(code_2fa)
-            )
+            try:
+                send_email_to_user(
+                    email=[user.email],
+                    subject='Codigo de 2FA: ' + user.first_name + ' '
+                    + user.last_name,
+                    message='Tu codigo de 2FA es: ' + str(code_2fa)
+                )
+            except:
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Error al enviar el correo. Intente mas tarde'],
+                        'data': {}
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
 
             user.failed_login_attempts = 0
             user.save()
@@ -417,7 +470,16 @@ class DisincorporateHelper(APIView):
         subsidiary = helper.id_subsidiary # NOTE: id_subsidiary is a subsidiary object
 
         if (subsidiary.users.count() == 1):
-            subsidiary.deactivate()
+            ok = subsidiary.deactivate()
+            if not ok:
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Error al desincorporar el usuario, hubieron problemas al enviar los correos.'],
+                        'data': {}
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
 
         helper.delete()
         return Response(
@@ -473,7 +535,16 @@ class ChangeHelperFilial(APIView):
         
         old_subsidiary = helper.id_subsidiary
         if (old_subsidiary.cant_current_helpers == 1):
-            old_subsidiary.deactivate()
+            ok = old_subsidiary.deactivate()
+            if not ok:
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Error al cambiar de filial, hubieron problemas al enviar los correos.'],
+                        'data': {}
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
         
         helper.id_subsidiary = new_subsidiary
         helper.save()

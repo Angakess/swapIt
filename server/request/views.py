@@ -279,14 +279,26 @@ class RequestAccept(APIView):
             post_maker_name = request_object.post_maker.name
             user_receive_name = request_object.user_receive.full_name
 
-            send_email_to_user(
-                email=[email],
-                subject="Solicitud aceptada.",
-                message=f"¡Hola! {user_receive_name} ha aceptado tu solicitud de {post_maker_name} por el producto {post_received_name}."
-                + f"El intercambio se hace en la filial {subsidiary_recieve}, y {user_receive_name} propone el dia {date_of_request} para realizar el intercambio."
-                + f"Podes aceptar o rechazar la solicitud desde la sección mis solicitudes en la página web."
-                + "¡Gracias por confiar en swapit! :)",
-            )
+            try:
+                send_email_to_user(
+                    email=[email],
+                    subject="Solicitud aceptada.",
+                    message=f"¡Hola! {user_receive_name} ha aceptado tu solicitud de {post_maker_name} por el producto {post_received_name}."
+                    + f"El intercambio se hace en la filial {subsidiary_recieve}, y {user_receive_name} propone el dia {date_of_request} para realizar el intercambio."
+                    + f"Podes aceptar o rechazar la solicitud desde la sección mis solicitudes en la página web."
+                    + "¡Gracias por confiar en swapit! :)",
+                )
+            except:
+                return Response(
+                    {
+                        "ok": False,
+                        "messages": [
+                            "Error al aceptar la request, hubo un problema al enviar el correo."
+                        ],
+                        "data": {},
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
             request_object.save()
             return Response(
                 {
@@ -360,25 +372,38 @@ class RequestConfirm(APIView):
             post_received_name = request_object.post_receive.name
             post_maker_name = request_object.post_maker.name
 
-            send_email_to_user(
-                email=[email_received],
-                subject="Solicitud aceptada",
-                message=f"¡Hola {full_name_received}! {full_name_maker} ha aceptado la fecha propuesta para intercambiar tu {post_received_name} por su {post_maker_name}. \n"
-                + f"El intercambio se realizará en la filial {request_object.post_receive.subsidiary.name} el día {request_object.day_of_request}. \n"
-                + f"Tu código para asistir al intercambio es {code_received}.\n"
-                + f"Podés contactarte con {full_name_maker} a través de su correo {email_maker}. \n"
-                + "¡Gracias por confiar en SwapIt! :)",
-            )
+            try:
+                send_email_to_user(
+                    email=[email_received],
+                    subject="Solicitud aceptada",
+                    message=f"¡Hola {full_name_received}! {full_name_maker} ha aceptado la fecha propuesta para intercambiar tu {post_received_name} por su {post_maker_name}. \n"
+                    + f"El intercambio se realizará en la filial {request_object.post_receive.subsidiary.name} el día {request_object.day_of_request}. \n"
+                    + f"Tu código para asistir al intercambio es {code_received}.\n"
+                    + f"Podés contactarte con {full_name_maker} a través de su correo {email_maker}. \n"
+                    + "¡Gracias por confiar en SwapIt! :)",
+                )
 
-            send_email_to_user(
-                email=[email_maker],
-                subject="Solicitud aceptada",
-                message=f"¡Hola, {full_name_maker}! Has pactado un intercambio con {full_name_received} para intercambiar tu {post_maker_name} por su {post_received_name}. \n"
-                + f"El intercambio se realizará en la filial {request_object.post_receive.subsidiary.name} el día {request_object.day_of_request}. \n"
-                + f"Tu código para asistir al intercambio es {code_maker}. \n"
-                + f"Podés contactarte con {full_name_received} a través de su correo {email_received}. \n"
-                + "¡Gracias por confiar en SwapIt! :)",
-            )
+                
+                send_email_to_user(
+                    email=[email_maker],
+                    subject="Solicitud aceptada",
+                    message=f"¡Hola, {full_name_maker}! Has pactado un intercambio con {full_name_received} para intercambiar tu {post_maker_name} por su {post_received_name}. \n"
+                    + f"El intercambio se realizará en la filial {request_object.post_receive.subsidiary.name} el día {request_object.day_of_request}. \n"
+                    + f"Tu código para asistir al intercambio es {code_maker}. \n"
+                    + f"Podés contactarte con {full_name_received} a través de su correo {email_received}. \n"
+                    + "¡Gracias por confiar en SwapIt! :)",
+                )
+            except:
+                return Response(
+                    {
+                        "ok": False,
+                        "messages": [
+                            "Error al confirmar la request, hubo un problema al enviar el correo."
+                        ],
+                        "data": {},
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
 
             other_requests = Request.objects.filter(
                 post_receive=request_object.post_receive
@@ -427,11 +452,24 @@ class RequestConfirm(APIView):
             )
         elif decision == "reject":  # Se rechaza la solicitud
             email = request_object.user_receive.email
-            send_email_to_user(
-                email=[email],
-                subject="Solicitud rechazada",
-                message=f"¡Hola! {request_object.user_maker.full_name} ha rechazado tu solicitud de intercambio. ¡Gracias por confiar en swapit! :)"
-            )
+            
+            try:
+                send_email_to_user(
+                    email=[email],
+                    subject="Solicitud rechazada",
+                    message=f"¡Hola! {request_object.user_maker.full_name} ha rechazado tu solicitud de intercambio. ¡Gracias por confiar en swapit! :)"
+                )
+            except:
+                return Response(
+                    {
+                        "ok": False,
+                        "messages": [
+                            "Error al rechazar la request, hubo un problema al enviar el correo."
+                        ],
+                        "data": {},
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
 
             request_object.state = RequestState.objects.filter(id=3).first()
             request.object.day_of_request = None

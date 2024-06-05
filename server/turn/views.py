@@ -84,23 +84,29 @@ class TurnsValidateView(APIView):
         score_maker = turn.post_maker.value
         score_received = turn.post_receive.value
         
-        send_email_to_user(
-            [email_maker],
-            "Califica tu intercambio",
-            f"¡Felicitaciones {name_maker}! Has finalizado un intercambio con {name_received}, has sumado {score_maker} puntos. \n" +
-            f"Puedes calificar a {name_received} en el siguiente enlace: http://localhost:5173/user/calificate/ \n" +
-            f"¡Gracias por confiar en SwapIt!"
-        )
+        try:
+            send_email_to_user(
+                [email_maker],
+                "Califica tu intercambio",
+                f"¡Felicitaciones {name_maker}! Has finalizado un intercambio con {name_received}, has sumado {score_maker} puntos. \n" +
+                f"Puedes calificar a {name_received} en el siguiente enlace: http://localhost:5173/user/calificate/ \n" +
+                f"¡Gracias por confiar en SwapIt!"
+            )
 
-        send_email_to_user(
-            [email_received],
-            "Califica tu intercambio",
-            f"¡Felicitaciones {name_received}! Has finalizado un intercambio con {name_maker}, has sumado {score_received} puntos. \n" +
-            f"Puedes calificar a {name_maker} en el siguiente enlace: http://localhost:5173/user/calificate/ \n" +
-            f"¡Gracias por confiar en SwapIt!"
-        )
-
-
+            
+            send_email_to_user(
+                [email_received],
+                "Califica tu intercambio",
+                f"¡Felicitaciones {name_received}! Has finalizado un intercambio con {name_maker}, has sumado {score_received} puntos. \n" +
+                f"Puedes calificar a {name_maker} en el siguiente enlace: http://localhost:5173/user/calificate/ \n" +
+                f"¡Gracias por confiar en SwapIt!"
+            )
+        except:
+            return Response(
+                {"ok": False, "messages": ["Error al validar un turno, hubo un error al enviar los correos."], "data": {}},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+        
         turn.state = TurnState.objects.get(name="efectuado")
         turn.user_maker.score += score_maker
         turn.user_received.score += score_received

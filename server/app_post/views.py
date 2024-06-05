@@ -56,16 +56,25 @@ class CategoryRemove(APIView):
                     status=status.HTTP_404_NOT_FOUND,
                 )
 
-            category.deactivate()
-
-            return Response(
-                {
-                    "ok": True,
-                    "messages": ["Categoria eliminada exitosamente"],
-                    "data": {"category": CategorySerializer(category).data},
-                },
-                status=status.HTTP_200_OK,
-            )
+            ok = category.deactivate()
+            if ok:
+                return Response(
+                    {
+                        "ok": True,
+                        "messages": ["Categoria eliminada exitosamente"],
+                        "data": {"category": CategorySerializer(category).data},
+                    },
+                    status=status.HTTP_200_OK,
+                )
+            else:
+                return Response(
+                    {
+                        "ok": False,
+                        "messages": ["Error al eliminar la categoria, hubieron problemas al enviar los correos."],
+                        "data": {},
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
         except KeyError:
             return Response(
                 {"ok": False, "messages": ["Falta ID"], "data": {}},
@@ -97,16 +106,26 @@ class CategoryRestore(APIView):
                     status=status.HTTP_404_NOT_FOUND,
                 )
 
-            category.reactivate()
-
-            return Response(
-                {
-                    "ok": True,
-                    "messages": ["Categoria restaurada exitosamente"],
-                    "data": {"category": CategorySerializer(category).data},
-                },
-                status=status.HTTP_200_OK,
-            )
+            ok = category.reactivate()
+            
+            if ok:
+                return Response(
+                    {
+                        "ok": True,
+                        "messages": ["Categoria restaurada exitosamente"],
+                        "data": {"category": CategorySerializer(category).data},
+                    },
+                    status=status.HTTP_200_OK,
+                )
+            else:
+                return Response(
+                    {
+                        "ok": False,
+                        "messages": ["Error al restaurar la categoria, hubieron problemas al enviar los correos."],
+                        "data": {},
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
         except KeyError:
             return Response(
                 {"ok": False, "messages": ["Falta ID"], "data": {}},
@@ -208,7 +227,7 @@ class PostUpdate(generics.UpdateAPIView):
         except Exception as _e:
             return Response({
                 'ok': False,
-                'messages': ["Ostias tio que la eh liao parda"],
+                'messages': ["No se pudo actualziar el post, hubo un error al enviar los correos."],
                 'data': {}
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -422,7 +441,7 @@ class PostModeration(APIView):
                 else:
                     return Response({
                         'ok': False,
-                        'messages': ['Error al cambiar el estado del usuario'],
+                        'messages': ['Error al cambiar el estado del usuario, hubo un error al enviar los correos.'],
                         'data': {}
                     }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
