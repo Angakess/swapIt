@@ -72,10 +72,10 @@ class Subsidiary(models.Model):
 
             for turn in turns_made:
                 if turn.post_maker.stock_product == 0 and turn.post_maker.state.id == 7:
-                    turn.post_maker.update(state=1)
+                    turn.post_maker.state_id=1
 
                 if turn.post_receive.stock_product == 0 and turn.post_receive.state.id == 7:
-                    turn.post_receive.update(state=1)
+                    turn.post_receive.state_id=1
 
                 turn.post_maker.stock_product += 1
                 turn.post_receive.stock_product += 1
@@ -85,10 +85,10 @@ class Subsidiary(models.Model):
         
             for turn in turns_receive:
                 if turn.post_maker.stock_product == 0 and turn.post_maker.state.id == 7:
-                    turn.post_maker.update(state=1)
+                    turn.post_maker.state_id=1
 
                 if turn.post_receive.stock_product == 0 and turn.post_receive.state.id == 7:
-                    turn.post_receive.update(state=1)
+                    turn.post_receive.state_id=1
 
                 turn.post_maker.stock_product += 1
                 turn.post_receive.stock_product += 1
