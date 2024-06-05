@@ -13,7 +13,7 @@ class Category(models.Model):
         return self.name
     
     def deactivate(self):
-        posts  = self.posts.filter(state__id__in=[1, 2])
+        posts  = self.posts.filter(state__id__in=[1, 2, 7])
         unique_emails = list(posts.values_list('user__email', flat=True).distinct())
         send_email_to_user(
             email=unique_emails,
@@ -36,6 +36,7 @@ class Category(models.Model):
 
             turns_receive = post.turns_receive.filter(state__id=1)
             emails_turns_receive = list(turns_receive.values_list('user_maker__email', flat=True).distinct())
+
 
             emails = emails_received + emails_send + emails_turns_send + emails_turns_receive
             emails_set = set(emails)
@@ -84,7 +85,7 @@ class Category(models.Model):
 
             turns_made.delete()
             turns_receive.delete()
-
+            
         posts.update(state=3)
         self.active = False 
         self.save()
