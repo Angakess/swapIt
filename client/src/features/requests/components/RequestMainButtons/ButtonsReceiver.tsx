@@ -2,9 +2,10 @@ import { RequestModel, rejectRequest } from '@Common/api'
 import { AcceptRejectButton } from './AcceptRejectButton'
 import { CancelButton } from './CancelButton'
 import { useState } from 'react'
-import { DatePicker, Form, Modal, ModalProps } from 'antd'
+import { DatePicker, Form, Modal, ModalProps, Typography } from 'antd'
 import { useCustomAlerts } from '@Common/hooks'
 import { useNavigate } from 'react-router-dom'
+import dayjs, { Dayjs } from 'dayjs'
 
 export function ButtonReceiver({ request }: { request: RequestModel }) {
   const navigate = useNavigate()
@@ -12,8 +13,8 @@ export function ButtonReceiver({ request }: { request: RequestModel }) {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  function handleAccept() {
-    console.log('receiver accept')
+  function handleAccept(date: Dayjs) {
+    console.log('handleAccept: date', date.format('YYYY-MM-DD'))
   }
 
   async function handleReject() {
@@ -52,7 +53,7 @@ export function ButtonReceiver({ request }: { request: RequestModel }) {
         <AcceptModal
           isOpen={isOpen}
           isLoading={isLoading}
-          onOk={handleAccept}
+          onFinish={handleAccept}
           onCancel={() => setIsOpen(false)}
         />
       </>
@@ -72,27 +73,75 @@ export function ButtonReceiver({ request }: { request: RequestModel }) {
 type AcceptModalProps = {
   isOpen: boolean
   isLoading: boolean
-  onOk: ModalProps['onOk']
+  onFinish: (date: Dayjs) => void
   onCancel: ModalProps['onCancel']
 }
 
-function AcceptModal({ isOpen, isLoading, onOk, onCancel }: AcceptModalProps) {
+function AcceptModal({
+  isOpen,
+  isLoading,
+  onFinish,
+  onCancel,
+}: AcceptModalProps) {
+  const [form] = Form.useForm<{ date: Dayjs }>()
+
   return (
     <Modal
       title="Aceptar solicitud"
       open={isOpen}
-      onOk={onOk}
+      onOk={form.submit}
       onCancel={onCancel}
       confirmLoading={isLoading}
       okText="Aceptar solicitud"
       cancelText="Cancelar"
     >
-      <Form layout="vertical">
+      <Typography.Paragraph type="secondary">
+        Seleccione la fecha en la que quiere realizar el turno.
+      </Typography.Paragraph>
+      <Typography.Paragraph type="secondary" style={{ marginBottom: '1.5rem' }}>
+        Cuando el otro usuario acepte el turno, se les enviará un correo a ambos
+        para que puedan coordinar el horario del encuentro.
+      </Typography.Paragraph>
+
+      <Form
+        layout="vertical"
+        form={form}
+        onFinish={({ date }) => onFinish(date)}
+      >
         <Form.Item
           label="Fecha del turno"
-          help="Seleccione la fecha en la que quiere realizar el turno."
+          name="date"
+          rules={[
+            () => ({
+              validator(_, value) {
+                const date: Dayjs | undefined = value
+
+                if (!date) {
+                  return Promise.reject(
+                    'Por favor ingrese una fecha para el turno'
+                  )
+                }
+
+                if (date.day() !== 0 && date.day() !== 6) {
+                  return Promise.reject(
+                    'La fecha para el turno debe ser un sábado o domingo'
+                  )
+                }
+
+                return Promise.resolve()
+              },
+            }),
+          ]}
         >
-          <DatePicker style={{ width: '100%' }} />
+          <DatePicker
+            style={{ width: '100%' }}
+            format="DD/MM/YYYY"
+            disabledDate={(current) =>
+              current && current.day() !== 0 && current.day() !== 6
+            }
+            minDate={dayjs()}
+            maxDate={dayjs().add(3, 'month')}
+          />
         </Form.Item>
       </Form>
     </Modal>
