@@ -312,8 +312,8 @@ class RequestAccept(APIView):
 class RequestReject(APIView):
     def post(self, request):
         data = request.data
-        request_id = data["request_id"]
-        request_object = Request.objects.filter(id=request_id).first()
+        id_request = data["id_request"]
+        request_object = Request.objects.filter(id=id_request).first()
 
         if request_object is None:
             return Response(
