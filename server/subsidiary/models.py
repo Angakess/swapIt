@@ -20,7 +20,7 @@ class Subsidiary(models.Model):
         return self.name
 
     def deactivate(self):
-        posts  = self.posts.filter(state__id__in=[1, 2])
+        posts  = self.posts.filter(state__id__in=[1, 2, 7])
         unique_emails = list(posts.values_list('user__email', flat=True).distinct())
         send_email_to_user(
             email=unique_emails,
