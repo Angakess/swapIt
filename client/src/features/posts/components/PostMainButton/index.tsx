@@ -7,14 +7,21 @@ import { OwnerButtons } from './OwnerButtons'
 type PostMainButtonProps = {
   post: PostModel
   setPost: React.Dispatch<React.SetStateAction<PostModel | null>>
+  isEditable: boolean
 }
 
-export function PostMainButton({ post, setPost }: PostMainButtonProps) {
+export function PostMainButton({
+  post,
+  setPost,
+  isEditable,
+}: PostMainButtonProps) {
   const { user } = useAuth()
 
   if (user!.role === 'EXCHANGER') {
     if (user!.id === post.user.id) {
-      return <OwnerButtons post={post} setPost={setPost} />
+      return (
+        <OwnerButtons post={post} setPost={setPost} isEditable={isEditable} />
+      )
     }
     return <ExchangerButtons post={post} />
   }

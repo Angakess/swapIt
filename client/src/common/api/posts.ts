@@ -120,11 +120,13 @@ export async function getPostList({
 //
 // getPostById
 
-export async function getPostById(id: number): Promise<PostModel | null> {
+export async function getPostById(
+  id: number
+): Promise<{ editable: boolean; post: PostModel } | null> {
   const resp = await fetch(`${SERVER_URL}/post/${id}`)
   const data = await resp.json()
 
-  return data?.data?.post ?? null
+  return data.ok ? data.data : null
 }
 
 //

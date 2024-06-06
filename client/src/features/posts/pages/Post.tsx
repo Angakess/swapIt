@@ -22,19 +22,21 @@ export function Post() {
   const { id } = useParams()
 
   const [post, setPost] = useState<PostModel | null>(null)
+  const [isEditable, setIsEditable] = useState(true)
   const [images, setImages] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     ;(async () => {
-      let p: PostModel | null = null
+      let resp: { editable: boolean; post: PostModel } | null = null
 
       try {
-        p = await getPostById(Number(id))
+        resp = await getPostById(Number(id))
       } catch {
-        p = null
+        resp = null
       } finally {
-        setPost(p)
+        setPost(resp?.post ?? null)
+        setIsEditable(resp?.editable ?? true)
         setIsLoading(false)
       }
     })()
@@ -106,7 +108,11 @@ export function Post() {
             bordered={false}
           >
             <Typography.Title level={3}>{post!.name}</Typography.Title>
-            <PostMainButton post={post!} setPost={setPost} />
+            <PostMainButton
+              post={post!}
+              setPost={setPost}
+              isEditable={isEditable}
+            />
             <PostDetails post={post!} />
           </Card>
 

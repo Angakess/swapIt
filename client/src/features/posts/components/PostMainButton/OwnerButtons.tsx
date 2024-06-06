@@ -5,15 +5,17 @@ import { PostModel } from '@Common/api'
 import { SERVER_URL } from 'constants'
 import { useState } from 'react'
 import { PostUpdateModal } from '../PostCreateUpdate'
+import { useCustomAlerts } from '@Common/hooks'
 
 type OwnerButtonsProps = {
   post: PostModel
   setPost: React.Dispatch<React.SetStateAction<PostModel | null>>
+  isEditable: boolean
 }
 
-export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
-  const { colorError } = theme.useToken().token
+export function OwnerButtons({ post, setPost, isEditable }: OwnerButtonsProps) {
   const { notification } = App.useApp()
+  const { errorNotification } = useCustomAlerts()
   const navigate = useNavigate()
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -21,6 +23,7 @@ export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
 
   async function deletePost() {
     setIsLoading(true)
+
     const resp = await fetch(`${SERVER_URL}/post/remove/${post.id}`, {
       method: 'DELETE',
     })
@@ -46,6 +49,18 @@ export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
     }
   }
 
+  function handleEditClick() {
+    if (!isEditable) {
+      errorNotification(
+        'No puedes borrar la publicación',
+        'No puedes borrar la publicación porque tiene solicitudes o turnos pendientes'
+      )
+      return
+    }
+
+    setIsEditModalOpen(true)
+  }
+
   return (
     <>
       <Row gutter={[12, 12]} style={{ marginBottom: '1.5rem' }}>
@@ -55,33 +70,18 @@ export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
             block
             size="large"
             style={{ fontWeight: '700' }}
-            onClick={() => setIsEditModalOpen(true)}
+            onClick={handleEditClick}
             disabled={isLoading}
           >
             Editar
           </Button>
         </Col>
         <Col xs={24} sm={8}>
-          <Popconfirm
-            title="Eliminar publicación"
-            description="¿Esta seguro que desea eliminar la publicación?"
-            okText="Sí, eliminar publicación"
-            cancelText="No, cancelar"
-            okType="danger"
-            placement="bottomLeft"
-            icon={<ExclamationCircleOutlined style={{ color: colorError }} />}
-            onConfirm={deletePost}
-          >
-            <Button
-              type="primary"
-              danger
-              block
-              size="large"
-              disabled={isLoading}
-            >
-              Eliminar
-            </Button>
-          </Popconfirm>
+          <DeleteButton
+            deletePost={deletePost}
+            isEditable={isEditable}
+            isLoading={isLoading}
+          />
         </Col>
       </Row>
       <PostUpdateModal
@@ -93,5 +93,57 @@ export function OwnerButtons({ post, setPost }: OwnerButtonsProps) {
         setIsLoading={setIsLoading}
       />
     </>
+  )
+}
+
+type DeleteButtonProps = {
+  deletePost: () => Promise<void>
+  isLoading: boolean
+  isEditable: boolean
+}
+
+function DeleteButton({
+  deletePost,
+  isLoading,
+  isEditable,
+}: DeleteButtonProps) {
+  const { colorError } = theme.useToken().token
+  const { errorNotification } = useCustomAlerts()
+
+  if (!isEditable) {
+    return (
+      <Button
+        type="primary"
+        danger
+        block
+        size="large"
+        disabled={isLoading}
+        onClick={() =>
+          errorNotification(
+            'No puedes borrar la publicación',
+            'No puedes borrar la publicación porque tiene solicitudes o turnos pendientes'
+          )
+        }
+      >
+        Eliminar
+      </Button>
+    )
+  }
+
+  return (
+    <Popconfirm
+      title="Eliminar publicación"
+      description="¿Esta seguro que desea eliminar la publicación?"
+      okText="Sí, eliminar publicación"
+      cancelText="No, cancelar"
+      okType="danger"
+      placement="bottomLeft"
+      icon={<ExclamationCircleOutlined style={{ color: colorError }} />}
+      onConfirm={deletePost}
+    >
+      <Button type="primary" danger block size="large" disabled={isLoading}>
+        Eliminar
+      </Button>
+    </Popconfirm>
   )
 }
