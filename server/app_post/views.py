@@ -192,13 +192,12 @@ class PostUpdate(generics.UpdateAPIView):
         
 
         instance = self.get_object()
-        #FIXME: Revisar que pasa si mi post está en alguna request como maker y no como receiver 
         # La request donde el post es el solicitado
-        requests_receive = instance.posts_receive.all()
+        requests_receive = instance.posts_receive.filter(state__name="pending")
         emails_makers = list(requests_receive.values_list('user_maker__email', flat=True).distinct())
 
         # La request donde el post es el solicitante
-        requests_send = instance.posts_send.all()
+        requests_send = instance.posts_send.filter(state__name="pending")
         emails_received = list(requests_send.values_list(
             'user_receive__email', flat=True).distinct())
         
@@ -356,14 +355,56 @@ class PostRemove(generics.DestroyAPIView):
             condition = {"state__id__in": [1, 4]}
             in_request_maker = post.posts_send.filter(**condition).exists()
             in_request_receive = post.posts_receive.filter(**condition).exists()
+
+
             post_turn_s = post.turns_send.filter(state__id=1).exists()
             post_turn_r = post.turns_receive.filter(state__id=1).exists()
+
+
             if  in_request_maker or in_request_receive or post_turn_s or post_turn_r:
                 return Response({
                     'ok': False,
                     'messages': ['No se puede eliminar el post'],
                     'data': {}
                 }, status=status.HTTP_406_NOT_ACCEPTABLE)
+            
+            requests_receive = post.posts_receive.filter(state__name="pending")
+            emails_makers = list(requests_receive.values_list('user_maker__email', flat=True).distinct())
+
+            # La request donde el post es el solicitante
+            requests_send = post.posts_send.filter(state__name="pending")
+            emails_received = list(requests_send.values_list(
+                'user_receive__email', flat=True).distinct())
+            
+            try:
+                send_email_to_user(
+                    email=emails_makers,
+                    subject="Solicitud de intercambio enviada cancelada",
+                    message="La solicitud de intercambio enviada" +
+                    " ha sido cancelada dado que" +
+                    " el propietario elimino la publicación " +
+                    post.name + ". \n"
+                )
+
+                send_email_to_user(
+                    email=emails_received,
+                    subject="Solicitud de intercambio recibida cancelada",
+                    message="La oferta de intercambio recibida " +
+                    " ha sido cancelada dado que el propietario elimino " +
+                    "la publicación " +
+                    post.name + ". \n"
+                )
+
+            except Exception as _e:
+                return Response({
+                    'ok': False,
+                    'messages': ["No se pudo actualziar el post, hubo un error al enviar los correos."],
+                    'data': {}
+                }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            requests_receive.update(state=RequestState.objects.get(name="rechazado"))
+            requests_send.update(
+                state=RequestState.objects.get(name="rechazado"))
             post.state=PostState.objects.get(id=5)
             post.save()
             return Response(
