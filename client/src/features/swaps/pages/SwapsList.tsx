@@ -8,7 +8,6 @@ import {
 import { tableColumnSearchProps } from '@Swaps/functions/tableColumnSearchProps'
 import { ButtonVerSwap } from '@Swaps/components/ButtonVerSwap'
 
-import MOCK_SWAPS_TODAY from '@Swaps/MOCK_SWAPS_TODAY.json'
 import { fetchPost } from '@Common/helpers'
 import { useAuth } from '@Common/hooks'
 import dayjs from 'dayjs'

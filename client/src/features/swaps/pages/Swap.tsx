@@ -5,7 +5,6 @@ import { ButtonConfirmSwap } from '@Swaps/components/ButtonConfirmSwap'
 import { useEffect, useState } from 'react'
 import { ButtonRejectSwap } from '@Swaps/components/ButtonRejectSwap'
 import { useNavigate } from 'react-router-dom'
-import { Page404 } from '@Common/pages'
 
 type SwapType = {
   id: number

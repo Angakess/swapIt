@@ -6,7 +6,6 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface'
 
-import MOCK_TURNS from '../MOCK_TURNS.json'
 import { ButtonVerTurno } from '@Turns/components/ButtonVerTurno'
 import { tableColumnSearchProps } from '@Turns/functions/tableColumnSearchProps'
 import dayjs from 'dayjs'

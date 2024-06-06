@@ -1,4 +1,4 @@
-import { Button, Flex, InputRef, Tooltip, theme } from 'antd'
+import { Button, Flex, InputRef, Tooltip } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { ColumnsType } from 'antd/es/table'
 import { FilterDropdownProps } from 'antd/es/table/interface'
