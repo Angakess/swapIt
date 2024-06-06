@@ -3,6 +3,7 @@ import { PostModel } from './posts'
 import { GenericApiResponse } from './types'
 import { SERVER_URL } from 'constants'
 import { createQueryURL } from '@Common/helpers/createQueryURL'
+import { Dayjs } from 'dayjs'
 
 //
 // Requests types
@@ -92,7 +93,16 @@ export async function getRequestById(id: number): Promise<RequestModel | null> {
 //
 // acceptRequest
 
-export async function acceptRequest() {}
+export async function acceptRequest(
+  id: number,
+  date: Dayjs
+): Promise<GenericApiResponse<{ request: RequestModel }>> {
+  const resp = await fetchPost(`${SERVER_URL}/requests/accept/`, {
+    request_id: id,
+    date_of_request: date.format('YYYY-MM-DD'),
+  })
+  return await resp.json()
+}
 
 //
 // rejectRequest
@@ -101,7 +111,7 @@ export async function rejectRequest(
   id: number
 ): Promise<GenericApiResponse<Record<string, never>>> {
   const resp = await fetchPost(`${SERVER_URL}/requests/reject/`, {
-    id_request: id,
+    request_id: id,
   })
   return await resp.json()
 }
@@ -113,7 +123,7 @@ export async function cancelRequestMade(
   id: number
 ): Promise<GenericApiResponse<Record<string, never>>> {
   const resp = await fetchPost(`${SERVER_URL}/requests/cancel_request/`, {
-    id_request: id,
+    request_id: id,
   })
   return await resp.json()
 }

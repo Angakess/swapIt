@@ -304,14 +304,14 @@ class RequestAccept(APIView):
                 {
                     "ok": True,
                     "messages": ["Solicitud aceptada con éxito"],
-                    "data": {"request": RequestSerializer(request_object).data},
+                    "data": {"request": RequestSerializer(request_object, context={'request': request}).data},
                 },
                 status=status.HTTP_200_OK,
             )
 
         return Response(
             {
-                "ok": True,
+                "ok": False,
                 "messages": [
                     "No puedes aceptar la solicitud, no tienes stock suficiente."
                 ],
@@ -324,8 +324,8 @@ class RequestAccept(APIView):
 class RequestReject(APIView):
     def post(self, request):
         data = request.data
-        id_request = data["id_request"]
-        request_object = Request.objects.filter(id=id_request).first()
+        request_id = data["request_id"]
+        request_object = Request.objects.filter(id=request_id).first()
 
         if request_object is None:
             return Response(
@@ -490,9 +490,9 @@ class RequestMakedCancel(APIView):
     def post(self, request):
         data = request.data
         # Validar que solo esté en pendiente
-        id_request = data["id_request"]
+        request_id = data["request_id"]
 
-        request_object = Request.objects.filter(pk=id_request, state__in=[2, 4]).first()
+        request_object = Request.objects.filter(pk=request_id, state__in=[2, 4]).first()
         if request_object is None:
             return Response(
                 {"ok": False, "messages": ["No se encontró la solicitud "], "data": {}},

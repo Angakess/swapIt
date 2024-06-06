@@ -70,7 +70,7 @@ export function Request() {
 
         <Col xs={24} md={24} lg={8} style={{ maxHeight: '30rem' }}>
           <Card style={{ marginBottom: '1.5rem' }}>
-            <RequestMainButton request={request} />
+            <RequestMainButton request={request} setRequest={setRequest} />
           </Card>
 
           <Row gutter={[24, 24]}>

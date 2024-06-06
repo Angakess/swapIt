@@ -1,4 +1,4 @@
-import { RequestModel, rejectRequest } from '@Common/api'
+import { RequestModel, acceptRequest, rejectRequest } from '@Common/api'
 import { AcceptRejectButton } from './AcceptRejectButton'
 import { CancelButton } from './CancelButton'
 import { useState } from 'react'
@@ -7,14 +7,31 @@ import { useCustomAlerts } from '@Common/hooks'
 import { useNavigate } from 'react-router-dom'
 import dayjs, { Dayjs } from 'dayjs'
 
-export function ButtonReceiver({ request }: { request: RequestModel }) {
+type ButtonReceiverProps = {
+  request: RequestModel
+  setRequest: React.Dispatch<React.SetStateAction<RequestModel | null>>
+}
+
+export function ButtonReceiver({ request, setRequest }: ButtonReceiverProps) {
   const navigate = useNavigate()
   const { successNotification, errorNotification } = useCustomAlerts()
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  function handleAccept(date: Dayjs) {
-    console.log('handleAccept: date', date.format('YYYY-MM-DD'))
+  async function handleAccept(date: Dayjs) {
+    setIsLoading(true)
+
+    const resp = await acceptRequest(request.id, date)
+
+    if (resp.ok) {
+      successNotification('Solicitud aceptada', 'Solicitud aceptada con éxito')
+      setRequest(resp.data.request)
+    } else {
+      errorNotification('Ocurrió un error', resp.messages.join('\n'))
+    }
+
+    setIsOpen(false)
+    setIsLoading(false)
   }
 
   async function handleReject() {

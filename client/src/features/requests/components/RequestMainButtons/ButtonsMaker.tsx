@@ -5,7 +5,12 @@ import { useState } from 'react'
 import { useCustomAlerts } from '@Common/hooks'
 import { useNavigate } from 'react-router-dom'
 
-export function ButtonsMaker({ request }: { request: RequestModel }) {
+type ButtonsMakerProps = {
+  request: RequestModel
+  setRequest: React.Dispatch<React.SetStateAction<RequestModel | null>>
+}
+
+export function ButtonsMaker({ request, setRequest }: ButtonsMakerProps) {
   const navigate = useNavigate()
   const { successNotification, errorNotification } = useCustomAlerts()
   const [isLoading, setIsLoading] = useState(false)
