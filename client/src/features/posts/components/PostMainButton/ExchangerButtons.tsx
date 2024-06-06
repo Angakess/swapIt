@@ -10,6 +10,10 @@ type ExchangerButtonsProps = {
 export function ExchangerButtons({ post }: ExchangerButtonsProps) {
   const [isExchangeModalOpen, setIsExchangeModalOpen] = useState(false)
 
+  if (post.state.name === 'sin-stock') {
+    return null
+  }
+
   return (
     <>
       <Button
