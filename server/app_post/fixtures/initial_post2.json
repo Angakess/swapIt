@@ -4759,6 +4759,25 @@
       "image_4": null,
       "image_5": null
     }
+  },
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "UNA LAPICERA",
+      "description": "ES UNA LAPICERA",
+      "value": 5,
+      "user": 113,
+      "subsidiary":1,
+      "state": 1,
+      "category": 1,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
   }
 
   

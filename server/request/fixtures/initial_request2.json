@@ -175,5 +175,18 @@
             "rejected": 0,
             "day_of_request": null
         }
+    },
+
+    {
+        "model": "request.request",
+        "fields": {
+            "user_maker": 150,
+            "post_maker": 225,
+            "post_receive": 257,
+            "user_receive": 113,
+            "state": 3,
+            "rejected": 2,
+            "day_of_request": null
+        }
     }
 ]
