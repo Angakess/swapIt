@@ -15,7 +15,7 @@ export function RequestMainButton({
   const { user } = useAuth()
 
   if (user!.id === request.user_maker) {
-    return <ButtonsMaker request={request} setRequest={setRequest} />
+    return <ButtonsMaker request={request} />
   }
   return <ButtonReceiver request={request} setRequest={setRequest} />
 }

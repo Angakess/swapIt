@@ -7,16 +7,29 @@ import { useNavigate } from 'react-router-dom'
 
 type ButtonsMakerProps = {
   request: RequestModel
-  setRequest: React.Dispatch<React.SetStateAction<RequestModel | null>>
 }
 
-export function ButtonsMaker({ request, setRequest }: ButtonsMakerProps) {
+export function ButtonsMaker({ request }: ButtonsMakerProps) {
   const navigate = useNavigate()
   const { successNotification, errorNotification } = useCustomAlerts()
   const [isLoading, setIsLoading] = useState(false)
 
-  function handleAccept() {
-    console.log('maker accept')
+  async function handleAccept() {
+    setIsLoading(true)
+
+    const resp = await confirmRequest('accept', request.id, request.user_maker)
+
+    if (resp.ok) {
+      successNotification(
+        'Solicitud aceptada',
+        'Se ha creado un turno para el intercambio'
+      )
+      navigate(`/turns/my-turns/${resp.data.turn_id}`, { replace: true })
+    } else {
+      errorNotification('Ocurrió un error', resp.messages.join('\n'))
+    }
+
+    setIsLoading(false)
   }
 
   async function handleReject() {
