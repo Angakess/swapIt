@@ -6,7 +6,12 @@ import {
   PostListWithSearchProps,
 } from './PostListWithSearch'
 
-const filterStates: PostStateModel['name'][] = ['activo', 'pendiente']
+const filterStates: PostStateModel['name'][] = [
+  'activo',
+  'pendiente',
+  'suspendido',
+  'sin-stock',
+]
 
 const additionalFilters = {
   status: {
@@ -15,6 +20,8 @@ const additionalFilters = {
       { label: 'Todos los estados de la publicación', value: '' },
       { label: 'Activo', value: 'activo' },
       { label: 'Pendiente', value: 'pendiente' },
+      { label: 'Suspendido', value: 'suspendido' },
+      { label: 'Sin stock', value: 'sin-stock' },
     ],
   },
 }

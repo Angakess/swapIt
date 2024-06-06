@@ -28,7 +28,11 @@ export function StaffButtons({ post }: { post: PostModel }) {
   const alerts = useCustomAlerts()
   const [isLoading, setIsLoading] = useState(false)
 
-  if (post.state.name === 'activo') {
+  if (
+    post.state.name === 'activo' ||
+    post.state.name === 'suspendido' ||
+    post.state.name === 'sin-stock'
+  ) {
     return (
       <Button
         type="primary"
