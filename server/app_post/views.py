@@ -193,11 +193,11 @@ class PostUpdate(generics.UpdateAPIView):
 
         instance = self.get_object()
         # La request donde el post es el solicitado
-        requests_receive = instance.posts_receive.filter(state__name="pending")
+        requests_receive = instance.posts_receive.filter(state__name="pendiente")
         emails_makers = list(requests_receive.values_list('user_maker__email', flat=True).distinct())
 
         # La request donde el post es el solicitante
-        requests_send = instance.posts_send.filter(state__name="pending")
+        requests_send = instance.posts_send.filter(state__name="pendiente")
         emails_received = list(requests_send.values_list(
             'user_receive__email', flat=True).distinct())
         
@@ -368,14 +368,13 @@ class PostRemove(generics.DestroyAPIView):
                     'data': {}
                 }, status=status.HTTP_406_NOT_ACCEPTABLE)
             
-            requests_receive = post.posts_receive.filter(state__name="pending")
+            requests_receive = post.posts_receive.filter(state__name="pendiente")
             emails_makers = list(requests_receive.values_list('user_maker__email', flat=True).distinct())
 
             # La request donde el post es el solicitante
-            requests_send = post.posts_send.filter(state__name="pending")
+            requests_send = post.posts_send.filter(state__name="pendiente")
             emails_received = list(requests_send.values_list(
                 'user_receive__email', flat=True).distinct())
-            
             try:
                 send_email_to_user(
                     email=emails_makers,
@@ -401,10 +400,9 @@ class PostRemove(generics.DestroyAPIView):
                     'messages': ["No se pudo actualziar el post, hubo un error al enviar los correos."],
                     'data': {}
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            requests_receive.update(state=RequestState.objects.get(name="rechazado"))
-            requests_send.update(
-                state=RequestState.objects.get(name="rechazado"))
+            state = RequestState.objects.get(name="rechazado")
+            requests_receive.update(state=state)
+            requests_send.update(state=state)
             post.state=PostState.objects.get(id=5)
             post.save()
             return Response(
