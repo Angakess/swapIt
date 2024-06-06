@@ -178,7 +178,7 @@ function AcceptModal({
             disabledDate={(current) =>
               current && current.day() !== 0 && current.day() !== 6
             }
-            minDate={dayjs()}
+            minDate={dayjs().add(1, 'day')}
             maxDate={dayjs().add(3, 'month')}
           />
         </Form.Item>
