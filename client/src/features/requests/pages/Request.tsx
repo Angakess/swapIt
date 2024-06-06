@@ -71,6 +71,10 @@ export function Request() {
         <Col xs={24} md={24} lg={8} style={{ maxHeight: '30rem' }}>
           <Card style={{ marginBottom: '1.5rem' }}>
             <RequestMainButton request={request} setRequest={setRequest} />
+            <Typography.Paragraph style={{ margin: '1rem 0 0' }}>
+              <Typography.Text strong>Estado solicitud: </Typography.Text>
+              <Typography.Text>{request.state}</Typography.Text>
+            </Typography.Paragraph>
           </Card>
 
           <Row gutter={[24, 24]}>
