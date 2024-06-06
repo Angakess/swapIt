@@ -129,6 +129,17 @@ export async function cancelRequest(
 }
 
 //
-// cancelRequestReceived
+// confirmRequest
 
-export async function cancelRequestReceived() {}
+export async function confirmRequest(
+  decision: 'accept' | 'reject',
+  requestId: number,
+  userMakerId: number
+): Promise<GenericApiResponse<{ turn_id: number }>> {
+  const resp = await fetchPost(`${SERVER_URL}/requests/confirm/`, {
+    request_id: requestId,
+    user_maker: userMakerId,
+    decision: decision,
+  })
+  return await resp.json()
+}

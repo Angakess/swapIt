@@ -472,7 +472,7 @@ class RequestConfirm(APIView):
                 )
 
             request_object.state = RequestState.objects.filter(id=3).first()
-            request.object.day_of_request = None
+            request_object.day_of_request = None
             request_object.save()
 
             return Response(

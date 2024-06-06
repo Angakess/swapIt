@@ -1,4 +1,4 @@
-import { RequestModel, cancelRequest } from '@Common/api'
+import { RequestModel, cancelRequest, confirmRequest } from '@Common/api'
 import { CancelButton } from './CancelButton'
 import { AcceptRejectButton } from './AcceptRejectButton'
 import { useState } from 'react'
@@ -19,8 +19,22 @@ export function ButtonsMaker({ request, setRequest }: ButtonsMakerProps) {
     console.log('maker accept')
   }
 
-  function handleReject() {
-    console.log('maker reject')
+  async function handleReject() {
+    setIsLoading(true)
+
+    const resp = await confirmRequest('reject', request.id, request.user_maker)
+
+    if (resp.ok) {
+      successNotification(
+        'Solicitud rechazada',
+        'La solicitud ha sido rechazada correctamente'
+      )
+      navigate('/requests/my-requests/', { replace: true })
+    } else {
+      errorNotification('Ocurrió un error', resp.messages.join('\n'))
+    }
+
+    setIsLoading(false)
   }
 
   async function handleCancel() {
