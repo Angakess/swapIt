@@ -2,10 +2,10 @@ import { Alert, Card, Col, Row, Spin, Typography, theme } from 'antd'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Page404 } from '@Common/pages'
-import { getPostById } from '@Common/api/posts'
-import { PostModel, PostStateModel } from '@Common/api/posts'
+import { User } from '@Common/types'
+import { getUserTurns, getPostById, PostModel } from '@Common/api'
 import { useAuth } from '@Common/hooks'
+import { Page404 } from '@Common/pages'
 import {
   ImageCarousel,
   PostDetails,
@@ -14,6 +14,62 @@ import {
   PostUser,
 } from '@Posts/components'
 import { getPostImagesArray } from '@Posts/helpers'
+
+async function validatePostAccess(
+  post: PostModel | null,
+  user: User
+): Promise<boolean> {
+  // Estado de publicación: quién puede verla
+  // activo:     cualquiera.
+  // pendiente:  propietario y staff (para aprobar o rechazar).
+  // suspendido: propietario y staff (para eliminar).
+  // bloqueado:  nadie.
+  // rechazado:  nadie.
+  // eliminado:  nadie.
+  // sin-stock:  propietario, staff y personas con las que tiene turno.
+
+  // El post no existe.
+  if (post == null) {
+    return false
+  }
+
+  // El post está activo.
+  if (post.state.name === 'activo') {
+    return true
+  }
+
+  // El post está en un estado inaccesible (bloqueado, eliminado, rechazado).
+  if (
+    post.state.name === 'bloqueado' ||
+    post.state.name === 'rechazado' ||
+    post.state.name === 'eliminado'
+  ) {
+    return false
+  }
+
+  // El post está pendiente o suspendido y no es intercambiador o es el propietario
+  // Ayudantes y el administrador general pueden verlo.
+  if (post.state.name === 'pendiente' || post.state.name === 'suspendido') {
+    return user.role !== 'EXCHANGER' || user.id === post.user.id
+  }
+
+  // El post está sin stock.
+  // Si es el propietario o staff puede verlo
+  // Si no, entonces es porque el usuario es intercambiador y solo puede verlo
+  if (post.state.name === 'sin-stock') {
+    if (user.role !== 'EXCHANGER' || user.id === post.user.id) return true
+    const resp = await getUserTurns(user.id)
+
+    // Si la publicación forma parte de alguno de sus turnos
+    return resp.some(
+      (turn) =>
+        turn.post_receive.id === post.id || turn.post_maker.id === post.id
+    )
+  }
+
+  // Fallback
+  return false
+}
 
 export function Post() {
   const { user } = useAuth()
@@ -25,6 +81,7 @@ export function Post() {
   const [isEditable, setIsEditable] = useState(true)
   const [images, setImages] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isValidAccess, setIsValidAccess] = useState(false)
 
   useEffect(() => {
     ;(async () => {
@@ -35,12 +92,15 @@ export function Post() {
       } catch {
         resp = null
       } finally {
+        const isValid = await validatePostAccess(resp?.post ?? null, user!)
+        setIsValidAccess(isValid)
+
         setPost(resp?.post ?? null)
         setIsEditable(resp?.editable ?? true)
         setIsLoading(false)
       }
     })()
-  }, [id])
+  }, [id, user])
 
   useEffect(() => {
     if (isLoading || post === null) return
@@ -52,38 +112,7 @@ export function Post() {
     return <Spin size="large" style={{ width: '100%' }} />
   }
 
-  // Si:
-  // - el post no existe
-  // - fue 'bloqueado', 'rechazado' o 'eliminado'
-  // - lo está viendo un usuario distinto al propietario y no está activo
-  // entonces: 404.
-
-  // Estado de publicación: quién puede verla
-  // activo:     cualquiera.
-  // pendiente:  propietario y staff (para aprobar o rechazar).
-  // suspendido: propietario.
-  // bloqueado:  nadie.
-  // rechazado:  nadie.
-  // eliminado:  nadie.
-
-  const invalidStates: PostStateModel['name'][] = [
-    'bloqueado',
-    'rechazado',
-    'eliminado',
-  ]
-
-  if (
-    post == null ||
-    invalidStates.includes(post.state.name) ||
-    (user!.role === 'EXCHANGER' &&
-      post!.user.id !== user!.id &&
-      post!.state.name !== 'activo') ||
-    (user!.role !== 'EXCHANGER' &&
-      post!.state.name !== 'activo' &&
-      post!.state.name !== 'pendiente')
-  ) {
-    return <Page404 />
-  }
+  if (!isValidAccess) return <Page404 />
 
   // Cualquier otro caso, mostrar el componente:
   return (
@@ -124,7 +153,7 @@ export function Post() {
             />
           </Card>
 
-          <PostSubsidiary post={post} />
+          <PostSubsidiary post={post!} />
         </Col>
       </Row>
     </>
