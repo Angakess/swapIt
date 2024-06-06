@@ -8,6 +8,7 @@ import { Page404 } from '@Common/pages'
 import { PageTitle } from '@Common/components'
 import { PostListItem, PostSubsidiary } from '@Posts/components'
 import { RequestMainButton } from '@Requests/components'
+import dayjs from 'dayjs'
 
 export function Request() {
   const { id } = useParams()
@@ -83,26 +84,38 @@ export function Request() {
             </Col>
 
             <Col xs={24} md={12} lg={24} style={{ marginBottom: '1.5rem' }}>
-              <Card style={{ width: '100%' }}>
-                <Typography.Title level={4}>Fecha</Typography.Title>
-                <Typography.Text>
-                  {new Date('2024-06-08 UTC-3').toLocaleDateString('es-AR', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </Typography.Text>
-                <Calendar
-                  fullscreen={false}
-                  style={{ pointerEvents: 'none' }}
-                  headerRender={() => undefined}
-                />
-              </Card>
+              <RequestCalendar request={request} />
             </Col>
           </Row>
         </Col>
       </Row>
     </>
+  )
+}
+
+function RequestCalendar({ request }: { request: RequestModel }) {
+  if (request.state !== 'semi-aceptado') return null
+
+  return (
+    <Card style={{ width: '100%' }}>
+      <Typography.Title level={4}>Fecha</Typography.Title>
+      <Typography.Paragraph>
+        {new Date(`${request.day_of_request} UTC-3`).toLocaleDateString(
+          'es-AR',
+          {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }
+        )}
+      </Typography.Paragraph>
+      <Calendar
+        fullscreen={false}
+        style={{ pointerEvents: 'none' }}
+        headerRender={() => undefined}
+        value={dayjs(request.day_of_request)}
+      />
+    </Card>
   )
 }
