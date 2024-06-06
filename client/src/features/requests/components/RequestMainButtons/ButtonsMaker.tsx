@@ -1,4 +1,4 @@
-import { RequestModel, cancelRequestMade } from '@Common/api'
+import { RequestModel, cancelRequest } from '@Common/api'
 import { CancelButton } from './CancelButton'
 import { AcceptRejectButton } from './AcceptRejectButton'
 import { useState } from 'react'
@@ -25,7 +25,7 @@ export function ButtonsMaker({ request, setRequest }: ButtonsMakerProps) {
 
   async function handleCancel() {
     setIsLoading(true)
-    const resp = await cancelRequestMade(request.id)
+    const resp = await cancelRequest(request.id)
 
     if (resp.ok) {
       successNotification(

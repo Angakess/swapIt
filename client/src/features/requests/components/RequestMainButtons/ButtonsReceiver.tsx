@@ -1,4 +1,9 @@
-import { RequestModel, acceptRequest, rejectRequest } from '@Common/api'
+import {
+  RequestModel,
+  acceptRequest,
+  cancelRequest,
+  rejectRequest,
+} from '@Common/api'
 import { AcceptRejectButton } from './AcceptRejectButton'
 import { CancelButton } from './CancelButton'
 import { useState } from 'react'
@@ -56,7 +61,24 @@ export function ButtonReceiver({ request, setRequest }: ButtonReceiverProps) {
   }
 
   async function handleCancel() {
-    console.log('receiver cancel')
+    setIsLoading(true)
+    const resp = await cancelRequest(request.id)
+
+    if (resp.ok) {
+      successNotification(
+        'Solicitud cancelada',
+        'Su solicitud ha sido cancelada correctamente'
+      )
+      navigate('/requests/my-requests/', { replace: true })
+    } else {
+      errorNotification(
+        'Ocurrió un error',
+        'Debido a un error inesperado no hemos podido cancelar su solicitud.\n' +
+          'Por favor, inténtelo más tarde.'
+      )
+    }
+
+    setIsLoading(false)
   }
 
   if (request.state === 'pendiente') {

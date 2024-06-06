@@ -119,7 +119,7 @@ export async function rejectRequest(
 //
 // cancelRequest
 
-export async function cancelRequestMade(
+export async function cancelRequest(
   id: number
 ): Promise<GenericApiResponse<Record<string, never>>> {
   const resp = await fetchPost(`${SERVER_URL}/requests/cancel_request/`, {
