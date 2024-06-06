@@ -52,8 +52,8 @@ export function OwnerButtons({ post, setPost, isEditable }: OwnerButtonsProps) {
   function handleEditClick() {
     if (!isEditable) {
       errorNotification(
-        'No puedes borrar la publicación',
-        'No puedes borrar la publicación porque tiene solicitudes o turnos pendientes'
+        'No puedes editar la publicación',
+        'No puedes editar la publicación porque tiene solicitudes o turnos pendientes'
       )
       return
     }
