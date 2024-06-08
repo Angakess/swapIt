@@ -5,7 +5,109 @@ import { ButtonConfirmSwap } from '@Swaps/components/ButtonConfirmSwap'
 import { useEffect, useState } from 'react'
 import { ButtonRejectSwap } from '@Swaps/components/ButtonRejectSwap'
 import { useNavigate } from 'react-router-dom'
+import { Page404 } from '@Common/pages'
 
+type SwapType = {
+  id: number
+  post_maker: {
+    id: number
+    name: string
+    description: string
+    value: number
+    user: {
+      id: number
+      first_name: string
+      last_name: string
+      dni: string
+      email: string
+      role: string
+      state: {
+        name: string
+      }
+    }
+    subsidiary: {
+      id: number
+      name: string
+      x_coordinate: string
+      y_coordinate: string
+      max_helpers: number
+      cant_current_helpers: number
+      active: boolean
+    }
+    state: {
+      id: number
+      name:
+        | 'activo'
+        | 'pendiente'
+        | 'suspendido'
+        | 'bloqueado'
+        | 'eliminado'
+        | 'rechazado'
+        | 'sin-stock'
+    }
+    category: {
+      id: number
+      name: string
+      active: boolean
+    }
+    state_product: 'NUEVO' | 'USADO'
+    stock_product: number
+    image_1: string
+    image_2: string
+    image_3: string
+    image_4: string
+    image_5: string
+  }
+  post_receive: {
+    id: number
+    name: string
+    description: string
+    value: number
+    user: {
+      id: number
+      first_name: string
+      last_name: string
+      dni: string
+      email: string
+      role: string
+      state: {
+        name: string
+      }
+    }
+    subsidiary: {
+      id: number
+      name: string
+      x_coordinate: string
+      y_coordinate: string
+      max_helpers: number
+      cant_current_helpers: number
+      active: boolean
+    }
+    state: {
+      id: number
+      name:
+        | 'activo'
+        | 'pendiente'
+        | 'suspendido'
+        | 'bloqueado'
+        | 'eliminado'
+        | 'rechazado'
+        | 'sin-stock'
+    }
+    category: {
+      id: number
+      name: string
+      active: boolean
+    }
+    state_product: 'NUEVO' | 'USADO'
+    stock_product: number
+    image_1: string
+    image_2: string
+    image_3: string
+    image_4: string
+    image_5: string
+  }
+}
 export function Swap() {
   const parts = window.location.href.split('/')
   const swapId: number = parseInt(parts[parts.length - 1])
@@ -16,6 +118,7 @@ export function Swap() {
   const navigate = useNavigate()
 
   const [confirmDisabled, setConfirmDisabled] = useState(true)
+  const [data, setData] = useState<SwapType | null>(null)
   const [loading, setLoading] = useState(false)
   const [inputError, setInputError] = useState<{
     errorStatus: '' | 'error'
@@ -52,256 +155,193 @@ export function Swap() {
   }
   useEffect(validateInputs, [inputCodes])
 
-  return (
-    <>
-      {!existe ? (
-        <Modal
-          open={true}
-          centered
-          closable={false}
-          okButtonProps={{ hidden: true, disabled: true }}
-          cancelButtonProps={{ hidden: true, disabled: true }}
-        >
-          <Flex justify="center">
-            <p style={{ fontSize: '20px' }}>Este trueque ha sido eliminado</p>
-          </Flex>
-          <Flex justify="center">
-            <Button
-              type="primary"
-              size="large"
-              onClick={() => navigate('/', { replace: true })}
-            >
-              Volver
-            </Button>
-          </Flex>
-        </Modal>
-      ) : null}
+  //-------------------------------------------------------------
 
-      <Spin spinning={loading}>
-        <Card
-          title={
-            <>
-              <Flex align="center" style={{ marginBottom: '0' }}>
-                <h3
-                  style={{
-                    fontWeight: 'bold',
-                    marginBottom: '0',
-                    marginRight: 'auto',
-                  }}
-                >
-                  Efectivización del trueque
-                </h3>
-                <Space>
-                  <ButtonRejectSwap
-                    loading={loading}
-                    setLoading={setLoading}
-                    existe={existe}
-                    setExiste={setExiste}
-                  ></ButtonRejectSwap>
-                  <ButtonConfirmSwap
-                    confirmDisabled={confirmDisabled}
-                    idTurn={swapId}
-                    inputCodes={inputCodes}
-                    loading={loading}
-                    setLoading={setLoading}
-                    existe={existe}
-                    setExist={setExiste}
-                  ></ButtonConfirmSwap>
-                </Space>
-              </Flex>
-            </>
-          }
-        >
-          <Row
-            gutter={gutter}
-            align="middle"
-            justify="center"
-            style={{ marginBottom: '0px' }}
+  async function fetchData() {
+
+    setLoading(true)
+    let result: SwapType | null = null
+    try{
+      const res = await fetch(`http://localhost:8000/turns/detail/${swapId}`)
+      result = await res.json()
+    } catch {
+      result = null
+    } finally {
+      setData(result)
+      setLoading(false)
+    }
+
+
+    /* const res = await fetch(`http://localhost:8000/turns/detail/${swapId}`)
+    const result = await res.json()
+    setData(result)
+    setLoading(false) */
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  //-------------------------------------------------------------
+
+    if(data === null){
+      return (<Page404/>)
+    }
+    else{
+
+    
+
+    return (
+      <>
+        {!existe ? (
+          <Modal
+            open={true}
+            centered
+            closable={false}
+            okButtonProps={{ hidden: true, disabled: true }}
+            cancelButtonProps={{ hidden: true, disabled: true }}
           >
-            <Col
-              span={10}
-              style={{ display: 'flex', justifyContent: 'center' }}
-            >
-              <p style={{ fontWeight: 'bold' }}>Ofrecedor</p>
-            </Col>
-            <Col
-              span={10}
-              offset={2}
-              style={{ display: 'flex', justifyContent: 'center' }}
-            >
-              <p style={{ fontWeight: 'bold' }}>Ofrecido</p>
-            </Col>
-          </Row>
-          <Row
-            gutter={gutter}
-            align="middle"
-            justify="center"
-            style={{ marginBottom: '20px' }}
+            <Flex justify="center">
+              <p style={{ fontSize: '20px' }}>Este trueque ha sido eliminado</p>
+            </Flex>
+            <Flex justify="center">
+              <Button
+                type="primary"
+                size="large"
+                onClick={() => navigate('/', { replace: true })}
+              >
+                Volver
+              </Button>
+            </Flex>
+          </Modal>
+        ) : null}
+
+        <Spin spinning={loading}>
+          <Card
+            title={
+              <>
+                <Flex align="center" style={{ marginBottom: '0' }}>
+                  <h3
+                    style={{
+                      fontWeight: 'bold',
+                      marginBottom: '0',
+                      marginRight: 'auto',
+                    }}
+                  >
+                    Efectivización del trueque
+                  </h3>
+                  <Space>
+                    <ButtonRejectSwap
+                      loading={loading}
+                      setLoading={setLoading}
+                      existe={existe}
+                      setExiste={setExiste}
+                      thisId={swapId}
+                    ></ButtonRejectSwap>
+                    <ButtonConfirmSwap
+                      confirmDisabled={confirmDisabled}
+                      idTurn={swapId}
+                      inputCodes={inputCodes}
+                      loading={loading}
+                      setLoading={setLoading}
+                      existe={existe}
+                      setExist={setExiste}
+                    ></ButtonConfirmSwap>
+                  </Space>
+                </Flex>
+              </>
+            }
           >
-            <Col span={10}>
-              <PostUser firstName="Luciano" lastName="Mercuri"></PostUser>
-            </Col>
-            <Col span={10} offset={2}>
-              <PostUser firstName="Luis" lastName="Urrels"></PostUser>
-            </Col>
-          </Row>
-          <Row
-            gutter={gutter}
-            align="middle"
-            justify="center"
-            style={{ marginBottom: '20px' }}
-          >
-            <Col span={10}>
-              <PostListItem
-                //cambiar por objeto post
-                post={{
-                  id: 1,
-                  name: 'Camperón de hombre',
-                  description:
-                    'Camperón XL con bolsillos dentro y forro interior extraíble, excelente estado',
-                  value: 4,
-                  user: {
-                    id: 15,
-                    first_name: 'Rena',
-                    last_name: 'Longcake',
-                    dni: '23309342',
-                    email: 'rlongcakef@yopmail.com',
-                    role: 'EXCHANGER',
-                    state: {
-                      name: 'activo',
-                    },
-                  },
-                  subsidiary: {
-                    id: 3,
-                    name: 'Nuestra Señora de la Salud',
-                    x_coordinate: '-34.95504757897488',
-                    y_coordinate: '-57.965366660497864',
-                    max_helpers: 3,
-                    cant_current_helpers: 1,
-                    active: true,
-                  },
-                  state: {
-                    id: 2,
-                    name: 'pendiente',
-                  },
-                  category: {
-                    id: 2,
-                    name: 'vestimenta',
-                    active: true,
-                  },
-                  state_product: 'USADO',
-                  stock_product: 1,
-                  image_1:
-                    'http://localhost:8000/media/post_images/post1_img1.jpg',
-                  image_2:
-                    'http://localhost:8000/media/post_images/post1_img2.jpg',
-                  image_3:
-                    'http://localhost:8000/media/post_images/post1_img3.jpg',
-                  image_4:
-                    'http://localhost:8000/media/post_images/post1_img4.jpg',
-                  image_5:
-                    'http://localhost:8000/media/post_images/post1_img5.jpg',
-                }}
-              ></PostListItem>
-            </Col>
-            <Col span={2}>
-              <SwapOutlined style={{ fontSize: '32px' }} />
-            </Col>
-            <Col span={10}>
-              <PostListItem
-                //cambiar por objeto post
-                post={{
-                  id: 1,
-                  name: 'Camperón de hombre',
-                  description:
-                    'Camperón XL con bolsillos dentro y forro interior extraíble, excelente estado',
-                  value: 4,
-                  user: {
-                    id: 15,
-                    first_name: 'Rena',
-                    last_name: 'Longcake',
-                    dni: '23309342',
-                    email: 'rlongcakef@yopmail.com',
-                    role: 'EXCHANGER',
-                    state: {
-                      name: 'activo',
-                    },
-                  },
-                  subsidiary: {
-                    id: 3,
-                    name: 'Nuestra Señora de la Salud',
-                    x_coordinate: '-34.95504757897488',
-                    y_coordinate: '-57.965366660497864',
-                    max_helpers: 3,
-                    cant_current_helpers: 1,
-                    active: true,
-                  },
-                  state: {
-                    id: 2,
-                    name: 'pendiente',
-                  },
-                  category: {
-                    id: 2,
-                    name: 'vestimenta',
-                    active: true,
-                  },
-                  state_product: 'USADO',
-                  stock_product: 1,
-                  image_1:
-                    'http://localhost:8000/media/post_images/post1_img1.jpg',
-                  image_2:
-                    'http://localhost:8000/media/post_images/post1_img2.jpg',
-                  image_3:
-                    'http://localhost:8000/media/post_images/post1_img3.jpg',
-                  image_4:
-                    'http://localhost:8000/media/post_images/post1_img4.jpg',
-                  image_5:
-                    'http://localhost:8000/media/post_images/post1_img5.jpg',
-                }}
-              ></PostListItem>
-            </Col>
-          </Row>
-          <Row justify="start" style={{ marginBottom: '0px' }}>
-            {/* <Col>
-            <h3
-              style={{
-                fontWeight: 'bold',
-                marginBottom: '10px',
-                marginRight: 'auto',
-              }}
+            <Row
+              gutter={gutter}
+              align="middle"
+              justify="center"
+              style={{ marginBottom: '0px' }}
             >
-              Ingrese al menos uno de los códigos:
-            </h3>
-          </Col> */}
-          </Row>
-          <Row justify="start">
-            <Col offset={1}>
-              <p style={{ color: '#FF4D4F' }}>{inputError.errorMessage}</p>
-            </Col>
-          </Row>
-          <Row gutter={gutter} align="middle" justify="center">
-            <Col span={10}>
-              <Input
-                addonBefore="Ofrecedor"
-                id="inputA"
-                status={inputError.errorStatus}
-                value={inputCodes.inputA}
-                onChange={(event) => handleChange(event)}
-              ></Input>
-            </Col>
-            <Col span={10} offset={2}>
-              <Input
-                addonBefore="Ofrecido"
-                id="inputB"
-                status={inputError.errorStatus}
-                value={inputCodes.inputB}
-                onChange={(event) => handleChange(event)}
-              ></Input>
-            </Col>
-          </Row>
-        </Card>
-      </Spin>
-      {/*       ) : (
+              <Col
+                span={10}
+                style={{ display: 'flex', justifyContent: 'center' }}
+              >
+                <p style={{ fontWeight: 'bold' }}>Ofrecedor</p>
+              </Col>
+              <Col
+                span={10}
+                offset={2}
+                style={{ display: 'flex', justifyContent: 'center' }}
+              >
+                <p style={{ fontWeight: 'bold' }}>Ofrecido</p>
+              </Col>
+            </Row>
+            <Row
+              gutter={gutter}
+              align="middle"
+              justify="center"
+              style={{ marginBottom: '20px' }}
+            >
+              <Col span={10}>
+                {data ? (
+                  <PostUser
+                    userId={data.post_maker.user.id}
+                    firstName={data.post_maker.user.first_name}
+                    lastName={data.post_maker.user.last_name}
+                  ></PostUser>
+                ) : null}
+              </Col>
+              <Col span={10} offset={2}>
+                {data && (
+                  <PostUser
+                  userId={data.post_receive.user.id}
+                    firstName={data.post_receive.user.first_name}
+                    lastName={data.post_receive.user.last_name}
+                  ></PostUser>
+                )}
+              </Col>
+            </Row>
+            <Row
+              gutter={gutter}
+              align="middle"
+              justify="center"
+              style={{ marginBottom: '20px' }}
+            >
+              <Col span={10}>
+                {data && <PostListItem post={data.post_maker}></PostListItem>}
+              </Col>
+              <Col span={2}>
+                <SwapOutlined style={{ fontSize: '32px' }} />
+              </Col>
+              <Col span={10}>
+                {data && <PostListItem post={data.post_receive}></PostListItem>}
+              </Col>
+            </Row>
+            <Row justify="start" style={{ marginBottom: '0px' }}></Row>
+            <Row justify="start">
+              <Col offset={1}>
+                <p style={{ color: '#FF4D4F' }}>{inputError.errorMessage}</p>
+              </Col>
+            </Row>
+            <Row gutter={gutter} align="middle" justify="center">
+              <Col span={10}>
+                <Input
+                  addonBefore="Ofrecedor"
+                  id="inputA"
+                  status={inputError.errorStatus}
+                  value={inputCodes.inputA}
+                  onChange={(event) => handleChange(event)}
+                ></Input>
+              </Col>
+              <Col span={10} offset={2}>
+                <Input
+                  addonBefore="Ofrecido"
+                  id="inputB"
+                  status={inputError.errorStatus}
+                  value={inputCodes.inputB}
+                  onChange={(event) => handleChange(event)}
+                ></Input>
+              </Col>
+            </Row>
+          </Card>
+        </Spin>
+        {/*       ) : (
         <>
           <Card>
             <Flex justify="center">
@@ -313,6 +353,6 @@ export function Swap() {
           </Card>
         </>
       )} */}
-    </>
-  )
-}
+      </>
+    )
+  }}

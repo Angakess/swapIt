@@ -34,56 +34,70 @@ interface TableParams {
 }
 interface FetchType {
   id: number
-  request: {
+  post_maker: {
     id: number
-    post_maker: {
+    name: string
+    description: string
+    value: number
+    user: {
+      id: number
+      first_name: string
+      last_name: string
+      dni: string
+      email: string
+      role: string
+      state: {
+        name: string
+      }
+    }
+    subsidiary: {
       id: number
       name: string
-      description: string
-      value: number
-      user: {
-        id: number
-        first_name: string
-        last_name: string
-        dni: string
-        email: string
-      }
-      subsidiary: {
-        name: string
-        x_coordinate: string
-        y_coordinate: string
-      }
-      category: string
-      state_product: string
-      image_1: string | null
-      image_2: string | null
+      x_coordinate: string
+      y_coordinate: string
+      max_helpers: number
+      cant_current_helpers: number
+      active: boolean
     }
-    post_receive: {
+    state: {
       id: number
       name: string
-      description: string
-      value: number
-      user: {
-        id: number
-        first_name: string
-        last_name: string
-        dni: string
-        email: string
-      }
-      subsidiary: {
-        name: string
-        x_coordinate: string
-        y_coordinate: string
-      }
-      category: string
-      state_product: string
-      image_1: string | null
-      image_2: string | null
     }
-    state: string
-    rejected: number
-    day_of_request: string
+    category: string
+    state_product: string
+    stock_product: number
+    image_1: string
+    image_2: string | null
+    image_3: string | null
+    image_4: string | null
+    image_5: string | null
   }
+  post_receive: {
+    id: number
+    name: string
+    description: string
+    value: number
+    user: {
+      id: number
+      first_name: string
+      last_name: string
+      dni: string
+      email: string
+    }
+    subsidiary: {
+      name: string
+      x_coordinate: string
+      y_coordinate: string
+    }
+    category: string
+    state_product: string
+    image_1: string
+    image_2: string | null
+    image_3: string | null
+    image_4: string | null
+    image_5: string | null
+  }
+  day_of_request: string
 }
 
 export function MyTurns() {
@@ -115,26 +129,26 @@ export function MyTurns() {
       otherPostImage: '',
     }
 
-    if (user?.id === result.request.post_maker.user.id) {
-      aux.myPostId = result.request.post_maker.id
-      aux.myPostName = result.request.post_maker.name
-      aux.myPostImage = '' /* result.post_maker.image_1 */
-      aux.otherPostId = result.request.post_receive.id
-      aux.otherPostName = result.request.post_receive.name
-      aux.otherPostImage = '' /* result.post_receive.image_1 */
+    if (user?.id === result.post_maker.user.id) {
+      aux.myPostId = result.post_maker.id
+      aux.myPostName = result.post_maker.name
+      aux.myPostImage = result.post_maker.image_1
+      aux.otherPostId = result.post_receive.id
+      aux.otherPostName = result.post_receive.name
+      aux.otherPostImage = result.post_receive.image_1
     } else {
-      aux.myPostId = result.request.post_receive.id
-      aux.myPostName = result.request.post_receive.name
-      aux.myPostImage = '' /* result.post_maker.image_1 */
-      aux.otherPostId = result.request.post_maker.id
-      aux.otherPostName = result.request.post_maker.name
-      aux.otherPostImage = '' /* result.post_receive.image_1 */
+      aux.myPostId = result.post_receive.id
+      aux.myPostName = result.post_receive.name
+      aux.myPostImage = result.post_maker.image_1
+      aux.otherPostId = result.post_maker.id
+      aux.otherPostName = result.post_maker.name
+      aux.otherPostImage = result.post_receive.image_1
     }
 
     return {
       id: result.id,
-      date: result.request.day_of_request, //Viene con formato "YYYY-MM-DD",
-      subsidiary: result.request.post_receive.subsidiary.name,
+      date: result.day_of_request, //Viene con formato "YYYY-MM-DD",
+      subsidiary: result.post_receive.subsidiary.name,
       myPostId: aux.myPostId,
       myPostName: aux.myPostName,
       myPostImage: aux.myPostImage,
@@ -144,23 +158,20 @@ export function MyTurns() {
     }
   }
 
-  const fetchData = async() => {
+  const fetchData = async () => {
     setLoading(true)
     const res = await fetch(`http://localhost:8000/turns/my_turns/${user?.id}`)
-
 
     const result = await res.json()
     const newData: DataType[] = []
     result.forEach((element: FetchType) => {
-      const newElement:DataType = transformData(element)
+      const newElement: DataType = transformData(element)
       newData.push(newElement)
-    });
+    })
     setData(newData)
-
 
     /* const result = MOCK_TURNS
     setData(result) */
-
 
     setLoading(false)
     setTableParams({
@@ -236,12 +247,12 @@ export function MyTurns() {
   }
 
   const columns: ColumnsType<DataType> = [
-    {
+    /* {
       title: `Fecha: ${searchText.date ? searchText.date : ''}`,
       dataIndex: 'date',
       render: (date) => {
-        const parts = date.split("-")
-        return(`${parts[2]}/${parts[1]}/${parts[0]}`)
+        const parts = date.split('-')
+        return `${parts[2]}/${parts[1]}/${parts[0]}`
       },
       ...tableColumnSearchProps('date', handleSearch, handleReset, searchInput),
       width: '15%',
@@ -257,7 +268,7 @@ export function MyTurns() {
         return 0
       },
       defaultSortOrder: 'ascend',
-    },
+    }, */
     {
       title: `Filial: ${searchText.subsidiary}`,
       dataIndex: 'subsidiary',

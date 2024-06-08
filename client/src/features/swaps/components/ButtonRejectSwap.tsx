@@ -7,11 +7,13 @@ export function ButtonRejectSwap({
   setLoading,
   existe,
   setExiste,
+  thisId
 }: {
   loading: boolean
   setLoading: (x: boolean) => void
   existe: boolean
   setExiste: (x: boolean) => void
+  thisId: number
 }) {
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -33,6 +35,7 @@ export function ButtonRejectSwap({
         setModalOpen={setModalOpen}
         setLoading={setLoading}
         setExiste={setExiste}
+        thisId={thisId}
       ></ModalForSwapReject>
     </>
   )

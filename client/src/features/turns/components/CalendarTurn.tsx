@@ -35,12 +35,12 @@ const cellRender: CalendarProps<Dayjs>['cellRender'] = (current) => {
   return dateCellRender(current)
 }
 
-export function CalendarTurn() {
+export function CalendarTurn({date}: {date: string}) {
   return (
     <>
       <ConfigProvider locale={esES}>
         <Calendar
-          defaultValue={dayjs('08/06/2024', 'DD/MM/YYYY')} //Cambiar
+          defaultValue={dayjs(date, 'YYYY-MM-DD')} //Cambiar
           fullscreen={false}
           style={{ marginBottom: '0'}}
           mode="month"

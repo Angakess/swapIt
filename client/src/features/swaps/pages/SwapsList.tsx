@@ -171,7 +171,7 @@ export function SwapsList() {
       newData.push(newElement)
     })
     setData(newData)
-
+    console.log(result)
     setLoading(false)
     setTableParams({
       ...tableParams,

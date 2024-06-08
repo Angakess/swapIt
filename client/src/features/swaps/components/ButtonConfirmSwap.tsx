@@ -22,7 +22,7 @@ export function ButtonConfirmSwap({
     setLoading(true)
     console.log(inputCodes)
 
-    const res = await fetchPost('http://localhost:8000/turns/validate', {
+    const res = await fetchPost('http://localhost:8000/turns/validate/', {
       id_turn: idTurn,
       code_maker: inputCodes.inputA,
       code_received: inputCodes.inputB,
@@ -33,15 +33,14 @@ export function ButtonConfirmSwap({
         title: 'Operación completada',
         content: result.messages,
       })
+      setExist(false)
     } else {
       Modal.error({
         title: 'Operación fallida',
         content: result.messages,
       })
     }
-
     setLoading(false)
-    setExist(false)
   }
 
   return (
