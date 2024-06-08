@@ -97,7 +97,7 @@ interface FetchType {
     image_4: string | null
     image_5: string | null
   }
-  day_of_request: string
+  day_of_turn: string
 }
 
 export function MyTurns() {
@@ -133,6 +133,7 @@ export function MyTurns() {
       aux.myPostId = result.post_maker.id
       aux.myPostName = result.post_maker.name
       aux.myPostImage = result.post_maker.image_1
+
       aux.otherPostId = result.post_receive.id
       aux.otherPostName = result.post_receive.name
       aux.otherPostImage = result.post_receive.image_1
@@ -140,6 +141,7 @@ export function MyTurns() {
       aux.myPostId = result.post_receive.id
       aux.myPostName = result.post_receive.name
       aux.myPostImage = result.post_receive.image_1
+
       aux.otherPostId = result.post_maker.id
       aux.otherPostName = result.post_maker.name
       aux.otherPostImage = result.post_maker.image_1
@@ -147,13 +149,13 @@ export function MyTurns() {
 
     return {
       id: result.id,
-      date: result.day_of_request, //Viene con formato "YYYY-MM-DD",
+      date: result.day_of_turn, //Viene con formato "YYYY-MM-DD",
       subsidiary: result.post_receive.subsidiary.name,
       myPostId: aux.myPostId,
       myPostName: aux.myPostName,
       myPostImage: aux.myPostImage,
       otherPostId: aux.otherPostId,
-      otherPostName: aux.myPostName,
+      otherPostName: aux.otherPostName,
       otherPostImage: aux.otherPostImage,
     }
   }
@@ -250,7 +252,7 @@ export function MyTurns() {
   }
 
   const columns: ColumnsType<DataType> = [
-    /* {
+    {
       title: `Fecha: ${searchText.date ? searchText.date : ''}`,
       dataIndex: 'date',
       render: (date) => {
@@ -271,7 +273,7 @@ export function MyTurns() {
         return 0
       },
       defaultSortOrder: 'ascend',
-    }, */
+    },
     {
       title: `Filial: ${searchText.subsidiary}`,
       dataIndex: 'subsidiary',

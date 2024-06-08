@@ -9,8 +9,111 @@ import { PostListItem } from '@Posts/components'
 import { MyPosts } from '@Posts/pages'
 import { useAuth } from '@Common/hooks'
 import { Page404 } from '@Common/pages'
+import dayjs from 'dayjs'
 
 interface DataType {
+  id: number;
+  post_maker: {
+      id: number;
+      name: string;
+      description: string;
+      value: number;
+      user: {
+          id: number;
+          first_name: string;
+          last_name: string;
+          dni: string;
+          email: string;
+          role: string;
+          state: {
+              name: string;
+          };
+      };
+      subsidiary: {
+          id: number;
+          name: string;
+          x_coordinate: string;
+          y_coordinate: string;
+          max_helpers: number;
+          cant_current_helpers: number;
+          active: boolean;
+      };
+      state: {
+          id: number;
+          name: | 'activo'
+          | 'pendiente'
+          | 'suspendido'
+          | 'bloqueado'
+          | 'eliminado'
+          | 'rechazado'
+          | 'sin-stock';
+      };
+      category: {
+          id: number;
+          name: string;
+          active: boolean;
+      };
+      state_product: 'NUEVO' | 'USADO';
+      stock_product: number;
+      image_1: string;
+      image_2: string;
+      image_3: string | null;
+      image_4: string | null;
+      image_5: string | null;
+  };
+  post_receive: {
+      id: number;
+      name: string;
+      description: string;
+      value: number;
+      user: {
+          id: number;
+          first_name: string;
+          last_name: string;
+          dni: string;
+          email: string;
+          role: string;
+          state: {
+              name: string;
+          };
+      };
+      subsidiary: {
+          id: number;
+          name: string;
+          x_coordinate: string;
+          y_coordinate: string;
+          max_helpers: number;
+          cant_current_helpers: number;
+          active: boolean;
+      };
+      state: {
+          id: number;
+          name:         | 'activo'
+          | 'pendiente'
+          | 'suspendido'
+          | 'bloqueado'
+          | 'eliminado'
+          | 'rechazado'
+          | 'sin-stock';
+      };
+      category: {
+          id: number;
+          name: string;
+          active: boolean;
+      };
+      state_product: 'NUEVO' | 'USADO';
+      stock_product: number;
+      image_1: string;
+      image_2: string;
+      image_3: string | null;
+      image_4: string | null;
+      image_5: string | null;
+  };
+  day_of_turn: string;
+}
+
+
+/* interface DataType2 {
   id: number
   date: string
   sub: {
@@ -117,109 +220,8 @@ interface DataType {
     image_4: string | null
     image_5: string | null
   }
-}
-interface FetchType {
-  id: number
-  post_maker: {
-    id: number
-    name: string
-    description: string
-    value: number
-    user: {
-      id: number
-      first_name: string
-      last_name: string
-      dni: string
-      email: string
-      role: string
-      state: {
-        name: string
-      }
-    }
-    subsidiary: {
-      id: number
-      name: string
-      x_coordinate: string
-      y_coordinate: string
-      max_helpers: number
-      cant_current_helpers: number
-      active: boolean
-    }
-    state: {
-      id: number
-      name:
-        | 'activo'
-        | 'pendiente'
-        | 'suspendido'
-        | 'bloqueado'
-        | 'eliminado'
-        | 'rechazado'
-        | 'sin-stock'
-    }
-    category: {
-      id: number
-      name: string
-      active: boolean
-    }
-    state_product: 'NUEVO' | 'USADO'
-    stock_product: number
-    image_1: string
-    image_2: string | null
-    image_3: string | null
-    image_4: string | null
-    image_5: string | null
-  }
-  post_receive: {
-    id: number
-    name: string
-    description: string
-    value: number
-    user: {
-      id: number
-      first_name: string
-      last_name: string
-      dni: string
-      email: string
-      role: string
-      state: {
-        name: string
-      }
-    }
-    subsidiary: {
-      id: number
-      name: string
-      x_coordinate: string
-      y_coordinate: string
-      max_helpers: number
-      cant_current_helpers: number
-      active: boolean
-    }
-    state: {
-      id: number
-      name:
-        | 'activo'
-        | 'pendiente'
-        | 'suspendido'
-        | 'bloqueado'
-        | 'eliminado'
-        | 'rechazado'
-        | 'sin-stock'
-    }
-    category: {
-      id: number
-      name: string
-      active: boolean
-    }
-    state_product: 'NUEVO' | 'USADO'
-    stock_product: number
-    image_1: string
-    image_2: string | null
-    image_3: string | null
-    image_4: string | null
-    image_5: string | null
-  }
-  day_of_request: string
-}
+  date_of_turn: string
+} */
 
 export function Turn() {
   const { user } = useAuth()
@@ -229,7 +231,7 @@ export function Turn() {
   const [data, setData] = useState<DataType>()
   const [loading, setLoading] = useState(false)
 
-  function transformData(result: FetchType): DataType {
+  /* function transformData(result: FetchType): DataType {
     let aux: DataType = {
       id: 1,
       date: '',
@@ -344,7 +346,7 @@ export function Turn() {
       myPost: aux.myPost,
       otherPost: aux.otherPost,
     }
-  }
+  } */
 
   async function fetchData() {
     setLoading(true)
@@ -352,9 +354,11 @@ export function Turn() {
     const res = await fetch(`http://localhost:8000/turns/detail/${turnId}`)
     const result = await res.json()
 
-    const newData: DataType = transformData(result)
+    setData(result)
 
-    setData(newData)
+    /* const newData: DataType = transformData(result)
+
+    setData(newData) */
     setLoading(false)
   }
   useEffect(() => {
@@ -391,10 +395,10 @@ export function Turn() {
                     marginRight: 'auto',
                   }}
                 >
-                  Fecha del turno: {data ? data.date : ''}
+                  Fecha del turno: {data ? dayjs(data.day_of_turn).format("DD/MM/YYYY") : ''}
                 </h3>
 
-                <CalendarTurn date={data?.date}></CalendarTurn>
+                <CalendarTurn date={data?.day_of_turn}></CalendarTurn>
               </Col>
               <Col span={12}>
                 <h3
@@ -404,15 +408,15 @@ export function Turn() {
                     marginRight: 'auto',
                   }}
                 >
-                  Filial: {`${data.sub.name}`}
+                  Filial: {`${data.post_receive.subsidiary.name}`}
                 </h3>
                 {data ? (
                   <MapWithTurn
                     sub={{
-                      id: data.sub.id,
-                      name: `${data.sub.name}`,
-                      x_coordinate: `${data.sub.x_coordinate}`,
-                      y_coordinate: `${data.sub.y_coordinate}`,
+                      id: data.post_receive.subsidiary.id,
+                      name: `${data.post_receive.subsidiary.name}`,
+                      x_coordinate: `${data.post_receive.subsidiary.x_coordinate}`,
+                      y_coordinate: `${data.post_receive.subsidiary.y_coordinate}`,
                     }}
                   ></MapWithTurn>
                 ) : null}
@@ -443,13 +447,13 @@ export function Turn() {
 
             <Row gutter={32} align="middle" justify="center">
               <Col span={10}>
-                <PostListItem post={data.myPost}></PostListItem>
+                <PostListItem post={user?.id == data.post_maker.user.id ? data.post_maker : data.post_receive}></PostListItem>
               </Col>
               <Col span={2}>
                 <SwapOutlined style={{ fontSize: '32px' }} />
               </Col>
               <Col span={10}>
-                <PostListItem post={data.otherPost}></PostListItem>
+                <PostListItem post={user?.id == data.post_maker.user.id ? data.post_receive : data.post_maker}></PostListItem>
               </Col>
             </Row>
           </Card>

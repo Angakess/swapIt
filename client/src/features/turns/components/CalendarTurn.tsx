@@ -20,22 +20,25 @@ function capitalizeMonth(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-//Contenido de cada caja del calendario
-const dateCellRender = (value: Dayjs) => {
-  return (
-    <Flex align="center" justify="center">
-      {value.isSame('06/08/2024', 'date') ? ( //Cambiar
-        <CheckCircleOutlined style={{ fontSize: '14px', color: '#14518B', paddingTop: "5px"}} />
-      ) : null}
-    </Flex>
-  )
-}
-
-const cellRender: CalendarProps<Dayjs>['cellRender'] = (current) => {
-  return dateCellRender(current)
-}
-
 export function CalendarTurn({date}: {date: string}) {
+
+
+  //Contenido de cada caja del calendario
+  const dateCellRender = (value: Dayjs) => {
+    return (
+      <Flex align="center" justify="center">
+        {value.isSame(dayjs(date), 'date') ? ( //Cambiar
+          <CheckCircleOutlined style={{ fontSize: '14px', color: '#14518B', paddingTop: "5px"}} />
+        ) : null}
+      </Flex>
+    )
+  }
+  
+  const cellRender: CalendarProps<Dayjs>['cellRender'] = (current) => {
+    return dateCellRender(current)
+  }
+
+
   return (
     <>
       <ConfigProvider locale={esES}>
