@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import generics
 
 from common.email import send_email_to_user
+from request.models import RequestState
 from .models import Category, Post, PostState
 from .serializer import (
     CategorySerializer,
@@ -164,38 +165,51 @@ class PostUpdate(generics.UpdateAPIView):
     serializer_class = PostSerializer
 
     def partial_update(self, request, *args, **kwargs):
-        # TODO: Evaluar que pasa con las solicitudes, ofertas, y trueques semi-aceptados y aceptados
+        
+
         instance = self.get_object()
 
-        # Yo soy el que recibe el post -> La solicitud se cancela
-        requests = instance.posts_receive.all()
-        emails_requests = list(requests.values_list(
-            'user__email', flat=True).distinct())
-        send_email_to_user(
-            email=emails_requests,
-            subject="Solicitud de intercambio enviada cancelada",
-            message="La solicitud de intercambio enviada" +
-            " ha sido cancelada dado que" +
-            " el propietario modifico la publicación " +
-            instance.name + ". \n"
-        )
-        requests.delete()
-        # Yo soy el que mando el post -> La oferta se cancela
-        requests = instance.posts_send.all()
-        emails_requests = list(requests.values_list(
-            'user__email', flat=True).distinct())
-        send_email_to_user(
-            email=requests,
-            subject="Solicitud de intercambio recibida cancelada",
-            message="La oferta de intercambio recibida " +
-            " ha sido cancelada dado que el propietario modifico " +
-            "la publicación " +
-            instance.name + ". \n"
-        )
-        requests.delete()
+        # La request donde el post es el solicitado
+        requests_receive = instance.posts_receive.all()
+        emails_makers = list(requests_receive.values_list(
+            'user_maker__email', flat=True).distinct())
 
-        serializer = self.get_serializer(
-            instance, data=request.data, partial=True)
+        # La request donde el post es el solicitante
+        requests_send = instance.posts_send.all()
+        emails_received = list(requests_send.values_list(
+            'user_receive__email', flat=True).distinct())
+        try:
+            send_email_to_user(
+                email=emails_makers,
+                subject="Solicitud de intercambio enviada cancelada",
+                message="La solicitud de intercambio enviada" +
+                " ha sido cancelada dado que" +
+                " el propietario modifico la publicación " +
+                instance.name + ". \n"
+            )
+
+            send_email_to_user(
+                email=emails_received,
+                subject="Solicitud de intercambio recibida cancelada",
+                message="La oferta de intercambio recibida " +
+                " ha sido cancelada dado que el propietario modifico " +
+                "la publicación " +
+                instance.name + ". \n"
+            )
+
+            requests_receive.update(
+                state=RequestState.objects.get(name="rechazado"))
+            requests_send.update(
+                state=RequestState.objects.get(name="rechazado"))
+        except Exception as _e:
+            return Response({
+                'ok': False,
+                'messages': ["Ostias tio que la eh liao parda"],
+                'data': {}
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        serializer = self.get_serializer(instance, data=request.data,
+                                         partial=True)
         if serializer.is_valid():
             serializer.save()
 
@@ -229,14 +243,16 @@ class PostRetrieve(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        editable = instance.posts_send.all().count(
-        ) == 0 and instance.posts_receive.all().count() == 0
+        condition = {"state__in": [1, 3]}
+        posts_send = instance.posts_send.filter(condition).count()
+        posts_receive = instance.posts_receive.filter(condition).count()
+
         return Response(
             {
                 "ok": True,
                 "messages": ["Post encontrado"],
                 "data": {"post": serializer.data,
-                         "editable": editable},
+                         "editable": not (posts_send+posts_receive)},
             },
             status=status.HTTP_200_OK,
         )
@@ -311,7 +327,7 @@ class PostRemove(generics.DestroyAPIView):
             print("[KWARGS] ", kwargs)
             post = Post.objects.filter(pk=kwargs["pk"])
             post.update(state=5)
-            # TODO: Agregar cancelación de peticiones
+            # TODO: Evaluar que sucede con las requests y turnos en los que esta participando.
             return Response(
                 {
                     "ok": True,

@@ -248,8 +248,14 @@ class RequestAccept(APIView):
             state__id=4, 
         ).count()
 
-        # TODO: Sumar ademas, al subsidiary_day_requests los turnos pactados para esa filial en esa fecha
-        if subsidiary_day_requests >= 50:
+        subsidiary_day_turns = Turn.objects.filter(
+            subsidiary=request_object.post_receive.subsidiary,
+            day_of_turn=date
+        ).count()
+
+        subidiary_quotas = subsidiary_day_requests + subsidiary_day_turns
+
+        if subidiary_quotas >= 50:
             return Response(
                 {
                     "ok": False,
