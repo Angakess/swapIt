@@ -9,6 +9,9 @@ import { tableColumnSearchProps } from '@Swaps/functions/tableColumnSearchProps'
 import { ButtonVerSwap } from '@Swaps/components/ButtonVerSwap'
 
 import MOCK_SWAPS_TODAY from '@Swaps/MOCK_SWAPS_TODAY.json'
+import { fetchPost } from '@Common/helpers'
+import { useAuth } from '@Common/hooks'
+import dayjs from 'dayjs'
 
 type SwapIndex = keyof SwapType
 interface SwapType {
@@ -126,6 +129,9 @@ interface TableParams {
 }
 
 export function SwapsList() {
+
+  const {user} = useAuth()
+
   const [data, setData] = useState<SwapType[]>([])
   const [searchText, setSearchText] = useState({
     id: 0,
@@ -147,22 +153,24 @@ export function SwapsList() {
       dniA: element.user_maker.dni,
       nameA: element.user_maker.first_name + ' ' + element.user_maker.last_name,
       dniB: element.user_received.dni,
-      nameB: element.user_received.first_name + ' ' + element.user_received,
+      nameB: element.user_received.first_name + ' ' + element.user_received.last_name,
     }
   }
 
   const fetchData = async () => {
     setLoading(true)
-    const res = await fetch(`http://localhost:8000/turns/list_today/`)
-    const result = await res.json()
-    /* const result = MOCK_SWAPS_TODAY
-    setData(result) */
 
+    const res = await fetchPost(`http://localhost:8000/turns/list_today/`,{
+      date: dayjs().format("YYYY-MM-DD"),
+      id_helper:  user?.id
+    })
+    const result = await res.json()
     const newData: SwapType[] = []
     result.forEach((element: FetchType) => {
       const newElement: SwapType = transformData(element)
       newData.push(newElement)
     })
+    setData(newData)
 
     setLoading(false)
     setTableParams({
@@ -242,7 +250,7 @@ export function SwapsList() {
       title: `DNI Ofrecedor: ${searchText.code ? searchText.code : ''}`,
       dataIndex: 'dniA',
       ...tableColumnSearchProps('dniA', handleSearch, handleReset, searchInput),
-      width: '30%',
+      
     },
     {
       title: `Nombre Ofrecedor: ${searchText.code ? searchText.code : ''}`,
@@ -253,13 +261,13 @@ export function SwapsList() {
         handleReset,
         searchInput
       ),
-      width: '30%',
+      
     },
     {
       title: `DNI Ofrecido: ${searchText.code ? searchText.code : ''}`,
       dataIndex: 'dniB',
       ...tableColumnSearchProps('dniB', handleSearch, handleReset, searchInput),
-      width: '30%',
+      
     },
     {
       title: `Nombre Ofrecido: ${searchText.code ? searchText.code : ''}`,
@@ -270,7 +278,7 @@ export function SwapsList() {
         handleReset,
         searchInput
       ),
-      width: '30%',
+      
     },
     {
       title: 'Acciones',
