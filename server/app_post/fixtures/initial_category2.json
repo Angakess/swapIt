@@ -1,0 +1,42 @@
+[
+    {
+        "model": "app_post.category",
+        "pk": 1,
+        "fields": {
+            "name": "útiles escolares",
+            "active": true
+        }
+    },
+    {
+        "model": "app_post.category",
+        "pk": 2,
+        "fields": {
+            "name": "vestimenta",
+            "active": true
+        }
+    },
+    {
+        "model": "app_post.category",
+        "pk": 3,
+        "fields": {
+            "name": "alimentos",
+            "active": true
+        }
+    },
+    {
+        "model": "app_post.category",
+        "pk": 4,
+        "fields": {
+            "name": "elementos de limpieza",
+            "active": true
+        }
+    },
+    {
+        "model": "app_post.category",
+        "pk": 5,
+        "fields": {
+            "name": "herramientas",
+            "active": true
+        }
+    }
+]
