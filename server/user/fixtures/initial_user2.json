@@ -1,0 +1,1268 @@
+[
+  {
+    "model": "user.useraccount",
+    "pk": 1,
+    "fields": {
+      "first_name": "Administrador",
+      "last_name": "General",
+      "dni": "00000000",
+      "email": "admin_caritas@yopmail.com",
+      "date_of_birth": "2001-11-08",
+      "phone_number": "342780437",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": true,
+      "is_active": true,
+      "gender": "OTHER",
+      "state": 3,
+      "role": "ADMIN",
+      "password": "482c811da5d5b4bc6d497ffa98491e38",
+      "is_superuser": true
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 2,
+    "fields": {
+      "first_name": "Peterus",
+      "last_name": "Nickless",
+      "dni": "49152698",
+      "email": "pnickless1@yopmail.com",
+      "date_of_birth": "1949-08-08",
+      "phone_number": "7332272396",
+      "id_subsidiary": 1,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 3,
+    "fields": {
+      "first_name": "Amalea",
+      "last_name": "Kierans",
+      "dni": "41448132",
+      "email": "akierans2@yopmail.com",
+      "date_of_birth": "1958-12-25",
+      "phone_number": "7842532734",
+      "id_subsidiary": 1,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 4,
+    "fields": {
+      "first_name": "Valentino",
+      "last_name": "McAster",
+      "dni": "11913963",
+      "email": "vmcaster4@yopmail.com",
+      "date_of_birth": "1985-07-05",
+      "phone_number": "8499000565",
+      "id_subsidiary": 1,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 5,
+    "fields": {
+      "first_name": "Darby",
+      "last_name": "Camilli",
+      "dni": "16028757",
+      "email": "dcamilli5@yopmail.com",
+      "date_of_birth": "1990-12-05",
+      "phone_number": "5611744809",
+      "id_subsidiary": 1,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 6,
+    "fields": {
+      "first_name": "Brittani",
+      "last_name": "Giraudou",
+      "dni": "19449531",
+      "email": "bgiraudou6@yopmail.com",
+      "date_of_birth": "1984-05-12",
+      "phone_number": "7988190015",
+      "id_subsidiary": 1,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 7,
+    "fields": {
+      "first_name": "Sayre",
+      "last_name": "Dowsing",
+      "dni": "24296311",
+      "email": "sdowsing7@yopmail.com",
+      "date_of_birth": "1964-05-11",
+      "phone_number": "8762636701",
+      "id_subsidiary": 2,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 8,
+    "fields": {
+      "first_name": "Wileen",
+      "last_name": "Addicote",
+      "dni": "15164957",
+      "email": "waddicote8@yopmail.com",
+      "date_of_birth": "1986-12-22",
+      "phone_number": "8743753669",
+      "id_subsidiary": 2,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "Genderqueer",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 9,
+    "fields": {
+      "first_name": "Fields",
+      "last_name": "Cruse",
+      "dni": "26880580",
+      "email": "fcruse9@yopmail.com",
+      "date_of_birth": "1991-08-18",
+      "phone_number": "1135635156",
+      "id_subsidiary": 2,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 10,
+    "fields": {
+      "first_name": "Casey",
+      "last_name": "Schoenrock",
+      "dni": "25035571",
+      "email": "cschoenrocka@yopmail.com",
+      "date_of_birth": "1975-11-02",
+      "phone_number": "4126628184",
+      "id_subsidiary": 3,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 11,
+    "fields": {
+      "first_name": "Emerson",
+      "last_name": "MacCaig",
+      "dni": "40153322",
+      "email": "emaccaigb@yopmail.com",
+      "date_of_birth": "1954-09-15",
+      "phone_number": "3611518643",
+      "id_subsidiary": 2,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 101,
+    "fields": {
+      "first_name": "Bloqueado",
+      "last_name": "Uno",
+      "dni": "10101010",
+      "email": "wcurtainc@yopmail.com",
+      "date_of_birth": "1971-12-27",
+      "phone_number": "4827484720",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 1,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 102,
+    "fields": {
+      "first_name": "Bloqueado",
+      "last_name": "Dos",
+      "dni": "20202020",
+      "email": "bloqueado2@yopmail.com",
+      "date_of_birth": "1972-01-27",
+      "phone_number": "4827484721",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 1,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 103,
+    "fields": {
+      "first_name": "Suspendido",
+      "last_name": "Uno",
+      "dni": "30303030",
+      "email": "suspendido1@yopmail.com",
+      "date_of_birth": "1973-02-27",
+      "phone_number": "4827484722",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 2,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 104,
+    "fields": {
+      "first_name": "Suspendido",
+      "last_name": "Dos",
+      "dni": "40404040",
+      "email": "suspendido2@yopmail.com",
+      "date_of_birth": "1974-03-27",
+      "phone_number": "4827484723",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 2,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 105,
+    "fields": {
+      "first_name": "Activo",
+      "last_name": "Uno",
+      "dni": "50505050",
+      "email": "activo1@yopmail.com",
+      "date_of_birth": "1975-04-27",
+      "phone_number": "4827484724",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 106,
+    "fields": {
+      "first_name": "Activo",
+      "last_name": "Dos",
+      "dni": "60606060",
+      "email": "activo2@yopmail.com",
+      "date_of_birth": "1976-05-27",
+      "phone_number": "4827484725",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 107,
+    "fields": {
+      "first_name": "Inactivo",
+      "last_name": "Uno",
+      "dni": "70707070",
+      "email": "inactivo1@yopmail.com",
+      "date_of_birth": "1977-06-27",
+      "phone_number": "4827484726",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": false,
+      "gender": "MALE",
+      "state": 4,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 108,
+    "fields": {
+      "first_name": "Inactivo",
+      "last_name": "Dos",
+      "dni": "80808080",
+      "email": "inactivo2@yopmail.com",
+      "date_of_birth": "1978-07-27",
+      "phone_number": "4827484727",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": false,
+      "gender": "FEMALE",
+      "state": 4,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 109,
+    "fields": {
+      "first_name": "Eliminado",
+      "last_name": "Uno",
+      "dni": "90909090",
+      "email": "eliminado1@yopmail.com",
+      "date_of_birth": "1979-08-27",
+      "phone_number": "4827484728",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": false,
+      "gender": "MALE",
+      "state": 5,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 110,
+    "fields": {
+      "first_name": "Eliminado",
+      "last_name": "Dos",
+      "dni": "11110000",
+      "email": "eliminado2@yopmail.com",
+      "date_of_birth": "1980-09-27",
+      "phone_number": "4827484729",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": false,
+      "gender": "FEMALE",
+      "state": 5,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+
+  {
+    "model": "user.useraccount",
+    "pk": 111,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Uno",
+      "dni": "01010101",
+      "email": "intercambiador1@yopmail.com",
+      "date_of_birth": "1981-01-01",
+      "phone_number": "4827484730",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 112,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Dos",
+      "dni": "02020202",
+      "email": "intercambiador2@yopmail.com",
+      "date_of_birth": "1982-02-02",
+      "phone_number": "4827484731",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 113,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Tres",
+      "dni": "03030303",
+      "email": "intercambiador3@yopmail.com",
+      "date_of_birth": "1983-03-03",
+      "phone_number": "4827484732",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 114,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Cuatro",
+      "dni": "04040404",
+      "email": "intercambiador4@yopmail.com",
+      "date_of_birth": "1984-04-04",
+      "phone_number": "4827484733",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 115,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Cinco",
+      "dni": "05050505",
+      "email": "intercambiador5@yopmail.com",
+      "date_of_birth": "1985-05-05",
+      "phone_number": "4827484734",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 116,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Seis",
+      "dni": "06060606",
+      "email": "intercambiador6@yopmail.com",
+      "date_of_birth": "1986-06-06",
+      "phone_number": "4827484735",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 117,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Siete",
+      "dni": "07070707",
+      "email": "intercambiador7@yopmail.com",
+      "date_of_birth": "1987-07-07",
+      "phone_number": "4827484736",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 118,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Ocho",
+      "dni": "08080808",
+      "email": "intercambiador8@yopmail.com",
+      "date_of_birth": "1988-08-08",
+      "phone_number": "4827484737",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 119,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Nueve",
+      "dni": "09090909",
+      "email": "intercambiador9@yopmail.com",
+      "date_of_birth": "1989-09-09",
+      "phone_number": "4827484738",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 120,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Diez",
+      "dni": "10101011",
+      "email": "intercambiador10@yopmail.com",
+      "date_of_birth": "1990-10-10",
+      "phone_number": "4827484739",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 121,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Once",
+      "dni": "11111111",
+      "email": "intercambiador11@yopmail.com",
+      "date_of_birth": "1991-11-11",
+      "phone_number": "4827484740",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 122,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Doce",
+      "dni": "12121212",
+      "email": "intercambiador12@yopmail.com",
+      "date_of_birth": "1992-12-12",
+      "phone_number": "4827484741",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 123,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Trece",
+      "dni": "13131313",
+      "email": "intercambiador13@yopmail.com",
+      "date_of_birth": "1993-01-13",
+      "phone_number": "4827484742",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 124,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Catorce",
+      "dni": "14141414",
+      "email": "intercambiador14@yopmail.com",
+      "date_of_birth": "1994-02-14",
+      "phone_number": "4827484743",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 125,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Quince",
+      "dni": "15151515",
+      "email": "intercambiador15@yopmail.com",
+      "date_of_birth": "1995-03-15",
+      "phone_number": "4827484744",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 126,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Dieciséis",
+      "dni": "16161616",
+      "email": "intercambiador16@yopmail.com",
+      "date_of_birth": "1996-04-16",
+      "phone_number": "4827484745",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 127,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Diecisiete",
+      "dni": "17171717",
+      "email": "intercambiador17@yopmail.com",
+      "date_of_birth": "1997-05-17",
+      "phone_number": "4827484746",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 128,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Dieciocho",
+      "dni": "18181818",
+      "email": "intercambiador18@yopmail.com",
+      "date_of_birth": "1998-06-18",
+      "phone_number": "4827484747",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 129,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Diecinueve",
+      "dni": "19191919",
+      "email": "intercambiador19@yopmail.com",
+      "date_of_birth": "1999-07-19",
+      "phone_number": "4827484748",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 130,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Veinte",
+      "dni": "20202022",
+      "email": "intercambiador20@yopmail.com",
+      "date_of_birth": "2000-08-20",
+      "phone_number": "4827484749",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 131,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Veintiuno",
+      "dni": "21212121",
+      "email": "intercambiador21@yopmail.com",
+      "date_of_birth": "2001-09-21",
+      "phone_number": "4827484750",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 132,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Veintidós",
+      "dni": "22222222",
+      "email": "intercambiador22@yopmail.com",
+      "date_of_birth": "2002-10-22",
+      "phone_number": "4827484751",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 133,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Veintitrés",
+      "dni": "23232323",
+      "email": "intercambiador23@yopmail.com",
+      "date_of_birth": "2003-11-23",
+      "phone_number": "4827484752",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 
+
+3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 134,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Veinticuatro",
+      "dni": "24242424",
+      "email": "intercambiador24@yopmail.com",
+      "date_of_birth": "2004-12-24",
+      "phone_number": "4827484753",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 135,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Veinticinco",
+      "dni": "25252525",
+      "email": "intercambiador25@yopmail.com",
+      "date_of_birth": "2005-01-25",
+      "phone_number": "4827484754",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 136,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Veintiséis",
+      "dni": "26262626",
+      "email": "intercambiador26@yopmail.com",
+      "date_of_birth": "2006-02-26",
+      "phone_number": "4827484755",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 137,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Veintisiete",
+      "dni": "27272727",
+      "email": "intercambiador27@yopmail.com",
+      "date_of_birth": "2007-03-27",
+      "phone_number": "4827484756",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 138,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Veintiocho",
+      "dni": "28282828",
+      "email": "intercambiador28@yopmail.com",
+      "date_of_birth": "2008-04-28",
+      "phone_number": "4827484757",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 139,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Veintinueve",
+      "dni": "29292929",
+      "email": "intercambiador29@yopmail.com",
+      "date_of_birth": "2009-05-29",
+      "phone_number": "4827484758",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 140,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Treinta",
+      "dni": "30303033",
+      "email": "intercambiador30@yopmail.com",
+      "date_of_birth": "2010-06-30",
+      "phone_number": "4827484759",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 141,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Treinta y Uno",
+      "dni": "31313131",
+      "email": "intercambiador31@yopmail.com",
+      "date_of_birth": "2011-07-31",
+      "phone_number": "4827484760",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 142,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Treinta y Dos",
+      "dni": "32323232",
+      "email": "intercambiador32@yopmail.com",
+      "date_of_birth": "2012-08-01",
+      "phone_number": "4827484761",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 143,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Treinta y Tres",
+      "dni": "33333333",
+      "email": "intercambiador33@yopmail.com",
+      "date_of_birth": "2013-09-02",
+      "phone_number": "4827484762",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 144,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Treinta y Cuatro",
+      "dni": "34343434",
+      "email": "intercambiador34@yopmail.com",
+      "date_of_birth": "2014-10-03",
+      "phone_number": "4827484763",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 145,
+    "fields": {
+     
+
+ "first_name": "Intercambiador",
+      "last_name": "Treinta y Cinco",
+      "dni": "35353535",
+      "email": "intercambiador35@yopmail.com",
+      "date_of_birth": "2015-11-04",
+      "phone_number": "4827484764",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 146,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Treinta y Seis",
+      "dni": "36363636",
+      "email": "intercambiador36@yopmail.com",
+      "date_of_birth": "2016-12-05",
+      "phone_number": "4827484765",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 147,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Treinta y Siete",
+      "dni": "37373737",
+      "email": "intercambiador37@yopmail.com",
+      "date_of_birth": "2017-01-06",
+      "phone_number": "4827484766",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 148,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Treinta y Ocho",
+      "dni": "38383838",
+      "email": "intercambiador38@yopmail.com",
+      "date_of_birth": "2018-02-07",
+      "phone_number": "4827484767",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 149,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Treinta y Nueve",
+      "dni": "39393939",
+      "email": "intercambiador39@yopmail.com",
+      "date_of_birth": "2019-03-08",
+      "phone_number": "4827484768",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 150,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Cuarenta",
+      "dni": "40404044",
+      "email": "intercambiador40@yopmail.com",
+      "date_of_birth": "2020-04-09",
+      "phone_number": "4827484769",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 151,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Cuarenta y Uno",
+      "dni": "41414141",
+      "email": "intercambiador41@yopmail.com",
+      "date_of_birth": "2021-05-10",
+      "phone_number": "4827484770",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 152,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": "Cuarenta y Dos",
+      "dni": "42424242",
+      "email": "intercambiador42@yopmail.com",
+      "date_of_birth": "2022-06-11",
+      "phone_number": "4827484771",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  }
+]

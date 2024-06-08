@@ -1,0 +1,16 @@
+[
+    {
+        "model": "turn.turn",
+        "fields": {
+            "code_maker": "M-000001",
+            "code_received": "R-000001",
+            "state": 1,
+            "subsidiary": 1,
+            "user_maker": 120,
+            "user_received": 111,
+            "post_maker": 25,
+            "post_receive": 125,
+            "day_of_turn": "2024-06-08"
+        }
+    }
+]
