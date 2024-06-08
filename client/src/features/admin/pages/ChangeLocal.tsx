@@ -37,6 +37,7 @@ export function ChangeLocal() {
   const helperId: number = parseInt(parts[parts.length - 1])
 
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingFetch, setIsLoadingFetch] = useState(false)
   const [isModalOpen, setModalOpen] = useState(false)
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false)
   const [subsData, setSubsData] = useState<SubsidiaryType[]>()
@@ -45,18 +46,18 @@ export function ChangeLocal() {
   const [subSelected, setSubSelected] = useState<SubsidiaryType>()
 
   const fetchSubsData = async () => {
-    setIsLoading(true)
+    setIsLoadingFetch(true)
     const res = await fetch('http://localhost:8000/subsidiary/subsidiaries/')
     const result = await res.json()
     setSubsData(result)
-    setIsLoading(false)
+    setIsLoadingFetch(false)
   }
   useEffect(() => {
     fetchSubsData()
   }, [])
 
   const fetchHelperData = async () => {
-    setIsLoading(true)
+    setIsLoadingFetch(true)
     try {
       const res = await fetch(
         `http://localhost:8000/users/get-helper/${helperId}`
@@ -69,7 +70,7 @@ export function ChangeLocal() {
         content: 'No se encontró al ayudante pedido',
       })
     }
-    setIsLoading(false)
+    setIsLoadingFetch(false)
   }
   useEffect(() => {
     fetchHelperData()
@@ -146,7 +147,7 @@ export function ChangeLocal() {
   }
 
   return (
-    <Spin spinning={isLoading}>
+    <Spin spinning={isLoadingFetch}>
       <PageTitle title={`Cambiar Filial - ${helperData?.full_name}`} />
       <Row>
         <Col span={24}>
@@ -182,10 +183,11 @@ export function ChangeLocal() {
       </Row>
       <Modal
         title="Cambio de filial"
-        open={isModalOpen}
+        open={isModalOpen || isLoading}
         onOk={handleOk}
         onCancel={handleCancel}
         okButtonProps={{ disabled: isLoading }}
+        cancelButtonProps={{ disabled: isLoading }}
         cancelText="Cancelar"
         okText="Confirmar"
       >
@@ -211,6 +213,13 @@ export function ChangeLocal() {
             relacionadas
           </p>
         ) : null}
+
+        {isLoading && (
+          <p style={{ fontWeight: 'normal', color: '#FF4D4F' }}>
+            {' '}
+            Esta operación puede tardar unos minutos
+          </p>
+        )}
       </Modal>
       <Modal
         title="Cambio de filial"

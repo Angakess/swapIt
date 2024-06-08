@@ -53,6 +53,7 @@ export function Helpers() {
 
   const [data, setData] = useState<DataType[]>([])
   const [loading, setLoading] = useState(false)
+  const [loadingFetch, setLoadingFetch] = useState(false)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -73,7 +74,7 @@ export function Helpers() {
   }
 
   const fetchData = async () => {
-    setLoading(true)
+    setLoadingFetch(true)
     const res = await fetch('http://localhost:8000/users/list-helpers/')
     const result = await res.json()
     const transformedData = result.map((item: fetchType) => ({
@@ -84,7 +85,7 @@ export function Helpers() {
       subsidiary_cant_helpers: item.subsidiary.cant_current_helpers,
     }))
     setData(transformedData)
-    setLoading(false)
+    setLoadingFetch(false)
     setTableParams({
       ...tableParams,
       pagination: {
@@ -252,7 +253,11 @@ export function Helpers() {
         <Space>
           <Link to={`/admin/helpers/change-local/${record.id}`}>
             <Tooltip title="Cambiar filial">
-              <Button type="primary" icon={<ShopFilled />}></Button>
+              <Button
+                type="primary"
+                icon={<ShopFilled />}
+                disabled={loading}
+              ></Button>
             </Tooltip>
           </Link>
           <Tooltip title="Desincorporar ayudante">
@@ -261,6 +266,7 @@ export function Helpers() {
               danger
               icon={<UserDeleteOutlined />}
               onClick={() => showModal(record)}
+              disabled={loading}
             ></Button>
           </Tooltip>
         </Space>
@@ -314,13 +320,13 @@ export function Helpers() {
         rowKey={(record) => record.id}
         dataSource={data}
         pagination={tableParams.pagination}
-        loading={loading}
+        loading={loadingFetch}
         onChange={handleTableChange}
         locale={{ emptyText: 'No hay ayudantes disponibles' }}
       />
       <Modal
         title="Atención"
-        open={isModalOpen}
+        open={isModalOpen || loading}
         onOk={handleOk}
         onCancel={handleCancel}
         cancelText="Cancelar"
@@ -329,6 +335,7 @@ export function Helpers() {
         cancelButtonProps={{ disabled: loading }}
       >
         <p>¿Está seguro que quiere desincorporar a este ayudante?</p>
+
         {helperSelected?.subsidiary_cant_helpers === 1 ? (
           <p style={{ fontWeight: 'bold' }}>
             IMPORTANTE: Si {helperSelected.full_name} es desincorporado/a, la
@@ -337,6 +344,13 @@ export function Helpers() {
             publicaciones relacionadas
           </p>
         ) : null}
+
+        {loading && (
+          <p style={{ fontWeight: 'normal', color: '#FF4D4F' }}>
+            {' '}
+            Esta operación puede tardar unos minutos
+          </p>
+        )}
       </Modal>
     </>
   )

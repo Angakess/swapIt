@@ -192,7 +192,7 @@ export function Swap() {
             cancelButtonProps={{ hidden: true, disabled: true }}
           >
             <Flex justify="center">
-              <p style={{ fontSize: '20px' }}>Este trueque ha sido eliminado</p>
+              <p style={{ fontSize: '20px' }}>Este trueque ha sido finalizado</p>
             </Flex>
             <Flex justify="center">
               <Button
