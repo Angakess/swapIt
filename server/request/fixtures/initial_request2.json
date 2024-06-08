@@ -123,5 +123,18 @@
             "rejected": 0,
             "day_of_request": "2024-06-09"
         }
+    },
+
+    {
+        "model": "request.request",
+        "fields": {
+          "state": 2,
+          "rejected": 0,
+          "user_maker": 151,
+          "user_receive": 111,
+          "post_maker": 246,
+          "post_receive": 243,
+          "day_of_request": null
+        }
     }
 ]

@@ -4453,5 +4453,123 @@
       "image_4": null,
       "image_5": null
     }
+  },
+
+
+
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "PRODUCTO 1 PARA TURNO DE POMPEYA",
+      "description": "ES UN PRODUCTO",
+      "value": 4,
+      "user": 111,
+      "subsidiary":3,
+      "state": 7,
+      "stock_product": 0,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "PRODUCTO 2 PARA TURNO DE POMPEYA",
+      "description": "ES UN PRODUCTO",
+      "value": 4,
+      "user": 111,
+      "subsidiary":3,
+      "state": 7,
+      "stock_product": 0,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "PRODUCTO 3 PARA TURNO DE POMPEYA",
+      "description": "ES UN PRODUCTO",
+      "value": 4,
+      "user": 111,
+      "subsidiary":3,
+      "state": 7,
+      "stock_product": 0,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "PRODUCTO 4 PARA TURNO DE POMPEYA",
+      "description": "ES UN PRODUCTO",
+      "value": 4,
+      "user": 151,
+      "subsidiary":2,
+      "state": 7,
+      "stock_product": 0,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "PRODUCTO 5 PARA TURNO DE POMPEYA",
+      "description": "ES UN PRODUCTO",
+      "value": 4,
+      "user": 151,
+      "subsidiary":2,
+      "state": 7,
+      "stock_product": 0,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "PRODUCTO 6 PARA TURNO DE POMPEYA",
+      "description": "ES UN PRODUCTO",
+      "value": 4,
+      "user": 151,
+      "subsidiary":2,
+      "state": 7,
+      "stock_product": 0,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
   }
 ]
