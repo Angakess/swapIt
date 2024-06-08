@@ -4196,34 +4196,17 @@
 
 
 
+  
   {
     "model": "app_post.post",
     "fields": {
-      "name": "UN MARTILLO",
-      "description": "ES UN MARTILLO",
-      "value": 5,
-      "user": 150,
-      "subsidiary":1,
-      "state": 1,
-      "category": 5,
-      "state_product": "USADO",
-      "image_1": "post_images/default.jpg",
-      "image_2": "post_images/default.jpg",
-      "image_3": null,
-      "image_4": null,
-      "image_5": null
-    }
-  },
-  {
-    "model": "app_post.post",
-    "fields": {
-      "name": "UN DESTORNILLADOR",
-      "description": "ES UN DESTORNILLADOR",
+      "name": "LAVARROPAS",
+      "description": "ES UN LAVARROPAS",
       "value": 5,
       "user": 117,
       "subsidiary":1,
       "state": 1,
-      "category": 5,
+      "category": 4,
       "state_product": "USADO",
       "image_1": "post_images/default.jpg",
       "image_2": "post_images/default.jpg",
