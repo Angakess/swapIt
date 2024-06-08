@@ -37,8 +37,8 @@ class ListTurnsByPostId(APIView):
 
 class ListMyTurns(APIView):
     def get(self, request, id_user):
-        turns_make = Turn.objects.filter(user_maker__id=id_user)
-        turns_received = Turn.objects.filter(user_received__id=id_user)
+        turns_make = Turn.objects.filter(user_maker__id=id_user, state=TurnState.objects.get(id=1))
+        turns_received = Turn.objects.filter(user_received__id=id_user, state=TurnState.objects.get(id=1))
         serializer = TurnExchangerListSerializer(
             turns_make.union(turns_received), many=True
         )
@@ -54,6 +54,7 @@ class ListTurnsTodayView(APIView):
         date, id_helper = data.get("date"), data.get("id_helper")
         helper = UserAccount.objects.get(id=id_helper)
         turns = Turn.objects.filter(
+            state=TurnState.objects.get(id=1),
             subsidiary__id=helper.id_subsidiary.id,
             day_of_turn=date
         )
@@ -113,5 +114,5 @@ class TurnsRejectView(APIView):
 
 
 class DetailTurnView(generics.RetrieveAPIView):
-    queryset = Turn.objects.all()
+    queryset = Turn.objects.filter(state=TurnState.objects.get(id=1))
     serializer_class = TurnDetailSerializer
