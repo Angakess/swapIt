@@ -167,8 +167,11 @@ export function SwapsList() {
     const result = await res.json()
     const newData: SwapType[] = []
     result.forEach((element: FetchType) => {
-      const newElement: SwapType = transformData(element)
+      if(element.state == 1){
+const newElement: SwapType = transformData(element)
       newData.push(newElement)
+      }
+      
     })
     setData(newData)
     console.log(result)

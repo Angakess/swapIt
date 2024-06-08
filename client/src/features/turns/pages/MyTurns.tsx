@@ -139,10 +139,10 @@ export function MyTurns() {
     } else {
       aux.myPostId = result.post_receive.id
       aux.myPostName = result.post_receive.name
-      aux.myPostImage = result.post_maker.image_1
+      aux.myPostImage = result.post_receive.image_1
       aux.otherPostId = result.post_maker.id
       aux.otherPostName = result.post_maker.name
-      aux.otherPostImage = result.post_receive.image_1
+      aux.otherPostImage = result.post_maker.image_1
     }
 
     return {
@@ -168,6 +168,9 @@ export function MyTurns() {
       const newElement: DataType = transformData(element)
       newData.push(newElement)
     })
+    console.log(user?.id)
+    console.log("RESULT ", result)
+    console.log("NEWDATA ", newData)
     setData(newData)
 
     /* const result = MOCK_TURNS

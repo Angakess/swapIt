@@ -160,16 +160,13 @@ export function Swap() {
   async function fetchData() {
 
     setLoading(true)
-    let result: SwapType | null = null
-    try{
+   
       const res = await fetch(`http://localhost:8000/turns/detail/${swapId}`)
-      result = await res.json()
-    } catch {
-      result = null
-    } finally {
+      const result = await res.json()
+
       setData(result)
       setLoading(false)
-    }
+  
 
 
     /* const res = await fetch(`http://localhost:8000/turns/detail/${swapId}`)
@@ -183,13 +180,6 @@ export function Swap() {
   }, [])
 
   //-------------------------------------------------------------
-
-    if(data === null){
-      return (<Page404/>)
-    }
-    else{
-
-    
 
     return (
       <>
@@ -355,4 +345,4 @@ export function Swap() {
       )} */}
       </>
     )
-  }}
+  }
