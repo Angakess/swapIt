@@ -8,7 +8,7 @@
             "user_receive": 113,
             "state": 4,
             "rejected": 0,
-            "day_of_request": null
+            "day_of_request": "2024-06-09"
         }
     },
     {
@@ -58,7 +58,7 @@
             "user_receive": 150,
             "state": 4,
             "rejected": 0,
-            "day_of_request": null
+            "day_of_request": "2024-06-09"
         }
     },
     {
@@ -70,7 +70,58 @@
             "user_receive": 150,
             "state": 4,
             "rejected": 0,
+            "day_of_request": "2024-06-09"
+        }
+    },
+
+
+
+    {
+        "model": "request.request",
+        "fields": {
+            "user_maker": 112,
+            "post_maker": 75,
+            "post_receive": 237,
+            "user_receive": 150,
+            "state": 2,
+            "rejected": 0,
             "day_of_request": null
+        }
+    },
+    {
+        "model": "request.request",
+        "fields": {
+            "user_maker": 112,
+            "post_maker": 76,
+            "post_receive": 238,
+            "user_receive": 150,
+            "state": 2,
+            "rejected": 0,
+            "day_of_request": null
+        }
+    },
+    {
+        "model": "request.request",
+        "fields": {
+            "user_maker": 112,
+            "post_maker": 76,
+            "post_receive": 239,
+            "user_receive": 150,
+            "state": 2,
+            "rejected": 0,
+            "day_of_request": null
+        }
+    },
+    {
+        "model": "request.request",
+        "fields": {
+            "user_maker": 112,
+            "post_maker": 77,
+            "post_receive": 240,
+            "user_receive": 150,
+            "state": 4,
+            "rejected": 0,
+            "day_of_request": "2024-06-09"
         }
     }
 ]

@@ -4270,5 +4270,85 @@
       "image_4": null,
       "image_5": null
     }
+  },
+
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "CAMISA",
+      "description": "ES UNA CAMISA",
+      "value": 5,
+      "user": 150,
+      "subsidiary":1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "ZAPATOS",
+      "description": "SON ZAPATOS",
+      "value": 3,
+      "user": 150,
+      "subsidiary":1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "BOTAS",
+      "description": "SON BOTAS",
+      "value": 3,
+      "user": 150,
+      "subsidiary":1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "ESCOBA",
+      "description": "ES UNA ESCOBA",
+      "value": 4,
+      "user": 150,
+      "subsidiary":1,
+      "state": 1,
+      "category": 4,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": "post_images/default.jpg",
+      "image_4": null,
+      "image_5": null
+    }
   }
 ]
