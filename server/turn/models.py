@@ -7,6 +7,9 @@ from app_post.models import Post
 class TurnState(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return f"({self.id}) {self.name}" 
+
 
 class Turn(models.Model):
     code_maker = models.CharField(max_length=255)

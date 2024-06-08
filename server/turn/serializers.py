@@ -44,7 +44,7 @@ class TurnExchangerListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Turn
-        fields = ["id", "post_maker", "post_receive"]
+        fields = ["id", "post_maker", "post_receive", "day_of_turn"]
 
 
 class TurnHelperListSerializer(serializers.ModelSerializer):
@@ -66,6 +66,7 @@ class TurnDetailSerializer(serializers.ModelSerializer):
             'id',
             'post_maker',
             'post_receive',
+            'day_of_turn'
         ]
 # [
 #     {
