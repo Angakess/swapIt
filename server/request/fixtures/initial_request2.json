@@ -6,7 +6,7 @@
             "post_maker": 225,
             "post_receive": 226,
             "user_receive": 113,
-            "state": 2,
+            "state": 4,
             "rejected": 0,
             "day_of_request": null
         }
@@ -43,6 +43,32 @@
             "post_receive": 232,
             "user_receive": 116,
             "state": 2,
+            "rejected": 0,
+            "day_of_request": null
+        }
+    },
+
+
+    {
+        "model": "request.request",
+        "fields": {
+            "user_maker": 118,
+            "post_maker": 235,
+            "post_receive": 234,
+            "user_receive": 150,
+            "state": 4,
+            "rejected": 0,
+            "day_of_request": null
+        }
+    },
+    {
+        "model": "request.request",
+        "fields": {
+            "user_maker": 119,
+            "post_maker": 236,
+            "post_receive": 234,
+            "user_receive": 150,
+            "state": 4,
             "rejected": 0,
             "day_of_request": null
         }
