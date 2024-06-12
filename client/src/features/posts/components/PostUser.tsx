@@ -6,6 +6,8 @@ import { StarFilled } from '@ant-design/icons'
 import { Flex, Space, Spin, Typography, theme } from 'antd'
 import { useEffect, useState } from 'react'
 
+import './PostUser.css'
+
 type PostUserProps = {
   userId: number
   firstName: string
@@ -33,6 +35,7 @@ export function PostUser({ userId, firstName, lastName }: PostUserProps) {
         align="center"
         style={{ cursor: 'pointer' }}
         onClick={() => !isLoading && setIsModalOpen(true)}
+        className="post-user"
       >
         <UserAvatar firstName={firstName} lastName={lastName} size="large" />
         <Stars isLoading={isLoading} ratings={ratings} />
