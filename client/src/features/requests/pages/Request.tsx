@@ -105,7 +105,7 @@ function RequestCalendar({ request }: { request: RequestModel }) {
             day: 'numeric',
           }
         )
-      : 'Esta solicitud todavía no tiene una fecha seleccionada para el turno'
+      : 'Esta solicitud todavía no tiene una fecha seleccionada para el turno.'
 
   return (
     <Card style={{ width: '100%' }}>
