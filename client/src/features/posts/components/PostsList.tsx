@@ -1,7 +1,7 @@
 import { Col, Empty, Flex, Pagination, Row, Spin } from 'antd'
 import { PostModel } from '@Common/api'
 import { PostListItem } from './PostListItem'
-import React, { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 const PAGE_SIZE = 12
 
@@ -15,7 +15,6 @@ export function PostsList({
   showStatus?: boolean
 }) {
   const [currentPage, setCurrentPage] = useState(1)
-  const rowRef = useRef<HTMLDivElement>(null)
 
   if (isLoading) {
     return <Spin size="large" style={{ width: '100%' }} />
@@ -27,7 +26,7 @@ export function PostsList({
 
   return (
     <>
-      <Row gutter={[12, 12]} ref={rowRef}>
+      <Row gutter={[12, 12]}>
         {posts
           .slice(
             (currentPage - 1) * PAGE_SIZE,
