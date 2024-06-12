@@ -59,19 +59,23 @@ export function AppHeader() {
         <Dropdown
           menu={{
             items: [
-              {
-                key: '1',
-                icon: <StarOutlined />,
-                label: 'Ver mis calificaciones',
-                onClick: () => {
-                  setIsUserRatingOpen(true)
-                  setIsLoading(true)
-                  getUserRatings(user!.id).then((fetchedRatings) => {
-                    setUserRatings(fetchedRatings)
-                    setIsLoading(false)
-                  })
-                },
-              },
+              ...(user?.role === 'EXCHANGER'
+                ? [
+                    {
+                      key: '1',
+                      icon: <StarOutlined />,
+                      label: 'Ver mis calificaciones',
+                      onClick: () => {
+                        setIsUserRatingOpen(true)
+                        setIsLoading(true)
+                        getUserRatings(user!.id).then((fetchedRatings) => {
+                          setUserRatings(fetchedRatings)
+                          setIsLoading(false)
+                        })
+                      },
+                    },
+                  ]
+                : []),
               {
                 key: '2',
                 icon: <EditOutlined />,
