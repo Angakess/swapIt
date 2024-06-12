@@ -9,6 +9,7 @@ type ImageCarouselProps = {
     main?: React.CSSProperties
     background?: React.CSSProperties
   }
+  disableCarousel?: boolean
 }
 
 export function ImageCarousel({
@@ -16,6 +17,7 @@ export function ImageCarousel({
   imagesUrls,
   imageHeight,
   styles = { background: {}, container: {}, main: {} },
+  disableCarousel = false,
 }: ImageCarouselProps) {
   const { colorPrimary: color } = theme.useToken().token
 
@@ -47,6 +49,23 @@ export function ImageCarousel({
     objectPosition: 'center center',
     filter: 'blur(5px) brightness(0.4)',
     backgroundColor: color,
+  }
+
+  if (disableCarousel) {
+    return (
+      <div style={{ ...containerStyle, ...styles.container }}>
+        <img
+          style={{ ...mainImageStyle, ...styles.main }}
+          src={imagesUrls[0]}
+          alt={`image ${1}`}
+        />
+        <img
+          style={{ ...backgroundImageStyle, ...styles.background }}
+          src={imagesUrls[0]}
+          alt={`background image ${1}`}
+        />
+      </div>
+    )
   }
 
   return (

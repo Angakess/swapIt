@@ -15,9 +15,11 @@ const IMG_HEIGHT = '300px'
 export function PostListItem({
   post,
   showStatus = false,
+  disableCarousel = false,
 }: {
   post: PostModel
   showStatus?: boolean
+  disableCarousel?: boolean
 }) {
   return (
     <Link to={`/posts/${post.id}`}>
@@ -29,13 +31,9 @@ export function PostListItem({
           <ImageCarousel
             imagesUrls={getPostImagesArray(post)}
             imageHeight={IMG_HEIGHT}
+            disableCarousel={disableCarousel}
           />
         }
-        // actions={[
-        //   <SettingOutlined key="setting" />,
-        //   <EditOutlined key="edit" />,
-        //   <EllipsisOutlined key="ellipsis" />,
-        // ]}
         bordered
       >
         <Flex vertical justify="space-between" style={{ height: '100%' }}>

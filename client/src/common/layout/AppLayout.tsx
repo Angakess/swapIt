@@ -10,13 +10,14 @@ export function AppLayout() {
   return (
     <Layout style={{ maxHeight: '100dvh' }}>
       <Sidebar />
-      <Layout style={{ overflow: 'auto' }}>
+      <Layout style={{ overflow: 'auto' }} id="SecondLayout">
         <Layout.Header
           style={{
             backgroundColor: colorBgContainer,
             padding: '0',
             marginBottom: '1.5rem',
           }}
+          id="AppLayoutHeader"
         >
           <AppHeader />
         </Layout.Header>
@@ -29,7 +30,9 @@ export function AppLayout() {
             height: 'auto',
           }}
         >
-          <div style={{ paddingBottom: '2rem' }}>{<Outlet />}</div>
+          <div style={{ paddingBottom: '2rem' }} id="AppLayout_container">
+            {<Outlet />}
+          </div>
         </Layout.Content>
       </Layout>
     </Layout>
