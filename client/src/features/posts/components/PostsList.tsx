@@ -1,7 +1,7 @@
 import { Col, Empty, Flex, Pagination, Row, Spin } from 'antd'
 import { PostModel } from '@Common/api'
 import { PostListItem } from './PostListItem'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
 const PAGE_SIZE = 12
 
