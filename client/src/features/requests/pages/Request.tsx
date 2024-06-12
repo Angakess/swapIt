@@ -94,13 +94,9 @@ export function Request() {
 }
 
 function RequestCalendar({ request }: { request: RequestModel }) {
-  if (request.state !== 'semi-aceptado') return null
-
-  return (
-    <Card style={{ width: '100%' }}>
-      <Typography.Title level={4}>Fecha</Typography.Title>
-      <Typography.Paragraph>
-        {new Date(`${request.day_of_request} UTC-3`).toLocaleDateString(
+  const text =
+    request.state === 'semi-aceptado'
+      ? new Date(`${request.day_of_request} UTC-3`).toLocaleDateString(
           'es-AR',
           {
             weekday: 'long',
@@ -108,14 +104,21 @@ function RequestCalendar({ request }: { request: RequestModel }) {
             month: 'long',
             day: 'numeric',
           }
-        )}
-      </Typography.Paragraph>
-      <Calendar
-        fullscreen={false}
-        style={{ pointerEvents: 'none' }}
-        headerRender={() => undefined}
-        value={dayjs(request.day_of_request)}
-      />
+        )
+      : 'Esta solicitud todavía no tiene una fecha seleccionada para el turno'
+
+  return (
+    <Card style={{ width: '100%' }}>
+      <Typography.Title level={4}>Fecha</Typography.Title>
+      <Typography.Paragraph>{text}</Typography.Paragraph>
+      {request.state === 'semi-aceptado' && (
+        <Calendar
+          fullscreen={false}
+          style={{ pointerEvents: 'none' }}
+          headerRender={() => undefined}
+          value={dayjs(request.day_of_request)}
+        />
+      )}
     </Card>
   )
 }
