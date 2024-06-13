@@ -79,6 +79,7 @@ export function PostListItem({
                 top: '0.5rem',
                 right: '0rem',
                 textTransform: 'capitalize',
+                zIndex: 1,
               }}
             >
               {post.state.name}
