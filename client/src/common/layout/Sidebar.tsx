@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Layout, Menu, theme } from 'antd'
-import { MenuProps } from 'antd/es/menu'
-import { MenuItemType } from 'antd/es/menu/hooks/useItems'
+import { Layout, Menu, theme, MenuProps } from 'antd'
 import {
   /* UploadOutlined, */
   CalendarOutlined,
@@ -13,12 +11,13 @@ import {
   HomeOutlined,
   AppstoreOutlined,
   SwapOutlined,
+  BarChartOutlined,
 } from '@ant-design/icons'
 import { UserPermissions } from '@Common/types'
 import { useAuth } from '@Common/hooks'
 
 type SidebarProps = {
-  menuItems: MenuItemType[]
+  menuItems: Required<MenuProps>['items']
   defaultSelectedKey: string
 }
 
@@ -34,7 +33,7 @@ const items: Record<UserPermissions, SidebarProps> = {
     ],
   },
   ADMIN: {
-    defaultSelectedKey: 'helpers',
+    defaultSelectedKey: '/posts',
     menuItems: [
       {
         key: '/posts',
@@ -60,6 +59,37 @@ const items: Record<UserPermissions, SidebarProps> = {
         key: '/admin/categories',
         label: 'Categorias',
         icon: <ProductOutlined />,
+      },
+      {
+        key: '/admin/stats',
+        label: 'Estadísticas',
+        icon: <BarChartOutlined />,
+        children: [
+          {
+            key: '/admin/stats/posts',
+            label: 'Publicaciones',
+          },
+          {
+            key: '/admin/stats/helpers',
+            label: 'Ayudantes',
+          },
+          {
+            key: '/admin/stats/exchangers',
+            label: 'Intercambiadores',
+          },
+          {
+            key: '/admin/stats/locals',
+            label: 'Filiales',
+          },
+          {
+            key: '/admin/stats/categories',
+            label: 'Categorias',
+          },
+          {
+            key: '/admin/stats/swaps',
+            label: 'Trueques',
+          },
+        ],
       },
     ],
   },
@@ -89,7 +119,7 @@ const items: Record<UserPermissions, SidebarProps> = {
     ],
   },
   HELPER: {
-    defaultSelectedKey: '',
+    defaultSelectedKey: '/posts',
     menuItems: [
       {
         key: '/posts',
