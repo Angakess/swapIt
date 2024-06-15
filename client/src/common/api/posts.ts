@@ -8,16 +8,21 @@ import { UserModel } from './users'
 //
 // Post types
 
+export enum PostStateNameEnum {
+  Activo = 'activo',
+  Pendiente = 'pendiente',
+  Suspendido = 'suspendido',
+  Bloqueado = 'bloqueado',
+  Eliminado = 'eliminado',
+  Rechazado = 'rechazado',
+  SinStock = 'sin-stock',
+}
+
+export type PostStateNames = `${PostStateNameEnum}`
+
 export type PostStateModel = {
   id: number
-  name:
-    | 'activo'
-    | 'pendiente'
-    | 'suspendido'
-    | 'bloqueado'
-    | 'eliminado'
-    | 'rechazado'
-    | 'sin-stock'
+  name: PostStateNames
 }
 
 export type ProductStateModel = 'NUEVO' | 'USADO' | 'DEFECTUOSO'
@@ -108,7 +113,7 @@ export async function getPostList({
   state = '',
   status = '',
   category = '',
-}: GetPostListOptions): Promise<PostModel[]> {
+}: GetPostListOptions = {}): Promise<PostModel[]> {
   const URL = `${SERVER_URL}/post/list/?search=${search}&state_product=${state}&state__name=${status}&category__name=${category}&user__id=${userId}`
 
   const resp = await fetch(URL)

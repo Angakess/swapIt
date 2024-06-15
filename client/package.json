@@ -12,6 +12,7 @@
     "format:fix": "prettier --write --list-different ."
   },
   "dependencies": {
+    "@ant-design/charts": "^2.1.1",
     "antd": "^5.16.5",
     "dayjs": "^1.11.11",
     "leaflet": "^1.9.4",
