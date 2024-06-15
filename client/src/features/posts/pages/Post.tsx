@@ -145,13 +145,16 @@ export function Post() {
             <PostDetails post={post!} />
           </Card>
 
-          <Card style={{ marginBottom: '1.5rem' }}>
-            <PostUser
-              userId={post!.user.id}
-              firstName={post!.user.first_name}
-              lastName={post!.user.last_name}
-            />
-          </Card>
+          {/* TODO: Discutir con sai y cacho */}
+          {post!.user.id !== user!.id && (
+            <Card style={{ marginBottom: '1.5rem' }}>
+              <PostUser
+                userId={post!.user.id}
+                firstName={post!.user.first_name}
+                lastName={post!.user.last_name}
+              />
+            </Card>
+          )}
 
           <PostSubsidiary post={post!} />
         </Col>
