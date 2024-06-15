@@ -9,6 +9,7 @@ import {
 } from '@Admin/pages'
 import { Page404 } from '@Common/pages'
 import { ProtectedRoute } from '@Common/components'
+import { StatsRoutes } from '@Stats/routes'
 
 export function AdminRoutes() {
   return (
@@ -20,6 +21,7 @@ export function AdminRoutes() {
         <Route path="/exchangers/:id" element={<ExchangerProfile />} />
         <Route path="/locals" element={<Locals />} />
         <Route path="/categories" element={<Categories />} />
+        <Route path="/stats/*" element={<StatsRoutes />} />
         <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>

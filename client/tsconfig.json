@@ -29,8 +29,9 @@
       "@Home/*": ["features/home/*"],
       "@Posts/*": ["features/posts/*"],
       "@Turns/*": ["features/turns/*"],
+      "@Stats/*": ["features/stats/*"],
       "@Swaps/*": ["features/swaps/*"],
-      "@Requests/*": ["features/requests/*"],
+      "@Requests/*": ["features/requests/*"]
     }
   },
   "include": ["src"],
