@@ -1,5 +1,4 @@
 import {
-  PostModel,
   PostStateModel,
   PostStateNameEnum,
   PostStateNames,
@@ -8,7 +7,7 @@ import {
 } from '@Common/api'
 import { PageTitle } from '@Common/components'
 import { Column } from '@ant-design/charts'
-import { Card, Spin, Typography } from 'antd'
+import { Button, Card, Flex, Spin, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 
 type TempDataStateType = Record<PostStateModel['name'], number>
@@ -55,6 +54,7 @@ async function formatData() {
 export function StatsPosts() {
   const [postsData, setPostsData] = useState<DataType[]>()
   const [isLoading, setIsLoading] = useState(false)
+  const [stack, setStack] = useState(true)
 
   useEffect(() => {
     setIsLoading(true)
@@ -68,9 +68,23 @@ export function StatsPosts() {
     <>
       <PageTitle title="Estadísticas de publicaciones" />
       <Card>
-        <Typography.Title level={3}>
-          Cantidad de publicaciones por categoría
-        </Typography.Title>
+        <Flex
+          justify="space-between"
+          align="center"
+          style={{ marginBottom: '0.75rem' }}
+        >
+          <Typography.Title level={3} style={{ margin: 0 }}>
+            Cantidad de publicaciones por categoría
+          </Typography.Title>
+          <Button
+            type={stack ? 'primary' : 'default'}
+            size="small"
+            style={{ width: '6.25rem' }}
+            onClick={() => setStack(!stack)}
+          >
+            {stack ? 'Agrupado' : 'Desagrupado'}
+          </Button>
+        </Flex>
         {isLoading ? (
           <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
         ) : (
@@ -79,10 +93,11 @@ export function StatsPosts() {
             data={postsData}
             xField="category"
             yField="amount"
-            // seriesField="state"
+            height={500}
+            seriesField={stack ? [] : 'state'}
             stack={{
               groupBy: ['x', 'series'],
-              series: false,
+              series: true,
             }}
             colorField="state"
           />
