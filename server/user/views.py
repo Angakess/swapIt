@@ -208,10 +208,10 @@ class ForgotPassword(APIView):
         generated_code = random.randint(100000, 999999)
         try:
             send_email_to_user(
-                email=[user_forgot_password.user.email],
+                email=[user.email],
                 subject='Recuperacion de contraseña de: ' +
-                user_forgot_password.user.first_name + ' '
-                + user_forgot_password.user.last_name,
+                user.first_name + ' '
+                + user.last_name,
                 message='Ingrese a la siguiente url'
                 + ' http://localhost:5173/auth/reset-password/' +
                 str(generated_code)
