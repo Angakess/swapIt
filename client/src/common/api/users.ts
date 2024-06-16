@@ -16,6 +16,16 @@ export type UserModel = {
   }
 }
 
+export type HelperModel = {
+  id: number
+  full_name: string
+  dni: string
+  subsidiary: {
+    name: string
+    cant_current_helpers: number
+  }
+}
+
 //
 // putUserInReview
 
@@ -35,4 +45,13 @@ export async function getUserScore(
   const resp = await fetch(`${SERVER_URL}/users/score/${userId}`)
   const data: GenericApiResponse<{ score: number }> = await resp.json()
   return data?.ok ? data.data.score : undefined
+}
+
+//
+// getHelpersList
+
+export async function getHelpersList(): Promise<HelperModel[]> {
+  const resp = await fetch(`${SERVER_URL}/users/list-helpers/`)
+  const data: HelperModel[] = await resp.json()
+  return data
 }
