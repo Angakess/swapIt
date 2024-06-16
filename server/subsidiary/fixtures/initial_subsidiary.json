@@ -51,7 +51,7 @@
             "x_coordinate": "-34.91146033629452",
             "y_coordinate": "-57.96477487663347",
             "max_helpers": 3,
-            "active": false
+            "active": true
         }
     }
 ]

@@ -1771,7 +1771,7 @@
       "user": 112,
       "subsidiary":1,
       "state": 1,
-      "category": 2,
+      "category": 5,
       "state_product": "USADO",
       "image_1": "post_images/default.jpg",
       "image_2": null,
@@ -4387,6 +4387,7 @@
       "state": 1,
       "category": 2,
       "state_product": "USADO",
+      "stock_product": 5,
       "image_1": "post_images/default.jpg",
       "image_2": "post_images/default.jpg",
       "image_3": null,
@@ -4571,5 +4572,195 @@
       "image_4": null,
       "image_5": null
     }
+  },
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "TOALLAS",
+      "description": "SON TOALLAS",
+      "value": 2,
+      "user": 150,
+      "subsidiary":1,
+      "state": 1,
+      "category": 2,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": null,
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de JABONES",
+      "description": "ES UN Set de JABONES",
+      "value": 5,
+      "user": 105,
+      "subsidiary":1,
+      "state": 2,
+      "category": 4,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de ACONDICIONADORES",
+      "description": "ES UN Set de ACONDICIONADORES",
+      "value": 5,
+      "user": 105,
+      "subsidiary":1,
+      "state": 2,
+      "category": 4,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de SHAMPOOS",
+      "description": "ES UN Set de SHAMPOOS",
+      "value": 5,
+      "user": 105,
+      "subsidiary":1,
+      "state": 2,
+      "category": 4,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de ESPONJAS",
+      "description": "ES UN Set de ESPONJAS",
+      "value": 5,
+      "user": 111,
+      "subsidiary":1,
+      "state": 2,
+      "category": 4,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Set de utensilios de MESA",
+      "description": "Set completo de utensilios de MESA, en buen estado",
+      "value": 2,
+      "user": 111,
+      "subsidiary":1,
+      "state": 1,
+      "category": 3,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "IMPRESORA (CON SOLICITUDES)",
+      "description": "ES UNA IMPRESORA",
+      "value": 2,
+      "user": 111,
+      "subsidiary":1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "OTRA IMPRESORA (SIN SOLICITUDES)",
+      "description": "ES OTRA IMPRESORA",
+      "value": 2,
+      "user": 111,
+      "subsidiary":1,
+      "state": 1,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "UN PRODUCTO PARA CALLE 40",
+      "description": "ES UN PRODUCTO",
+      "value": 2,
+      "user": 112,
+      "subsidiary":5,
+      "state": 7,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "OTRO PRODUCTO PARA CALLE 40",
+      "description": "ES UN PRODUCTO",
+      "value": 2,
+      "user": 111,
+      "subsidiary":5,
+      "state": 7,
+      "category": 5,
+      "state_product": "USADO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
   }
+
+  
+
 ]

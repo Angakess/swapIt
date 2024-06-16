@@ -222,6 +222,26 @@
   },
   {
     "model": "user.useraccount",
+    "pk": 12,
+    "fields": {
+      "first_name": "Emerson2",
+      "last_name": "MacCaig2",
+      "dni": "97979797",
+      "email": "emaccaigb97@yopmail.com",
+      "date_of_birth": "1954-09-15",
+      "phone_number": "3611518697",
+      "id_subsidiary": 5,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "MALE",
+      "state": 3,
+      "role": "HELPER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
+  },
+  {
+    "model": "user.useraccount",
     "pk": 101,
     "fields": {
       "first_name": "Bloqueado",
@@ -317,7 +337,8 @@
       "gender": "MALE",
       "state": 3,
       "role": "EXCHANGER",
-      "password": "482c811da5d5b4bc6d497ffa98491e38"
+      "password": "482c811da5d5b4bc6d497ffa98491e38",
+      "rejected_posts": 3
     }
   },
   {
