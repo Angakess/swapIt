@@ -1,17 +1,36 @@
 import { useEffect, useState } from 'react'
-import { SubsidiaryModel, getSubsidiaries } from '@Common/api'
+import {
+  CategoryModel,
+  PostModel,
+  SubsidiaryModel,
+  getCategoryList,
+  getPostList,
+  getSubsidiaries,
+} from '@Common/api'
 import { PageTitle } from '@Common/components'
 import { Space } from 'antd'
-import { ColumnHelpersPerSubsidiary } from '@Stats/components/subsidiaries'
+import {
+  ColumnHelpersPerSubsidiary,
+  ColumnPostsPerSubsidiary,
+} from '@Stats/components/subsidiaries'
 
 export function StatsSubsidiaries() {
   const [subsidiaries, setSubsidiaries] = useState<SubsidiaryModel[]>([])
+  const [posts, setPosts] = useState<PostModel[]>([])
+  const [categories, setCategories] = useState<CategoryModel[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     ;(async () => {
       setIsLoading(true)
-      setSubsidiaries(await getSubsidiaries())
+      const [s, p, c] = await Promise.all([
+        await getSubsidiaries(),
+        await getPostList(),
+        await getCategoryList(),
+      ])
+      setSubsidiaries(s)
+      setPosts(p)
+      setCategories(c)
       setIsLoading(false)
     })()
   }, [])
@@ -24,6 +43,12 @@ export function StatsSubsidiaries() {
         <ColumnHelpersPerSubsidiary
           isLoading={isLoading}
           subsidiaries={subsidiaries}
+        />
+        <ColumnPostsPerSubsidiary
+          isLoading={isLoading}
+          subsidiaries={subsidiaries}
+          posts={posts}
+          categories={categories}
         />
       </Space>
     </>
