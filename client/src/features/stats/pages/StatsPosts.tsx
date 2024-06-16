@@ -178,7 +178,8 @@ function CategoryPie({ isLoading, category, posts }: CategoryPieProps) {
           }}
           interaction={{
             tooltip: {
-              render: (e, { title, items }) => {
+              //@ts-expect-error _ y items son de tipo any
+              render: (_, { items }) => {
                 const name = items[0].name
                 const amount =
                   data.find(({ state }) => state === name)?.amount ?? 0
