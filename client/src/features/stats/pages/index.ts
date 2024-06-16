@@ -1,2 +1,2 @@
-export * from './StatsHelpers'
 export * from './StatsPosts'
+export * from './StatsSubsidiaries'
