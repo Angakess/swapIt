@@ -30,12 +30,6 @@ export function StatsPosts() {
       <PageTitle title="Estadísticas de publicaciones" />
 
       <Space direction="vertical" size={[24, 24]} style={{ display: 'flex' }}>
-        {/* <PostStatistics
-          categories={categories}
-          posts={posts}
-          isLoading={isLoading}
-        /> */}
-
         <StatPostColum
           isLoading={isLoading}
           categories={categories}
