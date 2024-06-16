@@ -15,7 +15,7 @@ type StatPostColumProps = {
   categories: CategoryModel[]
 }
 
-export function StatPostColum({
+export function StatPostColumn({
   isLoading,
   posts,
   categories,
