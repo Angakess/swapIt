@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Card, Flex, Spin, Typography } from 'antd'
+import { Button, Card, Flex, Spin, Statistic, Typography } from 'antd'
 import { Column } from '@ant-design/charts'
 
 import {
@@ -44,7 +44,7 @@ export function StatPostColum({
   }, [categories, posts])
 
   return (
-    <Card style={{ marginBottom: '12px' }}>
+    <Card>
       <Flex
         justify="space-between"
         align="center"
@@ -63,24 +63,74 @@ export function StatPostColum({
           {stack ? 'Agrupado' : 'Desagrupado'}
         </Button>
       </Flex>
+
       {isLoading ? (
         <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
       ) : (
-        <Column
-          loading={isLoading}
-          data={data}
-          xField="category"
-          yField="amount"
-          height={500}
-          seriesField={stack ? [] : 'state'}
-          stack={{
-            groupBy: ['x', 'series'],
-            series: true,
-          }}
-          colorField="state"
-          scale={{ color: { palette: 'category10' } }}
-        />
+        <>
+          <PostStatistics categories={categories} posts={posts} />
+
+          <Column
+            loading={isLoading}
+            data={data}
+            xField="category"
+            yField="amount"
+            height={500}
+            seriesField={stack ? [] : 'state'}
+            stack={{
+              groupBy: ['x', 'series'],
+              series: true,
+            }}
+            colorField="state"
+            scale={{ color: { palette: 'category10' } }}
+          />
+        </>
       )}
     </Card>
+  )
+}
+
+type PostStatisticsProps = {
+  posts: PostModel[]
+  categories: CategoryModel[]
+}
+
+export function PostStatistics({ posts, categories }: PostStatisticsProps) {
+  type DataType = { [category: string]: number }
+
+  const [data, setData] = useState<DataType>({})
+
+  useEffect(() => {
+    const newData = categories.reduce((acc, { name: category }) => {
+      acc[category] = posts.filter((p) => p.category.name === category).length
+      return acc
+    }, {} as DataType)
+    setData(newData)
+  }, [categories, posts])
+
+  return (
+    <Flex
+      align="center"
+      justify="space-between"
+      gap={36}
+      style={{
+        textTransform: 'capitalize',
+        overflowX: 'auto',
+        margin: '1.5rem 0.25rem',
+      }}
+    >
+      <Statistic
+        title="Total"
+        value={Object.values(data).reduce((acc, curr) => acc + curr, 0)}
+        style={{ minWidth: 'fit-content' }}
+      />
+      {Object.entries(data).map(([category, amount]) => (
+        <Statistic
+          title={category}
+          value={amount}
+          style={{ minWidth: 'fit-content' }}
+        />
+      ))}
+    </Flex>
   )
 }

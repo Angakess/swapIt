@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Col, Row, Spin } from 'antd'
+import { Col, Row, Space, Spin } from 'antd'
 
 import {
   CategoryModel,
@@ -29,28 +29,36 @@ export function StatsPosts() {
     <>
       <PageTitle title="Estadísticas de publicaciones" />
 
-      <StatPostColum
-        isLoading={isLoading}
-        categories={categories}
-        posts={posts}
-      />
+      <Space direction="vertical" size={[24, 24]} style={{ display: 'flex' }}>
+        {/* <PostStatistics
+          categories={categories}
+          posts={posts}
+          isLoading={isLoading}
+        /> */}
 
-      <Row gutter={[12, 12]}>
-        {isLoading ? (
-          <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
-        ) : (
-          categories.map((category) => (
-            <Col xs={24} md={12}>
-              <CategoryPie
-                key={category.name}
-                category={category.name}
-                posts={posts}
-                isLoading={isLoading}
-              />
-            </Col>
-          ))
-        )}
-      </Row>
+        <StatPostColum
+          isLoading={isLoading}
+          categories={categories}
+          posts={posts}
+        />
+
+        <Row gutter={[12, 12]}>
+          {isLoading ? (
+            <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
+          ) : (
+            categories.map((category) => (
+              <Col xs={24} md={12}>
+                <CategoryPie
+                  key={category.name}
+                  category={category.name}
+                  posts={posts}
+                  isLoading={isLoading}
+                />
+              </Col>
+            ))
+          )}
+        </Row>
+      </Space>
     </>
   )
 }
