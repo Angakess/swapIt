@@ -39,7 +39,7 @@ export function StatsPosts() {
           <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
         ) : (
           categories.map((category) => (
-            <Col md={12}>
+            <Col xs={24} md={12}>
               <CategoryPie
                 key={category.name}
                 category={category.name}
@@ -153,8 +153,6 @@ function CategoryPie({ isLoading, category, posts }: CategoryPieProps) {
     setData(newData)
     setTotal(newData.reduce((acc, { amount }) => acc + amount, 0))
   }, [category, posts])
-
-  console.log(data)
 
   return (
     <Card style={{ textTransform: 'capitalize' }}>
