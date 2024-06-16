@@ -13,7 +13,7 @@ import { CategoryPie, StatPostColum } from '@Stats/components/posts'
 export function StatsPosts() {
   const [posts, setPosts] = useState<PostModel[]>([])
   const [categories, setCategories] = useState<CategoryModel[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     ;(async () => {
