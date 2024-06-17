@@ -26,6 +26,15 @@ export type HelperModel = {
   }
 }
 
+export type ExchangerModel = {
+  id: number
+  full_name: string
+  dni: string
+  email: string
+  user_state: string
+  rating: number
+}
+
 //
 // putUserInReview
 
@@ -53,5 +62,14 @@ export async function getUserScore(
 export async function getHelpersList(): Promise<HelperModel[]> {
   const resp = await fetch(`${SERVER_URL}/users/list-helpers/`)
   const data: HelperModel[] = await resp.json()
+  return data
+}
+
+//
+// getExchangersList
+
+export async function getExchangersList(): Promise<ExchangerModel[]> {
+  const resp = await fetch(`${SERVER_URL}/users/list-exchangers/`)
+  const data: ExchangerModel[] = await resp.json()
   return data
 }
