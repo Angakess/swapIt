@@ -24,9 +24,9 @@ export function StatsSubsidiaries() {
     ;(async () => {
       setIsLoading(true)
       const [s, p, c] = await Promise.all([
-        await getSubsidiaries(),
-        await getPostList(),
-        await getCategoryList(),
+        getSubsidiaries(),
+        getPostList(),
+        getCategoryList(),
       ])
       setSubsidiaries(s)
       setPosts(p)
