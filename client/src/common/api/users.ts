@@ -4,6 +4,16 @@
 import { SERVER_URL } from 'constants'
 import { GenericApiResponse } from './types'
 
+export enum UserStateNameEnum {
+  bloqueado = 'bloqueado',
+  suspendido = 'suspendido',
+  activo = 'activo',
+  inactivo = 'inactivo',
+  eliminado = 'eliminado',
+}
+
+export type UserStateName = `${UserStateNameEnum}`
+
 export type UserModel = {
   id: number
   first_name: string
@@ -12,7 +22,7 @@ export type UserModel = {
   email: string
   role: string
   state: {
-    name: string
+    name: UserStateName
   }
 }
 
@@ -31,7 +41,7 @@ export type ExchangerModel = {
   full_name: string
   dni: string
   email: string
-  user_state: string
+  user_state: UserStateName
   rating: number
 }
 

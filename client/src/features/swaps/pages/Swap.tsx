@@ -5,107 +5,12 @@ import { ButtonConfirmSwap } from '@Swaps/components/ButtonConfirmSwap'
 import { useEffect, useState } from 'react'
 import { ButtonRejectSwap } from '@Swaps/components/ButtonRejectSwap'
 import { useNavigate } from 'react-router-dom'
+import { PostModel } from '@Common/api'
 
 type SwapType = {
   id: number
-  post_maker: {
-    id: number
-    name: string
-    description: string
-    value: number
-    user: {
-      id: number
-      first_name: string
-      last_name: string
-      dni: string
-      email: string
-      role: string
-      state: {
-        name: string
-      }
-    }
-    subsidiary: {
-      id: number
-      name: string
-      x_coordinate: string
-      y_coordinate: string
-      max_helpers: number
-      cant_current_helpers: number
-      active: boolean
-    }
-    state: {
-      id: number
-      name:
-        | 'activo'
-        | 'pendiente'
-        | 'suspendido'
-        | 'bloqueado'
-        | 'eliminado'
-        | 'rechazado'
-        | 'sin-stock'
-    }
-    category: {
-      id: number
-      name: string
-      active: boolean
-    }
-    state_product: 'NUEVO' | 'USADO'
-    stock_product: number
-    image_1: string
-    image_2: string
-    image_3: string
-    image_4: string
-    image_5: string
-  }
-  post_receive: {
-    id: number
-    name: string
-    description: string
-    value: number
-    user: {
-      id: number
-      first_name: string
-      last_name: string
-      dni: string
-      email: string
-      role: string
-      state: {
-        name: string
-      }
-    }
-    subsidiary: {
-      id: number
-      name: string
-      x_coordinate: string
-      y_coordinate: string
-      max_helpers: number
-      cant_current_helpers: number
-      active: boolean
-    }
-    state: {
-      id: number
-      name:
-        | 'activo'
-        | 'pendiente'
-        | 'suspendido'
-        | 'bloqueado'
-        | 'eliminado'
-        | 'rechazado'
-        | 'sin-stock'
-    }
-    category: {
-      id: number
-      name: string
-      active: boolean
-    }
-    state_product: 'NUEVO' | 'USADO'
-    stock_product: number
-    image_1: string
-    image_2: string
-    image_3: string
-    image_4: string
-    image_5: string
-  }
+  post_maker: PostModel
+  post_receive: PostModel
 }
 export function Swap() {
   const parts = window.location.href.split('/')

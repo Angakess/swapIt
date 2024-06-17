@@ -9,13 +9,13 @@ import { UserModel } from './users'
 // Post types
 
 export enum PostStateNameEnum {
-  Activo = 'activo',
-  Pendiente = 'pendiente',
-  Suspendido = 'suspendido',
-  Bloqueado = 'bloqueado',
-  Eliminado = 'eliminado',
-  Rechazado = 'rechazado',
-  SinStock = 'sin-stock',
+  activo = 'activo',
+  pendiente = 'pendiente',
+  suspendido = 'suspendido',
+  bloqueado = 'bloqueado',
+  eliminado = 'eliminado',
+  rechazado = 'rechazado',
+  sinStock = 'sin-stock',
 }
 
 export type PostStateNames = `${PostStateNameEnum}`
