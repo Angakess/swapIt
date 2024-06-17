@@ -73,7 +73,7 @@ function ExchangerStatistics({ data }: { data: DataType[] }) {
       <Statistic
         title="Total"
         value={data.reduce((acc, curr) => acc + curr.amount, 0)}
-        style={{ minWidth: 'fit-content' }}
+        style={{ minWidth: 'fit-content', fontWeight: 700 }}
       />
       {data.map(({ state, amount }) => (
         <Statistic

@@ -122,7 +122,7 @@ function PostStatistics({ posts, categories }: PostStatisticsProps) {
       <Statistic
         title="Total"
         value={Object.values(data).reduce((acc, curr) => acc + curr, 0)}
-        style={{ minWidth: 'fit-content' }}
+        style={{ minWidth: 'fit-content', fontWeight: 700 }}
       />
       {Object.entries(data).map(([category, amount]) => (
         <Statistic
