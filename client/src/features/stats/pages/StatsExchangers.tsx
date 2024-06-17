@@ -1,6 +1,9 @@
 import { ExchangerModel, getExchangersList } from '@Common/api'
 import { PageTitle } from '@Common/components'
-import { ColumnExchangersPerState } from '@Stats/components/excahngers'
+import {
+  ColumnExchangersPerState,
+  ColumnExchangersPerGender,
+} from '@Stats/components/excahngers'
 import { Space } from 'antd'
 import { useEffect, useState } from 'react'
 
@@ -23,6 +26,10 @@ export function StatsExchangers() {
 
       <Space direction="vertical" size={[24, 24]} style={{ display: 'flex' }}>
         <ColumnExchangersPerState
+          isLoading={isLoading}
+          exchangers={exchangers}
+        />
+        <ColumnExchangersPerGender
           isLoading={isLoading}
           exchangers={exchangers}
         />
