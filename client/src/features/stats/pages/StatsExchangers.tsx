@@ -3,7 +3,7 @@ import { PageTitle } from '@Common/components'
 import {
   ColumnExchangersPerState,
   ColumnExchangersPerGender,
-} from '@Stats/components/excahngers'
+} from '@Stats/components/exchangers'
 import { Space } from 'antd'
 import { useEffect, useState } from 'react'
 
