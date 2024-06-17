@@ -21,6 +21,8 @@ export function ColumnHelpersPerSubsidiary({
   const [data, setData] = useState<DataType[]>([])
 
   useEffect(() => {
+    if (isLoading) return
+
     setData(
       subsidiaries.map(({ name, max_helpers, cant_current_helpers }) => ({
         nombre: name,
@@ -28,18 +30,18 @@ export function ColumnHelpersPerSubsidiary({
         ayudantes: cant_current_helpers,
       }))
     )
-  }, [subsidiaries])
+  }, [isLoading, subsidiaries])
 
   return (
     <Card>
       <Typography.Title level={3}>
         Cantidad de ayudantes por filial
       </Typography.Title>
-      {isLoading ? (
+      {isLoading || data.length === 0 ? (
         <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
       ) : (
         <DualAxes
-          loading={isLoading}
+          loading={isLoading || data.length === 0}
           data={data}
           height={500}
           xField="nombre"

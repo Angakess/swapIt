@@ -27,6 +27,8 @@ export function ColumnExchangersPerGender({
   const [data, setData] = useState<DataType[]>([])
 
   useEffect(() => {
+    if (isLoading) return
+
     const newData: DataType[] = []
 
     // Generar los datos
@@ -77,7 +79,7 @@ export function ColumnExchangersPerGender({
 
     // Actualizar los datos
     setData(newData)
-  }, [exchangers])
+  }, [exchangers, isLoading])
 
   return (
     <Card>
@@ -94,17 +96,17 @@ export function ColumnExchangersPerGender({
           size="small"
           style={{ width: '6.25rem' }}
           onClick={() => setStack(!stack)}
-          disabled={isLoading}
+          disabled={isLoading || data.length === 0}
         >
           {stack ? 'Agrupado' : 'Desagrupado'}
         </Button>
       </Flex>
 
-      {isLoading ? (
+      {isLoading || data.length === 0 ? (
         <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
       ) : (
         <Column
-          loading={isLoading}
+          loading={isLoading || data.length === 0}
           data={data}
           xField="gender"
           yField="amount"

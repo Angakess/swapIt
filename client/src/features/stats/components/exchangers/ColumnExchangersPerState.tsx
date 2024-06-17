@@ -20,6 +20,8 @@ export function ColumnExchangersPerState({
   const [data, setData] = useState<DataType[]>([])
 
   useEffect(() => {
+    if (isLoading) return
+
     setData(
       Object.values(UserStateNameEnum)
         .map((state) => ({
@@ -29,7 +31,7 @@ export function ColumnExchangersPerState({
         }))
         .sort((a, b) => a.state.localeCompare(b.state))
     )
-  }, [exchangers])
+  }, [exchangers, isLoading])
 
   return (
     <Card>
@@ -37,14 +39,14 @@ export function ColumnExchangersPerState({
         Cantidad de intercambiadores por estado
       </Typography.Title>
 
-      {isLoading ? (
+      {isLoading || data.length === 0 ? (
         <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
       ) : (
         <>
           <ExchangerStatistics data={data} />
 
           <Column
-            loading={isLoading}
+            loading={isLoading || data.length === 0}
             data={data}
             xField="state"
             yField="amount"
@@ -77,6 +79,7 @@ function ExchangerStatistics({ data }: { data: DataType[] }) {
       />
       {data.map(({ state, amount }) => (
         <Statistic
+          key={state}
           title={state}
           value={amount}
           style={{ minWidth: 'fit-content' }}

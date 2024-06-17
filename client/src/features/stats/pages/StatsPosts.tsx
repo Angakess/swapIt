@@ -41,9 +41,8 @@ export function StatsPosts() {
             <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
           ) : (
             categories.map((category) => (
-              <Col xs={24} md={12}>
+              <Col xs={24} md={12} key={category.name}>
                 <CategoryPie
-                  key={category.name}
                   category={category.name}
                   posts={posts}
                   isLoading={isLoading}

@@ -9,6 +9,7 @@ type CategoryPieProps = {
   category: string
   posts: PostModel[]
 }
+
 export function CategoryPie({ isLoading, category, posts }: CategoryPieProps) {
   type DataType = {
     state: PostStateNames
@@ -19,6 +20,8 @@ export function CategoryPie({ isLoading, category, posts }: CategoryPieProps) {
   const [total, setTotal] = useState(0)
 
   useEffect(() => {
+    if (isLoading) return
+
     const states: PostStateNames[] = Object.values(PostStateNameEnum)
     const newData = states.map((state) => ({
       state,
@@ -29,18 +32,18 @@ export function CategoryPie({ isLoading, category, posts }: CategoryPieProps) {
 
     setData(newData)
     setTotal(newData.reduce((acc, { amount }) => acc + amount, 0))
-  }, [category, posts])
+  }, [category, isLoading, posts])
 
   return (
     <Card style={{ textTransform: 'capitalize' }}>
       <Typography.Title level={4} style={{ margin: 0 }}>
         {category}
       </Typography.Title>
-      {isLoading ? (
+      {isLoading || data.length === 0 ? (
         <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
       ) : (
         <Pie
-          loading={isLoading}
+          loading={isLoading || data.length === 0}
           data={data}
           angleField="amount"
           colorField="state"

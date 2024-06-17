@@ -30,6 +30,8 @@ export function StatPostColumn({
   const [data, setData] = useState<DataType[]>([])
 
   useEffect(() => {
+    if (isLoading) return
+
     const states: PostStateNames[] = Object.values(PostStateNameEnum)
     setData(
       categories.flatMap(({ name }) => {
@@ -41,7 +43,7 @@ export function StatPostColumn({
         }))
       })
     )
-  }, [categories, posts])
+  }, [categories, isLoading, posts])
 
   return (
     <Card>
@@ -58,20 +60,24 @@ export function StatPostColumn({
           size="small"
           style={{ width: '6.25rem' }}
           onClick={() => setStack(!stack)}
-          disabled={isLoading}
+          disabled={isLoading || data.length === 0}
         >
           {stack ? 'Agrupado' : 'Desagrupado'}
         </Button>
       </Flex>
 
-      {isLoading ? (
+      {isLoading || data.length === 0 ? (
         <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
       ) : (
         <>
-          <PostStatistics categories={categories} posts={posts} />
+          <PostStatistics
+            categories={categories}
+            posts={posts}
+            isLoading={isLoading}
+          />
 
           <Column
-            loading={isLoading}
+            loading={isLoading || data.length === 0}
             data={data}
             xField="category"
             yField="amount"
@@ -91,22 +97,25 @@ export function StatPostColumn({
 }
 
 type PostStatisticsProps = {
+  isLoading: boolean
   posts: PostModel[]
   categories: CategoryModel[]
 }
 
-function PostStatistics({ posts, categories }: PostStatisticsProps) {
+function PostStatistics({ posts, categories, isLoading }: PostStatisticsProps) {
   type DataType = { [category: string]: number }
 
   const [data, setData] = useState<DataType>({})
 
   useEffect(() => {
+    if (isLoading) return
+
     const newData = categories.reduce((acc, { name: category }) => {
       acc[category] = posts.filter((p) => p.category.name === category).length
       return acc
     }, {} as DataType)
     setData(newData)
-  }, [categories, posts])
+  }, [categories, isLoading, posts])
 
   return (
     <Flex
@@ -123,12 +132,15 @@ function PostStatistics({ posts, categories }: PostStatisticsProps) {
         title="Total"
         value={Object.values(data).reduce((acc, curr) => acc + curr, 0)}
         style={{ minWidth: 'fit-content', fontWeight: 700 }}
+        loading={isLoading || data.length === 0}
       />
       {Object.entries(data).map(([category, amount]) => (
         <Statistic
+          key={category}
           title={category}
           value={amount}
           style={{ minWidth: 'fit-content' }}
+          loading={isLoading || data.length === 0}
         />
       ))}
     </Flex>

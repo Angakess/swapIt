@@ -26,6 +26,8 @@ export function ColumnPostsPerSubsidiary({
   const [data, setData] = useState<DataType[]>([])
 
   useEffect(() => {
+    if (isLoading) return
+
     const newData: DataType[] = []
 
     subsidiaries.forEach(({ name: subsidiary }) => {
@@ -46,7 +48,7 @@ export function ColumnPostsPerSubsidiary({
     })
 
     setData(newData)
-  }, [categories, posts, subsidiaries])
+  }, [categories, isLoading, posts, subsidiaries])
 
   return (
     <Card>
@@ -63,17 +65,17 @@ export function ColumnPostsPerSubsidiary({
           size="small"
           style={{ width: '6.25rem' }}
           onClick={() => setStack(!stack)}
-          disabled={isLoading}
+          disabled={isLoading || data.length === 0}
         >
           {stack ? 'Agrupado' : 'Desagrupado'}
         </Button>
       </Flex>
 
-      {isLoading ? (
+      {isLoading || data.length === 0 ? (
         <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
       ) : (
         <Column
-          loading={isLoading}
+          loading={isLoading || data.length === 0}
           data={data}
           xField="subsidiary"
           yField="amount"
