@@ -16,12 +16,13 @@ import {
 import { AuthTitle } from '@Auth/components'
 import { dateValidator, phoneValidator } from '@Common/helpers/validators'
 import { fetchPost } from 'common/helpers'
-import { UserGender, UserRole } from '@Common/types'
+import { UserRole } from '@Common/types'
 import {
   ConfirmPasswordItem,
   DniItem,
   SubmitItem,
 } from '@Auth/components/items'
+import { UserGender } from '@Common/api'
 
 type LoginBody = {
   first_name: string

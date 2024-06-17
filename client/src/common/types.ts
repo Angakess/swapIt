@@ -1,7 +1,5 @@
 export type UserRole = 'ADMIN' | 'HELPER' | 'EXCHANGER'
 
-export type UserGender = 'MALE' | 'FEMALE' | 'OTHER'
-
 export type UserPermissions = UserRole | 'UNREGISTERED'
 
 export type User = {

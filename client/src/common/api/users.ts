@@ -14,6 +14,14 @@ export enum UserStateNameEnum {
 
 export type UserStateName = `${UserStateNameEnum}`
 
+export enum UserGenderEnum {
+  male = 'MALE',
+  female = 'FEMALE',
+  other = 'OTHER',
+}
+
+export type UserGender = `${UserGenderEnum}`
+
 export type UserModel = {
   id: number
   first_name: string
@@ -34,6 +42,7 @@ export type HelperModel = {
     name: string
     cant_current_helpers: number
   }
+  gender: UserGender
 }
 
 export type ExchangerModel = {

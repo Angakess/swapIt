@@ -83,7 +83,8 @@ class ListExchangerSerializer(serializers.ModelSerializer):
             'dni',
             'email',
             'user_state',
-            'rating'
+            'rating',
+            'gender'
         ]
 
 
