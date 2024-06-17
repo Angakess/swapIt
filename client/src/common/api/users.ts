@@ -42,7 +42,6 @@ export type HelperModel = {
     name: string
     cant_current_helpers: number
   }
-  gender: UserGender
 }
 
 export type ExchangerModel = {
@@ -52,6 +51,7 @@ export type ExchangerModel = {
   email: string
   user_state: UserStateName
   rating: number
+  gender: UserGender
 }
 
 //
