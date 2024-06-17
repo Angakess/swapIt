@@ -95,7 +95,7 @@ type PostStatisticsProps = {
   categories: CategoryModel[]
 }
 
-export function PostStatistics({ posts, categories }: PostStatisticsProps) {
+function PostStatistics({ posts, categories }: PostStatisticsProps) {
   type DataType = { [category: string]: number }
 
   const [data, setData] = useState<DataType>({})
