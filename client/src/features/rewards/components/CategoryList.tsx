@@ -1,11 +1,10 @@
-import { Button, Flex, GetProp, List, Table, Tooltip, Typography } from 'antd'
+import { Button, Flex, GetProp, Table, Tooltip } from 'antd'
 import { ShoppingOutlined } from '@ant-design/icons'
 /* import { ColumnsType } from 'antd/es/table' */
 import { TableProps } from 'antd/lib'
-import { MouseEventHandler, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-type DataIndex = keyof CategoryType
+/* type DataIndex = keyof CategoryType */
 interface CategoryType {
   id: number
   name: string
@@ -60,7 +59,7 @@ export function CategoryList({ hasUser }: { hasUser: boolean }) {
     setLoading(true)
     const res = await fetch('http://localhost:8000/category/list/')
     const results = await res.json()
-    setNewData(results.data.categories)
+    setNewData(results.data.categories.filter((e: CategoryType) => e.active))
     console.log(results)
     setLoading(false)
   }

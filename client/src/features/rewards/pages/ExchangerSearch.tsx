@@ -1,22 +1,8 @@
 import { PageTitle } from '@Common/components'
-import {
-  App,
-  Button,
-  Card,
-  Col,
-  Descriptions,
-  DescriptionsProps,
-  Input,
-  Modal,
-  Result,
-  Row,
-  Spin,
-} from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import { Col, Modal, Row, Spin } from 'antd'
 import Search from 'antd/es/input/Search'
-import { ChangeEventHandler, ReactElement, useState } from 'react'
-import { CategoryList, ExchangerInfo, ExchangerList } from '../components'
-import dayjs from 'dayjs'
+import { useState } from 'react'
+import { CategoryList, ExchangerInfo } from '../components'
 import { Exchanger } from '../types'
 
 export function ExchangerSearch() {
@@ -80,7 +66,11 @@ export function ExchangerSearch() {
             ></Search>
             {newData ? (
               <ExchangerInfo userData={newData}></ExchangerInfo>
-            ) : <p style={{color: "#FF6466"}}>Ingrese el DNI del intercambiador que desea realizar un canje</p>}
+            ) : (
+              <p style={{ color: '#FF6466' }}>
+                Ingrese el DNI del intercambiador que desea realizar un canje
+              </p>
+            )}
           </Col>
           <Col
             span={11}
