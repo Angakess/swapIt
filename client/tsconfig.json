@@ -31,7 +31,8 @@
       "@Turns/*": ["features/turns/*"],
       "@Stats/*": ["features/stats/*"],
       "@Swaps/*": ["features/swaps/*"],
-      "@Requests/*": ["features/requests/*"]
+      "@Requests/*": ["features/requests/*"],
+      "@Rewards/*": ["features/rewards/*"],
     }
   },
   "include": ["src"],

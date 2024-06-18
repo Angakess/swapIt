@@ -8,6 +8,7 @@ import { PostsRoutes } from '@Posts/routes'
 import { TurnsRoutes } from '@Turns/routes'
 import { SwapsRoutes } from '@Swaps/routes'
 import { RequestsRoutes } from '@Requests/routes'
+import { RewardsRoutes } from "./features/rewards/routes" //por que no funciona @Rewards ???
 
 // Pages
 import { Page404 } from '@Common/pages'
@@ -42,6 +43,7 @@ function App() {
         <Route path="/turns/*" element={<TurnsRoutes />} />
         <Route path="/swaps/*" element={<SwapsRoutes />} />
         <Route path="/requests/*" element={<RequestsRoutes />} />
+        <Route path="/rewards/*" element={<RewardsRoutes />} />
       </Route>
 
       <Route path="/403" element={<Page403 />} />

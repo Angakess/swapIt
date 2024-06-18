@@ -12,6 +12,7 @@ import {
   AppstoreOutlined,
   SwapOutlined,
   BarChartOutlined,
+  ShoppingOutlined,
 } from '@ant-design/icons'
 import { UserPermissions } from '@Common/types'
 import { useAuth } from '@Common/hooks'
@@ -130,6 +131,11 @@ const items: Record<UserPermissions, SidebarProps> = {
         key: '/swaps',
         label: 'Trueques del día',
         icon: <SwapOutlined />,
+      },
+      {
+        key: '/rewards/search-exchanger',
+        label: 'Canje de puntos',
+        icon: <ShoppingOutlined />,
       },
     ],
   },
