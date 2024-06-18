@@ -2,8 +2,8 @@ import { PageTitle } from '@Common/components'
 import { Col, Modal, Row, Spin } from 'antd'
 import Search from 'antd/es/input/Search'
 import { useState } from 'react'
-import { CategoryList, ExchangerInfo } from '../components'
-import { Exchanger } from '../types'
+import { CategoryList, ExchangerInfo } from '@Rewards/components'
+import { Exchanger } from '@Rewards/types'
 
 export function ExchangerSearch() {
   const [inputValue, setInputValue] = useState<string>()

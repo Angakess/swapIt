@@ -45,6 +45,11 @@ export function AppHeader() {
         <Button type="link" size="small">
           <Link to="/auth/register">Registrarse</Link>
         </Button>
+        <Link to="/donation" style={{marginLeft: "10px"}}>
+          <Button type="primary" size="large">
+            Donar
+          </Button>
+        </Link>
       </Flex>
     )
   }
@@ -104,6 +109,11 @@ export function AppHeader() {
             />
           </div>
         </Dropdown>
+        <Link to="/donation" style={{marginLeft: "10px"}}>
+          <Button type="primary" size="large">
+            Donar
+          </Button>
+        </Link>
       </Flex>
       <ListRatingsModal
         title="Mis calificaciones"

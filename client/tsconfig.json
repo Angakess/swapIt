@@ -33,6 +33,7 @@
       "@Swaps/*": ["features/swaps/*"],
       "@Requests/*": ["features/requests/*"],
       "@Rewards/*": ["features/rewards/*"],
+      "@Donation/*": ["features/donation/*"]
     }
   },
   "include": ["src"],

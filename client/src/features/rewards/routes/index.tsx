@@ -1,6 +1,6 @@
 import { ProtectedRoute } from '@Common/components'
 import { Page404 } from '@Common/pages'
-import { ExchangerSearch } from '../pages'
+import { ExchangerSearch } from '@Rewards/pages'
 import { Route, Routes } from 'react-router-dom'
 
 export function RewardsRoutes() {

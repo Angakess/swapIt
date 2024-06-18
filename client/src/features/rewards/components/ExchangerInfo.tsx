@@ -1,4 +1,4 @@
-import { Exchanger } from '../types'
+import { Exchanger } from '@Rewards/types'
 import { Card, Descriptions } from 'antd'
 import { DescriptionsProps } from 'antd/lib'
 import dayjs from 'dayjs'
