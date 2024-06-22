@@ -1,0 +1,102 @@
+[
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 1, "filial": 1 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 2, "filial": 1 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 3, "filial": 1 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 4, "filial": 1 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 5, "filial": 1 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 1, "filial": 2 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 2, "filial": 2 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 3, "filial": 2 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 4, "filial": 2 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 5, "filial": 2 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 1, "filial": 3 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 2, "filial": 3 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 3, "filial": 3 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 4, "filial": 3 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 5, "filial": 3 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 1, "filial": 4 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 2, "filial": 4 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 3, "filial": 4 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 4, "filial": 4 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 5, "filial": 4 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 1, "filial": 5 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 2, "filial": 5 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 3, "filial": 5 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 4, "filial": 5 }
+  },
+  {
+    "model": "stockFilial.stockfilial",
+    "fields": { "cantidad": 0, "categoria": 5, "filial": 5 }
+  }
+]
