@@ -8,4 +8,5 @@ python manage.py loaddata initial_category2.json   \
                           initial_turnstate.json  \
                           initial_turn2.json      \
                           initial_rating2.json    \
-                          initial_request2.json
+                          initial_request2.json \
+                          initial_stock.json
