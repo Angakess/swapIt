@@ -7,6 +7,7 @@ from subsidiary.serializers import SubsidiaryWithCantHelpersSerializer, Subsidia
 User = get_user_model()
 
 
+
 class UserStateSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserState
@@ -16,6 +17,11 @@ class UserStateSerializer(serializers.ModelSerializer):
 class UserStateFullSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserState
+        fields = '__all__'
+
+class UserBaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAccount
         fields = '__all__'
 
 

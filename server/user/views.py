@@ -1,7 +1,7 @@
 
 import hashlib
 import coreapi
-from user.serializers import UserSerializer
+from user.serializers import UserBaseSerializer, UserSerializer
 from user.models import UserAccount, UserRegister, UserForgotPassword
 from subsidiary.models import Subsidiary
 from rest_framework import generics
@@ -472,6 +472,7 @@ class DisincorporateHelper(APIView):
         if (subsidiary.users.count() == 1):
             ok = subsidiary.deactivate()
             if not ok:
+                #FIXME: Revisar el mensaje de error
                 return Response(
                     {
                         'ok': False,
@@ -590,5 +591,36 @@ class PutInReviewUser(APIView):
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+class RemoveUser(APIView):
+    def delete(self, request, user_id):
+        user = UserAccount.objects.filter(pk=user_id)
+        if user is None:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Usuario no encontrado'],
+                    'data': {}
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
         
+        ok = user.update(state= UserState.objects.get(id=5))
+        if ok:
+            return Response(
+                {
+                    'ok': True,
+                    'messages': ['Usuario eliminado exitosamente'],
+                    'data': UserBaseSerializer(user[0]).data
+                },
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            {
+                'ok': False,
+                'messages': ['Error al eliminar el usuario. Intente de nuevo mas tarde.'],
+                'data': {}
+            },
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
         

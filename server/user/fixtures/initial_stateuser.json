@@ -1,6 +1,7 @@
 [
     {
         "model": "user.userstate",
+        "pk": 1,
         "fields": {
             "name": "bloqueado"
         }
@@ -14,18 +15,21 @@
     },
     {
         "model": "user.userstate",
+        "pk": 3,
         "fields": {
             "name": "activo"
         }
     },
     {
         "model": "user.userstate",
+        "pk": 4,
         "fields": {
             "name": "inactivo"
         }
     },
     {
         "model": "user.userstate",
+        "pk": 5,
         "fields": {
             "name": "eliminado"
         }
