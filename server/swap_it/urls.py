@@ -7,6 +7,7 @@ from .settings import MEDIA_ROOT, MEDIA_URL
 urlpatterns = [
     path("", include("app_post.urls")),
     path("subsidiary/", include("subsidiary.urls")),
+    path("stock/", include("stockFilial.urls")),
     path("users/", include("user.urls")),
     path("requests/", include("request.urls")),
     path("turns/", include("turn.urls")),

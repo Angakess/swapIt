@@ -466,5 +466,14 @@
       "user_maker": 1,
       "user_received": 152
     }
+  },
+  {
+    "model": "rating.rating",
+    "fields": {
+      "score": 2,
+      "comment": "Bienvenido a SwapIt!",
+      "user_maker": 1,
+      "user_received": 153
+    }
   }
 ]

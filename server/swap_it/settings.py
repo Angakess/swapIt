@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'turn',
     'app_post',
     'subsidiary',
+    'stockFilial',
     'request',
     'corsheaders',
     'coreapi',
