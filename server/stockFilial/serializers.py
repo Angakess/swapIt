@@ -5,8 +5,16 @@ from subsidiary.serializers import SubsidiarySerializer
 
 class StockFilialSerializer(serializers.ModelSerializer):
     categoria = CategorySerializer()
-    subsidiary = SubsidiarySerializer()    
+    filial = SubsidiarySerializer()    
 
     class Meta:
         model = StockFilial
         fields = "__all__"
+
+
+class StockFilialUpdateSerializer(serializers.ModelSerializer):
+    
+
+    class Meta:
+        model = StockFilial
+        fields = '__all__'
