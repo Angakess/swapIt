@@ -13,6 +13,29 @@ interface CategoryType {
   [key: string]: string | number | boolean
 }
 
+interface RootObject {
+  id: number
+  categoria: Categoria
+  filial: Filial
+  cantidad: number
+}
+
+interface Filial {
+  id: number
+  name: string
+  x_coordinate: string
+  y_coordinate: string
+  max_helpers: number
+  cant_current_helpers: number
+  active: boolean
+}
+
+interface Categoria {
+  id: number
+  name: string
+  active: boolean
+}
+
 type ColumnsType<T> = TableProps<T>['columns']
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>
 interface TableParams {
@@ -24,7 +47,7 @@ interface TableParams {
 
 export function CategoryList({ hasUser }: { hasUser: boolean }) {
   const [loading, setLoading] = useState(false)
-  const [newData, setNewData] = useState<CategoryType[]>()
+  const [newData, setNewData] = useState<RootObject[]>()
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -57,11 +80,27 @@ export function CategoryList({ hasUser }: { hasUser: boolean }) {
 
   const fetchData = async () => {
     setLoading(true)
-    const res = await fetch('http://localhost:8000/category/list/')
-    const results = await res.json()
-    setNewData(results.data.categories.filter((e: CategoryType) => e.active))
-    console.log(results)
-    setLoading(false)
+    // const res = await fetch('http://localhost:8000/category/list/')
+    fetch('http://localhost:8000/stock/retrieve/1')
+      .then(res => res.json())
+      .then(results =>results.data)
+      .then(data => data.filter((result: RootObject) => result.categoria.active))
+      .then(filtered =>
+        filtered.map((result: RootObject) => ({
+          id: result.id,
+          name: result.categoria.name,
+          stock: result.cantidad,
+          points: 10,
+        }))
+      )
+      .then(finalData => {
+        setNewData(finalData)
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.log('[ERROR][FETCH][GET STOCK FILIAL]\n', error)
+        setLoading(false)
+      })
   }
 
   useEffect(() => {

@@ -118,7 +118,44 @@ export function Locals() {
     setSubsData(result)
     setSubSelected(undefined)
   }
-
+  /*TODO: Implementar la funcionalidad de listar stock. Endpoint: /stock/retrieve/<int:pk>
+  pk es el id de la filial seleccionada. 
+  Respuesta: 
+  {
+    "ok": true,
+    "messages": [
+        "Stock de la filial 2 obtenido correctamente"
+    ],
+    "data": [
+        {
+            "id": 6,
+            "categoria": {
+                "id": 1,
+                "name": "útiles escolares",
+                "active": true
+            },
+            "filial": {
+                "id": 2,
+                "name": "Nuestra Señora de La Piedad",
+                "x_coordinate": "-34.94271621425516",
+                "y_coordinate": "-57.95568044237283",
+                "max_helpers": 5,
+                "cant_current_helpers": 4,
+                "active": true
+            },
+            "cantidad": 0
+        },
+      ]
+  }
+        
+  Para actualizar un stock hacer un PUT a /stock/update/<int:pk> con el siguiente body:
+  {
+    "id": 2,
+    "cantidad": 50,
+    "categoria": 2,
+    "filial": 1
+  }
+  */
   const handleListStock = () => {
     alert.notImplementedYet()
   }
