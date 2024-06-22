@@ -60,10 +60,9 @@ export function CategoryPie({ isLoading, category, posts }: CategoryPieProps) {
             tooltip: {
               //@ts-expect-error _ y items son de tipo any
               render: (_, { items }) => {
-                const name = items[0].name
-                const amount =
-                  data.find(({ state }) => state === name)?.amount ?? 0
-                return `<b>${name}:</b> ${amount} <i>(${((amount * 100) / total).toFixed(2)}%)</i>`
+                const amount = items[0].value
+                const color = items[0].color
+                return `<span style="color:${color}">&#x25A0;</span> <b>Cantidad:</b> ${amount} <i>(${((amount * 100) / total).toFixed(2)}%)</i>`
               },
             },
           }}
