@@ -29,7 +29,7 @@ urlpatterns = [
          name='user-get-exchanger'),
     path('score/<int:user_id>', UserScore.as_view(), name='user-score'),
 
-    path('update-profile/<int:user_id>', UpdateUser.as_view()),
+    path('update-profile/<int:pk>', UpdateUser.as_view()),
     path('remove-exchanger/<int:user_id>',
          RemoveUser.as_view(), name='user-remove-exchanger'),
 ]
