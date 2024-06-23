@@ -592,6 +592,7 @@ class PutInReviewUser(APIView):
         )
 
 class RemoveUser(APIView):
+    #TODO: Agregar eliminar en cascada 
     def delete(self, request, user_id):
         user = UserAccount.objects.filter(pk=user_id)
         if user is None:
@@ -624,3 +625,11 @@ class RemoveUser(APIView):
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
         
+
+class UpdateUser(generics.UpdateAPIView):
+    queryset = UserAccount.objects.all()
+    serializer_class = UserSerializer
+
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
