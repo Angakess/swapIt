@@ -625,10 +625,10 @@ class RemoveUser(APIView):
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
         
-
+#TODO: Revisar si hay que hacer algo antes de actualizar. 
 class UpdateUser(generics.UpdateAPIView):
     queryset = UserAccount.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserBaseSerializer
 
     def partial_update(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)

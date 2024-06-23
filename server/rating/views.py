@@ -24,3 +24,16 @@ class RatingOfUser(APIView):
             {"ok": True, "messages": ["Califiaciones del usuario"], "data": {"ratings": RatingSerializer(rating, many=True).data}},
             status=status.HTTP_200_OK,
         )
+#TODO: Solo se elimina el comentario. Qué mas debería hacer? 
+class ModerateCommentRating(generics.UpdateAPIView):
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
+
+    def partial_update(self, request, *args, **kwargs):
+        rating = self.get_object()
+        rating.comment = "Este comentario a sido eliminado por violar las politicas de la plataforma"
+        rating.save()
+        return Response(
+            {"ok": True, "messages": ["Calificacion moderada"], "data": {"rating": RatingSerializer(rating).data}},
+            status=status.HTTP_200_OK,
+        )
