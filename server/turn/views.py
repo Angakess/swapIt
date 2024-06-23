@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from common.email import send_email_to_user
 
+from request.serializers import RequestSerializer
+from request.models import Request
 from user.models import UserAccount
 from .models import Turn, TurnState
 from app_post.models import PostState
@@ -40,7 +42,8 @@ class ListTurnsByPostId(APIView):
 class ListMyTurns(APIView):
     def get(self, request, id_user):
         turns_make = Turn.objects.filter(user_maker__id=id_user, state__id=1)
-        turns_received = Turn.objects.filter(user_received__id=id_user, state__id=1)
+        turns_received = Turn.objects.filter(
+            user_received__id=id_user, state__id=1)
         serializer = TurnExchangerListSerializer(
             turns_make.union(turns_received), many=True
         )
@@ -63,6 +66,7 @@ class ListTurnsTodayView(APIView):
         serializer = TurnHelperListSerializer(turns, many=True)
         return Response(serializer.data)
 
+
 class TurnsValidateView(APIView):
     def post(self, request):
         data = request.data
@@ -76,14 +80,14 @@ class TurnsValidateView(APIView):
                     "Los códigos no coinciden."], "data": {}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        
+
         email_maker = turn.user_maker.email
         name_maker = turn.user_maker.full_name
         email_received = turn.user_received.email
         name_received = turn.user_received.full_name
         score_maker = turn.post_maker.value
         score_received = turn.post_receive.value
-        
+
         try:
             send_email_to_user(
                 [email_maker],
@@ -93,7 +97,6 @@ class TurnsValidateView(APIView):
                 f"¡Gracias por confiar en SwapIt!"
             )
 
-            
             send_email_to_user(
                 [email_received],
                 "Califica tu intercambio",
@@ -103,10 +106,11 @@ class TurnsValidateView(APIView):
             )
         except:
             return Response(
-                {"ok": False, "messages": ["Error al validar un turno, hubo un error al enviar los correos."], "data": {}},
+                {"ok": False, "messages": [
+                    "Error al validar un turno, hubo un error al enviar los correos."], "data": {}},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-        
+
         turn.state = TurnState.objects.get(name="efectuado")
         turn.user_maker.score += score_maker
         turn.user_received.score += score_received
@@ -118,7 +122,6 @@ class TurnsValidateView(APIView):
             {"ok": True, "messages": ["Turno validado."], "data": {}},
             status=status.HTTP_200_OK,
         )
-
 
 
 class TurnsRejectView(APIView):
@@ -155,5 +158,23 @@ class TurnsRejectView(APIView):
 
 
 class DetailTurnView(generics.RetrieveAPIView):
-    queryset = Turn.objects.filter(state__id = 1)
+    queryset = Turn.objects.filter(state__id=1)
     serializer_class = TurnDetailSerializer
+
+
+class ListTurns(generics.ListAPIView):
+    queryset = Turn.objects.all()
+    serializer_class = TurnSerializer
+
+    def get(self, request):
+        turns = Turn.objects.all()
+        requests = Request.objects.all()
+        r_serializer = RequestSerializer(requests, many=True)
+        serializer = TurnSerializer(turns, many=True)
+        return Response({
+            "ok": True,
+            "messages": ["Turnos encontrados."],
+            "data": {"turns": serializer.data,
+                     "requests": r_serializer.data}
+        },
+          status=status.HTTP_200_OK  )
