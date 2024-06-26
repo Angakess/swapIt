@@ -13,3 +13,4 @@ class Rating(models.Model):
                                       on_delete=models.DO_NOTHING,
                                       related_name='ratings_received'
                                       )
+    checked = models.BooleanField(default=False)

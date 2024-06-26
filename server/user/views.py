@@ -592,7 +592,7 @@ class PutInReviewUser(APIView):
         )
 
 class RemoveUser(APIView):
-    #TODO: Agregar eliminar en cascada 
+    #TODO: Agregar eliminar en cascada (publicaciones, solicitud, turnos)
     def delete(self, request, user_id):
         user = UserAccount.objects.filter(pk=user_id)
         if user is None:
