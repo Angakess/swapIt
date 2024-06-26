@@ -10,7 +10,7 @@ import {
 import { PageTitle } from '@Common/components'
 import { CategoryPie, StatCategoriesColumn } from '@Stats/components/categories'
 
-export function StatsPosts() {
+export function StatsCategories() {
   const [posts, setPosts] = useState<PostModel[]>([])
   const [categories, setCategories] = useState<CategoryModel[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -27,7 +27,7 @@ export function StatsPosts() {
 
   return (
     <>
-      <PageTitle title="Estadísticas de publicaciones" />
+      <PageTitle title="Estadísticas de categorías" />
 
       <Space direction="vertical" size={[24, 24]} style={{ display: 'flex' }}>
         <StatCategoriesColumn

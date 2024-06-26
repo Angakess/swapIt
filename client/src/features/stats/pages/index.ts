@@ -1,3 +1,3 @@
 export * from './StatsExchangers'
-export * from './StatsPosts'
+export * from './StatsCategories'
 export * from './StatsSubsidiaries'
