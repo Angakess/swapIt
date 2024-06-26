@@ -8,7 +8,7 @@ import {
   getPostList,
 } from '@Common/api'
 import { PageTitle } from '@Common/components'
-import { CategoryPie, StatPostColumn } from '@Stats/components/posts'
+import { CategoryPie, StatPostColumn } from '@Stats/components/categories'
 
 export function StatsPosts() {
   const [posts, setPosts] = useState<PostModel[]>([])
