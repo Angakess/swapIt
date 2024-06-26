@@ -8,7 +8,7 @@ import {
   getPostList,
 } from '@Common/api'
 import { PageTitle } from '@Common/components'
-import { CategoryPie, StatPostColumn } from '@Stats/components/categories'
+import { CategoryPie, StatCategoriesColumn } from '@Stats/components/categories'
 
 export function StatsPosts() {
   const [posts, setPosts] = useState<PostModel[]>([])
@@ -30,7 +30,7 @@ export function StatsPosts() {
       <PageTitle title="Estadísticas de publicaciones" />
 
       <Space direction="vertical" size={[24, 24]} style={{ display: 'flex' }}>
-        <StatPostColumn
+        <StatCategoriesColumn
           isLoading={isLoading}
           categories={categories}
           posts={posts}

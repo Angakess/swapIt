@@ -9,17 +9,17 @@ import {
   PostStateNames,
 } from '@Common/api'
 
-type StatPostColumProps = {
+type StatCategoriesColumnProps = {
   isLoading: boolean
   posts: PostModel[]
   categories: CategoryModel[]
 }
 
-export function StatPostColumn({
+export function StatCategoriesColumn({
   isLoading,
   posts,
   categories,
-}: StatPostColumProps) {
+}: StatCategoriesColumnProps) {
   type DataType = {
     category: string
     state: PostStateNames
@@ -70,7 +70,7 @@ export function StatPostColumn({
         <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
       ) : (
         <>
-          <PostStatistics
+          <CategoriesStatistics
             categories={categories}
             posts={posts}
             isLoading={isLoading}
@@ -96,13 +96,17 @@ export function StatPostColumn({
   )
 }
 
-type PostStatisticsProps = {
+type CategoriesStatisticsProps = {
   isLoading: boolean
   posts: PostModel[]
   categories: CategoryModel[]
 }
 
-function PostStatistics({ posts, categories, isLoading }: PostStatisticsProps) {
+function CategoriesStatistics({
+  posts,
+  categories,
+  isLoading,
+}: CategoriesStatisticsProps) {
   type DataType = { [category: string]: number }
 
   const [data, setData] = useState<DataType>({})
