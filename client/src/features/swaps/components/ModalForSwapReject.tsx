@@ -1,5 +1,7 @@
 import { fetchPost } from '@Common/helpers'
+import { useCustomAlerts } from '@Common/hooks'
 import { Modal } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 export function ModalForSwapReject({
   open,
@@ -14,6 +16,11 @@ export function ModalForSwapReject({
   setExiste: (x: boolean) => void
   thisId: number
 }) {
+
+  const miniModal = useCustomAlerts()
+
+  const navigate = useNavigate()
+
   async function handleOk() {
     setLoading(true)
 
@@ -22,19 +29,16 @@ export function ModalForSwapReject({
     }])
     const result = await res.json()
     if(res.ok){
-      Modal.success({
-        title:"Operación realizada con éxito",
-        content: result.messages[0]
-      })
+      miniModal.successNotification("Operación realizada con éxito",result.messages[0])
       setExiste(false)
+      navigate("/swaps",{replace: true})
     }
     else{
-      Modal.error({
-        title: "Operación fallida",
-        content: result.messages[0]
-      })
+      miniModal.errorNotification("Operación fallida",result.messages[0]
+      )
     }
     setModalOpen(false)
+    setLoading(false)
 
 /* 
     console.log('')

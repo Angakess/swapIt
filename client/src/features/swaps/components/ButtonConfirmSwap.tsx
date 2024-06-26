@@ -1,5 +1,7 @@
 import { fetchPost } from '@Common/helpers'
+import { useCustomAlerts } from '@Common/hooks'
 import { Button, Modal } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 export function ButtonConfirmSwap({
   confirmDisabled,
@@ -18,6 +20,11 @@ export function ButtonConfirmSwap({
   existe: boolean
   setExist: (x: boolean) => void
 }) {
+
+  const miniModal = useCustomAlerts()
+
+  const navigate = useNavigate()
+
   async function handleClick() {
     setLoading(true)
     console.log(inputCodes)
@@ -28,17 +35,14 @@ export function ButtonConfirmSwap({
       code_received: inputCodes.inputB,
     })
     const result = await res.json()
-    if (res.ok) {
-      Modal.success({
-        title: 'Operación completada',
-        content: result.messages,
-      })
+    if(res.ok){
+      miniModal.successNotification("Operación realizada con éxito",result.messages[0])
       setExist(false)
-    } else {
-      Modal.error({
-        title: 'Operación fallida',
-        content: result.messages,
-      })
+      navigate("/swaps",{replace: true})
+    }
+    else{
+      miniModal.errorNotification("Operación fallida",result.messages[0]
+      )
     }
     setLoading(false)
   }

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { ButtonRejectSwap } from '@Swaps/components/ButtonRejectSwap'
 import { useNavigate } from 'react-router-dom'
 import { PostModel } from '@Common/api'
+import { useCustomAlerts } from '@Common/hooks'
 
 type SwapType = {
   id: number
@@ -13,6 +14,9 @@ type SwapType = {
   post_receive: PostModel
 }
 export function Swap() {
+
+  const miniModal = useCustomAlerts()
+
   const parts = window.location.href.split('/')
   const swapId: number = parseInt(parts[parts.length - 1])
 
@@ -87,7 +91,7 @@ export function Swap() {
 
     return (
       <>
-        {!existe ? (
+        {/* {!existe ? (
           <Modal
             open={true}
             centered
@@ -108,7 +112,7 @@ export function Swap() {
               </Button>
             </Flex>
           </Modal>
-        ) : null}
+        ) : null} */}
 
         <Spin spinning={loading}>
           <Card
