@@ -1,9 +1,9 @@
 import { LogoutOutlined, EditOutlined, StarOutlined } from '@ant-design/icons'
-import { Button, Dropdown, Flex, theme } from 'antd'
+import { Button, Dropdown, Flex, MenuProps, theme } from 'antd'
 import { UserAvatar } from '@Common/components/UserAvatar'
 import { useAuth, useCustomAlerts } from '@Common/hooks'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { UserRatingModel, getUserRatings, getUserScore } from '@Common/api'
 import { ListRatingsModal } from '@Common/components'
 
@@ -31,6 +31,45 @@ export function AppHeader() {
     return () => clearInterval(interval)
   }, [user])
 
+  const menuItems: MenuProps['items'] = useMemo(() => {
+    const items: MenuProps['items'] = []
+
+    if (user?.role === 'EXCHANGER') {
+      items.push({
+        key: '1',
+        icon: <StarOutlined />,
+        label: 'Ver mis calificaciones',
+        onClick: () => {
+          setIsUserRatingOpen(true)
+          setIsLoading(true)
+          getUserRatings(user!.id).then((fetchedRatings) => {
+            setUserRatings(fetchedRatings)
+            setIsLoading(false)
+          })
+        },
+      })
+    }
+
+    if (user?.role !== 'ADMIN') {
+      items.push({
+        key: '2',
+        icon: <EditOutlined />,
+        label: 'Editar perfil',
+        onClick: customAlerts.notImplementedYet,
+      })
+    }
+
+    items.push({
+      key: '3',
+      icon: <LogoutOutlined />,
+      label: 'Cerrar sesión',
+      style: { color: colorErrorActive },
+      onClick: () => logOut(),
+    })
+
+    return items
+  }, [colorErrorActive, customAlerts.notImplementedYet, logOut, user])
+
   if (!isLoggedIn()) {
     return (
       <Flex
@@ -45,7 +84,7 @@ export function AppHeader() {
         <Button type="link" size="small">
           <Link to="/auth/register">Registrarse</Link>
         </Button>
-        <Link to="/donation" style={{marginLeft: "10px"}}>
+        <Link to="/donation" style={{ marginLeft: '10px' }}>
           <Button type="primary" size="large">
             Donar
           </Button>
@@ -62,40 +101,7 @@ export function AppHeader() {
         style={{ height: '100%', padding: '0 1rem' }}
       >
         <Dropdown
-          menu={{
-            items: [
-              ...(user?.role === 'EXCHANGER'
-                ? [
-                    {
-                      key: '1',
-                      icon: <StarOutlined />,
-                      label: 'Ver mis calificaciones',
-                      onClick: () => {
-                        setIsUserRatingOpen(true)
-                        setIsLoading(true)
-                        getUserRatings(user!.id).then((fetchedRatings) => {
-                          setUserRatings(fetchedRatings)
-                          setIsLoading(false)
-                        })
-                      },
-                    },
-                  ]
-                : []),
-              {
-                key: '2',
-                icon: <EditOutlined />,
-                label: 'Editar perfil',
-                onClick: customAlerts.notImplementedYet,
-              },
-              {
-                key: '3',
-                icon: <LogoutOutlined />,
-                label: 'Cerrar sesión',
-                style: { color: colorErrorActive },
-                onClick: () => logOut(),
-              },
-            ],
-          }}
+          menu={{ items: menuItems }}
           placement="bottom"
           arrow={{ pointAtCenter: true }}
           overlayStyle={{ maxWidth: 'fit-content', minWidth: 'none' }}
@@ -109,7 +115,7 @@ export function AppHeader() {
             />
           </div>
         </Dropdown>
-        <Link to="/donation" style={{marginLeft: "10px"}}>
+        <Link to="/donation" style={{ marginLeft: '10px' }}>
           <Button type="primary" size="large">
             Donar
           </Button>
