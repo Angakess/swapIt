@@ -10,7 +10,8 @@ class TurnState(models.Model):
     def __str__(self):
         return f"({self.id}) {self.name}" 
 
-
+# post_maker 
+# yo
 class Turn(models.Model):
     code_maker = models.CharField(max_length=255)
     code_received = models.CharField(max_length=255)

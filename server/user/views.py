@@ -1,6 +1,11 @@
 
 import hashlib
+import traceback
 import coreapi
+from app_post.views import PostRemove 
+from app_post.models import Post, PostState
+from request.models import RequestState
+from turn.models import TurnState
 from user.serializers import UserBaseSerializer, UserSerializer
 from user.models import UserAccount, UserRegister, UserForgotPassword
 from subsidiary.models import Subsidiary
@@ -16,6 +21,7 @@ from user.models import Role, UserState
 import coreschema
 from rest_framework.schemas import AutoSchema
 from rating.models import Rating
+from django.db import  transaction 
 
 
 class UserScore(APIView):
@@ -591,9 +597,91 @@ class PutInReviewUser(APIView):
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+
 class RemoveUser(APIView):
-    #TODO: Agregar eliminar en cascada (publicaciones, solicitud, turnos)
-    def delete(self, request, user_id):
+
+    @staticmethod
+    def remove_post(post):
+        try:
+
+            requests_receive = post.posts_receive.all()
+            emails_makers = list(requests_receive.values_list('user_maker__email', flat=True).distinct())
+
+            # La request donde el post es el solicitante
+            requests_send = post.posts_send.all()
+            emails_received = list(requests_send.values_list(
+                'user_receive__email', flat=True).distinct())
+            
+            turns_send = post.turns_send.all()
+            turns_receive = post.turns_receive.all()
+            turns_emails_makers = list(turns_send.values_list('user_received__email', flat=True).distinct())
+            turns_emails_received = list(turns_receive.values_list('user_maker__email', flat=True).distinct())
+
+
+            try:
+                send_email_to_user(
+                    email=emails_makers,
+                    subject="Solicitud de intercambio enviada cancelada",
+                    message="La solicitud de intercambio enviada" +
+                    " ha sido cancelada dado que" +
+                    " el propietario elimino la publicación " +
+                    post.name + ". \n"
+                )
+
+                send_email_to_user(
+                    email=emails_received,
+                    subject="Solicitud de intercambio recibida cancelada",
+                    message="La oferta de intercambio recibida " +
+                    " ha sido cancelada dado que el propietario elimino " +
+                    "la publicación " +
+                    post.name + ". \n"
+                )
+
+                send_email_to_user(
+                    email=turns_emails_makers,
+                    subject="Turno cancelado",
+                    message="El turno que ibas a realizar con " +
+                    "la publicación " + post.name + " ha sido cancelado " +
+                    "dado que el propietario elimino su cuenta. \n"
+                )
+                send_email_to_user(
+                    email=turns_emails_received,
+                    subject="Turno cancelado",
+                    message="El turno que ibas a realizar con " +
+                    "la publicación " + post.name + " ha sido cancelado " +
+                    "dado que el propietario elimino su cuenta. \n"
+                )
+
+            except Exception as _e:
+                raise Exception("Error al enviar correos")
+            state = RequestState.objects.get(name="rechazado")
+            requests_receive.update(state=state)
+            requests_send.update(state=state)
+
+            for turn in turns_receive:
+                turn.post_maker.stock_product += 1
+                turn.post_receive.stock_product += 1
+                turn.post_maker.save()
+                turn.post_receive.save()
+            
+            for turn in turns_send:
+                turn.post_maker.stock_product += 1
+                turn.post_receive.stock_product += 1
+                turn.post_maker.save()
+                turn.post_receive.save()
+            
+            state = TurnState.objects.get(name="no efectuado")
+            turns_send.update(state=state, day_of_turn=None)
+            turns_receive.update(state=state, day_of_turn=None)
+            post.state=PostState.objects.get(id=5)
+            post.save()
+            return {"ok": True, "messages": ["Publicación eliminada"], "post":post}
+        except KeyError:
+                raise Exception("Error al eliminar")
+
+
+
+    def delete(self, request, user_id, *args, **kwargs):
         user = UserAccount.objects.filter(pk=user_id)
         if user is None:
             return Response(
@@ -604,7 +692,23 @@ class RemoveUser(APIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
-        
+        posts = user.first().posts.all()
+        with transaction.atomic():
+            try:
+                for post in posts:
+                    response = self.remove_post(post)
+                    print("[RESPONSE REMOVE POST] \n", response)
+            except Exception as e:
+                print(traceback.format_exc())
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Error al eliminar el usuario. Intente de nuevo mas tarde.'],
+                        'data': {}
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
         ok = user.update(state= UserState.objects.get(id=5))
         if ok:
             return Response(
