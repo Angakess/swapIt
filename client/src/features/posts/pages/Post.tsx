@@ -145,7 +145,7 @@ export function Post() {
             <PostDetails post={post!} />
           </Card>
 
-          {/* TODO: Discutir con sai y cacho */}
+          {/* FIXED: sai tenía razón */}
           {post!.user.id !== user!.id && (
             <Card style={{ marginBottom: '1.5rem' }}>
               <PostUser
