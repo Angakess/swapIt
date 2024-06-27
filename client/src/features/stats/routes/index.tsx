@@ -6,12 +6,14 @@ import {
   StatsSubsidiaries,
   StatsPosts,
 } from '@Stats/pages'
+import StatsMainPage from '@Stats/pages/StatsMainPage'
 import { Route, Routes } from 'react-router-dom'
 
 export function StatsRoutes() {
   return (
     <Routes>
       <Route element={<ProtectedRoute allowed={['ADMIN']} />}>
+        <Route path="/" element={<StatsMainPage />} />
         <Route path="/posts" element={<StatsPosts />} />
         <Route path="/exchangers" element={<StatsExchangers />} />
         <Route path="/locals" element={<StatsSubsidiaries />} />

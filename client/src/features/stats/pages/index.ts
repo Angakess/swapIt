@@ -1,4 +1,5 @@
 export * from './StatsCategories'
 export * from './StatsExchangers'
+export * from './StatsMainPage'
 export * from './StatsPosts'
 export * from './StatsSubsidiaries'

@@ -65,32 +65,6 @@ const items: Record<UserPermissions, SidebarProps> = {
         key: '/admin/stats',
         label: 'Estadísticas',
         icon: <BarChartOutlined />,
-        children: [
-          {
-            key: '/admin/stats/posts',
-            label: 'Publicaciones',
-          },
-          {
-            key: '/admin/stats/helpers',
-            label: 'Ayudantes',
-          },
-          {
-            key: '/admin/stats/exchangers',
-            label: 'Intercambiadores',
-          },
-          {
-            key: '/admin/stats/locals',
-            label: 'Filiales',
-          },
-          {
-            key: '/admin/stats/categories',
-            label: 'Categorias',
-          },
-          {
-            key: '/admin/stats/swaps',
-            label: 'Trueques',
-          },
-        ],
       },
     ],
   },
