@@ -1,21 +1,56 @@
 import { LogoutOutlined, EditOutlined, StarOutlined } from '@ant-design/icons'
 import { Button, Dropdown, Flex, MenuProps, theme } from 'antd'
 import { UserAvatar } from '@Common/components/UserAvatar'
-import { useAuth, useCustomAlerts } from '@Common/hooks'
+import { useAuth } from '@Common/hooks'
 import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { UserRatingModel, getUserRatings, getUserScore } from '@Common/api'
-import { ListRatingsModal } from '@Common/components'
+import { EditProfileModal, ListRatingsModal } from '@Common/components'
 
 export function AppHeader() {
+  const { isLoggedIn } = useAuth()
+
+  return (
+    <Flex
+      align="center"
+      justify="end"
+      style={{ height: '100%', padding: '0 1rem' }}
+    >
+      {isLoggedIn() ? <LoggedInContent /> : <NotLoggedInContent />}
+
+      <Link to="/donation" style={{ marginLeft: '10px' }}>
+        <Button type="primary" size="large">
+          Donar
+        </Button>
+      </Link>
+    </Flex>
+  )
+}
+
+function NotLoggedInContent() {
+  return (
+    <>
+      <Button type="link" size="small">
+        <Link to="/auth/login">Iniciar sesión</Link>
+      </Button>
+      &#9474;
+      <Button type="link" size="small">
+        <Link to="/auth/register">Registrarse</Link>
+      </Button>
+    </>
+  )
+}
+
+function LoggedInContent() {
   const { colorErrorActive } = theme.useToken().token
-  const customAlerts = useCustomAlerts()
-  const { user, logOut, isLoggedIn } = useAuth()
+  const { user, logOut } = useAuth()
 
   const [userScore, setUserScore] = useState<number>()
   const [userRatings, setUserRatings] = useState<UserRatingModel[]>([])
   const [isUserRatingOpen, setIsUserRatingOpen] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState(false)
+
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
 
   useEffect(() => {
     if (user?.role !== 'EXCHANGER') return
@@ -55,7 +90,7 @@ export function AppHeader() {
         key: '2',
         icon: <EditOutlined />,
         label: 'Editar perfil',
-        onClick: customAlerts.notImplementedYet,
+        onClick: () => setIsEditProfileOpen(true),
       })
     }
 
@@ -68,65 +103,35 @@ export function AppHeader() {
     })
 
     return items
-  }, [colorErrorActive, customAlerts.notImplementedYet, logOut, user])
-
-  if (!isLoggedIn()) {
-    return (
-      <Flex
-        align="center"
-        justify="end"
-        style={{ height: '100%', padding: '0 1rem' }}
-      >
-        <Button type="link" size="small">
-          <Link to="/auth/login">Iniciar sesión</Link>
-        </Button>
-        &#9474;
-        <Button type="link" size="small">
-          <Link to="/auth/register">Registrarse</Link>
-        </Button>
-        <Link to="/donation" style={{ marginLeft: '10px' }}>
-          <Button type="primary" size="large">
-            Donar
-          </Button>
-        </Link>
-      </Flex>
-    )
-  }
+  }, [colorErrorActive, logOut, user])
 
   return (
     <>
-      <Flex
-        align="center"
-        justify="end"
-        style={{ height: '100%', padding: '0 1rem' }}
+      <Dropdown
+        menu={{ items: menuItems }}
+        placement="bottom"
+        arrow={{ pointAtCenter: true }}
+        overlayStyle={{ maxWidth: 'fit-content', minWidth: 'none' }}
       >
-        <Dropdown
-          menu={{ items: menuItems }}
-          placement="bottom"
-          arrow={{ pointAtCenter: true }}
-          overlayStyle={{ maxWidth: 'fit-content', minWidth: 'none' }}
-        >
-          <div>
-            <UserAvatar
-              firstName={user!.first_name}
-              lastName={user!.last_name}
-              score={userScore}
-              order="nameFirst"
-            />
-          </div>
-        </Dropdown>
-        <Link to="/donation" style={{ marginLeft: '10px' }}>
-          <Button type="primary" size="large">
-            Donar
-          </Button>
-        </Link>
-      </Flex>
+        <div>
+          <UserAvatar
+            firstName={user!.first_name}
+            lastName={user!.last_name}
+            score={userScore}
+            order="nameFirst"
+          />
+        </div>
+      </Dropdown>
       <ListRatingsModal
         title="Mis calificaciones"
         isOpen={isUserRatingOpen}
         setIsOpen={setIsUserRatingOpen}
         ratings={userRatings}
         isLoading={isLoading}
+      />
+      <EditProfileModal
+        isOpen={isEditProfileOpen}
+        setIsOpen={setIsEditProfileOpen}
       />
     </>
   )
