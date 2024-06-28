@@ -54,6 +54,17 @@ export type ExchangerModel = {
   gender: UserGender
 }
 
+export type UserDetailsModel = {
+  id: number
+  first_name: string
+  last_name: string
+  dni: string
+  email: string
+  date_of_birth: string
+  phone_number: string
+  gender: UserGender
+}
+
 //
 // putUserInReview
 
@@ -90,5 +101,19 @@ export async function getHelpersList(): Promise<HelperModel[]> {
 export async function getExchangersList(): Promise<ExchangerModel[]> {
   const resp = await fetch(`${SERVER_URL}/users/list-exchangers/`)
   const data: ExchangerModel[] = await resp.json()
+  return data
+}
+
+//
+// getUserDetails
+
+export async function getUserDetails(
+  id: number
+): Promise<UserDetailsModel | null> {
+  const resp = await fetch(`${SERVER_URL}/users/get/${id}`)
+
+  if (resp.status === 404) return null
+
+  const data: UserDetailsModel = await resp.json()
   return data
 }
