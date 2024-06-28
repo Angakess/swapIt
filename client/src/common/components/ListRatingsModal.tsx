@@ -42,7 +42,7 @@ function RatingItem({ rating }: { rating: UserRatingModel }) {
   } = rating
 
   return (
-    <List.Item>
+    <List.Item style={{ paddingLeft: 0, paddingRight: 0 }}>
       <List.Item.Meta
         avatar={
           <Avatar style={{ backgroundColor: '#D02F4C' }}>
