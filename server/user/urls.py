@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (CreateUser, ActivateUser, LoginUser, ForgotPassword, ResetPassword,
                     SearchHelper, SearchExchanger, DisincorporateHelper, RetrieveHelper, RetrieveExchanger, ChangeHelperFilial, UserScore, RemoveUser,
-                    PutInReviewUser,UpdateUser
+                    PutInReviewUser,UpdateUser, RetrieveUser
                     )
 
 
@@ -32,4 +32,6 @@ urlpatterns = [
     path('update-profile/<int:pk>', UpdateUser.as_view()),
     path('remove-exchanger/<int:user_id>',
          RemoveUser.as_view(), name='user-remove-exchanger'),
+    path('get/<int:pk>', RetrieveUser.as_view(), name='user-retrieve'),
+
 ]

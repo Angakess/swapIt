@@ -141,3 +141,17 @@ class UserOnlyNameSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name'
         ]
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAccount
+        fields = [
+            'id',
+            'first_name',
+            'last_name',
+            'dni',
+            'email',
+            'date_of_birth',
+            'phone_number',
+            'gender',
+        ]

@@ -15,7 +15,7 @@ import random
 from rest_framework.response import Response
 from rest_framework import status, filters
 from rest_framework.views import APIView
-from user.serializers import UserCreatedSerializer, ListHelperSerializer, ListExchangerSerializer, ExchangerDetailSerializer, HelperDetailSerializer
+from user.serializers import UserCreatedSerializer, ListHelperSerializer, ListExchangerSerializer, ExchangerDetailSerializer, HelperDetailSerializer, UserDetailSerializer
 import itertools
 from user.models import Role, UserState
 import coreschema
@@ -728,8 +728,9 @@ class RemoveUser(APIView):
             },
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
-        
-#TODO: Revisar si hay que hacer algo antes de actualizar. 
+
+
+#TODO: Revisar si hay que hacer algo antes de actualizar.
 class UpdateUser(generics.UpdateAPIView):
     queryset = UserAccount.objects.all()
     serializer_class = UserBaseSerializer
@@ -737,3 +738,7 @@ class UpdateUser(generics.UpdateAPIView):
     def partial_update(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
 
+
+class RetrieveUser(generics.RetrieveAPIView):
+    queryset = UserAccount.objects.all()
+    serializer_class = UserDetailSerializer
