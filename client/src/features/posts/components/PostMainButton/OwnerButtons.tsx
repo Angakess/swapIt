@@ -1,11 +1,11 @@
-import { App, Button, Col, Popconfirm, Row, theme } from 'antd'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { App, Button, Col, Row } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { PostModel } from '@Common/api'
 import { SERVER_URL } from 'constants'
 import { useState } from 'react'
 import { PostUpdateModal } from '../PostCreateUpdate'
 import { useCustomAlerts } from '@Common/hooks'
+import { DangerPopConfirm } from '@Common/components'
 
 type OwnerButtonsProps = {
   post: PostModel
@@ -107,7 +107,6 @@ function DeleteButton({
   isLoading,
   isEditable,
 }: DeleteButtonProps) {
-  const { colorError } = theme.useToken().token
   const { errorNotification } = useCustomAlerts()
 
   if (!isEditable) {
@@ -131,19 +130,17 @@ function DeleteButton({
   }
 
   return (
-    <Popconfirm
+    <DangerPopConfirm
       title="Eliminar publicación"
       description="¿Esta seguro que desea eliminar la publicación?"
       okText="Sí, eliminar publicación"
       cancelText="No, cancelar"
-      okType="danger"
       placement="bottomLeft"
-      icon={<ExclamationCircleOutlined style={{ color: colorError }} />}
       onConfirm={deletePost}
     >
       <Button type="primary" danger block size="large" disabled={isLoading}>
         Eliminar
       </Button>
-    </Popconfirm>
+    </DangerPopConfirm>
   )
 }

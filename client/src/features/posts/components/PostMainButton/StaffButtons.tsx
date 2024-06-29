@@ -1,4 +1,3 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons'
 import {
   Button,
   Col,
@@ -6,7 +5,6 @@ import {
   Dropdown,
   Form,
   Modal,
-  Popconfirm,
   Row,
   Select,
   theme,
@@ -23,6 +21,7 @@ import { useCustomAlerts } from '@Common/hooks'
 import { PostModel, moderatePost, putUserInReview } from '@Common/api'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { DangerPopConfirm } from '@Common/components'
 
 export function StaffButtons({ post }: { post: PostModel }) {
   const alerts = useCustomAlerts()
@@ -234,7 +233,6 @@ function BlockUserButton({
   isLoading,
   setIsLoading,
 }: ModerationButtonProps) {
-  const { colorError } = theme.useToken().token
   const navigate = useNavigate()
   const { successNotification, errorNotification } = useCustomAlerts()
 
@@ -255,20 +253,18 @@ function BlockUserButton({
   }
 
   return (
-    <Popconfirm
+    <DangerPopConfirm
       title="Bloquear usuario"
       description="¿Seguro que desea bloquear al usuario?"
       okText="Sí, bloquear usuario"
       cancelText="No, cancelar"
-      okType="danger"
       placement="bottom"
-      icon={<ExclamationCircleOutlined style={{ color: colorError }} />}
       onConfirm={handleDelete}
       cancelButtonProps={{ disabled: isLoading }}
     >
       <Button danger block icon={<UserDeleteOutlined />} disabled={isLoading}>
         Bloquear usuario
       </Button>
-    </Popconfirm>
+    </DangerPopConfirm>
   )
 }

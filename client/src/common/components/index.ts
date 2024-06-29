@@ -1,3 +1,4 @@
+export * from './DangerPopConfirm'
 export * from './EditProfileModal'
 export * from './ListRatingsModal'
 export * from './MiniPostForTable'
