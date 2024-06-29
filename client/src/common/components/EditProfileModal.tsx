@@ -1,6 +1,5 @@
-import { UserDetailsModel, UserGender, getUserDetails } from '@Common/api'
 import { dateValidator, phoneValidator } from '@Common/helpers/validators'
-import { useAuth } from '@Common/hooks'
+import { useEditProfileForm } from '@Common/hooks'
 import {
   Button,
   DatePicker,
@@ -12,54 +11,25 @@ import {
   Select,
   Spin,
 } from 'antd'
-import dayjs, { Dayjs } from 'dayjs'
-import { SetStateAction, useEffect, useState } from 'react'
+import { SetStateAction } from 'react'
+import { DangerPopConfirm } from './DangerPopConfirm'
 
 type EditProfileModalProps = {
   isOpen: boolean
   setIsOpen: React.Dispatch<SetStateAction<boolean>>
 }
 
-type EditFormData = {
-  email: string
-  phone_number: string
-  date_of_birth: Dayjs
-  gender: UserGender
-  password: string
-  confirmPassword: string
-  currentPassword: string
-}
-
 export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
-  const { user } = useAuth()
-
-  const [userDetails, setUserDetails] = useState<UserDetailsModel>()
-  const [isLoading, setIsLoading] = useState(true)
-
-  const [form] = Form.useForm<EditFormData>()
-
-  useEffect(() => {
-    ;(async () => {
-      setIsLoading(true)
-      const u = await getUserDetails(user!.id)
-
-      if (u === null) throw new Error('User not found')
-
-      form.setFieldsValue({
-        email: u.email,
-        phone_number: u.phone_number,
-        date_of_birth: dayjs(u.date_of_birth),
-        gender: u.gender,
-      })
-
-      setUserDetails(u)
-      setIsLoading(false)
-    })()
-  }, [form, user])
-
-  function handleFinish() {
-    console.log('first')
-  }
+  const {
+    userDetails,
+    isLoading,
+    form,
+    hasBeenUpdated,
+    setInitialValues,
+    isFormUpdated,
+    handleFinish,
+    handleDeleteAccount,
+  } = useEditProfileForm()
 
   return (
     <Modal
@@ -77,6 +47,8 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
             onFinish={handleFinish}
             disabled={isLoading}
             form={form}
+            onValuesChange={(_, values) => isFormUpdated(values)}
+            onReset={setInitialValues}
           >
             <Flex gap="1rem">
               <Form.Item label="Nombre">
@@ -187,10 +159,34 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
               align="center"
               style={{ paddingTop: '1rem' }}
             >
-              <Button danger>Eliminar cuenta</Button>
-              <Button type="primary" htmlType="submit">
-                Editar perfil
-              </Button>
+              <DangerPopConfirm
+                title="Eliminar cuenta"
+                description="¿Está seguro que desea eliminar su cuenta? Esta acción no se puede revertir"
+                okText="Sí, eliminar cuenta"
+                cancelText="No, cancelar"
+                placement="topLeft"
+                onConfirm={handleDeleteAccount}
+              >
+                <Button danger>Eliminar cuenta</Button>
+              </DangerPopConfirm>
+
+              <div>
+                <Button
+                  type="text"
+                  htmlType="reset"
+                  style={{ marginRight: '1rem' }}
+                  disabled={!hasBeenUpdated}
+                >
+                  Restablecer
+                </Button>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  disabled={!hasBeenUpdated}
+                >
+                  Editar perfil
+                </Button>
+              </div>
             </Flex>
           </Form>
         </>
