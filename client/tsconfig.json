@@ -23,17 +23,18 @@
     /* Custom */
     "baseUrl": "src",
     "paths": {
-      "@Common/*": ["common/*"],
       "@Admin/*": ["features/admin/*"],
       "@Auth/*": ["features/auth/*"],
+      "@Common/*": ["common/*"],
+      "@Donation/*": ["features/donation/*"],
       "@Home/*": ["features/home/*"],
       "@Posts/*": ["features/posts/*"],
-      "@Turns/*": ["features/turns/*"],
-      "@Stats/*": ["features/stats/*"],
-      "@Swaps/*": ["features/swaps/*"],
+      "@Ratings/*": ["features/ratings/*"],
       "@Requests/*": ["features/requests/*"],
       "@Rewards/*": ["features/rewards/*"],
-      "@Donation/*": ["features/donation/*"]
+      "@Stats/*": ["features/stats/*"],
+      "@Swaps/*": ["features/swaps/*"],
+      "@Turns/*": ["features/turns/*"]
     }
   },
   "include": ["src"],

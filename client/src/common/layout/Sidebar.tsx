@@ -13,6 +13,7 @@ import {
   SwapOutlined,
   BarChartOutlined,
   ShoppingOutlined,
+  StarOutlined,
 } from '@ant-design/icons'
 import { UserPermissions } from '@Common/types'
 import { useAuth } from '@Common/hooks'
@@ -58,8 +59,13 @@ const items: Record<UserPermissions, SidebarProps> = {
       },
       {
         key: '/admin/categories',
-        label: 'Categorias',
+        label: 'Categorías',
         icon: <ProductOutlined />,
+      },
+      {
+        key: '/admin/ratings',
+        label: 'Calificaciones',
+        icon: <StarOutlined />,
       },
       {
         key: '/admin/stats',
