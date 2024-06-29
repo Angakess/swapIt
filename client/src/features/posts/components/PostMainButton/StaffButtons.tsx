@@ -164,6 +164,7 @@ function ApproveButton({
         okText="Editar y aprobar"
         cancelText="Cancelar"
         okButtonProps={{ style: { backgroundColor: colorSuccess } }}
+        forceRender
       >
         <Form
           layout="vertical"

@@ -70,6 +70,7 @@ export function PostCreateUpdateModal({
       confirmLoading={isLoading}
       okText={okText}
       cancelText="Cancelar"
+      forceRender
       {...modalProps}
     >
       <PostCreateUpdateForm

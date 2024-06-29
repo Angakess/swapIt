@@ -133,6 +133,7 @@ function AcceptModal({
       confirmLoading={isLoading}
       okText="Aceptar solicitud"
       cancelText="Cancelar"
+      forceRender
     >
       <Typography.Paragraph type="secondary">
         Seleccione la fecha en la que quiere realizar el turno.
