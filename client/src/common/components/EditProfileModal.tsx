@@ -1,5 +1,5 @@
 import { dateValidator, phoneValidator } from '@Common/helpers/validators'
-import { useEditProfileForm } from '@Common/hooks'
+import { useAuth, useEditProfileForm } from '@Common/hooks'
 import {
   Button,
   DatePicker,
@@ -10,6 +10,7 @@ import {
   Modal,
   Select,
   Spin,
+  Typography,
 } from 'antd'
 import { SetStateAction } from 'react'
 import { DangerPopConfirm } from './DangerPopConfirm'
@@ -20,6 +21,8 @@ type EditProfileModalProps = {
 }
 
 export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
+  const { user } = useAuth()
+
   const {
     userDetails,
     isLoading,
@@ -155,20 +158,33 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
             </Form.Item>
 
             <Flex
-              justify="space-between"
+              justify={
+                user!.role === 'EXCHANGER' ? 'space-between' : 'flex-end'
+              }
               align="center"
               style={{ paddingTop: '1rem' }}
             >
-              <DangerPopConfirm
-                title="Eliminar cuenta"
-                description="¿Está seguro que desea eliminar su cuenta? Esta acción no se puede revertir"
-                okText="Sí, eliminar cuenta"
-                cancelText="No, cancelar"
-                placement="topLeft"
-                onConfirm={handleDeleteAccount}
-              >
-                <Button danger>Eliminar cuenta</Button>
-              </DangerPopConfirm>
+              {user!.role === 'EXCHANGER' && (
+                <DangerPopConfirm
+                  title="Eliminar cuenta"
+                  description={
+                    <>
+                      <Typography.Paragraph style={{ marginBottom: '0.25rem' }}>
+                        ¿Está seguro que desea eliminar su cuenta?
+                      </Typography.Paragraph>
+                      <Typography.Paragraph>
+                        Esta acción no se puede revertir.
+                      </Typography.Paragraph>
+                    </>
+                  }
+                  okText="Sí, eliminar cuenta"
+                  cancelText="No, cancelar"
+                  placement="top"
+                  onConfirm={handleDeleteAccount}
+                >
+                  <Button danger>Eliminar cuenta</Button>
+                </DangerPopConfirm>
+              )}
 
               <div>
                 <Button
