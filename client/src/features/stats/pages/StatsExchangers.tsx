@@ -1,11 +1,12 @@
+import { Empty, Space, Spin } from 'antd'
+import { useEffect, useState } from 'react'
+
 import { ExchangerModel, getExchangersList } from '@Common/api'
 import { PageTitle } from '@Common/components'
 import {
-  ColumnExchangersPerState,
   ColumnExchangersPerGender,
+  ColumnExchangersPerState,
 } from '@Stats/components/exchangers'
-import { Space } from 'antd'
-import { useEffect, useState } from 'react'
 
 export function StatsExchangers() {
   const [exchangers, setExchangers] = useState<ExchangerModel[]>([])
@@ -24,16 +25,22 @@ export function StatsExchangers() {
     <>
       <PageTitle title="Estadísticas de intercambiadores" />
 
-      <Space direction="vertical" size={[24, 24]} style={{ display: 'flex' }}>
-        <ColumnExchangersPerState
-          isLoading={isLoading}
-          exchangers={exchangers}
-        />
-        <ColumnExchangersPerGender
-          isLoading={isLoading}
-          exchangers={exchangers}
-        />
-      </Space>
+      {isLoading ? (
+        <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
+      ) : exchangers.length === 0 ? (
+        <Empty description="No hay intercambiadores disponibles para mostrar estadísticas." />
+      ) : (
+        <Space direction="vertical" size={[24, 24]} style={{ display: 'flex' }}>
+          <ColumnExchangersPerState
+            isLoading={isLoading}
+            exchangers={exchangers}
+          />
+          <ColumnExchangersPerGender
+            isLoading={isLoading}
+            exchangers={exchangers}
+          />
+        </Space>
+      )}
     </>
   )
 }
