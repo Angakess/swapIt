@@ -43,3 +43,18 @@ export async function getUncheckedRatings(): Promise<RatingModel[]> {
   const data: GenericApiResponse<{ ratings: RatingModel[] }> = await resp.json()
   return data.data.ratings
 }
+
+//
+// moderateRating()
+
+export async function moderateRating(
+  id: number,
+  comment: string
+): Promise<boolean> {
+  const resp = await fetch(`${SERVER_URL}/ratings/moderate/${id}/`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'PATCH',
+    body: JSON.stringify({ comment }),
+  })
+  return resp.status === 200
+}

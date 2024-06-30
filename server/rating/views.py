@@ -25,6 +25,7 @@ class RatingOfUser(APIView):
             {"ok": True, "messages": ["Califiaciones del usuario"], "data": {"ratings": RatingSerializer(rating, many=True).data}},
             status=status.HTTP_200_OK,
         )
+
 class ModerateCommentRating(generics.UpdateAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingCreateSerializer
@@ -36,7 +37,7 @@ class ModerateCommentRating(generics.UpdateAPIView):
         except Exception:
             print("[ERROR]", Exception)
         rating = self.get_object()
-        rating.comment = comment if comment else "Este comentario a sido eliminado por violar las politicas de la plataforma"
+        rating.comment = comment if comment else "Este comentario a sido eliminado por un administrador."
         rating.checked = True
         rating.save()
         return Response(
@@ -64,5 +65,3 @@ class BulkCheckRating(APIView):
             {"ok": True, "messages": ["Calificaciones chequeadas"], "data": {"ratings": RatingCreateSerializer(ratings, many=True).data}},
             status=status.HTTP_200_OK,  
         )
-    
-
