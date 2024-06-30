@@ -33,5 +33,4 @@ urlpatterns = [
     path('remove-exchanger/<int:user_id>',
          RemoveUser.as_view(), name='user-remove-exchanger'),
     path('get/<int:pk>', RetrieveUser.as_view(), name='user-retrieve'),
-
 ]

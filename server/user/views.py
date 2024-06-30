@@ -693,6 +693,18 @@ class RemoveUser(APIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
+        
+        current_password = request.data.get('current_password')
+        if user.first().password != hashlib.md5(current_password.encode()).hexdigest():
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Contraseña incorrecta, no se puede eliminar la cuenta.'],
+                    'data': {}
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         posts = user.first().posts.all()
         with transaction.atomic():
             try:
@@ -737,6 +749,18 @@ class UpdateUser(generics.UpdateAPIView):
     serializer_class = UserBaseSerializer
 
     def partial_update(self, request, *args, **kwargs):
+        current_password = self.request.data.get('current_password')
+        if current_password:
+            user = UserAccount.objects.filter(pk=kwargs['pk']).first()
+            if user.password != hashlib.md5(current_password.encode()).hexdigest():
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Contraseña incorrecta, no se puede actualizar la cuenta.'],
+                        'data': {}
+                    },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
         return super().partial_update(request, *args, **kwargs)
 
 
