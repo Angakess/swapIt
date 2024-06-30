@@ -3,6 +3,7 @@
 
 import { SERVER_URL } from 'constants'
 import { GenericApiResponse } from './types'
+import { UserDetailsModel } from './users'
 
 export type UserRatingModel = {
   score: number
@@ -11,6 +12,15 @@ export type UserRatingModel = {
     first_name: string
     last_name: string
   }
+}
+
+export type RatingModel = {
+  id: number
+  user_maker: UserDetailsModel
+  user_received: UserDetailsModel
+  score: number
+  comment: string
+  checked: boolean
 }
 
 //
@@ -23,4 +33,13 @@ export async function getUserRatings(
   const data: GenericApiResponse<{ ratings: UserRatingModel[] }> =
     await resp.json()
   return data?.ok ? data.data.ratings : []
+}
+
+//
+// getUncheckedRatings()
+
+export async function getUncheckedRatings(): Promise<RatingModel[]> {
+  const resp = await fetch(`${SERVER_URL}/ratings/list/unchecked/`)
+  const data: GenericApiResponse<{ ratings: RatingModel[] }> = await resp.json()
+  return data.data.ratings
 }
