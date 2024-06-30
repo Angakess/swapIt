@@ -598,6 +598,31 @@ class PutInReviewUser(APIView):
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+class RemoveUserFromReview(APIView):
+        def get(self, request, user_id):
+            user = UserAccount.objects.filter(pk=user_id).first()
+            if user is None:
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Usuario no encontrado'],
+                        'data': {}
+                    },
+                    status=status.HTTP_404_NOT_FOUND
+                )
+            
+            user.state = UserState.objects.get(id=3)
+            user.save()
+            return Response(
+                {
+                    'ok': True,
+                    'messages': ['Usuario desbloqueado exitosamente.'],
+                    'data': {}
+                },
+                status=status.HTTP_200_OK
+            )
+
+
 
 class RemoveUser(APIView):
 
@@ -743,7 +768,6 @@ class RemoveUser(APIView):
         )
 
 
-#TODO: Revisar si hay que hacer algo antes de actualizar.
 class UpdateUser(generics.UpdateAPIView):
     queryset = UserAccount.objects.all()
     serializer_class = UserBaseSerializer
@@ -763,6 +787,58 @@ class UpdateUser(generics.UpdateAPIView):
                 )
         return super().partial_update(request, *args, **kwargs)
 
+class ConvertToHelper(APIView):
+        def get(self, request, helper_id, filial_id):
+            exchanger = UserAccount.objects.filter(pk=helper_id, role=Role.EXCHANGER).first()
+            new_subsidiary = Subsidiary.objects.filter(pk=filial_id).first()
+            if exchanger is None or new_subsidiary is None:
+                messages = []
+                if exchanger is None:
+                    messages.append('Usuario no encontrado')
+                if new_subsidiary is None:
+                    messages.append('Filial no encontrada')
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': messages,
+                        'data': {}
+                    },
+                    status=status.HTTP_404_NOT_FOUND
+                )
+            
+            if (new_subsidiary.cant_current_helpers >= new_subsidiary.max_helpers):
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Esta filial ya tiene el cupo de ayudantes completo'],
+                        'data': {}
+                    },
+                    status=status.HTTP_412_PRECONDITION_FAILED
+                )
+            
+            with transaction.atomic():
+                remove_all = exchanger.review()
+                if not remove_all:
+                    return Response(
+                        {
+                            'ok': False,
+                            'messages': ['Error al cambiar el estado del usuario. Intente de nuevo mas tarde.'],
+                            'data': {}
+                        },
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+                exchanger.state = UserState.objects.get(id=3)            
+                exchanger.role = Role.HELPER
+                exchanger.id_subsidiary = new_subsidiary
+                exchanger.save()
+            return Response(
+                {
+                    'ok': True,
+                    'messages': ['Usuario cambiado de filial exitosamente'],
+                    'data': {}
+                },
+                status=status.HTTP_200_OK
+            )
 
 class RetrieveUser(generics.RetrieveAPIView):
     queryset = UserAccount.objects.all()

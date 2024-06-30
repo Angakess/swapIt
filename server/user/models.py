@@ -132,7 +132,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
         # BAJA DE PUBLICACIONES
         posts = self.posts.all()
-        posts.update(state=4)
+        posts.update(state=5)
         
         self.state = UserState.objects.get(id=1)
         self.save()
