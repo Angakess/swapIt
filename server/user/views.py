@@ -15,7 +15,7 @@ import random
 from rest_framework.response import Response
 from rest_framework import status, filters
 from rest_framework.views import APIView
-from user.serializers import UserCreatedSerializer, ListHelperSerializer, ListExchangerSerializer, ExchangerDetailSerializer, HelperDetailSerializer, UserDetailSerializer
+from user.serializers import UserCreatedSerializer, ListHelperSerializer, ListExchangerSerializer, ExchangerDetailSerializer, HelperDetailSerializer, UserDetailSerializer,UserScoreSerializer
 import itertools
 from user.models import Role, UserState
 import coreschema
@@ -501,6 +501,37 @@ class DisincorporateHelper(APIView):
 class RetrieveExchanger(generics.RetrieveAPIView):
     def get_queryset(self):
         return UserAccount.objects.filter(role=Role.EXCHANGER)
+    
+    serializer_class = ExchangerDetailSerializer
+
+class RetrieveExchangerDNI(APIView):
+    def get(self, request, *args, **kwargs):
+        print(f"[DNI GET][KWARGS] {kwargs}")
+        try:
+            user = UserAccount.objects.filter(dni=kwargs['dni'])
+            if user is None:
+                return Response(
+                    {
+                        'ok': False,
+                        'messages': ['Usuario no encontrado'],
+                        'data': {}
+                    },
+                    status=status.HTTP_404_NOT_FOUND
+                )
+            return Response({
+                'ok': True,
+                'messages': ['Usuario encontrado'],
+                'data': UserScoreSerializer(user.first()).data
+            }, status=status.HTTP_200_OK)
+        except:
+            return Response(
+                {
+                    'ok': False,
+                    'messages': ['Error al buscar el usuario'],
+                    'data': {}
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
     
     serializer_class = ExchangerDetailSerializer
 
