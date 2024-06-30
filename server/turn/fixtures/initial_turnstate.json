@@ -16,5 +16,11 @@
         "fields": {
             "name": "no efectuado"
         }
+    },
+    {
+        "model": "turn.turnstate",
+        "fields": {
+            "name": "sin calificar"
+        }
     }
 ]
