@@ -508,7 +508,7 @@ class RetrieveExchangerDNI(APIView):
     def get(self, request, *args, **kwargs):
         print(f"[DNI GET][KWARGS] {kwargs}")
         try:
-            user = UserAccount.objects.filter(dni=kwargs['dni'])
+            user = UserAccount.objects.filter(dni=kwargs['dni']).first()
             if user is None:
                 return Response(
                     {
