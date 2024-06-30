@@ -521,7 +521,7 @@ class RetrieveExchangerDNI(APIView):
             return Response({
                 'ok': True,
                 'messages': ['Usuario encontrado'],
-                'data': UserScoreSerializer(user.first()).data
+                'data': UserScoreSerializer(user).data
             }, status=status.HTTP_200_OK)
         except:
             return Response(
