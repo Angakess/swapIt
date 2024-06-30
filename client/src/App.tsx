@@ -20,6 +20,7 @@ import { useAuth } from '@Common/hooks'
 import { UserPermissions } from '@Common/types'
 import { AuthLayout } from '@Auth/layouts'
 import { AppLayout } from '@Common/layout'
+import { RatingRoutes } from '@Ratings/routes'
 
 const mainPages: Record<UserPermissions, string> = {
   ADMIN: '/admin/helpers',
@@ -43,6 +44,7 @@ function App() {
         <Route path="/admin/*" element={<AdminRoutes />} />
         <Route path="/turns/*" element={<TurnsRoutes />} />
         <Route path="/swaps/*" element={<SwapsRoutes />} />
+        <Route path="/user/*" element={<RatingRoutes />} />
         <Route path="/requests/*" element={<RequestsRoutes />} />
         <Route path="/rewards/*" element={<RewardsRoutes />} />
         <Route path="/donation/*" element={<DonationRoutes />} />

@@ -7,6 +7,7 @@ from common.email import send_email_to_user
 
 from request.serializers import RequestSerializer
 from request.models import Request
+from rating.models import Rating
 from user.models import UserAccount
 from .models import Turn, TurnState
 from app_post.models import PostState
@@ -88,12 +89,12 @@ class TurnsValidateView(APIView):
         score_maker = turn.post_maker.value
         score_received = turn.post_receive.value
 
-        try:
+        try:      
             send_email_to_user(
                 [email_maker],
                 "Califica tu intercambio",
                 f"¡Felicitaciones {name_maker}! Has finalizado un intercambio con {name_received}, has sumado {score_maker} puntos. \n" +
-                f"Puedes calificar a {name_received} en el siguiente enlace: http://localhost:5173/user/calificate/ \n" +
+                f"Puedes calificar a {name_received} en el siguiente enlace: http://localhost:5173/user/calificate/M-{id_turn} \n" +
                 f"¡Gracias por confiar en SwapIt!"
             )
 
@@ -101,7 +102,7 @@ class TurnsValidateView(APIView):
                 [email_received],
                 "Califica tu intercambio",
                 f"¡Felicitaciones {name_received}! Has finalizado un intercambio con {name_maker}, has sumado {score_received} puntos. \n" +
-                f"Puedes calificar a {name_maker} en el siguiente enlace: http://localhost:5173/user/calificate/ \n" +
+                f"Puedes calificar a {name_maker} en el siguiente enlace: http://localhost:5173/user/calificate/R-{id_turn} \n" +
                 f"¡Gracias por confiar en SwapIt!"
             )
         except:
@@ -116,7 +117,6 @@ class TurnsValidateView(APIView):
         turn.user_received.score += score_received
         turn.user_maker.save()
         turn.user_received.save()
-
         turn.save()
         return Response(
             {"ok": True, "messages": ["Turno validado."], "data": {}},

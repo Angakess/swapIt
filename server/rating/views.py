@@ -1,6 +1,6 @@
 from rest_framework import generics, status
 from rating.models import Rating
-from rating.serializer import RatingCreateSerializer, RatingSerializer
+from rating.serializer import RatingCreateSerializer, RatingSerializer,RatingNewSerializer
 from rest_framework.views import APIView
 from user.models import UserAccount
 from rest_framework.parsers import JSONParser
@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 class RatingCreateView(generics.CreateAPIView):
     queryset = Rating.objects.all()
-    serializer_class = RatingCreateSerializer
+    serializer_class = RatingNewSerializer
 
 
 class RatingOfUser(APIView):

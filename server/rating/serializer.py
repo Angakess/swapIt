@@ -20,3 +20,8 @@ class RatingSerializer(serializers.ModelSerializer):
             'comment',
             'user_maker'
         ]
+
+class RatingNewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = '__all__'
