@@ -1,4 +1,8 @@
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import {
+  CheckOutlined,
+  CloseOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons'
 import {
   Avatar,
   Button,
@@ -10,6 +14,7 @@ import {
   Rate,
   Row,
   Spin,
+  Tooltip,
   Typography,
   theme,
 } from 'antd'
@@ -18,6 +23,7 @@ import { RatingModel, getUncheckedRatings } from '@Common/api'
 import { PageTitle } from '@Common/components'
 
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export function Ratings() {
   const [ratings, setRatings] = useState<RatingModel[]>([])
@@ -35,6 +41,19 @@ export function Ratings() {
   return (
     <>
       <PageTitle title="Calificaciones" />
+
+      <Flex gap="0.25rem" align="baseline">
+        <Typography.Title level={3}>
+          Validar calificaiones pendientes
+        </Typography.Title>
+        <Tooltip
+          placement="bottom"
+          title="Al rechazar una calificación se mantendrá su valoración, pero se eliminará su comentario."
+        >
+          <InfoCircleOutlined />
+        </Tooltip>
+      </Flex>
+      <Typography.Paragraph></Typography.Paragraph>
       <RatingContent ratings={ratings} isLoading={isLoading} />
     </>
   )
@@ -47,6 +66,8 @@ function RatingContent({
   ratings: RatingModel[]
   isLoading: boolean
 }) {
+  const { colorSuccess } = theme.useToken().token
+
   if (isLoading) {
     return <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
   }
@@ -62,8 +83,17 @@ function RatingContent({
           <Col xs={24} md={15}>
             <RatingAvatar {...rating} />
           </Col>
-          <Col xs={24} md={9}>
-            <RatingButtons />
+          <Col xs={24} md={9} style={{ justifySelf: 'end' }}>
+            <Flex gap="0.75rem">
+              <ConfigProvider theme={{ token: { colorPrimary: colorSuccess } }}>
+                <Button type="primary" icon={<CheckOutlined />} block>
+                  Aceptar
+                </Button>
+              </ConfigProvider>
+              <Button type="primary" danger icon={<CloseOutlined />} block>
+                Rechazar
+              </Button>
+            </Flex>
           </Col>
         </Row>
         <Typography.Paragraph style={{ margin: 0 }}>
@@ -76,36 +106,24 @@ function RatingContent({
 
 function RatingAvatar({
   score,
-  user_maker: { first_name, last_name },
+  user_maker: { id, first_name, last_name },
 }: RatingModel) {
+  const { colorText } = theme.useToken().token
+
   return (
     <Flex gap="1rem" align="center">
       <Avatar style={{ backgroundColor: '#D02F4C' }} size="large">
         {(first_name[0] + last_name[0]).toUpperCase()}
       </Avatar>
       <Flex vertical>
-        <Typography.Text strong>
+        <Link
+          to={`/admin/exchangers/${id}`}
+          style={{ color: colorText, fontWeight: 700 }}
+        >
           {first_name} {last_name}
-        </Typography.Text>
+        </Link>
         <Rate disabled defaultValue={score} allowHalf />
       </Flex>
-    </Flex>
-  )
-}
-
-function RatingButtons() {
-  const { colorSuccess } = theme.useToken().token
-
-  return (
-    <Flex gap="0.75rem">
-      <ConfigProvider theme={{ token: { colorPrimary: colorSuccess } }}>
-        <Button type="primary" icon={<CheckOutlined />} block>
-          Aceptar
-        </Button>
-      </ConfigProvider>
-      <Button type="primary" danger icon={<CloseOutlined />} block>
-        Rechazar
-      </Button>
     </Flex>
   )
 }
