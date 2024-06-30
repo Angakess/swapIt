@@ -4,7 +4,8 @@
         "pk": 1,
         "fields": {
             "name": "útiles escolares",
-            "active": true
+            "active": true,
+            "score":10
         }
     },
     {
@@ -12,7 +13,8 @@
         "pk": 2,
         "fields": {
             "name": "vestimenta",
-            "active": true
+            "active": true,
+            "score":10
         }
     },
     {
@@ -20,7 +22,8 @@
         "pk": 3,
         "fields": {
             "name": "alimentos",
-            "active": true
+            "active": true,
+            "score":10
         }
     },
     {
@@ -28,7 +31,8 @@
         "pk": 4,
         "fields": {
             "name": "elementos de limpieza",
-            "active": true
+            "active": true,
+            "score":10
         }
     },
     {
@@ -36,7 +40,8 @@
         "pk": 5,
         "fields": {
             "name": "herramientas",
-            "active": true
+            "active": true,
+            "score":10
         }
     }
 ]
