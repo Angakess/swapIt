@@ -8,6 +8,7 @@ from common.email import send_email_to_user
 class Category(models.Model):
     name = models.CharField(max_length=255)
     active = models.BooleanField(default=True)
+    score = models.IntegerField(default=10)
 
     def __str__(self):
         return self.name

@@ -155,3 +155,19 @@ class UserDetailSerializer(serializers.ModelSerializer):
             'phone_number',
             'gender',
         ]
+
+
+class UserScoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAccount
+        fields = [
+            'id',
+            'full_name',
+            'dni',
+            'email',
+            'gender',
+            'date_of_birth',
+            'phone_number',
+            'state',
+            'score'
+        ]
