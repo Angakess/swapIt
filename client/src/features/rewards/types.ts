@@ -6,6 +6,7 @@ export type Exchanger = {
     gender: string
     date_of_birth: string
     phone_number: string
+    score:number
     state: {
       id: number
       name: string

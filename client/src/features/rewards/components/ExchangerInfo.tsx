@@ -5,10 +5,10 @@ import dayjs from 'dayjs'
 
 export function ExchangerInfo({ userData }: { userData: Exchanger }) {
   function translateGender() {
-    if (userData?.gender === 'FEMALE') {
+    if (userData.gender === 'FEMALE') {
       return 'FEMENINO'
     }
-    if (userData?.gender === 'MALE') {
+    if (userData.gender === 'MALE') {
       return 'MASCULINO'
     } else {
       return 'OTRO'
@@ -44,7 +44,7 @@ export function ExchangerInfo({ userData }: { userData: Exchanger }) {
     {
       key: '6',
       label: 'Puntos',
-      children: 'WIP',
+      children: userData.score,
     },
   ]
 

@@ -1,16 +1,18 @@
-import { Button, Flex, GetProp, Table, Tooltip } from 'antd'
+import { Button, Flex, GetProp, Popconfirm, Table, Tooltip } from 'antd'
 import { ShoppingOutlined } from '@ant-design/icons'
 /* import { ColumnsType } from 'antd/es/table' */
 import { TableProps } from 'antd/lib'
 import { useEffect, useState } from 'react'
+import { Exchanger } from '@Rewards/types'
+import { useCustomAlerts } from '@Common/hooks'
 
 /* type DataIndex = keyof CategoryType */
 interface CategoryType {
   id: number
   name: string
-  active: boolean
-  /* points: number */
-  [key: string]: string | number | boolean
+  stock: number
+  points: number
+  subId: number
 }
 
 interface RootObject {
@@ -18,6 +20,7 @@ interface RootObject {
   categoria: Categoria
   filial: Filial
   cantidad: number
+  subId: number
 }
 
 interface Filial {
@@ -34,6 +37,7 @@ interface Categoria {
   id: number
   name: string
   active: boolean
+  score: number
 }
 
 type ColumnsType<T> = TableProps<T>['columns']
@@ -45,9 +49,23 @@ interface TableParams {
   filters?: Parameters<GetProp<TableProps, 'onChange'>>[1]
 }
 
-export function CategoryList({ hasUser }: { hasUser: boolean }) {
+export function CategoryList({
+  hasUser,
+  subId,
+  userPoints,
+  user,
+  handleSearch,
+  fetchSubId,
+}: {
+  hasUser: boolean
+  subId: number
+  userPoints: number | undefined
+  user: Exchanger | undefined
+  handleSearch: () => void
+  fetchSubId: () => void
+}) {
   const [loading, setLoading] = useState(false)
-  const [newData, setNewData] = useState<RootObject[]>()
+  const [newData, setNewData] = useState<CategoryType[]>()
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -81,19 +99,22 @@ export function CategoryList({ hasUser }: { hasUser: boolean }) {
   const fetchData = async () => {
     setLoading(true)
     // const res = await fetch('http://localhost:8000/category/list/')
-    fetch('http://localhost:8000/stock/retrieve/1')
-      .then(res => res.json())
-      .then(results =>results.data)
-      .then(data => data.filter((result: RootObject) => result.categoria.active))
-      .then(filtered =>
+    fetch(`http://localhost:8000/stock/retrieve/${subId}`)
+      .then((res) => res.json())
+      .then((results) => results.data)
+      .then((data) =>
+        data.filter((result: RootObject) => result.categoria.active)
+      )
+      .then((filtered) =>
         filtered.map((result: RootObject) => ({
           id: result.id,
           name: result.categoria.name,
           stock: result.cantidad,
-          points: 10,
+          points: result.categoria.score,
+          subId: result.filial.id,
         }))
       )
-      .then(finalData => {
+      .then((finalData) => {
         setNewData(finalData)
         setLoading(false)
       })
@@ -105,11 +126,31 @@ export function CategoryList({ hasUser }: { hasUser: boolean }) {
 
   useEffect(() => {
     fetchData()
-    console.log('asdasd')
   }, [])
 
-  async function redeemPoints(record: CategoryType) {
-    console.log('redimistes ', record.name)
+  const modal = useCustomAlerts()
+
+  async function handleConfirm(record: CategoryType) {
+    setLoading(true)
+    const res = await fetch(`http://localhost:8000/stock/update/${record.id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'PATCH',
+      body: JSON.stringify({
+        id_user: user?.id,
+      }),
+    })
+    const result = await res.json()
+    if (result.ok) {
+      modal.successNotification('Operación exitosa', result.messages[0])
+    } else {
+      modal.errorNotification('Operación fallida', result.messages[0])
+    }
+    setLoading(false)
+    handleSearch()
+    fetchSubId()
+    fetchData()
   }
 
   const columns: ColumnsType<CategoryType> = [
@@ -134,12 +175,23 @@ export function CategoryList({ hasUser }: { hasUser: boolean }) {
       render: (_: any, record) => (
         <Flex justify="center">
           <Tooltip title="Canjear puntos">
-            <Button
-              type="primary"
-              disabled={!hasUser}
-              icon={<ShoppingOutlined />}
-              onClick={() => redeemPoints(record)}
-            ></Button>
+            <Popconfirm
+              title="¿Está seguro que quiere realizar el canje?"
+              okText="Confirmar"
+              cancelText="Cancelar"
+              onConfirm={() => handleConfirm(record)}
+            >
+              <Button
+                type="primary"
+                disabled={
+                  record.stock == 0 ||
+                  !hasUser ||
+                  (userPoints !== undefined && record.points > userPoints)
+                }
+                icon={<ShoppingOutlined />}
+                /* onClick={() => redeemPoints(record)} */
+              ></Button>
+            </Popconfirm>
           </Tooltip>
         </Flex>
       ),

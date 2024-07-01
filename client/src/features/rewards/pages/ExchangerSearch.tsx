@@ -1,23 +1,25 @@
 import { PageTitle } from '@Common/components'
 import { Col, Modal, Row, Spin } from 'antd'
 import Search from 'antd/es/input/Search'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CategoryList, ExchangerInfo } from '@Rewards/components'
 import { Exchanger } from '@Rewards/types'
+import { useAuth } from '@Common/hooks'
 
 export function ExchangerSearch() {
+  const { user } = useAuth()
+
   const [inputValue, setInputValue] = useState<string>()
   const [loading, setLoading] = useState(false)
   const [newData, setNewData] = useState<Exchanger>()
   async function handleSearch() {
     setLoading(true)
-    console.log('buscaste: ', inputValue)
     const res = await fetch(
-      `http://localhost:8000/users/get-exchanger/${inputValue}`
+      `http://localhost:8000/users/get-exchanger-dni/${inputValue}`
     )
     if (res.ok) {
       const result = await res.json()
-      setNewData(result)
+      setNewData(result.data)
     } else {
       setNewData(undefined)
       if (res.status === 404) {
@@ -26,7 +28,6 @@ export function ExchangerSearch() {
           content: `No existe un intercambiador con el DNI ingresado`,
         })
       } else {
-        console.log('Sucedio otro error')
         Modal.error({
           title: 'Ocurrió un error',
           content: ``,
@@ -35,10 +36,24 @@ export function ExchangerSearch() {
     }
     setLoading(false)
   }
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(event.target.value)
-    console.log(event.target.value)
   }
+
+  const [subId, setSubId] = useState()
+  async function fetchSubId() {
+    setLoading(true)
+    const res = await fetch(
+      `http://localhost:8000/users/get-helper/${user?.id}`
+    )
+    const result = await res.json()
+    setSubId(result.subsidiary.id)
+    setLoading(false)
+  }
+  useEffect(() => {
+    fetchSubId()
+  }, [])
   return (
     <>
       <Spin spinning={loading}>
@@ -92,7 +107,16 @@ export function ExchangerSearch() {
             >
               Categorías
             </h2>
-            <CategoryList hasUser={newData ? true : false}></CategoryList>
+            {subId && (
+              <CategoryList
+                hasUser={newData ? true : false}
+                subId={subId}
+                userPoints={newData?.score}
+                user={newData}
+                handleSearch={handleSearch}
+                fetchSubId={fetchSubId}
+              ></CategoryList>
+            )}
           </Col>
         </Row>
       </Spin>
