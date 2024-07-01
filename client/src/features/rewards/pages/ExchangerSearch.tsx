@@ -1,21 +1,23 @@
 import { PageTitle } from '@Common/components'
-import { Col, Modal, Row, Spin } from 'antd'
-import Search from 'antd/es/input/Search'
+import { Button, Col, Form, Input, Modal, Row, Space, Spin } from 'antd'
 import { useEffect, useState } from 'react'
 import { CategoryList, ExchangerInfo } from '@Rewards/components'
 import { Exchanger } from '@Rewards/types'
 import { useAuth } from '@Common/hooks'
+import { SearchOutlined } from '@ant-design/icons'
 
 export function ExchangerSearch() {
   const { user } = useAuth()
 
-  const [inputValue, setInputValue] = useState<string>()
+  /* const [inputValue, setInputValue] = useState<string>() */
+  const [form] = Form.useForm<{ dni: string }>()
   const [loading, setLoading] = useState(false)
   const [newData, setNewData] = useState<Exchanger>()
-  async function handleSearch() {
+
+  async function handleSearch(values: { dni: string }) {
     setLoading(true)
     const res = await fetch(
-      `http://localhost:8000/users/get-exchanger-dni/${inputValue}`
+      `http://localhost:8000/users/get-exchanger-dni/${values.dni}`
     )
     if (res.ok) {
       const result = await res.json()
@@ -37,9 +39,9 @@ export function ExchangerSearch() {
     setLoading(false)
   }
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  /*  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(event.target.value)
-  }
+  } */
 
   const [subId, setSubId] = useState()
   async function fetchSubId() {
@@ -54,6 +56,7 @@ export function ExchangerSearch() {
   useEffect(() => {
     fetchSubId()
   }, [])
+
   return (
     <>
       <Spin spinning={loading}>
@@ -69,7 +72,44 @@ export function ExchangerSearch() {
               height: '100%',
             }}
           >
-            <Search
+            <Form
+              form={form}
+              layout="vertical"
+              style={{ padding: '10px' }}
+              onFinish={handleSearch}
+            >
+              <Form.Item
+                label="Ingrese un DNI"
+                name="dni"
+                required={false}
+                rules={[
+                  {
+                    required: true,
+                    message:
+                      'Ingrese el DNI del intercambiador que desea realizar un canje',
+                  },
+                  { len: 8, message: 'El DNI debe ser de 8 dígitos' },
+                  { pattern: /^\d+$/, message: 'El DNI debe ser un número' },
+                ]}
+              >
+                <Space.Compact block>
+                  <Input
+                    placeholder="DNI"
+                    size="large"
+                    style={{ width: '100%' }}
+                    autoFocus
+                  />
+                  <Button
+                    htmlType="submit"
+                    size="large"
+                    type="primary"
+                    icon={<SearchOutlined />}
+                  ></Button>
+                </Space.Compact>
+              </Form.Item>
+            </Form>
+
+            {/* <Search
               value={inputValue}
               autoFocus
               placeholder="Ingrese un DNI"
@@ -78,14 +118,15 @@ export function ExchangerSearch() {
               onSearch={handleSearch}
               enterButton={'Buscar'}
               style={{ marginBottom: '24px', marginTop: '24px' }}
-            ></Search>
+              
+            ></Search> */}
             {newData ? (
               <ExchangerInfo userData={newData}></ExchangerInfo>
-            ) : (
+            ) : /* (
               <p style={{ color: '#FF6466' }}>
                 Ingrese el DNI del intercambiador que desea realizar un canje
               </p>
-            )}
+            ) */ null}
           </Col>
           <Col
             span={11}

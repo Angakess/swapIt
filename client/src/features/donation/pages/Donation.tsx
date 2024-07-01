@@ -1,37 +1,47 @@
 import { PageTitle } from '@Common/components'
-import { AmountChoice, FormMercadoPago } from '@Donation/components'
-import { Button, Flex, Progress, Space } from 'antd'
+import {
+  AmountChoice,
+  FormMercadoPago,
+  MyStatusScreen,
+} from '@Donation/components'
+import { Flex, Spin } from 'antd'
 import { useState } from 'react'
 
 export function Donation() {
-  /* const [step, setStep] = useState<number>(0) */
+  const [loading, setLoading] = useState(false)
   const [amount, setAmount] = useState<number>(100)
+  const [paymentResponse, setPaymentResponse] = useState<any>(null)
+  const [showForm, setShowForm] = useState(false)
 
   return (
     <>
       <PageTitle title="Colaborá con Cáritas"></PageTitle>
-      <Flex vertical gap={'middle'}>
-        {/* <Progress
-          percent={step === 3 ? 100 : 33 * step}
-          showInfo={false}
-          status={step === 3 ? 'success' : 'active'}
-        ></Progress> */}
-        <>
-          <AmountChoice amount={amount} setAmount={setAmount}></AmountChoice>
-          <FormMercadoPago monto={amount}></FormMercadoPago>
-        </>
-        {/* <Flex justify="end" gap={'middle'}>
-          {step > 0 ? (
-            <Button size="large" type="link" onClick={() => setStep(step - 1)}>
-              Volver
-            </Button>
-          ) : null}
-
-          <Button size="large" type="primary" onClick={() => setStep(step + 1)}>
-            Confirmar
-          </Button>
-        </Flex> */}
-      </Flex>
+      <Spin spinning={loading}>
+        <Flex vertical gap={'middle'}>
+          <>
+            {paymentResponse ? (
+              <MyStatusScreen paymentId={paymentResponse.id} />
+            ) : (
+              <>
+                {showForm ? ( 
+                  <FormMercadoPago
+                    monto={amount}
+                    setPaymentResponse={setPaymentResponse}
+                    setLoading={setLoading}
+                    setShowForm={setShowForm}
+                  ></FormMercadoPago>
+               ) : ( 
+                  <AmountChoice
+                    amount={amount}
+                    setAmount={setAmount}
+                    setShowForm={setShowForm}
+                  ></AmountChoice>
+               )} 
+              </>
+            )}
+          </>
+        </Flex>
+      </Spin>
     </>
   )
 }

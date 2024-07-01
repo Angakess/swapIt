@@ -61,7 +61,7 @@ export function CategoryList({
   subId: number
   userPoints: number | undefined
   user: Exchanger | undefined
-  handleSearch: () => void
+  handleSearch: (values: { dni: string }) => Promise<void>
   fetchSubId: () => void
 }) {
   const [loading, setLoading] = useState(false)
@@ -148,7 +148,7 @@ export function CategoryList({
       modal.errorNotification('Operación fallida', result.messages[0])
     }
     setLoading(false)
-    handleSearch()
+    handleSearch(user!)
     fetchSubId()
     fetchData()
   }
