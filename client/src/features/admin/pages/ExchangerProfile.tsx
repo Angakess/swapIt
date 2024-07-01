@@ -1,5 +1,7 @@
+import { ModalSubChoice } from '@Admin/components'
 import { PageTitle } from '@Common/components'
 import { useCustomAlerts } from '@Common/hooks'
+import { Page404 } from '@Common/pages'
 import {
   Button,
   Card,
@@ -7,8 +9,11 @@ import {
   DescriptionsProps,
   Flex,
   Modal,
+  Popconfirm,
+  Select,
   Spin,
 } from 'antd'
+import { DefaultOptionType } from 'antd/es/select'
 import { useEffect, useState } from 'react'
 
 type DataType = {
@@ -26,48 +31,88 @@ type DataType = {
 }
 
 export function ExchangerProfile() {
+  const [openModal, setOpenModal] = useState(false)
+  const [exists, setExists] = useState(true)
+  const miniModal = useCustomAlerts()
+
   function CardHeader() {
-    const sendAddHelper = () => {
-      console.log('Lo agregaste como ayudante')
-      alert.notImplementedYet()
-      fetchData()
+    const sendAddHelper = async () => {
+      console.log('Lo agregaste como ayudanteasdsadasdasdas')
+      setOpenModal(true)
     }
-    const sendBlock = () => {
+    const sendBlock = async () => {
       console.log('Lo bloqueaste')
-      alert.notImplementedYet()
+      setIsLoading(true)
+      const res = await fetch(
+        `http://localhost:8000/users/put-in-review/${exchangerId}`
+      )
+      const result = await res.json()
+      if (result.ok) {
+        miniModal.successNotification(
+          'Operación exitosa',
+          'Usuario bloqueado exitosamente'
+        )
+      } else {
+        miniModal.errorNotification('Operación fallida', result.messages[0])
+      }
+      setIsLoading(false)
       fetchData()
     }
-    const sendUnblock = () => {
+    const sendUnblock = async () => {
       console.log('Lo desbloqueaste')
-      alert.notImplementedYet()
+      /* alert.notImplementedYet() */
+      setIsLoading(true)
+      const res = await fetch(
+        `http://localhost:8000/users/remove-user-from-review/${exchangerId}`
+      )
+      const result = await res.json()
+      if (result.ok) {
+        miniModal.successNotification(
+          'Operación exitosa',
+          'Usuario desbloqueado exitosamente'
+        )
+      } else {
+        miniModal.errorNotification('Operación fallida', result.messages[0])
+      }
+      setIsLoading(false)
       fetchData()
     }
-    const sendUnlockAccount = () => {
+    /* const sendUnlockAccount = () => {
       console.log('Le desbloqueaste el inicio de sesión')
       alert.notImplementedYet()
       fetchData()
-    }
+    } */
 
     const MakeButtons = () => {
       if (data?.state.name === 'suspendido') {
         return (
           <>
-            <Button
-              type="primary"
-              onClick={sendUnlockAccount}
-              disabled={isLoading}
+            <Popconfirm
+              title="¿Está seguro que quiere desbloquear este usuario?"
+              okText="Confirmar"
+              cancelText="Cancelar"
+              onConfirm={sendUnblock}
             >
-              Desbloquear inicio de sesión
-            </Button>
+              <Button type="primary" disabled={isLoading}>
+                Desbloquear inicio de sesión
+              </Button>
+            </Popconfirm>
           </>
         )
       }
       if (data?.state.name === 'bloqueado') {
         return (
           <>
-            <Button type="primary" onClick={sendUnblock} disabled={isLoading}>
-              Desbloquear cuenta
-            </Button>
+            <Popconfirm
+              title="¿Está seguro que quiere desbloquear este usuario?"
+              okText="Confirmar"
+              cancelText="Cancelar"
+              onConfirm={sendUnblock}
+            >
+              <Button type="primary" disabled={isLoading}>
+                Desbloquear cuenta
+              </Button>
+            </Popconfirm>
           </>
         )
       }
@@ -77,14 +122,30 @@ export function ExchangerProfile() {
             <Button onClick={sendAddHelper} disabled={isLoading}>
               Incorporar como ayudante
             </Button>
-            <Button
-              type="primary"
-              danger
-              onClick={sendBlock}
-              disabled={isLoading}
+            <ModalSubChoice
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+              loading={isLoading}
+              setLoading={setIsLoading}
+              userId={exchangerId}
+              setExists={setExists}
+            ></ModalSubChoice>
+
+            <Popconfirm
+              title="¿Está seguro que quiere bloquear este usuario?"
+              okText="Confirmar"
+              cancelText="Cancelar"
+              onConfirm={sendBlock}
             >
-              Bloquear
-            </Button>
+              <Button
+                type="primary"
+                danger
+                /* onClick={sendBlock} */
+                disabled={isLoading}
+              >
+                Bloquear
+              </Button>
+            </Popconfirm>
           </>
         )
       }
@@ -168,17 +229,23 @@ export function ExchangerProfile() {
   ]
 
   return (
-    <Spin spinning={isLoading}>
-      <PageTitle title={`Intercambiador - ${data?.full_name}`} />
-      <Card title={<CardHeader />}>
-        <Descriptions
-          bordered
-          layout="horizontal"
-          column={1}
-          items={items}
-          labelStyle={{ width: '15%' }}
-        />
-      </Card>
-    </Spin>
+    <>
+      {exists ? (
+        <Spin spinning={isLoading}>
+          <PageTitle title={`Intercambiador - ${data?.full_name}`} />
+          <Card title={<CardHeader />}>
+            <Descriptions
+              bordered
+              layout="horizontal"
+              column={1}
+              items={items}
+              labelStyle={{ width: '15%' }}
+            />
+          </Card>
+        </Spin>
+      ) : (
+        <Page404></Page404>
+      )}
+    </>
   )
 }
