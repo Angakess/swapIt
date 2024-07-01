@@ -117,3 +117,27 @@ export async function getUserDetails(
   const data: UserDetailsModel = await resp.json()
   return data
 }
+
+//
+// editUserProfile
+
+export type EditUserProfileOptions = {
+  id: UserDetailsModel['id']
+  current_password: string
+  email?: UserDetailsModel['email']
+  phone_number?: UserDetailsModel['phone_number']
+  date_of_birth?: UserDetailsModel['date_of_birth']
+  gender?: UserDetailsModel['gender']
+  new_password?: string
+}
+
+export async function editUserProfile(
+  user: EditUserProfileOptions
+): Promise<GenericApiResponse<{ user: UserDetailsModel }>> {
+  const resp = await fetch(`${SERVER_URL}/users/update-profile/${user.id}`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'PATCH',
+    body: JSON.stringify({ ...user }),
+  })
+  return resp.json()
+}
