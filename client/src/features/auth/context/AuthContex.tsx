@@ -27,9 +27,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return user.role
   }
 
+  function updateEmail(email: string) {
+    setUser((prev) => ({ ...prev!, email }))
+  }
+
   return (
     <AuthContext.Provider
-      value={{ user, isLoggedIn, logIn, logOut, getPermission }}
+      value={{ user, isLoggedIn, logIn, logOut, getPermission, updateEmail }}
     >
       {children}
     </AuthContext.Provider>

@@ -12,12 +12,12 @@ import {
   Spin,
   Typography,
 } from 'antd'
-import { SetStateAction } from 'react'
+import { useEffect } from 'react'
 import { DangerPopConfirm } from './DangerPopConfirm'
 
 type EditProfileModalProps = {
   isOpen: boolean
-  setIsOpen: React.Dispatch<SetStateAction<boolean>>
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
@@ -26,13 +26,20 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
   const {
     userDetails,
     isLoading,
+    isUpdating,
     form,
     hasBeenUpdated,
     setInitialValues,
     isFormUpdated,
     handleFinish,
     handleDeleteAccount,
+    invalidPasswordValidation,
+    setInvalidPasswordValidation,
   } = useEditProfileForm()
+
+  useEffect(() => {
+    form.validateFields()
+  }, [form, invalidPasswordValidation])
 
   return (
     <Modal
@@ -49,7 +56,7 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
           <Form
             layout="vertical"
             onFinish={handleFinish}
-            disabled={isLoading}
+            disabled={isLoading || isUpdating}
             form={form}
             onValuesChange={(_, values) => isFormUpdated(values)}
             onReset={setInitialValues}
@@ -152,10 +159,25 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
               label="Contraseña actual"
               name="currentPassword"
               required={false}
-              rules={[{ required: true, message: 'Ingrese su contraseña' }]}
+              rules={[
+                { required: true, message: 'Ingrese su contraseña' },
+                () => ({
+                  validator(_, value) {
+                    console.log('first', invalidPasswordValidation)
+                    if (!value || !invalidPasswordValidation) {
+                      return Promise.resolve()
+                    }
+                    return Promise.reject('Contraseña incorrecta')
+                  },
+                }),
+              ]}
               extra="Debes ingresar tu contraseña actual para poder realizar los cambios"
             >
-              <Input.Password placeholder="Contraseña actual" size="large" />
+              <Input.Password
+                placeholder="Contraseña actual"
+                size="large"
+                onChange={() => setInvalidPasswordValidation(false)}
+              />
             </Form.Item>
 
             <Flex
@@ -183,7 +205,9 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
                   placement="top"
                   onConfirm={handleDeleteAccount}
                 >
-                  <Button danger>Eliminar cuenta</Button>
+                  <Button danger loading={isUpdating}>
+                    Eliminar cuenta
+                  </Button>
                 </DangerPopConfirm>
               )}
 
@@ -193,6 +217,7 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
                   htmlType="reset"
                   style={{ marginRight: '1rem' }}
                   disabled={!hasBeenUpdated}
+                  loading={isUpdating}
                 >
                   Restablecer
                 </Button>
@@ -200,6 +225,7 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
                   type="primary"
                   htmlType="submit"
                   disabled={!hasBeenUpdated}
+                  loading={isUpdating}
                 >
                   Editar perfil
                 </Button>

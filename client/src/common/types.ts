@@ -17,4 +17,5 @@ export type AuthContextType = {
   logIn: (user: User) => void
   logOut: () => void
   getPermission: () => UserPermissions
+  updateEmail: (email: string) => void
 }
