@@ -38,7 +38,7 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
   } = useEditProfileForm()
 
   useEffect(() => {
-    form.validateFields()
+    form.validateFields(['currentPassword'])
   }, [form, invalidPasswordValidation])
 
   return (
@@ -162,9 +162,8 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
               rules={[
                 { required: true, message: 'Ingrese su contraseña' },
                 () => ({
-                  validator(_, value) {
-                    console.log('first', invalidPasswordValidation)
-                    if (!value || !invalidPasswordValidation) {
+                  validator() {
+                    if (!invalidPasswordValidation) {
                       return Promise.resolve()
                     }
                     return Promise.reject('Contraseña incorrecta')

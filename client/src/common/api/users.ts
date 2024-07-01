@@ -3,6 +3,7 @@
 
 import { SERVER_URL } from 'constants'
 import { GenericApiResponse } from './types'
+import { fetchPost } from '@Common/helpers'
 
 export enum UserStateNameEnum {
   bloqueado = 'bloqueado',
@@ -139,5 +140,23 @@ export async function editUserProfile(
     method: 'PATCH',
     body: JSON.stringify({ ...user }),
   })
+  return resp.json()
+}
+
+//
+// removeExchanger
+
+export async function removeExchanger(
+  exchangerId: number,
+  password: string
+): Promise<GenericApiResponse<never>> {
+  const resp = await fetch(
+    `${SERVER_URL}/users/remove-exchanger/${exchangerId}`,
+    {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ current_password: password }),
+    }
+  )
   return resp.json()
 }

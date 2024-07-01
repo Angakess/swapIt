@@ -4,6 +4,7 @@ import {
   UserGender,
   editUserProfile,
   getUserDetails,
+  removeExchanger,
 } from '@Common/api'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useEffect, useState } from 'react'
@@ -22,8 +23,8 @@ export type EditFormData = {
 }
 
 export function useEditProfileForm() {
-  const { user, updateEmail } = useAuth()
-  const { successNotification } = useCustomAlerts()
+  const { user, updateEmail, logOut } = useAuth()
+  const { successNotification, errorNotification } = useCustomAlerts()
 
   const [userDetails, setUserDetails] = useState<UserDetailsModel>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -99,13 +100,48 @@ export function useEditProfileForm() {
       // No se actualizó la información del usuario.
       // La contraseña es incorrecta.
       setInvalidPasswordValidation(true)
+      form.validateFields(['currentPassword'])
     }
 
     setIsUpdating(false)
   }
 
-  function handleDeleteAccount() {
-    console.log('handleDeleteAccount')
+  async function handleDeleteAccount() {
+    setIsUpdating(true)
+
+    const currentPassword = form.getFieldValue('currentPassword')
+
+    // Si no se ingresó la contraseña marcar el error y terminar
+    if (currentPassword === '') {
+      form.validateFields(['currentPassword'])
+      setIsUpdating(false)
+      return
+    }
+
+    // Solicitar la eliminación
+    const resp = await removeExchanger(user!.id, currentPassword)
+
+    if (!resp.ok) {
+      if (
+        resp.messages[0] ===
+        'Contraseña incorrecta, no se puede eliminar la cuenta.'
+      ) {
+        setInvalidPasswordValidation(true)
+      } else {
+        errorNotification(
+          'Ocurrió un error al eliminar la cuenta',
+          resp.messages.join('\n')
+        )
+      }
+    } else {
+      logOut()
+      successNotification(
+        'Cuenta eliminada',
+        'Su cuenta ha sido eliminada correctamente'
+      )
+    }
+
+    setIsUpdating(false)
   }
 
   useEffect(() => {
