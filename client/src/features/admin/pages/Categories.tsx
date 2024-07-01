@@ -3,6 +3,7 @@ import {
   Button,
   GetProp,
   Input,
+  InputNumber,
   InputRef,
   Modal,
   Space,
@@ -29,6 +30,7 @@ interface DataType {
   id: number
   name: string
   active: boolean
+  score: number
   [key: string]: string | number | boolean
 }
 
@@ -56,8 +58,10 @@ export function Categories() {
     id: -1,
     name: '',
     active: false,
+    score: 0
   })
   const [newName, setNewName] = useState('')
+  const [newScore, setNewScore] = useState<number | null>()
   const [inputStatus, setInputStatus] = useState<'' | 'error'>('')
   const [inputErrorMessage, setInputErrorMessage] = useState('')
   const { modal } = App.useApp()
@@ -288,6 +292,12 @@ export function Categories() {
       ...getColumnSearchProps('name'),
     },
     {
+      title: "Puntos:",
+      dataIndex: "score",
+      render: (score) => `${score}`,
+
+    },
+    {
       title: `Estado:`,
       dataIndex: 'active',
       render: (isActive) => (isActive ? 'Activo' : 'Pausado'),
@@ -337,6 +347,7 @@ export function Categories() {
       method: 'PATCH',
       body: JSON.stringify({
         name: newName,
+        score: newScore
       }),
     })
     if (!res.ok) {
@@ -351,6 +362,8 @@ export function Categories() {
   const showModalEdit = (record: DataType) => {
     setIsModalOpen(true)
     setCatSelected(record)
+    setNewScore(record.score)
+    setNewName(record.name)
   }
   const handleOk = () => {
     if (!newName) {
@@ -358,11 +371,11 @@ export function Categories() {
       setInputErrorMessage('El nombre es obligatorio')
       return
     }
-    if (data?.some((item) => item.name === newName)) {
+    /* if (data?.some((item) => item.name === newName)) {
       setInputStatus('error')
       setInputErrorMessage(`Ya existe una categoría con el nombre "${newName}"`)
       return
-    }
+    } */
     sendCatNameChange(catSelected.id)
     setIsModalOpen(false)
   }
@@ -402,6 +415,9 @@ export function Categories() {
     setIsModalOpenNewCat(false)
     console.log('OPERACION CANCELADA')
   }
+  function handleChangeScore(value: number | null){
+    setNewScore(value)
+  }
 
   return (
     <>
@@ -436,6 +452,7 @@ export function Categories() {
         okText="Confirmar"
         afterClose={() => {
           setNewName('')
+          setNewScore(catSelected.score)
           setInputStatus('')
         }}
       >
@@ -450,6 +467,8 @@ export function Categories() {
         {inputStatus === 'error' ? (
           <p style={{ color: '#FF4D4F' }}>{inputErrorMessage}</p>
         ) : null}
+        <p>Ingrese un puntaje</p>
+        <InputNumber defaultValue={catSelected.score} value={newScore} min={1} onChange={(v) => handleChangeScore(v)}></InputNumber>
       </Modal>
       <Modal
         title="Agregando categoría"
