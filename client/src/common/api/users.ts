@@ -3,7 +3,6 @@
 
 import { SERVER_URL } from 'constants'
 import { GenericApiResponse } from './types'
-import { fetchPost } from '@Common/helpers'
 
 export enum UserStateNameEnum {
   bloqueado = 'bloqueado',
