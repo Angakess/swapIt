@@ -22,7 +22,7 @@ import coreschema
 from rest_framework.schemas import AutoSchema
 from rating.models import Rating
 from django.db import  transaction 
-
+from django.contrib.auth.hashers import check_password, make_password
 
 class UserScore(APIView):
     def get(self, request, user_id):
@@ -804,10 +804,10 @@ class UpdateUser(generics.UpdateAPIView):
     serializer_class = UserBaseSerializer
 
     def partial_update(self, request, *args, **kwargs):
-        current_password = self.request.data.get('current_password')
+        current_password = request.data.get('current_password')
         if current_password:
-            user = UserAccount.objects.filter(pk=kwargs['pk']).first()
-            if user.password != hashlib.md5(current_password.encode()).hexdigest():
+            user = self.get_object()
+            if not check_password(current_password, user.password):
                 return Response(
                     {
                         'ok': False,
@@ -816,7 +816,30 @@ class UpdateUser(generics.UpdateAPIView):
                     },
                     status=status.HTTP_400_BAD_REQUEST
                 )
-        return super().partial_update(request, *args, **kwargs)
+
+        response = super().partial_update(request, *args, **kwargs)
+
+        # Si el estado de la respuesta es 200 (OK), personalizamos la respuesta
+        if response.status_code == status.HTTP_200_OK:
+            user = self.get_object()
+            user_data = UserDetailSerializer(user).data
+            return Response(
+                {
+                    'ok': True,
+                    'messages': ['Perfil actualizado correctamente'],
+                    'data': {'user': user_data}
+                },
+                status=status.HTTP_200_OK
+            )
+
+        return response
+
+    def perform_update(self, serializer):
+        new_password = self.request.data.get('new_password')
+        if new_password:
+            serializer.save(password=make_password(new_password))
+        else:
+            serializer.save()
 
 class ConvertToHelper(APIView):
         def get(self, request, helper_id, filial_id):
