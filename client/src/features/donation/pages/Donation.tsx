@@ -9,7 +9,7 @@ import { useState } from 'react'
 
 export function Donation() {
   const [loading, setLoading] = useState(false)
-  const [amount, setAmount] = useState<number>(100)
+  const [amount, setAmount] = useState<number | null>(100)
   const [paymentResponse, setPaymentResponse] = useState<any>(null)
   const [showForm, setShowForm] = useState(false)
 
@@ -25,7 +25,7 @@ export function Donation() {
               <>
                 {showForm ? ( 
                   <FormMercadoPago
-                    monto={amount}
+                    monto={amount!}
                     setPaymentResponse={setPaymentResponse}
                     setLoading={setLoading}
                     setShowForm={setShowForm}

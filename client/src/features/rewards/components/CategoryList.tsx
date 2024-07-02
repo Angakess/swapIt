@@ -165,7 +165,7 @@ export function CategoryList({
       width: '0',
     },
     {
-      title: `Puntos`,
+      title: `Valor`,
       dataIndex: 'points',
       width: '0',
     },

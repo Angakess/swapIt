@@ -5,6 +5,7 @@ import {
   ExchangerProfile,
   Exchangers,
   Helpers,
+  LocalStock,
   Locals,
 } from '@Admin/pages'
 import { Page404 } from '@Common/pages'
@@ -21,6 +22,7 @@ export function AdminRoutes() {
         <Route path="/exchangers" element={<Exchangers />} />
         <Route path="/exchangers/:id" element={<ExchangerProfile />} />
         <Route path="/locals" element={<Locals />} />
+        <Route path="/locals/:id" element={<LocalStock />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/ratings" element={<Ratings />} />
         <Route path="/stats/*" element={<StatsRoutes />} />
