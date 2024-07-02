@@ -7,7 +7,7 @@ export function RatingRoutes() {
   return (
     <Routes>
       <Route element={<ProtectedRoute allowed={['EXCHANGER']} />}>
-        <Route path="calificate/:rol/:id" element={<Rating />} />
+        <Route path="rate/:rol/:id" element={<Rating />} />
       </Route>
 
       <Route path="/*" element={<Page404 />} />

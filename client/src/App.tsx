@@ -8,7 +8,7 @@ import { PostsRoutes } from '@Posts/routes'
 import { TurnsRoutes } from '@Turns/routes'
 import { SwapsRoutes } from '@Swaps/routes'
 import { RequestsRoutes } from '@Requests/routes'
-import { RewardsRoutes } from "@Rewards/routes"
+import { RewardsRoutes } from '@Rewards/routes'
 import { DonationRoutes } from '@Donation/routes'
 
 // Pages
