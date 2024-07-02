@@ -522,17 +522,7 @@
   {
     "model": "rating.rating",
     "fields": {
-      "score": 5,
-      "comment": "Bienvenido a SwapIt!",
-      "checked": true,
-      "user_maker": 1,
-      "user_received": 153
-    }
-  },
-  {
-    "model": "rating.rating",
-    "fields": {
-      "score": 3,
+      "score": 2,
       "comment": "Intercambiamos una campera por un par de zapatillas y la campera tenía los bolsillos rotos.",
       "checked": false,
       "user_maker": 150,

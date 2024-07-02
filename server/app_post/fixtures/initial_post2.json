@@ -4813,8 +4813,77 @@
       "image_4": null,
       "image_5": null
     }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Jabon baratito",
+      "description": "El jabon es barato",
+      "value": 5,
+      "user": 105,
+      "subsidiary":3,
+      "state": 1,
+      "category": 4,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Jabon carito",
+      "description": "El jabon es caro",
+      "value": 5,
+      "user": 105,
+      "subsidiary":3,
+      "state": 1,
+      "category": 4,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Jabon baratito 2",
+      "description": "El jabon es barato 2",
+      "value": 5,
+      "user": 106,
+      "subsidiary":3,
+      "state": 1,
+      "category": 4,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
+  },
+  {
+    "model": "app_post.post",
+    "fields": {
+      "name": "Jabon carito 2",
+      "description": "El jabon es caro 2",
+      "value": 5,
+      "user": 106,
+      "subsidiary":3,
+      "state": 1,
+      "category": 4,
+      "state_product": "NUEVO",
+      "image_1": "post_images/default.jpg",
+      "image_2": "post_images/default.jpg",
+      "image_3": null,
+      "image_4": null,
+      "image_5": null
+    }
   }
-
-  
-
 ]

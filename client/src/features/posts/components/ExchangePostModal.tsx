@@ -127,7 +127,9 @@ function ExchangePostsList({
         emptyText: (
           <Empty
             image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description={`No tienes productos disponibles para intercambiar que pertenezcan a la categoría ${postReceiver.category.name}.`}
+            description={
+              'No tienes productos disponibles para intercambiar que pertenezcan a la categoría.'
+            }
             style={{ textWrap: 'balance' }}
           />
         ),

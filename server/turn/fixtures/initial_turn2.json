@@ -744,5 +744,19 @@
       "post_receive": 256,
       "day_of_turn": "2024-06-26"
     }
+  },
+  {
+    "model": "turn.turn",
+    "fields": {
+      "code_maker": "M-000001",
+      "code_received": "R-000001",
+      "state": 1,
+      "subsidiary": 3,
+      "user_maker": 105,
+      "user_received": 106,
+      "post_maker": 262,
+      "post_receive": 264,
+      "day_of_turn": "2024-06-26"
+    }
   }
 ]
