@@ -1,0 +1,23 @@
+[
+  {
+    "model": "user.useraccount",
+    "pk": 1,
+    "fields": {
+      "first_name": "Administrador",
+      "last_name": "General",
+      "dni": "00000000",
+      "email": "admin_caritas@yopmail.com",
+      "date_of_birth": "2001-11-08",
+      "phone_number": "342780437",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": true,
+      "is_active": true,
+      "gender": "OTHER",
+      "state": 3,
+      "role": "ADMIN",
+      "password": "482c811da5d5b4bc6d497ffa98491e38",
+      "is_superuser": true
+    }
+  }
+]
