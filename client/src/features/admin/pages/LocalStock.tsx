@@ -156,6 +156,7 @@ export function LocalStock() {
     }
 
     setLoading(false)
+    fetchData()
   }
 
   const columns: ColumnsType<StockType> = [
