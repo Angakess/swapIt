@@ -31,7 +31,7 @@ export function StatsCategories() {
 
       {isLoading ? (
         <Spin size="large" style={{ width: '100%', margin: '2.5rem 0' }} />
-      ) : posts.length === 0 || categories.length === 0 ? (
+      ) : categories.length === 0 ? (
         <Empty description="No hay categorías disponibles para mostrar estadísticas." />
       ) : (
         <Space direction="vertical" size={[24, 24]} style={{ display: 'flex' }}>
