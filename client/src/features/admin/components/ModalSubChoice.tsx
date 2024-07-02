@@ -3,6 +3,7 @@ import { Modal } from 'antd'
 import { DefaultOptionType } from 'antd/es/select'
 import { Select } from 'antd/lib'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 type SubType = {
   id: number
@@ -29,6 +30,9 @@ export function ModalSubChoice({
   userId: number
   setExists: (x: boolean) => void
 }) {
+
+    const navigate = useNavigate()
+
   const [subs, setSubs] = useState<SubType[]>([])
   const [subSelected, setSubSelected] = useState<number>()
 
@@ -47,6 +51,7 @@ export function ModalSubChoice({
     
     if (result.ok) {
       miniModal.successNotification('Operación exitosa', result.messages[0])
+      navigate("/admin/exchangers",{replace: true})
     } else {
       miniModal.errorNotification('Operación fallida', result.messages[0])
     }

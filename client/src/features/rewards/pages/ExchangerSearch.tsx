@@ -79,14 +79,14 @@ export function ExchangerSearch() {
               onFinish={handleSearch}
             >
               <Form.Item
-                label="Ingrese un DNI"
+                label="Ingrese el DNI del intercambiador que desea realizar un canje"
                 name="dni"
                 required={false}
                 rules={[
                   {
                     required: true,
                     message:
-                      'Ingrese el DNI del intercambiador que desea realizar un canje',
+                      'Ingrese un DNI',
                   },
                   { len: 8, message: 'El DNI debe ser de 8 dígitos' },
                   { pattern: /^\d+$/, message: 'El DNI debe ser un número' },
@@ -104,7 +104,7 @@ export function ExchangerSearch() {
                     size="large"
                     type="primary"
                     icon={<SearchOutlined />}
-                  ></Button>
+                  >Buscar</Button>
                 </Space.Compact>
               </Form.Item>
             </Form>

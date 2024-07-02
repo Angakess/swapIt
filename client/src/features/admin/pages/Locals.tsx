@@ -20,6 +20,7 @@ import grayMarkerIcon from '/map-pin-gray.svg'
 import Input, { SearchProps } from 'antd/es/input'
 import { useCustomAlerts } from '@Common/hooks'
 import { PageTitle } from '@Common/components'
+import { Link } from 'react-router-dom'
 
 type SubsidiaryType = {
   id: number
@@ -241,10 +242,13 @@ export function Locals() {
                     </h3>
                     <Button onClick={handleEditingModal}>Editar</Button>
                     <Tooltip title="Listar stock">
+                      <Link to={`/admin/locals/${subSelected.id}`}>
                       <Button
                         icon={<GoldOutlined />}
-                        onClick={handleListStock}
-                      ></Button>
+                        /* onClick={handleListStock} */
+                      >Stock</Button>
+                      </Link>
+                      
                     </Tooltip>
                   </Flex>
                 </>
