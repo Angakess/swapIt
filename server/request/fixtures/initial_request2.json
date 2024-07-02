@@ -193,8 +193,8 @@
         "model": "request.request",
         "fields": {
             "user_maker": 105,
-            "post_maker": 261,
-            "post_receive": 263,
+            "post_maker": 260,
+            "post_receive": 262,
             "user_receive": 106,
             "state": 2,
             "rejected": 0,
