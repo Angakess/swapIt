@@ -94,7 +94,7 @@ class TurnsValidateView(APIView):
                 [email_maker],
                 "Califica tu intercambio",
                 f"¡Felicitaciones {name_maker}! Has finalizado un intercambio con {name_received}, has sumado {score_maker} puntos. \n" +
-                f"Puedes calificar a {name_received} en el siguiente enlace: http://localhost:5173/user/calificate/M/{id_turn} \n" +
+                f"Puedes calificar a {name_received} en el siguiente enlace: http://localhost:5173/ratings/calificate/M/{id_turn} \n" +
                 f"¡Gracias por confiar en SwapIt!"
             )
 
@@ -102,7 +102,7 @@ class TurnsValidateView(APIView):
                 [email_received],
                 "Califica tu intercambio",
                 f"¡Felicitaciones {name_received}! Has finalizado un intercambio con {name_maker}, has sumado {score_received} puntos. \n" +
-                f"Puedes calificar a {name_maker} en el siguiente enlace: http://localhost:5173/user/calificate/R/{id_turn} \n" +
+                f"Puedes calificar a {name_maker} en el siguiente enlace: http://localhost:5173/ratings/calificate/R/{id_turn} \n" +
                 f"¡Gracias por confiar en SwapIt!"
             )
         except:

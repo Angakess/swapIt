@@ -44,7 +44,7 @@ function App() {
         <Route path="/admin/*" element={<AdminRoutes />} />
         <Route path="/turns/*" element={<TurnsRoutes />} />
         <Route path="/swaps/*" element={<SwapsRoutes />} />
-        <Route path="/user/*" element={<RatingRoutes />} />
+        <Route path="/ratings/*" element={<RatingRoutes />} />
         <Route path="/requests/*" element={<RequestsRoutes />} />
         <Route path="/rewards/*" element={<RewardsRoutes />} />
         <Route path="/donation/*" element={<DonationRoutes />} />
