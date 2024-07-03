@@ -212,15 +212,6 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
 
               <div>
                 <Button
-                  type="text"
-                  htmlType="reset"
-                  style={{ marginRight: '1rem' }}
-                  disabled={!hasBeenUpdated}
-                  loading={isUpdating}
-                >
-                  Restablecer
-                </Button>
-                <Button
                   type="primary"
                   htmlType="submit"
                   disabled={!hasBeenUpdated}
