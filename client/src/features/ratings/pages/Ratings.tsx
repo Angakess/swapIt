@@ -124,8 +124,8 @@ function RatingItem({
 
     if (ok) {
       successNotification(
-        'Calificación rechazada',
-        'La calificación ha sido rechazada correctamente.'
+        'Calificación moderada',
+        'El comentario de la calificación ha sido eliminado correctamente.'
       )
       setRatings((prev) => prev.filter((r) => r.id !== rating.id))
     } else {
