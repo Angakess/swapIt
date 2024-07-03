@@ -131,12 +131,12 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
               </Select>
             </Form.Item>
 
-            <Form.Item label="Contraseña" name="password">
+            <Form.Item label="Nueva Contraseña" name="password">
               <Input.Password placeholder="Contraseña" size="large" />
             </Form.Item>
 
             <Form.Item
-              label="Confirmar contraseña"
+              label="Repetir Nueva Contraseña"
               name="confirmPassword"
               dependencies={['password']}
               required={false}
