@@ -45,7 +45,10 @@ export function EditProfileModal({ isOpen, setIsOpen }: EditProfileModalProps) {
     <Modal
       title="Editar perfil"
       open={isOpen}
-      onCancel={() => setIsOpen(false)}
+      onCancel={() => {
+        setIsOpen(false)
+        setInitialValues()
+      }}
       forceRender
       footer={null}
     >
