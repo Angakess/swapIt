@@ -227,12 +227,12 @@ export function TableMyPetitions() {
     {
       title: `Mi publicación: ${searchText.myPostName ? searchText.myPostName : ''}`,
       dataIndex: 'myPostName',
-      ...tableColumnSearchProps(
+      /* ...tableColumnSearchProps(
         'myPostName',
         handleSearch,
         handleReset,
         searchInput
-      ),
+      ), */
       width: '40%',
       render: (_, record) => (
         <MiniPostForTable
@@ -247,12 +247,12 @@ export function TableMyPetitions() {
     {
       title: `Otra publicación: ${searchText.otherPostName ? searchText.otherPostName : ''}`,
       dataIndex: 'otherPostName',
-      ...tableColumnSearchProps(
+      /* ...tableColumnSearchProps(
         'otherPostName',
         handleSearch,
         handleReset,
         searchInput
-      ),
+      ), */
       width: '40%',
       render: (_, record) => (
         <MiniPostForTable
@@ -267,12 +267,12 @@ export function TableMyPetitions() {
     {
       title: `Estado:`,
       dataIndex: 'state',
-      filters: [
+      /* filters: [
         { text: 'Pendiente', value: 'Pendiente' },
         { text: 'Semi-aceptado', value: 'Semi-aceptado' },
       ],
       onFilter: (value, record) => record.state === value,
-      filterSearch: false,
+      filterSearch: false, */
       width: '10%',
     },
 
