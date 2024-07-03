@@ -118,18 +118,15 @@ export function LocalStock() {
   }, [])
 
   function handleInputChange(value: number | null) {
-    if (value) {
-      if (value < 0) {
-        setError({ status: 'error', msg: 'Debe ser mayor o igual a 0' })
-        setNewStock(value)
-        return
-      } else {
-        setError({ status: '', msg: '' })
-        setNewStock(value)
-      }
+    if (value == null) {
+      setError({ status: 'error', msg: 'Ingrese un valor' })
+      setNewStock(value)
+    } else if (value < 0) {
+      setError({ status: 'error', msg: 'Debe ser mayor o igual a 0' })
+      setNewStock(value)
     } else {
       setError({ status: '', msg: '' })
-      setNewStock(0)
+      setNewStock(value)
     }
   }
 
