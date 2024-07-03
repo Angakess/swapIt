@@ -1306,5 +1306,25 @@
       "role": "EXCHANGER",
       "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 154,
+    "fields": {
+      "first_name": "Intercambiador",
+      "last_name": " para borrar",
+      "dni": "54545454",
+      "email": "intercambiador54@yopmail.com",
+      "date_of_birth": "2000-06-11",
+      "phone_number": "4827484771",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "FEMALE",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38"
+    }
   }
 ]
