@@ -34,13 +34,13 @@ export function AmountChoice({
 
     if (!/^\d*$/.test(v)) {
       setDisableButton(true)
-      setError({ status: 'error', msg: 'Debe ingresar un número positivo' })
+      setError({ status: 'error', msg: 'Ingrese un monto válido' })
 
       return
     }
     if (v == '') {
       setDisableButton(true)
-      setError({ status: 'error', msg: 'Ingrese un monto' })
+      setError({ status: 'error', msg: 'Ingrese un monto válido' })
       setAmount(null)
       return
     }
@@ -48,7 +48,7 @@ export function AmountChoice({
 
     if (vNumber <= 0) {
       setDisableButton(true)
-      setError({ status: 'error', msg: 'El monto debe ser positivo' })
+      setError({ status: 'error', msg: 'Ingrese un monto válido' })
       setAmount(vNumber)
       return
     }
