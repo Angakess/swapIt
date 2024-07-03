@@ -56,6 +56,7 @@ class SubsidiaryDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubsidiarySerializer
 
 
+#TODO: Al crear una filial nueva se debe crear un stockFilial para cada categoria
 class SubsidiaryCreate(generics.CreateAPIView):
     queryset = Subsidiary.objects.all()
     serializer_class = SubsidiarySerializer

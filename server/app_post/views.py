@@ -132,7 +132,7 @@ class CategoryRestore(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-
+#TODO: Cuando se crea una categoría nueva se debe crear un stockFilial para cada Filial
 class CategoryCreate(generics.CreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
