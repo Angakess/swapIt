@@ -37,7 +37,7 @@ class ModerateCommentRating(generics.UpdateAPIView):
         except Exception:
             print("[ERROR]", Exception)
         rating = self.get_object()
-        rating.comment = comment if comment else "Este comentario a sido eliminado por un administrador."
+        rating.comment = comment if comment else "Este comentario ha sido eliminado por un administrador."
         rating.checked = True
         rating.save()
         return Response(
