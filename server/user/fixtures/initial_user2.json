@@ -1243,6 +1243,7 @@
       "gender": "FEMALE",
       "state": 3,
       "role": "EXCHANGER",
+      "score": 10,
       "password": "482c811da5d5b4bc6d497ffa98491e38"
     }
   },

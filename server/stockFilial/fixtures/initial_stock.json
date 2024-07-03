@@ -1,15 +1,15 @@
 [
   {
     "model": "stockFilial.stockfilial",
-    "fields": { "cantidad": 0, "categoria": 1, "filial": 1 }
+    "fields": { "cantidad": 10, "categoria": 1, "filial": 1 }
   },
   {
     "model": "stockFilial.stockfilial",
-    "fields": { "cantidad": 0, "categoria": 2, "filial": 1 }
+    "fields": { "cantidad": 10, "categoria": 2, "filial": 1 }
   },
   {
     "model": "stockFilial.stockfilial",
-    "fields": { "cantidad": 0, "categoria": 3, "filial": 1 }
+    "fields": { "cantidad": 10, "categoria": 3, "filial": 1 }
   },
   {
     "model": "stockFilial.stockfilial",
