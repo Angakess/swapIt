@@ -19,5 +19,26 @@
       "password": "482c811da5d5b4bc6d497ffa98491e38",
       "is_superuser": true
     }
+  },
+  {
+    "model": "user.useraccount",
+    "pk": 2,
+    "fields": {
+      "first_name": "Ayudante",
+      "last_name": "Prueba",
+      "dni": "11111111",
+      "email": "pruba_ayu@yopmail.com",
+      "date_of_birth": "2001-11-08",
+      "phone_number": "342780437",
+      "id_subsidiary": null,
+      "failed_login_attempts": 0,
+      "is_staff": false,
+      "is_active": true,
+      "gender": "OTHER",
+      "state": 3,
+      "role": "EXCHANGER",
+      "password": "482c811da5d5b4bc6d497ffa98491e38",
+      "is_superuser": false
+    }
   }
 ]
