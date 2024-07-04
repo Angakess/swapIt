@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from rest_framework import generics, filters, status
 from rest_framework.response import Response
+
+from app_post.models import Category
+from stockFilial.models import StockFilial
 from .models import Subsidiary
 from .serializers import SubsidiarySerializer
 
@@ -56,11 +59,22 @@ class SubsidiaryDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubsidiarySerializer
 
 
-#TODO: Al crear una filial nueva se debe crear un stockFilial para cada categoria
 class SubsidiaryCreate(generics.CreateAPIView):
     queryset = Subsidiary.objects.all()
     serializer_class = SubsidiarySerializer
 
+    def create(self, request, *args, **kwargs):
+        newFilial = super().create(request, *args, **kwargs)
+        instance = Subsidiary.objects.get(pk=newFilial.data['id'])
+        categories = Category.objects.all()
+
+        for category in categories:
+            StockFilial.objects.create(
+                filial=instance,
+                categoria=category,
+                cantidad=0
+            )
+        return newFilial
 
 class SubsidiaryList(generics.ListAPIView):
     def get_queryset(self):

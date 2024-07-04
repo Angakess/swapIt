@@ -304,10 +304,10 @@
     "model": "user.useraccount",
     "pk": 104,
     "fields": {
-      "first_name": "Suspendido",
+      "first_name": "Asuspender",
       "last_name": "Dos",
       "dni": "40404040",
-      "email": "suspendido2@yopmail.com",
+      "email": "Asuspender2@yopmail.com",
       "date_of_birth": "1974-03-27",
       "phone_number": "4827484723",
       "id_subsidiary": null,
@@ -315,7 +315,7 @@
       "is_staff": false,
       "is_active": true,
       "gender": "FEMALE",
-      "state": 2,
+      "state": 3,
       "role": "EXCHANGER",
       "password": "482c811da5d5b4bc6d497ffa98491e38"
     }

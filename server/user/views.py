@@ -487,8 +487,18 @@ class DisincorporateHelper(APIView):
                     },
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
-
-        helper.delete()
+        try:
+            helper.posts.all().delete()
+            helper.ratings_made.all().delete()
+            helper.ratings_received.all().delete()
+            helper.requests_send.all().delete()
+            helper.requests_receive.all().delete()
+            helper.turns_made.all().delete()
+            helper.turns_received.all().delete()
+            helper.delete()
+        except Exception as e:
+            traceback.print_exc()
+            print("[NO JODAS BRO QUE PASO] ", e)
         return Response(
             {
                 'ok': True,

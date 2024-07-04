@@ -43,5 +43,14 @@
             "active": true,
             "score":10
         }
+    },
+    {
+        "model": "app_post.category",
+        "pk": 6,
+        "fields": {
+            "name": "categoria_pausar",
+            "active": true,
+            "score":1
+        }
     }
 ]

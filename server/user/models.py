@@ -120,7 +120,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
             send_email_to_user(
                 email = [self.email],
                 subject='Cuenta en revisión',
-                message='Su cuenta ha pasado a un estado de revisión por haber excedido el límite de publicaciones rechazadas. \n'
+                message='Su cuenta ha pasado a un estado de revisión. Pónganse en contacto con el soporte de Cáritas, caritas_is2@hotmail.com . \n'
             )
         except Exception as e:
             return False
